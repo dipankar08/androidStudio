@@ -49,6 +49,8 @@ Presenter: loadData(), TryLogin()
 - You can write the unit test for Model as Model will not depens on any things - It just a network call or save load using sqlite.
 - You can write unit test on Presenter by moking model as It doent depends on View. As it is indipended to View( andrid spacific compoennt, it can be unit testied in non-android platform too.
 
+16. It is possible to shared data between two View via two presnegter as Presengter can have dependecy to Model and Model is resposble to store all the data. So we have a shared model ( in this example, i have two difefrnet model), where we will invoke model with passing the listner. see [3]
+
 
 
 
@@ -60,3 +62,5 @@ Presenter: loadData(), TryLogin()
 
 [1] https://medium.com/@cervonefrancesco/model-view-presenter-android-guidelines-94970b430ddf
 [2] https://android.jlelse.eu/android-mvp-doing-it-right-dac9d5d72079
+[3] https://stackoverflow.com/questions/42928243/how-to-share-data-between-two-presenters-in-mvp-architecture-in-android
+
