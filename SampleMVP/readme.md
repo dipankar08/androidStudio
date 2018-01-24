@@ -59,7 +59,9 @@ Presenter: loadData(), TryLogin()
 
 20. How to hanlde cache, localstore, networkcalls in MVC? When we talk about model, it might be three things : local data( db) , networks(calls), and prefs. They might have seperate models and Manager and helper function and might obey a commom contacts ( interface). see [7] for more.
 
-21.
+21. *Uisng Observer pattern inside MVP* There might be a senario where you have multiple presneter which wnat to listering some data chnages in model. How to notify all the presenetr asking them to update the desrite screen (Model donet know which screen are presenet right now). To handle this case, we have a IObservaer interface having a method called hanleData(). Now All presenter implemnegt the observer. Model has a list of observer and have a add/removeOBserver(). When some data chnages it will interate though all the observer( presenter and invoke the handleData()) methods. see [10] for this.
+
+
 
 
 
@@ -79,4 +81,4 @@ Refernces:
 7. https://github.com/MindorksOpenSource/android-mvp-architecture/tree/master/app/src/main/java/com/mindorks/framework/mvp/data
 8. https://github.com/MindorksOpenSource/android-mvp-architecture/tree/master/app/src/main/java/com/mindorks/framework/mvp/data/prefs
 9. https://github.com/MindorksOpenSource/android-mvp-architecture/blob/2d362b3f4f2dd336afa437f4360f756bcf0ff986/app/src/main/java/com/mindorks/framework/mvp/data/DataManager.java
-
+10. https://stackoverflow.com/questions/36788502/observer-pattern-in-mvp
