@@ -1,0 +1,4 @@
+I would love to implemnet some of interesting topics on android here - I am using this sample app while building prototype for my production code.
+
+1. BottomSheet Pattern ->https://code.tutsplus.com/articles/how-to-use-bottom-sheets-with-the-design-support-library--cms-26031
+2.
