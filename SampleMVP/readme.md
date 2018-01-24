@@ -1,8 +1,8 @@
 Model-View-Presenter: Things to remember:
 Each Android screen should have 3 components, Each comonent should have an interface and 
 
-a) Model: it is an interface responsible for managing data. Model’s responsibilities include using APIs, caching data, managing databases and Network calls to update models
-b) Presenter: The presenter is responsible for querying the model and updating the view when it got notification from model.
+a) Model/Interacter/Repositary: it is an interface responsible for managing data. Model’s responsibilities include using APIs, caching data, managing databases and Network calls to update models
+b) Presenter/Controler: The presenter is responsible for querying the model and updating the view when it got notification from model.
 c) View: Just draw the UI( implemented by Activities, Fragments, any Android widget) and deletgates all the user evnets to Presenter.
 
 Android Guidelines:
@@ -55,7 +55,11 @@ Presenter: loadData(), TryLogin()
 
 18. I want to build music player app Using MVP. How we can integreate or expose MusicPlayer API in the patterns? It will definily part of each P or M. as MusicPlayer is need to access the playlist whcih is a list of IMusic. It might be sepetate compoenet. It sould be initlized by presenter and pass the playlist once it read from Model. MusicPlayer should expose PlayerListener which is passes by presneter and propate the evnet to View. That means MusicPlayer should be in parrale to model and Should not have any depency on either model and presenter. Howver Presneter need to have a dependecy on MusicPlayer. see [6] how the music player should looks like:
 
-19.
+19. I want to store some data in shared perf. How can I active that in MVC. It should be part of model as it has depency to android context. You might have Interface of Pref and it's implementation like [8] and extent this interface in oiuter model interface.[9]( that means sharedpref is a part of model) . When presneter try to access the shared pref, it will use the ModelInterface to access it. 
+
+20. How to hanlde cache, localstore, networkcalls in MVC? When we talk about model, it might be three things : local data( db) , networks(calls), and prefs. They might have seperate models and Manager and helper function and might obey a commom contacts ( interface). see [7] for more.
+
+21.
 
 
 
@@ -72,4 +76,7 @@ Refernces:
 4. https://stackoverflow.com/questions/24858050/how-to-control-listview-with-mvp-pattern-for-android
 5. http://albertovecina.github.io/PaperKnife/
 6. https://github.com/skyhacker2/MVCPlayer/blob/master/app/src/main/java/com/eleven/app/mvcplayer/models/MusicPlayer.java
+7. https://github.com/MindorksOpenSource/android-mvp-architecture/tree/master/app/src/main/java/com/mindorks/framework/mvp/data
+8. https://github.com/MindorksOpenSource/android-mvp-architecture/tree/master/app/src/main/java/com/mindorks/framework/mvp/data/prefs
+9. https://github.com/MindorksOpenSource/android-mvp-architecture/blob/2d362b3f4f2dd336afa437f4360f756bcf0ff986/app/src/main/java/com/mindorks/framework/mvp/data/DataManager.java
 
