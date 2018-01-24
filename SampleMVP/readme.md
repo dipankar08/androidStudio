@@ -1,3 +1,5 @@
+![alt text](https://upday.github.io/images/blog/model_view_presenter/mvp.png)
+
 Model-View-Presenter: Things to remember:
 Each Android screen should have 3 components, Each comonent should have an interface and 
 
