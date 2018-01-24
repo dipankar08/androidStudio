@@ -45,6 +45,10 @@ Presenter: loadData(), TryLogin()
 - Presenter knowns the View and mode, so it can invoke mode and view.
 - Model doent know the view/Prsenter, It just send the data by calling the listner which is provided my presenter. So Model is totally indipendent.
 
+15. Unit Testing:
+- You can write the unit test for Model as Model will not depens on any things - It just a network call or save load using sqlite.
+- You can write unit test on Presenter by moking model as It doent depends on View. As it is indipended to View( andrid spacific compoennt, it can be unit testied in non-android platform too.
+
 
 
 
