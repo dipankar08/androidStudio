@@ -51,6 +51,11 @@ Presenter: loadData(), TryLogin()
 
 16. It is possible to shared data between two View via two presnegter as Presengter can have dependecy to Model and Model is resposble to store all the data. So we have a shared model ( in this example, i have two difefrnet model), where we will invoke model with passing the listner. see [3]
 
+17. Where will have my custom adapter in case of list view ? Adapter is part of the view. In fact, all Android dependencies should be a part of the view. see [4] ane [5]
+
+18. I want to build music player app Using MVP. How we can integreate or expose MusicPlayer API in the patterns? It will definily part of each P or M. as MusicPlayer is need to access the playlist whcih is a list of IMusic. It might be sepetate compoenet. It sould be initlized by presenter and pass the playlist once it read from Model. MusicPlayer should expose PlayerListener which is passes by presneter and propate the evnet to View. That means MusicPlayer should be in parrale to model and Should not have any depency on either model and presenter. Howver Presneter need to have a dependecy on MusicPlayer. see [6] how the music player should looks like:
+
+19.
 
 
 
@@ -60,7 +65,11 @@ Presenter: loadData(), TryLogin()
 
 
 
-[1] https://medium.com/@cervonefrancesco/model-view-presenter-android-guidelines-94970b430ddf
-[2] https://android.jlelse.eu/android-mvp-doing-it-right-dac9d5d72079
-[3] https://stackoverflow.com/questions/42928243/how-to-share-data-between-two-presenters-in-mvp-architecture-in-android
+Refernces: 
+1. https://medium.com/@cervonefrancesco/model-view-presenter-android-guidelines-94970b430ddf
+2. https://android.jlelse.eu/android-mvp-doing-it-right-dac9d5d72079
+3. https://stackoverflow.com/questions/42928243/how-to-share-data-between-two-presenters-in-mvp-architecture-in-android
+4. https://stackoverflow.com/questions/24858050/how-to-control-listview-with-mvp-pattern-for-android
+5. http://albertovecina.github.io/PaperKnife/
+6. https://github.com/skyhacker2/MVCPlayer/blob/master/app/src/main/java/com/eleven/app/mvcplayer/models/MusicPlayer.java
 
