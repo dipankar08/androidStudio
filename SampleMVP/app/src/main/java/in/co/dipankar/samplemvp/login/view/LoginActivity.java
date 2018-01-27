@@ -36,16 +36,16 @@ public class LoginActivity extends Activity implements ILoginView, View.OnClickL
     }
 
     @Override protected void onDestroy() {
-        presenter.dettach();
+        presenter.onViewDetached();
         super.onDestroy();
     }
 
     @Override protected void onResume() {
-        presenter.attach(this);
+        presenter.onViewAttached(this);
         super.onResume();
     }
     @Override protected void onStop() {
-        presenter.dettach();
+        presenter.onDestroyed();
         super.onStop();
     }
     @Override public void showProgress() {

@@ -8,6 +8,7 @@ import in.co.dipankar.samplemvp.login.view.ILoginView;
 
 public interface ILoginPresenter {
     void tryLogin(String username, String password);
-    void attach(ILoginView v);
-    void dettach();
+    void onViewAttached(ILoginView view);
+    void onViewDetached();
+    void onDestroyed();
 }

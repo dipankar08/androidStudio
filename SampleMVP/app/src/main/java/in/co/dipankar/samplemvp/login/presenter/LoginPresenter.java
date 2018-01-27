@@ -27,15 +27,19 @@ public class LoginPresenter implements ILoginPresenter, ILoginInteractor.OnLogin
     }
 
     @Override
-    public void attach(ILoginView loginView) {
+    public void onViewAttached(ILoginView view) {
         this.loginView = loginView;
     }
 
     @Override
-    public void dettach() {
+    public void onViewDetached() {
         loginView = null;
     }
 
+    @Override
+    public void onDestroyed() {
+        loginView = null;
+    }
 
     @Override public void onUsernameError(String msg) {
         if (loginView != null) {
