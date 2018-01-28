@@ -9,51 +9,56 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import static in.co.dipankar.coolui.views.Direction.DOWN;
-import static in.co.dipankar.coolui.views.Direction.LEFT;
-import static in.co.dipankar.coolui.views.Direction.NONE;
-import static in.co.dipankar.coolui.views.Direction.RIGHT;
-import static in.co.dipankar.coolui.views.Direction.UP;
+import static in.co.dipankar.coolui.views.RemoteButtonView.Direction.DOWN;
+import static in.co.dipankar.coolui.views.RemoteButtonView.Direction.LEFT;
+import static in.co.dipankar.coolui.views.RemoteButtonView.Direction.NONE;
+import static in.co.dipankar.coolui.views.RemoteButtonView.Direction.RIGHT;
+import static in.co.dipankar.coolui.views.RemoteButtonView.Direction.UP;
 import static java.lang.Math.PI;
 import static java.lang.Math.atan2;
 
-/*
- * This class is a View that you can include in your Activity.
- * It uses very basic 2D graphics to draw a square and a circle.
- * Ooooooohhhh, pretty colors.....
- */
-
- enum Direction{
-     NONE,
-    UP,
-     DOWN,
-    LEFT,
-     RIGHT,
-};
-
-public class TouchShapeView extends View{
+public class RemoteButtonView extends View{
+    public enum Direction{
+        NONE,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+    };
+    public interface TouchShapeViewListener {
+        void onClick(RemoteButtonView.Direction direction);
+        void onHoverIn(RemoteButtonView.Direction direction);
+        void onHoverOut(RemoteButtonView.Direction direction);
+    }
 
     private RectF rect;
     final static String TAG ="DIPANKAR";
     private float centerX, centerY;
+
     private int mRadius,mRadiusInner, strockSize;
     private Direction mDirection = NONE ;
     private Direction prevDirection = NONE ;
     private Paint paint1, paint2;
+    @Nullable  private TouchShapeViewListener mTouchShapeViewListener;
     // you must implement these constructors!!
-    public TouchShapeView(Context c) {
+    public RemoteButtonView(Context c) {
         super(c);
         init();
     }
-    public TouchShapeView(Context c, AttributeSet a) {
+    public RemoteButtonView(Context c, AttributeSet a) {
         super(c, a);
         init();
     }
+
+    public void setTouchShapeViewListener(TouchShapeViewListener touchShapeViewListener) {
+        mTouchShapeViewListener = touchShapeViewListener;
+    }
+
     void init(){
         rect = new RectF();
         mRadius = 130;
@@ -116,44 +121,51 @@ public class TouchShapeView extends View{
         canvas.drawText("-", canvas.getWidth()/2 - mRadius, canvas.getHeight()/2 +20 , textPaint);
         canvas.drawText("+", canvas.getWidth()/2 + mRadius , canvas.getHeight()/2+20, textPaint);
     }
-    @Override
-    public boolean onTouchEvent( MotionEvent event)
-    {
-        double distance = Math.hypot(event.getX() - centerX, event.getY() - centerY);
 
+    void updateTouchDirection( MotionEvent event){
+        Direction direction = NONE;
+        double distance = Math.hypot(event.getX() - centerX, event.getY() - centerY);
         if (rect.contains(event.getX(),event.getY()) && distance > mRadiusInner ) {
             double angle = atan2(event.getY() - getHeight()/2, event.getX() - getWidth()/2) * 180 / PI;
             angle = (angle + 720) % 360;
-            Log.d(TAG,"inside: "+angle +"  Distnace:"+distance);
-
-            if(event.getAction() == MotionEvent.ACTION_UP){
-                mDirection = NONE;
+            if(angle >=45 && angle <135){
+                direction = DOWN;
+            }else if(angle >= 135 && angle <225){
+                direction = LEFT;
+            }else if(angle >=225 && angle < 315){
+                direction = UP;
             } else{
-                if(angle >=45 && angle <135){
-                    mDirection = DOWN;
-                }else if(angle >= 135 && angle <225){
-                    mDirection = LEFT;
-                }else if(angle >=225 && angle < 315){
-                    mDirection = UP;
-                } else{
-                    mDirection = RIGHT;
-                }
+                direction = RIGHT;
             }
+        }
+        mDirection = direction;
+    }
 
-            if(prevDirection !=mDirection){
-                prevDirection = mDirection;
-                invalidate();
-            }
+    @Override
+    public boolean onTouchEvent( MotionEvent event)
+    {
+        updateTouchDirection(event);
 
-        } else{
-            if(event.getAction() == MotionEvent.ACTION_UP){
-                mDirection = NONE;
+        if(prevDirection != mDirection){
+            if(prevDirection!= NONE && mTouchShapeViewListener != null){
+                mTouchShapeViewListener.onHoverOut(prevDirection);
             }
+            if(mDirection!= NONE && mTouchShapeViewListener != null){
+                mTouchShapeViewListener.onHoverIn(mDirection);
+            }
+            prevDirection = mDirection;
             invalidate();
         }
 
+        if(event.getAction() == MotionEvent.ACTION_UP){
+            if(mDirection != NONE && mTouchShapeViewListener != null){
+                mTouchShapeViewListener.onClick(mDirection);
+                mTouchShapeViewListener.onHoverOut(mDirection);
+                mDirection = prevDirection= NONE;
+            }
+            invalidate();
+        }
         return true;
     }
-
 
 }
