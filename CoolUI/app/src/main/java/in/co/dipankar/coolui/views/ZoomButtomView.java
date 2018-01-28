@@ -115,8 +115,8 @@ public class ZoomButtomView extends View{
         textPaint.setColor(Color.WHITE );
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setTextSize(50);
-        canvas.drawText("+", canvas.getWidth()/2, canvas.getHeight()/2 + mHeight/2 - 50  , textPaint);
-        canvas.drawText("_", canvas.getWidth()/2, canvas.getHeight()/2 - mHeight/2 + 50  , textPaint);
+        canvas.drawText("_", canvas.getWidth()/2, canvas.getHeight()/2 + mHeight/2 - mWidth/2 - 25, textPaint);
+        canvas.drawText("+", canvas.getWidth()/2, canvas.getHeight()/2 - mHeight/2 + mWidth/2 + 25, textPaint);
   }
 
   void updateTouchDirection( MotionEvent event){
