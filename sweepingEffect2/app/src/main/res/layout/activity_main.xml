@@ -21,7 +21,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="India, officially the Republic of India (Bhārat Gaṇarājya),[e] is a country in South Asia. It is the seventh-largest country by area, the second-most populous country (with over 1.2 billion people), and the most populous democracy in the world. It is bounded by the Indian Ocean on the south, the Arabian Sea on the southwest, and the Bay of Bengal on the southeast. It shares land borders with Pakistan to the west;[f] China, Nepal, and Bhutan to the northeast; and Myanmar (Burma) and Bangladesh to the east. In the Indian Ocean, India is in the vicinity of Sri Lanka and the Maldives. India's Andaman and Nicobar Islands share a maritime border with Thailand and Indonesia."/>
-            <Button
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:id="@+id/show_btn"
                 android:text="show"
@@ -29,39 +29,40 @@
                 android:layout_alignParentBottom="true"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+        <!-- Panel Design -->
         <RelativeLayout
             android:id="@+id/panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#e2b19d"
             >
-
-            <Button
+            <ImageButton
                 android:id="@+id/hide_btn"
-                android:layout_width="100dp"
-                android:layout_height="15dp"
-                android:layout_marginBottom="16dp"
-                android:layout_alignParentStart="true"
+                android:src="@drawable/line_horizantal"
                 android:layout_alignParentTop="true"
-                android:background="#ffffff"
-                android:text="" />
-
-            <ImageView
-                android:id="@+id/image1"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:text="" />
+            <RelativeLayout
+                android:id="@+id/control_holder"
+                android:layout_centerInParent="true"
                 android:layout_below="@+id/hide_btn"
-                android:src="@drawable/image1" />
-            <ImageView
-                android:id="@+id/image2"
-                android:layout_below="@id/hide_btn"
-                android:layout_alignRight="@id/image1"
-                android:src="@drawable/image2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content">
+                <com.example.dip.sweepingeffect2.RemoteButtonView
+                    android:id="@+id/move_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginRight="20dp"
+                    />
+                <com.example.dip.sweepingeffect2.ZoomButtonView
+                    android:id="@+id/zoom_btn"
+                    android:layout_toRightOf="@+id/move_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="150dp" />
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
 
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
