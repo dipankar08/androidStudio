@@ -57,11 +57,12 @@
                     />
                 <com.example.dip.sweepingeffect2.ZoomButtonView
                     android:id="@+id/zoom_btn"
+                    android:layout_height="150dp"
                     android:layout_width="75dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_below="@+id/move_btn"
-                    android:layout_height="150dp" />
+                    />
             </RelativeLayout>
         </RelativeLayout>
 

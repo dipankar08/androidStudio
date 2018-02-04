@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     private int MOVE_BUTTON_HEIGHT = 150;
     private int MOVE_BUTTON_WIDTH = 150;
-    private int ZOOM_BUTTON_HEIGHT = 150;
-    private int ZOOM_BUTTON_WIDTH = 80;
-    private int TWO_BUTTON_GAP = 25;
+    private int ZOOM_BUTTON_HEIGHT = 300;
+    private int ZOOM_BUTTON_WIDTH = 120;
+    private int TWO_BUTTON_GAP = 50;
 
 
     float dX, dY;
@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) mRemoteButtonView.getLayoutParams();
         switch(mOrientation){
             case PORTRAIT:
-                buttonParams.setMargins(0,0,BUTTON_MARGIN,0);
+                buttonParams.setMargins(0,0,TWO_BUTTON_GAP,0);
                 break;
             case LANDSCAPE:
-                buttonParams.setMargins(0,0,0,BUTTON_MARGIN);
+                buttonParams.setMargins(0,0,0,TWO_BUTTON_GAP);
                 break;
             default:return;
         }
@@ -169,21 +169,23 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) mZoomButtomView.getLayoutParams();
         switch(mOrientation){
             case PORTRAIT:
+                buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_WIDTH,ZOOM_BUTTON_HEIGHT);
                 buttonParams.removeRule(RelativeLayout.BELOW);
                 buttonParams.addRule(RelativeLayout.RIGHT_OF,R.id.move_btn);
+                buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT,R.id.move_btn);
                 mZoomButtomView.setLayout(ZoomButtonView.Layout.VERTICAL);
-                mZoomButtomView.setRotation(0);
+                mZoomButtomView.setLayoutParams(buttonParams);
                 break;
             case LANDSCAPE:
+                buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_HEIGHT,ZOOM_BUTTON_WIDTH);
                 buttonParams.removeRule(RelativeLayout.RIGHT_OF);
                 buttonParams.addRule(RelativeLayout.BELOW,R.id.move_btn);
+                buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT,R.id.move_btn);
                 mZoomButtomView.setLayout(ZoomButtonView.Layout.HORIZONTAL);
-                mZoomButtomView.setRotation(90);
+                mZoomButtomView.setLayoutParams(buttonParams);
                 break;
             default:return;
         }
-       mZoomButtomView.setLayoutParams(buttonParams);
-
     }
 
 
@@ -192,12 +194,14 @@ public class MainActivity extends AppCompatActivity {
         mHideImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("DIPANKAR","HIDE BUTTON CLICKED");
                 hideCameraControlPanelAnimation();
             }
         });
         mShowImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("DIPANKAR","SHOW BUTTON CLICKED");
                 showCameraControlPanelAnimation();
             }
         });
@@ -248,7 +252,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+
     }
+
+
 
     void showCameraControlPanelAnimation(){
         mPanelRelativeLayout
