@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.atan2;
+import static java.lang.Math.min;
 
 public class RemoteButtonView extends View {
     public enum Direction {
@@ -19,6 +21,11 @@ public class RemoteButtonView extends View {
         DOWN,
         LEFT,
         RIGHT,
+    };
+
+    public enum Layout {
+        VERTICAL,
+        HORIZONTAL,
     };
 
     public interface TouchShapeViewListener {
@@ -32,10 +39,12 @@ public class RemoteButtonView extends View {
     private RectF rect;
     static final String TAG = "DIPANKAR";
     private float centerX, centerY;
-    private int mRadius, mRadiusInner, strockSize;
+    private int mRadius, mRadiousOuter, mRadiusInner, strockSize;
     private Direction mDirection = Direction.NONE;
     private Direction prevDirection = Direction.NONE;
-    private Paint paint1, paint2;
+    private Layout mLayout = Layout.HORIZONTAL;
+    private Paint paint1, paint2, paint3;
+    private TextPaint textPaint1, textPaint2;
     @Nullable
     private TouchShapeViewListener mTouchShapeViewListener;
 
@@ -55,14 +64,25 @@ public class RemoteButtonView extends View {
     public void setTouchShapeViewListener(TouchShapeViewListener touchShapeViewListener) {
         mTouchShapeViewListener = touchShapeViewListener;
     }
+    public void setRadius(int radiusOuter, int radiousInner){
+        mRadiousOuter = radiusOuter;
+        mRadiusInner = radiousInner;
+    }
 
     void init() {
         rect = new RectF();
-        mRadius = 130;
-        strockSize = mRadius * 2 / 3;
-        mRadiusInner = mRadius - strockSize;
+
+        // note that height == width == 2* outerradious,
+        mRadiousOuter = 150;
+        mRadiusInner = 60;
+
+        mRadius = mRadiusInner +(mRadiousOuter - mRadiusInner )/2;
+        strockSize = (mRadiousOuter - mRadiusInner );
+
+
         paint1 = new Paint();
         paint2 = new Paint();
+        paint3 = new Paint();
 
         paint1.setColor(Color.parseColor("#5f6673"));
         paint1.setStrokeWidth(strockSize);
@@ -73,6 +93,23 @@ public class RemoteButtonView extends View {
         paint2.setStrokeWidth(strockSize);
         paint2.setAntiAlias(true);
         paint2.setStyle(Paint.Style.STROKE);
+
+        paint3.setColor(Color.parseColor("#ffffff"));
+        paint3.setStrokeWidth(5);
+        paint3.setAntiAlias(true);
+        paint3.setStyle(Paint.Style.STROKE);
+
+        textPaint1 = new TextPaint();
+        textPaint1.setARGB(200, 254, 0, 0);
+        textPaint1.setColor(Color.parseColor("#c5c8cb"));
+        textPaint1.setTextAlign(Paint.Align.CENTER);
+        textPaint1.setTextSize(45);
+
+        textPaint2 = new TextPaint();
+        textPaint2.setARGB(200, 254, 0, 0);
+        textPaint2.setColor(Color.parseColor("#ffffff"));
+        textPaint2.setTextAlign(Paint.Align.CENTER);
+        textPaint2.setTextSize(25);
     }
 
     // This method is called when the View is displayed
@@ -89,6 +126,7 @@ public class RemoteButtonView extends View {
     }
 
     void drawBack(Canvas canvas) {
+        canvas.drawArc(rect, 0, 360, false, paint1);
         if (mDirection == Direction.RIGHT && checkEnabledForDirection(mDirection)) {
             canvas.drawArc(rect, -45, 90, false, paint2);
         } else {
@@ -112,30 +150,23 @@ public class RemoteButtonView extends View {
     }
 
     void drawLabel(Canvas canvas) {
-        Paint textPaint = new Paint();
-        textPaint.setARGB(200, 254, 0, 0);
-        textPaint.setColor(Color.parseColor("#c5c8cb"));
-        textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(45);
-        canvas.drawText(
-                "+",
-                canvas.getWidth() / 2,
-                canvas.getHeight() / 2 - mRadius + strockSize / 2 - 20,
-                textPaint);
-        canvas.drawText(
-                "-",
-                canvas.getWidth() / 2,
-                canvas.getHeight() / 2 + mRadius + strockSize / 2 - 20,
-                textPaint);
-        canvas.drawText("-", canvas.getWidth() / 2 - mRadius, canvas.getHeight() / 2 + 20, textPaint);
-        canvas.drawText("+", canvas.getWidth() / 2 + mRadius, canvas.getHeight() / 2 + 20, textPaint);
+        canvas.drawLine(centerX - mRadius -15 , centerY,centerX - mRadius + 15, centerY,paint3);
+        canvas.drawLine(centerX + mRadius -15 , centerY,centerX + mRadius + 15, centerY,paint3);
+        canvas.drawLine(centerX , centerY- mRadius -15,centerX, centerY- mRadius + 15,paint3);
+        canvas.drawLine(centerX , centerY + mRadius -15,centerX, centerY + mRadius + 15,paint3);
+
+        if(mLayout == Layout.HORIZONTAL){
+            canvas.drawText("MOVE",canvas.getWidth() / 2,canvas.getHeight() / 2 + 25/2,textPaint2);
+        } else{
+            canvas.drawText("MOVE",canvas.getWidth() / 2,canvas.getHeight() / 2 + 25/2,textPaint2);
+        }
     }
 
     void updateTouchDirection(MotionEvent event) {
         // Log.d("DIpankar",event.getX()+"::"+event.getY());
         Direction direction = Direction.NONE;
         double distance = Math.hypot(event.getX() - centerX, event.getY() - centerY);
-        if (distance <= (mRadius + strockSize) && distance > mRadiusInner) {
+        if (distance <mRadiousOuter && distance > mRadiusInner) {
             double angle =
                     atan2(event.getY() - getHeight() / 2, event.getX() - getWidth() / 2) * 180 / PI;
             angle = (angle + 720) % 360;
@@ -183,10 +214,12 @@ public class RemoteButtonView extends View {
         }
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (mDirection != Direction.NONE && mTouchShapeViewListener != null) {
-                if (checkEnabledForDirection(mDirection)) {
-                    mTouchShapeViewListener.onClick(mDirection);
-                    mTouchShapeViewListener.onHoverOut(mDirection);
+            if (mDirection != Direction.NONE) {
+                if(mTouchShapeViewListener != null) {
+                    if (checkEnabledForDirection(mDirection)) {
+                        mTouchShapeViewListener.onClick(mDirection);
+                        mTouchShapeViewListener.onHoverOut(mDirection);
+                    }
                 }
                 mDirection = prevDirection = Direction.NONE;
             }

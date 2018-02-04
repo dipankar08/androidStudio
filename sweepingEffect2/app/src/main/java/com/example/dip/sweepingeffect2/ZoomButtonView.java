@@ -17,6 +17,11 @@ public class ZoomButtonView extends View {
         DOWN,
     };
 
+    public enum Layout {
+        VERTICAL,
+        HORIZONTAL,
+    };
+
     public interface ZoomButtomViewListener {
         void onClick(ZoomButtonView.Direction direction);
 
@@ -25,13 +30,16 @@ public class ZoomButtonView extends View {
         void onHoverOut(ZoomButtonView.Direction direction);
     }
 
-    private RectF rect1, rect2, rect3, rect4;
+    private RectF rect1, rect2, rect3, rect4, rect5;
     static final String TAG = "DIPANKAR";
     private float centerX, centerY, mWidth, mHeight;
-    private int mRadius, mRadiusInner, strockSize;
+
     private Direction mDirection = Direction.NONE;
     private Direction prevDirection = Direction.NONE;
+    private Layout mLayout = Layout.VERTICAL;
     private Paint paint1, paint2;
+    Paint textPaint1, textPaint2;
+
     @Nullable private ZoomButtomViewListener mZoomButtomViewListener;
     // you must implement these constructors!!
     public ZoomButtonView(Context c) {
@@ -48,12 +56,18 @@ public class ZoomButtonView extends View {
         mZoomButtomViewListener = ZoomButtomViewListener;
     }
 
+    public void setLayout(Layout layout){
+        mLayout = layout;
+        invalidate();
+    }
+
     void init() {
         rect1 = new RectF();
         rect2 = new RectF();
         rect3 = new RectF();
         rect4 = new RectF();
-        mWidth = 110;
+        rect5 = new RectF();
+        mWidth = 100;
         mHeight = 300;
 
         paint1 = new Paint();
@@ -66,6 +80,19 @@ public class ZoomButtonView extends View {
         paint2.setColor(Color.parseColor("#afb3b9"));
         paint2.setStyle(Paint.Style.FILL);
         paint2.setAntiAlias(true);
+
+        textPaint2 = new Paint();
+        textPaint2.setARGB(200, 254, 0, 0);
+        textPaint2.setColor(Color.parseColor("#c5c8cb"));
+        textPaint2.setTextAlign(Paint.Align.CENTER);
+        textPaint2.setTextSize(25);
+    }
+
+    public void setHeight(int height){
+        mHeight = height;
+    }
+    public void setWidth(int width){
+        mWidth = width;
     }
 
     // This method is called when the View is displayed
@@ -129,6 +156,14 @@ public class ZoomButtonView extends View {
                 canvas.getWidth() / 2,
                 canvas.getHeight() / 2 - mHeight / 2 + mWidth / 2 + 25,
                 textPaint);
+        if(mLayout == Layout.HORIZONTAL){
+            canvas.drawText("ZOOM",canvas.getWidth() / 2,canvas.getHeight() / 2 + 25/2,textPaint2);
+        } else{
+            canvas.save();
+            canvas.rotate(90f, canvas.getWidth() / 2, canvas.getHeight() / 2);
+            canvas.drawText("ZOOM",canvas.getWidth() / 2 , canvas.getHeight() / 2 + 25/2, textPaint2);
+            canvas.restore();
+        }
     }
 
     void updateTouchDirection(MotionEvent event) {
@@ -145,7 +180,6 @@ public class ZoomButtonView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         updateTouchDirection(event);
-
         if (prevDirection != mDirection) {
             if (prevDirection != Direction.NONE && mZoomButtomViewListener != null) {
                 mZoomButtomViewListener.onHoverOut(prevDirection);

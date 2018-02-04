@@ -34,11 +34,11 @@
             android:id="@+id/panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#e2b19d"
+            android:background="#303846"
             >
             <ImageButton
                 android:id="@+id/hide_btn"
-                android:src="@drawable/line_horizantal"
+                android:background="@drawable/line_horizantal"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
@@ -54,12 +54,13 @@
                     android:id="@+id/move_btn"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginRight="20dp"
                     />
                 <com.example.dip.sweepingeffect2.ZoomButtonView
                     android:id="@+id/zoom_btn"
-                    android:layout_toRightOf="@+id/move_btn"
-                    android:layout_width="50dp"
+                    android:layout_width="75dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_below="@+id/move_btn"
                     android:layout_height="150dp" />
             </RelativeLayout>
         </RelativeLayout>

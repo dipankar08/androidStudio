@@ -1,5 +1,6 @@
 package com.example.dip.sweepingeffect2;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
@@ -10,19 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout parent, body;
 
-    private RelativeLayout mPanelRelativeLayout, mControlHolderRelativeLayout;
+    private RelativeLayout mPanelRelativeLayout;
+    private RelativeLayout  mControlHolderRelativeLayout;
     private ImageButton mHideImageButton, mShowImageButton;
     private RemoteButtonView mRemoteButtonView;
     private ZoomButtonView mZoomButtomView;
 
 
-    private int PANEL_WIDTH  = 950;
+    private final int PANEL_WIDTH  = 450;
+    private final float PANEL_HIDE_CUTOFF_DISTANCE = PANEL_WIDTH/2;
+    private final float PANEL_VALID_TOUCH_MOVE_CUTOFF_DISTANCE = 20;
     private int BUTTON_MARGIN = 8;
 
     private int MOVE_BUTTON_HEIGHT = 150;
@@ -61,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         mPanelRelativeLayout = findViewById(R.id.panel);
         mControlHolderRelativeLayout = findViewById(R.id.control_holder);
-        mRemoteButtonView = new RemoteButtonView(this);
-        mZoomButtomView = new ZoomButtonView(this);
+        mRemoteButtonView = findViewById(R.id.move_btn);
+        mZoomButtomView = findViewById(R.id.zoom_btn);
 
         mHideImageButton = (ImageButton) findViewById(R.id.hide_btn);
         mShowImageButton = (ImageButton) findViewById(R.id.show_btn);
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 mPanelRelativeLayout.setLayoutParams(newParams);
                 break;
             case LANDSCAPE:
-                newParams = new RelativeLayout.LayoutParams( PANEL_WIDTH,
+                newParams = new RelativeLayout.LayoutParams(PANEL_WIDTH,
                         RelativeLayout.LayoutParams.MATCH_PARENT
                         );;
                 newParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
@@ -112,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
                 buttonParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
                 buttonParams.setMargins(0, BUTTON_MARGIN, 0, BUTTON_MARGIN);
                 mHideImageButton.setLayoutParams(buttonParams);
-                mHideImageButton.setImageResource(R.drawable.line_horizantal);
+                mHideImageButton.setBackground( getResources().getDrawable(R.drawable.line_horizantal));
+
                 break;
             case LANDSCAPE:
                 buttonParams.removeRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -121,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonParams.addRule(RelativeLayout.CENTER_VERTICAL, 1);
                 buttonParams.setMargins(BUTTON_MARGIN, 0, BUTTON_MARGIN, 0);
                 mHideImageButton.setLayoutParams(buttonParams);
-                mHideImageButton.setImageResource(R.drawable.line_vertical);
+                mHideImageButton.setBackground( getResources().getDrawable(R.drawable.line_vertical));
                 break;
         }
     }
@@ -130,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT, 1);
+
         switch(mOrientation){
             case PORTRAIT:
                 buttonParams.removeRule(RelativeLayout.RIGHT_OF);
@@ -145,12 +152,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderCameraControlRemoteButtonView(){
-        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-                MOVE_BUTTON_WIDTH,MOVE_BUTTON_WIDTH);
+        RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) mRemoteButtonView.getLayoutParams();
         switch(mOrientation){
             case PORTRAIT:
                 buttonParams.setMargins(0,0,BUTTON_MARGIN,0);
-                buttonParams.addRule(RelativeLayout.LEFT_OF,R.id.zoom_btn);
                 break;
             case LANDSCAPE:
                 buttonParams.setMargins(0,0,0,BUTTON_MARGIN);
@@ -161,210 +166,167 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderCameraControlZoomButtonView(){
-        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-                ZOOM_BUTTON_WIDTH,ZOOM_BUTTON_HEIGHT);
-       // buttonParams.addRule(,R.id.move_btn);
-        mZoomButtomView.setLayoutParams(buttonParams);
-
-
-
-/*
+        RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) mZoomButtomView.getLayoutParams();
         switch(mOrientation){
             case PORTRAIT:
-                RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-                        ZOOM_BUTTON_WIDTH,ZOOM_BUTTON_HEIGHT);
                 buttonParams.removeRule(RelativeLayout.BELOW);
-                buttonParams.addRule(RelativeLayout.BELOW,mRemoteButtonView.getId());
-                mZoomButtomView.setLayoutParams(buttonParams);
-                mZoomButtomView.invalidate();
+                buttonParams.addRule(RelativeLayout.RIGHT_OF,R.id.move_btn);
+                mZoomButtomView.setLayout(ZoomButtonView.Layout.VERTICAL);
+                mZoomButtomView.setRotation(0);
                 break;
             case LANDSCAPE:
-                RelativeLayout.LayoutParams buttonParam = new RelativeLayout.LayoutParams(
-                        ZOOM_BUTTON_HEIGHT,ZOOM_BUTTON_WIDTH);
-                buttonParam.removeRule(RelativeLayout.RIGHT_OF);
-                buttonParam.addRule(RelativeLayout.BELOW,R.id.move_btn);
-                mZoomButtomView.setLayoutParams(buttonParam);
+                buttonParams.removeRule(RelativeLayout.RIGHT_OF);
+                buttonParams.addRule(RelativeLayout.BELOW,R.id.move_btn);
+                mZoomButtomView.setLayout(ZoomButtonView.Layout.HORIZONTAL);
                 mZoomButtomView.setRotation(90);
                 break;
+            default:return;
         }
-        */
+       mZoomButtomView.setLayoutParams(buttonParams);
+
     }
 
 
     private void setCameraControlEventListner(){
-        /*
+
         mHideImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideCameraControlPanel();
+                hideCameraControlPanelAnimation();
             }
         });
         mShowImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCameraControlPanel();
+                showCameraControlPanelAnimation();
             }
         });
         mPanelRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return handleCameraControlTouchEvent();
+                return handleCameraControlTouchEvent(event);
 
             }
         });
-        */
     }
-
-
-    /*
-
-    
-
-    public void hidePanel(){
-        if(mOrientation == Configuration.ORIENTATION_PORTRAIT){
-            panel.animate().translationY(PANEL_WIDTH).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(200);
-
-            ResizeWidthAnimation anim = new ResizeWidthAnimation(body);
-            anim.setDimention(ResizeWidthAnimation.Dimention.HEIGHT);
-            anim.setOffset(PANEL_WIDTH);
-            anim.setInterpolator(new AccelerateDecelerateInterpolator());
-            anim.setDuration(200);
-            body.startAnimation(anim);
-
-        } else{
-            panel.animate().translationX(PANEL_WIDTH).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(200);
-            ResizeWidthAnimation anim = new ResizeWidthAnimation(body);
-            anim.setDimention(ResizeWidthAnimation.Dimention.WIDTH);
-            anim.setOffset(PANEL_WIDTH);
-            anim.setInterpolator(new AccelerateDecelerateInterpolator());
-            anim.setDuration(200);
-            body.startAnimation(anim);
+    void hideCameraControlPanelAnimation(){
+        float x = 0;
+        float y = 0;
+        switch(mOrientation){
+            case PORTRAIT:
+                x = 0;
+                y = PANEL_WIDTH;
+                break;
+            case LANDSCAPE:
+                x =  PANEL_WIDTH;
+                y = 0;
+                break;
+            default:return;
         }
+        mPanelRelativeLayout
+                .animate()
+                .translationX(x)
+                .translationY(y)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setDuration(100)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mPanelRelativeLayout.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+
+                });
     }
 
-    public void showPanel(){
-        if(mOrientation == Configuration.ORIENTATION_PORTRAIT){
-            panel.animate().translationY(0).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(200);
-            ResizeWidthAnimation anim = new ResizeWidthAnimation(body);
-            anim.setDimention(ResizeWidthAnimation.Dimention.HEIGHT);
-            anim.setOffset(0);
-            anim.setInterpolator(new AccelerateDecelerateInterpolator());
-            anim.setDuration(200);
-            body.startAnimation(anim);
-        } else{
-            panel.animate().translationX(0).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(200);
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void handleMoveEffect() {
-
-        panel.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        dX = view.getX() - event.getRawX();
-                        dY = view.getY() - event.getRawY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        if(mOrientation == Configuration.ORIENTATION_LANDSCAPE){
-
-                            view.animate()
-                                    .x(event.getRawX() + dX)
-                                    .setDuration(0)
-                                    .start();
-                        } else{
-                            Log.d("DIPANKAR =>",""+(event.getRawY() + dY));
-                            if(event.getRawX() + dY >= PANEL_WIDTH){
-                                break;
-                            }
-                            view.animate()
-                                    .y(event.getRawY() + dY)
-                                    .setDuration(0)
-                                    .start();
-                        }
-
-                        break;
-                    default:
-                        return false;
+    void showCameraControlPanelAnimation(){
+        mPanelRelativeLayout
+            .animate()
+            .translationY(0)
+            .translationX(0)
+            .setInterpolator(new AccelerateDecelerateInterpolator())
+            .setDuration(100)
+            .setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    mPanelRelativeLayout.setVisibility(View.VISIBLE);
                 }
-                return true;
-            }
-        });
-
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                }
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
     }
 
-    void putInButton(){
-        //LayoutBodyOnPotrateMode();
-        LayoutPanelOnPotrateMode();
-        LayoutButtonOnPotrateMode();
+    private float orgX, orgY,downX,downY,curX, curY;
+    boolean handleCameraControlTouchEvent(MotionEvent event){
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                orgX = mPanelRelativeLayout.getX();
+                orgY = mPanelRelativeLayout.getY();
+                downX = event.getRawX();
+                downY = event.getRawY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                 curX = orgX + event.getRawX() - downX;
+                 curY = orgY + event.getRawY() - downY;
+                if(mOrientation == Orientation.PORTRAIT){
+                    if(curY > orgY){
+                        mPanelRelativeLayout.animate()
+                                .y(curY)
+                                .setDuration(0)
+                                .start();
+                    }
+                } else{
+                    if(curX > orgX){
+                        mPanelRelativeLayout.animate()
+                                .x(curX)
+                                .setDuration(0)
+                                .start();
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                 curX = orgX + event.getRawX() - downX;
+                 curY = orgY + event.getRawY() - downY;
+                Log.d("DIPANKAR11:",dX+"::"+dY);
+                if(mOrientation == Orientation.PORTRAIT){
+                    if(Math.abs(event.getRawX() - downX) < PANEL_VALID_TOUCH_MOVE_CUTOFF_DISTANCE &&
+                            Math.abs(event.getRawY() - downY)< PANEL_VALID_TOUCH_MOVE_CUTOFF_DISTANCE){
+                        return false;
+                    }
+                    if(curY - orgY < PANEL_HIDE_CUTOFF_DISTANCE){
+                        showCameraControlPanelAnimation();
+                    } else{
+                        hideCameraControlPanelAnimation();
+                    }
+                } else{
+                    if(curX - orgX < PANEL_HIDE_CUTOFF_DISTANCE){
+                        showCameraControlPanelAnimation();
+                    } else{
+                        hideCameraControlPanelAnimation();
+                    }
+                }
+                break;
+            default:
+                return false;
+        }
+        return true;
     }
-
-    void putInRight(){
-        //LayoutBodyOnLandscapeMode();
-        LayoutPanelOnLandscapeMode();
-        LayoutButtonOnLandscapeMode();
-    }
-
-    private void  LayoutBodyOnPotrateMode(){
-        body.requestLayout();
-        RelativeLayout.LayoutParams newParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                body.getMeasuredHeight() - PANEL_WIDTH);;
-        body.setLayoutParams(newParams);
-    }
-    private void LayoutBodyOnLandscapeMode(){
-        body.requestLayout();
-        RelativeLayout.LayoutParams newParams = new RelativeLayout.LayoutParams(
-                body.getMeasuredWidth() - PANEL_WIDTH,
-                RelativeLayout.LayoutParams.MATCH_PARENT
-                );;
-        body.setLayoutParams(newParams);
-    }
-
-    private void LayoutPanelOnPotrateMode() {
-        // second Button
-        RelativeLayout.LayoutParams newParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                PANEL_WIDTH);;
-        newParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
-        panel.setLayoutParams(newParams);
-    }
-
-    private void LayoutButtonOnPotrateMode() {
-        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-                BUTTON_LENGTH,BUTTON_WIDTH
-        );;
-        buttonParams.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        buttonParams.removeRule(RelativeLayout.CENTER_VERTICAL);
-        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 1);
-        buttonParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
-        buttonParams.setMargins(0, BUTTON_MARGIN, 0, 0);
-        btnHide.setLayoutParams(buttonParams);
-    }
-
-    private void LayoutButtonOnLandscapeMode() {
-        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-                BUTTON_WIDTH, BUTTON_LENGTH
-        );
-        buttonParams.removeRule(RelativeLayout.ALIGN_PARENT_TOP);
-        buttonParams.removeRule(RelativeLayout.CENTER_HORIZONTAL);
-        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 1);
-        buttonParams.addRule(RelativeLayout.CENTER_VERTICAL, 1);
-        buttonParams.setMargins(BUTTON_MARGIN, 0, 0, 0);
-        btnHide.setLayoutParams(buttonParams);
-    }
-
-    private void LayoutPanelOnLandscapeMode() {
-        RelativeLayout.LayoutParams newParams = new RelativeLayout.LayoutParams(
-                PANEL_WIDTH,RelativeLayout.LayoutParams.MATCH_PARENT
-        );;
-        newParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
-        panel.setLayoutParams(newParams);
-    }
-
-    */
-
-
 }
