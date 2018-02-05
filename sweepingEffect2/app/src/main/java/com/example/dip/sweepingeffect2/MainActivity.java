@@ -1,7 +1,6 @@
 package com.example.dip.sweepingeffect2;
 
 import android.animation.Animator;
-import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +9,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mHideImageButton, mShowImageButton;
     private RemoteButtonView mRemoteButtonView;
     private ZoomButtonView mZoomButtomView;
+    private Button mTest;
 
 
     private final int PANEL_WIDTH  = 450;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         parent = findViewById(R.id.parent);
         body = findViewById(R.id.body);
+        mTest = findViewById(R.id.test);
         initPanelView();
     }
 
@@ -169,18 +173,18 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) mZoomButtomView.getLayoutParams();
         switch(mOrientation){
             case PORTRAIT:
-                buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_WIDTH,ZOOM_BUTTON_HEIGHT);
+                //buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_WIDTH,ZOOM_BUTTON_HEIGHT);
                 buttonParams.removeRule(RelativeLayout.BELOW);
                 buttonParams.addRule(RelativeLayout.RIGHT_OF,R.id.move_btn);
-                buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT,R.id.move_btn);
+                buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 mZoomButtomView.setLayout(ZoomButtonView.Layout.VERTICAL);
                 mZoomButtomView.setLayoutParams(buttonParams);
                 break;
             case LANDSCAPE:
-                buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_HEIGHT,ZOOM_BUTTON_WIDTH);
+                //buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_HEIGHT,ZOOM_BUTTON_WIDTH);
                 buttonParams.removeRule(RelativeLayout.RIGHT_OF);
                 buttonParams.addRule(RelativeLayout.BELOW,R.id.move_btn);
-                buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT,R.id.move_btn);
+                buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 mZoomButtomView.setLayout(ZoomButtonView.Layout.HORIZONTAL);
                 mZoomButtomView.setLayoutParams(buttonParams);
                 break;
@@ -189,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // button event handling
     private void setCameraControlEventListner(){
 
         mHideImageButton.setOnClickListener(new View.OnClickListener() {
@@ -212,7 +217,25 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        mTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DIPANKAR","Test BUTTON CLICKED");
+                /*
+                if(mZoomButtomView.getVisibility() != GONE) {
+                    mZoomButtomView.setVisibility(GONE);
+                } else{
+                    mZoomButtomView.setVisibility(VISIBLE);
+                }*/
+                showMoveControlOnly();
+                enableTopDownMoveControlOnly();
+            }
+        });
+
     }
+
+
+    // show hide animation when button clicked.
     void hideCameraControlPanelAnimation(){
         float x = 0;
         float y = 0;
@@ -240,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        mPanelRelativeLayout.setVisibility(View.GONE);
+                        mPanelRelativeLayout.setVisibility(GONE);
                     }
                     @Override
                     public void onAnimationCancel(Animator animation) {
@@ -252,10 +275,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
-
     }
-
-
 
     void showCameraControlPanelAnimation(){
         mPanelRelativeLayout
@@ -267,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             .setListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    mPanelRelativeLayout.setVisibility(View.VISIBLE);
+                    mPanelRelativeLayout.setVisibility(VISIBLE);
                 }
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -281,6 +301,8 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
+
+    //handling touch slide animation.
     private float orgX, orgY,downX,downY,curX, curY;
     boolean handleCameraControlTouchEvent(MotionEvent event){
         switch (event.getAction()) {
@@ -336,4 +358,48 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    //set of helper functions
+    private void showZoomControlOnly() {
+        mZoomButtomView.setVisibility(VISIBLE);
+        mRemoteButtonView.setVisibility(GONE);
+    }
+
+    private void showMoveControlOnly() {
+        mZoomButtomView.setVisibility(GONE);
+        mRemoteButtonView.setVisibility(VISIBLE);
+    }
+
+    private void showAllControl() {
+        mZoomButtomView.setVisibility(VISIBLE);
+        mRemoteButtonView.setVisibility(VISIBLE);
+    }
+
+    private void enableTopDownMoveControlOnly() {
+        mRemoteButtonView.setEnableUpDownOnly();
+    }
+
+    private void enableLeftRightMoveControlOnly() {
+        mRemoteButtonView.setEnableLeftRightOnly();
+    }
+
+    private void enableAllMoveControl() {
+        mRemoteButtonView.setEnableAllControl();
+    }
+
+    private void enableZoomControlHorizontally() {
+        mZoomButtomView.setLayout(ZoomButtonView.Layout.HORIZONTAL);
+    }
+
+    private void enableZoomControlVertically() {
+        mZoomButtomView.setLayout(ZoomButtonView.Layout.VERTICAL);
+    }
+
+    private void resetControlState() {
+        showAllControl();
+        enableZoomControlVertically();
+        enableAllMoveControl();
+    }
+
+    // Text view resize animations 
 }

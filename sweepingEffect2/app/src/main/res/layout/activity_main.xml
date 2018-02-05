@@ -17,6 +17,7 @@
             android:layout_height="match_parent"
             android:background="#e2db9d"
             >
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -27,6 +28,12 @@
                 android:text="show"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/test"
+                android:text="test"
+                android:layout_centerInParent="true"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
         <!-- Panel Design -->
@@ -47,18 +54,19 @@
             <RelativeLayout
                 android:id="@+id/control_holder"
                 android:layout_centerInParent="true"
+                android:gravity="center"
                 android:layout_below="@+id/hide_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <com.example.dip.sweepingeffect2.RemoteButtonView
                     android:id="@+id/move_btn"
-                    android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:layout_width="150dp"
                     />
                 <com.example.dip.sweepingeffect2.ZoomButtonView
                     android:id="@+id/zoom_btn"
                     android:layout_height="150dp"
-                    android:layout_width="75dp"
+                    android:layout_width="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_below="@+id/move_btn"
