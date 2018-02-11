@@ -3,4 +3,14 @@ I started working on android three years back when I joined microsoft. I am stil
 
 Learing is a continuous provcess for me - that means i will keep adding new items in this list as i am hoing though new experinecs.
 
+Core Technology
+----------------
+1. Android Application and Activity Life cycle.
+2. Android Compoenets : Activity, Service, BR, Content provide, Interection between them using [a intent](http://www.vogella.com/tutorials/AndroidIntent/article.html)
+3. Permission Model
 
+
+UI Design and Technology
+------------------------
+1. Layouts 
+2. List and Grid View 
