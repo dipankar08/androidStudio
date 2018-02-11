@@ -18,20 +18,13 @@ Core Technology
 
 Storage, Networking and Processing
 ------------------------------------
-1. [SQLite]( http://www.vogella.com/tutorials/AndroidSQLite/article.html)
-2. [Xml procesing](http://www.vogella.com/tutorials/AndroidXML/article.html)
-3. [Pref and File store](http://www.vogella.com/tutorials/AndroidFileBasedPersistence/article.html)
-4. [Network Nptification](http://www.vogella.com/tutorials/AndroidNetworking/article.html)
-5. [Web socket](https://www.varvet.com/blog/using-websockets-in-native-ios-and-android-apps/)
-5. [Rest calls using okHTTP]
-6. [ RXJava](http://www.vogella.com/tutorials/RxJava/article.html)
-7. [AsyncTask](http://www.vogella.com/tutorials/AndroidBackgroundProcessing/article.html)
-8. [Json Paring](http://www.vogella.com/tutorials/AndroidJSON/article.html) 
-9. [Task scheduler](http://www.vogella.com/tutorials/AndroidTaskScheduling/article.html)
-10. [data backups](http://www.vogella.com/tutorials/AndroidDataBackup/article.html)
-11. [Event Bs is Otto](http://www.vogella.com/tutorials/JavaLibrary-EventBusOtto/article.html)
-12 [Jni](https://developer.android.com/ndk/samples/sample_hellojni.html), [JNI Spec](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html), [jni with java](https://www.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html), [Jni quick start](https://coderwall.com/p/nakhrq/android-ndk-jni-quickstart) and [this](https://code.tutsplus.com/tutorials/advanced-android-getting-started-with-the-ndk--mobile-2152)
-13. 
+1. Storage: [Pref and File store](http://www.vogella.com/tutorials/AndroidFileBasedPersistence/article.html), [SQLite]( http://www.vogella.com/tutorials/AndroidSQLite/article.html).
+2. Networking: Rest API using OkHttp, [Web socket](https://www.varvet.com/blog/using-websockets-in-native-ios-and-android-apps/), [Raw Networking](http://www.vogella.com/tutorials/AndroidNetworking/article.html), [Xml procesing](http://www.vogella.com/tutorials/AndroidXML/article.html) and [Json Paring](http://www.vogella.com/tutorials/AndroidJSON/article.html)
+3. Backgound processing: [AsyncTask](http://www.vogella.com/tutorials/AndroidBackgroundProcessing/article.html), [Task scheduler](http://www.vogella.com/tutorials/AndroidTaskScheduling/article.html), Thread pools, Java Executors and [Event Bus Otto](http://www.vogella.com/tutorials/JavaLibrary-EventBusOtto/article.html)
+4. Backup and Restore: [data backups](http://www.vogella.com/tutorials/AndroidDataBackup/article.html) 
+5. [ RXJava](http://www.vogella.com/tutorials/RxJava/article.html)
+6. [Jni](https://developer.android.com/ndk/samples/sample_hellojni.html), [JNI Spec](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html), [jni with java](https://www.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html), [Jni quick start](https://coderwall.com/p/nakhrq/android-ndk-jni-quickstart) and [this](https://code.tutsplus.com/tutorials/advanced-android-getting-started-with-the-ndk--mobile-2152)
+
 
 
 UI Design - User interections
