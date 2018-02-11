@@ -38,6 +38,7 @@ UI Design - User interections
 ------------------------
 0. [Mesumenet](http://www.vogella.com/tutorials/AndroidResourceSelection/article.html)
 1. [Layouts](http://www.learn-android-easily.com/search/label/Layouts)
+2. Understnding the basic layout like [Linier layout](http://abhiandroid.com/ui/linear-layout) [Relative Layout](https://www.youtube.com/watch?v=gkh-5pmYEa0) and [RL](http://abhiandroid.com/ui/relative-layout), [Frame Layout](http://abhiandroid.com/ui/framelayout), [table Layout](http://abhiandroid.com/ui/tablelayout), [Absolute layout](http://abhiandroid.com/ui/absolute-layout), [Coordinate layout](https://www.androidauthority.com/using-coordinatorlayout-android-apps-703720/), [Scroll View](http://stacktips.com/tutorials/android/android-scrollview-example)
 2. [List View](http://www.vogella.com/tutorials/AndroidListView/article.html)
 3.[Recycler view](http://www.vogella.com/tutorials/AndroidRecyclerView/article.html)
 4. [Fragments and it's life cycle](http://www.vogella.com/tutorials/AndroidFragments/article.html)
@@ -52,8 +53,7 @@ UI Design - User interections
 12. [Building Widgets](http://www.vogella.com/tutorials/AndroidWidgets/article.html)
 13. [Animation](http://www.vogella.com/tutorials/AndroidAnimation/article.html)
 14. [Notification](http://www.vogella.com/tutorials/AndroidNotifications/article.html)
-15. Toasts
-16. Dialogs and alerts
+15. Toasts,Dialogs and alerts, snakebar
 17. Androud [Touch and Muti touch](http://www.vogella.com/tutorials/AndroidTouch/article.html) and Gestures(http://www.vogella.com/tutorials/AndroidGestures/article.html)
 18. android [touch framework](https://www.youtube.com/watch?v=EZAoJU-nUyI)
 19 [Guesture detector](http://www.learn-android-easily.com/2013/06/android-gesturedetector-example.html)
