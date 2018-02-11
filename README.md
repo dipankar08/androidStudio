@@ -30,13 +30,14 @@ Storage, Networking and Processing
 9. [Task scheduler](http://www.vogella.com/tutorials/AndroidTaskScheduling/article.html)
 10. [data backups](http://www.vogella.com/tutorials/AndroidDataBackup/article.html)
 11. [Event Bs is Otto](http://www.vogella.com/tutorials/JavaLibrary-EventBusOtto/article.html)
-12
+12 [Jni](https://developer.android.com/ndk/samples/sample_hellojni.html), [JNI Spec](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html), [jni with java](https://www.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html), [Jni quick start](https://coderwall.com/p/nakhrq/android-ndk-jni-quickstart) and [this](https://code.tutsplus.com/tutorials/advanced-android-getting-started-with-the-ndk--mobile-2152)
+13. Advance JNI
 
 
-UI Design and Guestions
+UI Design - User interections
 ------------------------
 0. [Mesumenet](http://www.vogella.com/tutorials/AndroidResourceSelection/article.html)
-1. Layouts 
+1. [Layouts](http://www.learn-android-easily.com/search/label/Layouts)
 2. [List View](http://www.vogella.com/tutorials/AndroidListView/article.html)
 3.[Recycler view](http://www.vogella.com/tutorials/AndroidRecyclerView/article.html)
 4. [Fragments and it's life cycle](http://www.vogella.com/tutorials/AndroidFragments/article.html)
@@ -54,7 +55,8 @@ UI Design and Guestions
 15. Toasts
 16. Dialogs and alerts
 17. Androud [Touch and Muti touch](http://www.vogella.com/tutorials/AndroidTouch/article.html) and Gestures(http://www.vogella.com/tutorials/AndroidGestures/article.html)
-18.
+18. android [touch framework](https://www.youtube.com/watch?v=EZAoJU-nUyI)
+19 [Guesture detector](http://www.learn-android-easily.com/2013/06/android-gesturedetector-example.html)
 
 
 
