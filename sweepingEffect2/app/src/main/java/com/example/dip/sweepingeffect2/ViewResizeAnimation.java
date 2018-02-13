@@ -4,43 +4,31 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
-public class ResizeWidthAnimation extends Animation {
+public class ViewResizeAnimation extends Animation {
     public enum Dimention{
         WIDTH,
         HEIGHT
     };
-    private Dimention mDimention;
-    private int mStartWidth;
-    private int mWidth;
-    private int mOffset;
 
     private View mView;
+    private Dimention mDimention;
+    private int mStart;
+    private int mEnd;
 
-    public ResizeWidthAnimation(View view) {
+    public ViewResizeAnimation(View view, Dimention dimention, int start, int end) {
         mView = view;
-
-    }
-
-    public void setOffset(int offset){
-        mStartWidth = mView.getMeasuredWidth();
-        mWidth = mStartWidth + offset;
-
-        mOffset = offset;
-    }
-
-    public void setDimention(Dimention dimention){
         mDimention = dimention;
+        mStart = start;
+        mEnd = end;
     }
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
-        int newWidth = mStartWidth + (int) ((mWidth - mStartWidth) * interpolatedTime);
-
-        //int newWidth =  (int) ((mOffset) * interpolatedTime);
+        int newDim = mStart + (int) ((mEnd - mStart) * interpolatedTime);
         if(mDimention == Dimention.HEIGHT){
-            mView.getLayoutParams().height = newWidth;
+            mView.getLayoutParams().height = newDim;
         } else{
-            mView.getLayoutParams().width = newWidth;
+            mView.getLayoutParams().width = newDim;
         }
         mView.requestLayout();
     }

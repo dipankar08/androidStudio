@@ -239,14 +239,22 @@ public class MainActivity extends AppCompatActivity {
     void hideCameraControlPanelAnimation(){
         float x = 0;
         float y = 0;
+        ViewResizeAnimation.Dimention dimention;
+        int startSize, endSize;
         switch(mOrientation){
             case PORTRAIT:
                 x = 0;
                 y = PANEL_WIDTH;
+                dimention = ViewResizeAnimation.Dimention.HEIGHT;
+                startSize = body.getMeasuredHeight();
+                endSize = parent.getMeasuredHeight();
                 break;
             case LANDSCAPE:
                 x =  PANEL_WIDTH;
                 y = 0;
+                dimention = ViewResizeAnimation.Dimention.WIDTH;
+                startSize = body.getMeasuredWidth();
+                endSize = parent.getMeasuredWidth();
                 break;
             default:return;
         }
@@ -273,32 +281,75 @@ public class MainActivity extends AppCompatActivity {
                     public void onAnimationRepeat(Animator animation) {
 
                     }
-
                 });
+
+        ViewResizeAnimation viewResizeAnimation = new ViewResizeAnimation(body, dimention,startSize,endSize);
+        viewResizeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        viewResizeAnimation.setDuration(100);
+        body.startAnimation(viewResizeAnimation);
     }
 
     void showCameraControlPanelAnimation(){
-        mPanelRelativeLayout
-            .animate()
-            .translationY(0)
-            .translationX(0)
-            .setInterpolator(new AccelerateDecelerateInterpolator())
-            .setDuration(100)
-            .setListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    mPanelRelativeLayout.setVisibility(VISIBLE);
-                }
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                }
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                }
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                }
-            });
+        ViewResizeAnimation.Dimention dimention;
+        int startSize, endSize;
+        switch(mOrientation){
+            case PORTRAIT:
+                mPanelRelativeLayout
+                        .animate()
+                        .translationY(0)
+                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                        .setDuration(100)
+                        .setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                mPanelRelativeLayout.setVisibility(VISIBLE);
+                            }
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                            }
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+                            }
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+                            }
+                        });
+                dimention = ViewResizeAnimation.Dimention.HEIGHT;
+                startSize = body.getMeasuredHeight();
+                endSize = parent.getMeasuredHeight()-PANEL_WIDTH;
+                break;
+            case LANDSCAPE:
+                mPanelRelativeLayout
+                        .animate()
+                        .translationX(0)
+                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                        .setDuration(100)
+                        .setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                mPanelRelativeLayout.setVisibility(VISIBLE);
+                            }
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                            }
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+                            }
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+                            }
+                        });
+                dimention = ViewResizeAnimation.Dimention.WIDTH;
+                startSize = body.getMeasuredWidth();
+                endSize = parent.getMeasuredWidth()- PANEL_WIDTH;
+                break;
+            default:return;
+        }
+
+        ViewResizeAnimation viewResizeAnimation = new ViewResizeAnimation(body, dimention,startSize,endSize);
+        viewResizeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        viewResizeAnimation.setDuration(100);
+        body.startAnimation(viewResizeAnimation);
     }
 
 
@@ -321,6 +372,12 @@ public class MainActivity extends AppCompatActivity {
                                 .y(curY)
                                 .setDuration(0)
                                 .start();
+                        float diffY = curY - orgY;
+                        ViewResizeAnimation viewResizeAnimation = new ViewResizeAnimation(body,
+                            ViewResizeAnimation.Dimention.HEIGHT, body.getMeasuredHeight(), (int) (parent.getMeasuredHeight() + diffY - PANEL_WIDTH));
+                        viewResizeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                        viewResizeAnimation.setDuration(0);
+                        body.startAnimation(viewResizeAnimation);
                     }
                 } else{
                     if(curX > orgX){
@@ -328,6 +385,12 @@ public class MainActivity extends AppCompatActivity {
                                 .x(curX)
                                 .setDuration(0)
                                 .start();
+                        float diffX = curX - orgX;
+                        ViewResizeAnimation viewResizeAnimation = new ViewResizeAnimation(body,
+                                ViewResizeAnimation.Dimention.WIDTH, body.getMeasuredWidth(), (int) (parent.getMeasuredWidth() + diffX - PANEL_WIDTH));
+                        viewResizeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                        viewResizeAnimation.setDuration(0);
+                        body.startAnimation(viewResizeAnimation);
                     }
                 }
                 break;
