@@ -1,39 +1,41 @@
 package in.peerreview.fmradioindia.activities.radio;
 
+import in.peerreview.fmradioindia.activities.radio.model.RadioNode;
 import java.util.List;
 
-import in.peerreview.fmradioindia.activities.radio.model.RadioNode;
-
-/**
- * Created by dip on 2/14/18.
- */
-
+/** Created by dip on 2/14/18. */
 public interface IRadioContract {
 
-    public interface View {
+  public interface View {
 
-        void updateList(List<RadioNode> mNodes);
+    void updateList(List<RadioNode> mNodes);
 
-        void renderTryPlayUI(String msg);
-        void renderPauseUI(String msg);
-        void renderPlayUI(String msg);
-    }
+    void renderTryPlayUI(String msg);
 
-    public interface Presenter{
-        //filters
-        void filterByText(String text);
-        void filterByTag(String text);
-        void clearFilter();
+    void renderPauseUI(String msg);
 
-        //plays
-        void playCurrent();
-        void playPrevious();
-        void playNext();
-        void makeCurrentFev();
+    void renderPlayUI(String msg);
+  }
 
-        void play(int pos);
+  public interface Presenter {
+    // filters
+    void filterByText(String text);
 
-        void loadData();
-    }
+    void filterByTag(String text);
 
+    void clearFilter();
+
+    // plays
+    void playCurrent();
+
+    void playPrevious();
+
+    void playNext();
+
+    void makeCurrentFev();
+
+    void play(int pos);
+
+    void loadData();
+  }
 }
