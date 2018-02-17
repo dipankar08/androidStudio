@@ -10,22 +10,30 @@ import in.peerreview.fmradioindia.BuildConfig;
 public class AndroidUtils {
 
   // public APIS
-  public AndroidUtils(Context cx) {
+  public static void Init(Context cx) {
     mContext = cx;
   }
-
-  public void isDebug() {
-    isDebugInternal();
+  public static AndroidUtils Get() {
+    if (sAndroidUtils == null) {
+      sAndroidUtils = new AndroidUtils();
+    }
+    return sAndroidUtils;
   }
 
+
+  public static boolean  isDebug() {
+    return isDebugInternal();
+  }
   public void rateApp() {
     rateAppInternal();
   }
 
-  // Private
-  private Context mContext;
 
-  private boolean isDebugInternal() {
+  // Private
+  private static Context mContext;
+  private static AndroidUtils sAndroidUtils;
+
+  private static boolean isDebugInternal() {
     if (BuildConfig.DEBUG) {
       return true;
     } else {

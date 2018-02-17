@@ -18,43 +18,30 @@ import java.util.TimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/** Created by dip on 2/15/18. */
 public class TelemetryUtils {
 
   // public APIS
-  public static void init(Context cx, String url, boolean isForce) {
+
+  public void init(Context cx, String url){
+    init(cx,url,false);
+  }
+  // pass isForce as true if you want to log the telemetry in debug build too.
+  public void init(Context cx, String url, boolean isForce) {
     mContext = cx;
-    TelemetryUtils t = Get();
-    t.mUrl = url;
-    t.mDebug = isForce || AndroidUtils.isDebug();
-    t.m_Httpclient = new OkHttpClient();
-    t.sendEventLaunch();
-  }
-
-  public static TelemetryUtils Get() {
-    if (mTelemetry == null) {
-      mTelemetry = new TelemetryUtils();
+    mUrl = url;
+    mDebug = AndroidUtils.Get().isDebug();
+    if(isForce){
+      mDebug = false;
     }
-    return mTelemetry;
+    sendEventLaunch();
   }
 
-  // private apis
-
-  private OkHttpClient m_Httpclient;
-  private boolean mDebug = false;
-  private String mUrl;
-
-  private static TelemetryUtils mTelemetry;
-  private static final String TAG = "Telemetry";
-  private static Context mContext;
-
-  public static void sendTelemetry(String tag, Map<String, String> map) {
-    TelemetryUtils t = Get();
-    if (t.m_Httpclient == null || t.mUrl == null) {
+  public void sendTelemetry(String tag, Map<String, String> map) {
+    if (TelemetryUtilsLoader.mHttpclient == null || mUrl == null) {
       Log.d(TAG, "You must need to call setup() first.");
       return;
     }
-    if (t.mDebug == true) {
+    if (mDebug == true) {
       Log.d(TAG, "Ignore Sending telemetry data as debug build ");
       return;
     }
@@ -63,13 +50,14 @@ public class TelemetryUtils {
       for (Map.Entry<String, String> entry : map.entrySet()) {
         data.put(entry.getKey(), entry.getValue());
       }
-      t.sendTelemtry(tag, data);
+      sendTelemtry(tag, data);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  ///////////////////////////  Private API's ///////////////////////////////////////
+
+  // private apis
   private void sendTelemtry(String tag, JSONObject json) {
     if (mDebug == true) {
       Log.d("DIPANKAR", "Skipping telemetry as debug build");
@@ -87,18 +75,17 @@ public class TelemetryUtils {
       MediaType JSON = MediaType.parse("application/json; charset=utf-8");
       RequestBody body = RequestBody.create(JSON, json.toString());
       Request request = new Request.Builder().url(mUrl).post(body).build();
-      m_Httpclient
+      TelemetryUtilsLoader.mHttpclient
           .newCall(request)
           .enqueue(
               new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
-                  Log.d("Dipankar", "Telemtery: Failed " + e.toString());
+                  Log.d(TAG, "TelemetryUtils: onFailure " + e.toString());
                 }
-
                 @Override
                 public void onResponse(Response response) throws IOException {
-                  Log.d("Dipankar", "Telemtery: Success " + response.toString());
+                  Log.d(TAG, "TelemetryUtils: onResponse " + response.toString());
                 }
               });
     } catch (JSONException e) {
@@ -119,7 +106,6 @@ public class TelemetryUtils {
   }
 
   private static String s_session = getSaltString();
-
   private void sendEventLaunch() {
     if (mDebug == true) {
       Log.d(TAG, "Ignore Sending telemetry data as debug build ");
@@ -152,4 +138,25 @@ public class TelemetryUtils {
       e.printStackTrace();
     }
   }
+
+  //private
+
+  private Context mContext;
+  private  String mUrl;
+  private  boolean mDebug;
+
+  //singleton
+  private static class TelemetryUtilsLoader {
+    private static final TelemetryUtils INSTANCE = new TelemetryUtils();
+    private static final OkHttpClient mHttpclient = new OkHttpClient();
+  }
+  private TelemetryUtils() {
+    if (TelemetryUtilsLoader.INSTANCE != null) {
+      throw new IllegalStateException("Already instantiated");
+    }
+  }
+  public static TelemetryUtils getInstance() {
+    return TelemetryUtilsLoader.INSTANCE;
+  }
+  private final  String TAG ="DIPANKAR";
 }

@@ -30,8 +30,7 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
   public void loadData() {
     final long startTime = System.currentTimeMillis();
     final List<RadioNode> nodes = new ArrayList<>();
-    INetwork network = new Network(((Activity) mView).getBaseContext());
-    network.retrive(
+    Network.getInstance().retrive(
         url,
         Network.CacheControl.GET_LIVE_ELSE_CACHE,
         new Network.INetworkCallback() {

@@ -5,6 +5,7 @@ import in.peerreview.fmradioindia.activities.radio.model.RadioNode;
 import in.peerreview.fmradioindia.activities.welcome.presenter.WelcomePresenter;
 import in.peerreview.fmradioindia.common.utils.Player;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,6 +38,26 @@ public class RadioPresenter implements IRadioContract.Presenter {
               }
 
               @Override
+              public void onResume(String msg) {
+                mView.renderPauseUI(msg);
+              }
+
+              @Override
+              public void onPause(String msg) {
+                mView.renderPlayUI(msg);
+              }
+
+              @Override
+              public void onMusicInfo(HashMap<String, Object> info) {
+
+              }
+
+              @Override
+              public void onSeekBarPossionUpdate(int total, int cur) {
+
+              }
+
+              @Override
               public void onError(String msg) {
                 mView.renderPlayUI(msg);
               }
@@ -61,11 +82,13 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
   @Override
   public void playCurrent() {
-
     if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
       RadioNode cur = mNodes.get(mCurNodeIdx);
-      mPlayer.play(cur.getName(), cur.getUrl());
-    } else {
+      if(mPlayer.isPlaying()){
+        mPlayer.pause();
+      } else{
+        mPlayer.play(cur.getName(), cur.getUrl());
+      }
 
     }
   }

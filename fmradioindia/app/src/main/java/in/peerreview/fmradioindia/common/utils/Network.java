@@ -3,8 +3,10 @@ package in.peerreview.fmradioindia.common.utils;
 import android.content.Context;
 import android.util.Log;
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,15 +14,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Network implements INetwork {
 
-  // interface
+  // public interfaces
   public interface INetworkCallback {
     void onSuccess(JSONObject jsonObject);
-
     void onError(String msg);
   }
 
@@ -32,9 +35,8 @@ public class Network implements INetwork {
   }
 
   // public function
-  public Network(Context cx) {
+  public void init(Context cx) {
     mContext = cx;
-    init();
   }
 
   @Override
@@ -44,14 +46,51 @@ public class Network implements INetwork {
   }
 
   @Override
-  public void send(final String url, final INetworkCallback networkCallback) {}
+  public void send(final String url, final Map<String, String> data, final INetworkCallback networkCallback) {
+    sendInternal(url,data, networkCallback);
+  }
 
-  // private
 
-  private void init() {
-    if (m_Httpclient == null) {
-      m_Httpclient = new OkHttpClient();
+  private void sendInternal(final String url, Map<String, String> data, final INetworkCallback networkCallback) {
+    JSONObject json = new JSONObject();
+    try {
+      for (Map.Entry<String, String> entry : data.entrySet()) {
+        json.put(entry.getKey(), entry.getValue());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return;
     }
+
+    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    RequestBody body = RequestBody.create(JSON, json.toString());
+    Request request = new Request.Builder()
+            .url(url)
+            .post(body)
+            .build();
+    NetworkLoader.mHttpclient.newCall(request)
+            .enqueue(new Callback() {
+              @Override
+              public void onFailure(Request request, IOException e) {
+                Log.d(TAG, "SimpleSend: Failed " + e.toString());
+                if (networkCallback != null) {
+                  networkCallback.onError(e.toString());
+                }
+              }
+
+              @Override
+              public void onResponse(Response response) throws IOException {
+                try {
+                  String jsonData = response.body().string();
+                  JSONObject Jobject = new JSONObject(jsonData);
+                  networkCallback.onSuccess(Jobject);
+                } catch (Exception e) {
+                  e.printStackTrace();
+                  networkCallback.onError(
+                          "Internal error happened while parsing the json object");
+                }
+              }
+            });
   }
 
   private void retriveInternal(
@@ -70,7 +109,7 @@ public class Network implements INetwork {
         return;
       case GET_LIVE_ONLY:
         Log.d(TAG, "Trying fetch from network....");
-        m_Httpclient
+        NetworkLoader.mHttpclient
             .newCall(request)
             .enqueue(
                 new Callback() {
@@ -104,7 +143,7 @@ public class Network implements INetwork {
         return;
       case GET_LIVE_ELSE_CACHE:
         Log.d(TAG, "Trying fetch from network....");
-        m_Httpclient
+        NetworkLoader.mHttpclient
             .newCall(request)
             .enqueue(
                 new Callback() {
@@ -142,7 +181,7 @@ public class Network implements INetwork {
       Log.d(TAG, "Write successfully to: " + filename);
     } catch (IOException e) {
       e.printStackTrace();
-      Log.d(TAG, "Write error");
+      Log.d(TAG, "storeInCache Write error");
     }
   }
 
@@ -177,8 +216,21 @@ public class Network implements INetwork {
     return null;
   }
 
-  private static final String TAG = "Network";
-  private static OkHttpClient m_Httpclient;
+  private static final String TAG = "DIPANKAR::"+Network.class.getSimpleName();
   private boolean mDebug = false;
   private Context mContext;
+
+  //singleton
+  private static class NetworkLoader {
+    private static final Network INSTANCE = new Network();
+    private static final OkHttpClient mHttpclient = new OkHttpClient();
+  }
+  private Network() {
+    if (NetworkLoader.INSTANCE != null) {
+      throw new IllegalStateException("Already instantiated");
+    }
+  }
+  public static Network getInstance() {
+    return NetworkLoader.INSTANCE;
+  }
 }
