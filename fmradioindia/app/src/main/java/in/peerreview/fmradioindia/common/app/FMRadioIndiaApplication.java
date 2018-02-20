@@ -43,7 +43,7 @@ public class FMRadioIndiaApplication extends Application {
         TelemetryUtils.getInstance().init(getApplicationContext(),TELEMETRY_ENDPOINT);
         Network.getInstance().init(getApplicationContext());
 
-        test();
+        //test();
         mIsInit = true;
     }
 

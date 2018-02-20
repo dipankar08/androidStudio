@@ -15,16 +15,16 @@ public class Player implements IPlayer {
   // interface
 
   public interface IPlayerCallback {
-    void onTryPlaying(String msg);
+    void onTryPlaying(String id);
 
-    void onSuccess(String msg);
-    void onResume(String msg);
-    void onPause(String msg);
+    void onSuccess(String id);
+    void onResume(String id);
+    void onPause(String id);
     void onMusicInfo(HashMap<String, Object> info);
     void onSeekBarPossionUpdate(int total, int cur);
-    void onError(String msg);
+    void onError(String id);
 
-    void onComplete(String msg);
+    void onComplete(String id);
   }
 
   // public functions
@@ -53,7 +53,7 @@ public class Player implements IPlayer {
     Log.d(TAG,"Pause Called");
     if (mPlayer != null && mPlayer.isPlaying()) {
       mPlayer.pause();
-      mPlayerCallback.onPause("");
+      mPlayerCallback.onPause(mTitle);
     }
   }
 
@@ -62,7 +62,7 @@ public class Player implements IPlayer {
     Log.d(TAG,"Resume Called");
     if (mPlayer != null && mPlayer.isPlaying() == false) {
       mPlayer.start();
-      mPlayerCallback.onResume("");
+      mPlayerCallback.onResume(mTitle);
     }
   }
 
@@ -74,9 +74,20 @@ public class Player implements IPlayer {
     }
   }
 
-  public void seekTo(int msec) {
+  @Override
+  public void mute() {
+
+  }
+
+  @Override
+  public void unmute() {
+
+  }
+
+  public void seekTo(int progress) {
     Log.d(TAG,"Pause Called");
     if (s_playing) {
+      int msec = (int)(mTotalDuration * (progress / 100.0));
       mPlayer.seekTo(msec);
     }
   }
@@ -110,7 +121,7 @@ public class Player implements IPlayer {
     }
     mUrl = url;
     mTitle = title;
-    onTryPlaying("Trying to play " + title);
+    onTryPlaying(title);
 
     stop();
     init();
@@ -133,7 +144,8 @@ public class Player implements IPlayer {
           @Override
           public void onPrepared(MediaPlayer player) {
             mPlayer.start();
-            onSuccess("Now Playing " + title);
+            mTotalDuration = mPlayer.getDuration();
+            onSuccess(title);
             onMusicInfo( new HashMap<String, Object>() {{
               put("CurrentPosition",mPlayer.getCurrentPosition());
               put("Duration", mPlayer.getDuration());
@@ -147,7 +159,7 @@ public class Player implements IPlayer {
         new MediaPlayer.OnCompletionListener() {
           @Override
           public void onCompletion(MediaPlayer mediaPlayer) {
-            onComplete("");
+            onComplete(title);
           }
         });
     mPlayer.setOnErrorListener(
@@ -167,6 +179,7 @@ public class Player implements IPlayer {
   private static final String TAG = "DIPANKAR :: Player ";
   private String mUrl;
   private String mTitle;
+  private int mTotalDuration;
   private Handler mHandler = new Handler();;
 
   private void onError1(final String msg){

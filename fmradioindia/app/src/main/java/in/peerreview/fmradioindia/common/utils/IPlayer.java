@@ -13,4 +13,8 @@ public interface IPlayer {
   void resume();
 
   void restart();
+
+  void mute();
+
+  void unmute();
 }
