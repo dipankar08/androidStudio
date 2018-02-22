@@ -9,7 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.radio.view.RadioActivity;
 import in.peerreview.fmradioindia.activities.welcome.IWelcomeContract;

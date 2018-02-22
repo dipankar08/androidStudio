@@ -8,7 +8,8 @@ public interface INetwork {
       Network.CacheControl cacheControl,
       final Network.INetworkCallback networkCallback);
 
-  void send(final String url,
-            final Map<String, String> data,
-            final Network.INetworkCallback networkCallback);
+  void send(
+      final String url,
+      final Map<String, String> data,
+      final Network.INetworkCallback networkCallback);
 }

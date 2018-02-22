@@ -17,7 +17,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -64,7 +63,7 @@ public class RemoteButtonView extends View {
   void init() {
     rect = new RectF();
     mRadius = 130;
-    strockSize = mRadius*2/3;
+    strockSize = mRadius * 2 / 3;
     mRadiusInner = mRadius - strockSize;
     paint1 = new Paint();
     paint2 = new Paint();
@@ -137,10 +136,10 @@ public class RemoteButtonView extends View {
   }
 
   void updateTouchDirection(MotionEvent event) {
-    //Log.d("DIpankar",event.getX()+"::"+event.getY());
+    // Log.d("DIpankar",event.getX()+"::"+event.getY());
     Direction direction = NONE;
     double distance = Math.hypot(event.getX() - centerX, event.getY() - centerY);
-    if (distance <=(mRadius+strockSize) && distance > mRadiusInner) {
+    if (distance <= (mRadius + strockSize) && distance > mRadiusInner) {
       double angle =
           atan2(event.getY() - getHeight() / 2, event.getX() - getWidth() / 2) * 180 / PI;
       angle = (angle + 720) % 360;

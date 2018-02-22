@@ -13,6 +13,7 @@ public class AndroidUtils {
   public static void Init(Context cx) {
     mContext = cx;
   }
+
   public static AndroidUtils Get() {
     if (sAndroidUtils == null) {
       sAndroidUtils = new AndroidUtils();
@@ -20,14 +21,13 @@ public class AndroidUtils {
     return sAndroidUtils;
   }
 
-
-  public static boolean  isDebug() {
+  public static boolean isDebug() {
     return isDebugInternal();
   }
+
   public void rateApp() {
     rateAppInternal();
   }
-
 
   // Private
   private static Context mContext;

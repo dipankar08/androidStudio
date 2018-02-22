@@ -48,14 +48,10 @@ public class RadioPresenter implements IRadioContract.Presenter {
               }
 
               @Override
-              public void onMusicInfo(HashMap<String, Object> info) {
-
-              }
+              public void onMusicInfo(HashMap<String, Object> info) {}
 
               @Override
-              public void onSeekBarPossionUpdate(int total, int cur) {
-
-              }
+              public void onSeekBarPossionUpdate(int total, int cur) {}
 
               @Override
               public void onError(String msg) {
@@ -84,12 +80,11 @@ public class RadioPresenter implements IRadioContract.Presenter {
   public void playCurrent() {
     if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
       RadioNode cur = mNodes.get(mCurNodeIdx);
-      if(mPlayer.isPlaying()){
+      if (mPlayer.isPlaying()) {
         mPlayer.pause();
-      } else{
+      } else {
         mPlayer.play(cur.getName(), cur.getUrl());
       }
-
     }
   }
 

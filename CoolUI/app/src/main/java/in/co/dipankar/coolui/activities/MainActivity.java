@@ -1,7 +1,5 @@
 package in.co.dipankar.coolui.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -10,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
 import in.co.dipankar.coolui.R;
 import in.co.dipankar.coolui.views.RemoteButtonView;
 import in.co.dipankar.coolui.views.ZoomButtomView;
@@ -49,32 +46,33 @@ public class MainActivity extends AppCompatActivity {
           }
         });
 
-      imageButton.setOnClickListener(new View.OnClickListener() {
+    imageButton.setOnClickListener(
+        new View.OnClickListener() {
           @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
           @Override
           public void onClick(View v) {
-              if(expandView.getVisibility() == View.GONE){
+            if (expandView.getVisibility() == View.GONE) {
 
-                  expandView.setVisibility(View.VISIBLE);
-                  imageButton.setBackground(getResources().getDrawable(R.drawable.hide));
-              } else{
-                  expandView.setVisibility(View.GONE);
-                  /*
-                  expandView.animate()
-                          .translationY(expandView.getHeight())
-                          .alpha(0.0f)
-                          .setDuration(300)
-                          .setListener(new AnimatorListenerAdapter() {
-                              @Override
-                              public void onAnimationEnd(Animator animation) {
-                                  super.onAnimationEnd(animation);
-                                  expandView.setVisibility(View.GONE);
-                              }
-                          }); */
-                  imageButton.setBackground(getResources().getDrawable(R.drawable.show));
-              }
+              expandView.setVisibility(View.VISIBLE);
+              imageButton.setBackground(getResources().getDrawable(R.drawable.hide));
+            } else {
+              expandView.setVisibility(View.GONE);
+              /*
+              expandView.animate()
+                      .translationY(expandView.getHeight())
+                      .alpha(0.0f)
+                      .setDuration(300)
+                      .setListener(new AnimatorListenerAdapter() {
+                          @Override
+                          public void onAnimationEnd(Animator animation) {
+                              super.onAnimationEnd(animation);
+                              expandView.setVisibility(View.GONE);
+                          }
+                      }); */
+              imageButton.setBackground(getResources().getDrawable(R.drawable.show));
+            }
           }
-      });
+        });
 
     zoomButtomView.setZoomButtomViewListener(
         new ZoomButtomView.ZoomButtomViewListener() {

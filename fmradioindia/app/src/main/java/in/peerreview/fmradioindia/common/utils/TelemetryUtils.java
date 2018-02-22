@@ -22,15 +22,15 @@ public class TelemetryUtils {
 
   // public APIS
 
-  public void init(Context cx, String url){
-    init(cx,url,false);
+  public void init(Context cx, String url) {
+    init(cx, url, false);
   }
   // pass isForce as true if you want to log the telemetry in debug build too.
   public void init(Context cx, String url, boolean isForce) {
     mContext = cx;
     mUrl = url;
     mDebug = AndroidUtils.Get().isDebug();
-    if(isForce){
+    if (isForce) {
       mDebug = false;
     }
     sendEventLaunch();
@@ -55,7 +55,6 @@ public class TelemetryUtils {
       e.printStackTrace();
     }
   }
-
 
   // private apis
   private void sendTelemtry(String tag, JSONObject json) {
@@ -83,6 +82,7 @@ public class TelemetryUtils {
                 public void onFailure(Request request, IOException e) {
                   Log.d(TAG, "TelemetryUtils: onFailure " + e.toString());
                 }
+
                 @Override
                 public void onResponse(Response response) throws IOException {
                   Log.d(TAG, "TelemetryUtils: onResponse " + response.toString());
@@ -106,6 +106,7 @@ public class TelemetryUtils {
   }
 
   private static String s_session = getSaltString();
+
   private void sendEventLaunch() {
     if (mDebug == true) {
       Log.d(TAG, "Ignore Sending telemetry data as debug build ");
@@ -139,24 +140,27 @@ public class TelemetryUtils {
     }
   }
 
-  //private
+  // private
 
   private Context mContext;
-  private  String mUrl;
-  private  boolean mDebug;
+  private String mUrl;
+  private boolean mDebug;
 
-  //singleton
+  // singleton
   private static class TelemetryUtilsLoader {
     private static final TelemetryUtils INSTANCE = new TelemetryUtils();
     private static final OkHttpClient mHttpclient = new OkHttpClient();
   }
+
   private TelemetryUtils() {
     if (TelemetryUtilsLoader.INSTANCE != null) {
       throw new IllegalStateException("Already instantiated");
     }
   }
+
   public static TelemetryUtils getInstance() {
     return TelemetryUtilsLoader.INSTANCE;
   }
-  private final  String TAG ="DIPANKAR";
+
+  private final String TAG = "DIPANKAR";
 }

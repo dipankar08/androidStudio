@@ -15,7 +15,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +23,7 @@ public class Network implements INetwork {
   // public interfaces
   public interface INetworkCallback {
     void onSuccess(JSONObject jsonObject);
+
     void onError(String msg);
   }
 
@@ -46,12 +46,13 @@ public class Network implements INetwork {
   }
 
   @Override
-  public void send(final String url, final Map<String, String> data, final INetworkCallback networkCallback) {
-    sendInternal(url,data, networkCallback);
+  public void send(
+      final String url, final Map<String, String> data, final INetworkCallback networkCallback) {
+    sendInternal(url, data, networkCallback);
   }
 
-
-  private void sendInternal(final String url, Map<String, String> data, final INetworkCallback networkCallback) {
+  private void sendInternal(
+      final String url, Map<String, String> data, final INetworkCallback networkCallback) {
     JSONObject json = new JSONObject();
     try {
       for (Map.Entry<String, String> entry : data.entrySet()) {
@@ -64,12 +65,11 @@ public class Network implements INetwork {
 
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     RequestBody body = RequestBody.create(JSON, json.toString());
-    Request request = new Request.Builder()
-            .url(url)
-            .post(body)
-            .build();
-    NetworkLoader.mHttpclient.newCall(request)
-            .enqueue(new Callback() {
+    Request request = new Request.Builder().url(url).post(body).build();
+    NetworkLoader.mHttpclient
+        .newCall(request)
+        .enqueue(
+            new Callback() {
               @Override
               public void onFailure(Request request, IOException e) {
                 Log.d(TAG, "SimpleSend: Failed " + e.toString());
@@ -86,8 +86,7 @@ public class Network implements INetwork {
                   networkCallback.onSuccess(Jobject);
                 } catch (Exception e) {
                   e.printStackTrace();
-                  networkCallback.onError(
-                          "Internal error happened while parsing the json object");
+                  networkCallback.onError("Internal error happened while parsing the json object");
                 }
               }
             });
@@ -216,20 +215,22 @@ public class Network implements INetwork {
     return null;
   }
 
-  private static final String TAG = "DIPANKAR::"+Network.class.getSimpleName();
+  private static final String TAG = "DIPANKAR::" + Network.class.getSimpleName();
   private boolean mDebug = false;
   private Context mContext;
 
-  //singleton
+  // singleton
   private static class NetworkLoader {
     private static final Network INSTANCE = new Network();
     private static final OkHttpClient mHttpclient = new OkHttpClient();
   }
+
   private Network() {
     if (NetworkLoader.INSTANCE != null) {
       throw new IllegalStateException("Already instantiated");
     }
   }
+
   public static Network getInstance() {
     return NetworkLoader.INSTANCE;
   }
