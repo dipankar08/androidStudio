@@ -1,10 +1,16 @@
 package in.peerreview.fmradioindia.common.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.widget.ImageView;
+
+import in.peerreview.fmradioindia.common.views.MusicHozListView;
+
 /**
  * Created by dip on 2/19/18.
  */
 
-public class MusicNode {
+public class MusicNode implements  Parcelable {
     public String getId() {
         return id;
     }
@@ -13,8 +19,14 @@ public class MusicNode {
         this.id = id;
     }
 
+
     public String getTitle() {
         return title;
+    }
+
+
+    public String getImageUrl() {
+        return image_url;
     }
 
     public void setTitle(String title) {
@@ -60,4 +72,37 @@ public class MusicNode {
     String subtitle;
     String media_url;
     String image_url;
+
+    //Parsel..
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public  MusicNode(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        subtitle = in.readString();
+        media_url = in.readString();
+        image_url = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(subtitle);
+        dest.writeString(media_url);
+        dest.writeString(image_url);
+    }
+
+    public static final Parcelable.Creator<MusicNode> CREATOR = new Parcelable.Creator<MusicNode>() {
+        public MusicNode createFromParcel(Parcel in) {
+            return new MusicNode(in);
+        }
+
+        public MusicNode[] newArray(int size) {
+            return new MusicNode[size];
+        }
+    };
 }

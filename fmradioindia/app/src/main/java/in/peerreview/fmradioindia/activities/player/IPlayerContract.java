@@ -1,5 +1,7 @@
 package in.peerreview.fmradioindia.activities.player;
 
+import java.util.List;
+
 import in.peerreview.fmradioindia.common.models.MusicNode;
 
 public interface IPlayerContract {
@@ -33,7 +35,7 @@ public interface IPlayerContract {
   }
 
   interface Presenter {
-    void loadAlbum(String name);
+    void loadAlbum(List<MusicNode> name, int start);
     void playNext();
     void playPrevious();
     void play();

@@ -10,6 +10,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import in.peerreview.fmradioindia.R;
@@ -39,7 +41,15 @@ public class PlayerActivity extends AppCompatActivity implements IPlayerContract
         presenter = new PlayerPresenter(this);
         setContentView(R.layout.activity_playlist);
         initViews();
-        presenter.loadAlbum("hindi");
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null)
+        {
+            Bundle bundle = getIntent().getExtras();
+            ArrayList<MusicNode> arraylist = bundle.getParcelableArrayList("mylist");
+            int startIndex = bundle.getInt("start",0);
+            presenter.loadAlbum(arraylist, startIndex);
+            presenter.play();
+        }
     }
 
     private void initViews() {

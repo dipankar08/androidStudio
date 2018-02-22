@@ -82,39 +82,10 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
             }
         });
     }
-
     @Override
-    public void loadAlbum(String name) {
-        String url = Configuration.MUSIC_ENDPOINT+ "?limit=30&album_name="+name;
-        Network.getInstance().retrive(url, Network.CacheControl.GET_CACHE_ELSE_LIVE, new Network.INetworkCallback() {
-            @Override
-            public void onSuccess(JSONObject jsonObject) {
-                try{
-                    List<MusicNode> list = new ArrayList<>();
-                    JSONArray output = jsonObject.getJSONArray("out");
-                    for( int i=0; i< output.length();i++){
-                        JSONObject js = output.getJSONObject(i);
-                        list.add(new MusicNode(js.getString("uid"),
-                                js.getString("title"),
-                                js.getString("subtitle"),
-                                js.getString("media_url"),
-                                js.getString("image_url")));
-                    }
-                    if(list.size() > 0) {
-                        mMusicNodeList = list;
-                        curIndex = 0;
-                    }
-                    mView.hideLoadUI();
-                } catch (Exception e){
-
-                }
-            }
-
-            @Override
-            public void onError(String msg) {
-
-            }
-        });
+    public void loadAlbum(List<MusicNode> name, int start) {
+        mMusicNodeList = name;
+        curIndex = start;
     }
 
     @Override
