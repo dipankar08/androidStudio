@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
    >
     <!-- backgroud -->
 
@@ -62,7 +61,9 @@
         android:text="Jani Dekha Hobe"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/logo"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:maxLines="1"
         android:layout_marginBottom="2dp"
         android:textSize="30dp"
         android:textColor="#e0ffffff"
@@ -71,12 +72,13 @@
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:text="Kishore kumar"
+        android:maxLines="1"
+        android:gravity="center"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/title"
         android:textSize="15dp"
         android:textColor="#c0ffffff"
         android:layout_height="wrap_content" />
-
     <!-- EXtra Controls -->
     <LinearLayout
         android:id="@+id/holder_extra_control"
@@ -85,17 +87,33 @@
        android:layout_centerHorizontal="true"
         android:layout_above="@+id/holder_music_control"
         android:layout_height="wrap_content">
-        <ImageButton
+
+        <in.peerreview.fmradioindia.common.views.DImageView
             android:id="@+id/vol"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/pl_volume"
-            android:layout_width="20dp"
-            android:layout_height="20dp"/>
-        <ImageButton
+            android:padding="3dp"
+            custom:enabled="false"
+            custom:enableBackground="@drawable/pl_volume"
+            custom:disableBackground="@drawable/pl_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <in.peerreview.fmradioindia.common.views.DImageView
             android:id="@+id/restart"
-            android:background="@drawable/pl_refresh"
-            android:layout_width="20dp"
-            android:layout_height="20dp"/>
+            android:padding="3dp"
+            custom:enabled="false"
+            custom:enableBackground="@drawable/pl_refresh"
+            custom:disableBackground="@drawable/pl_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <in.peerreview.fmradioindia.common.views.DImageView
+            android:id="@+id/repeat"
+            android:padding="3dp"
+            custom:enabled="false"
+            custom:enableBackground="@drawable/pl_repeat_en"
+            custom:disableBackground="@drawable/pl_repeat_dis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <!-- Seek bar navigation -->

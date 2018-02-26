@@ -12,6 +12,8 @@ import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.player.IPlayerContract;
 import in.peerreview.fmradioindia.activities.player.presenter.PlayerPresenter;
 import in.peerreview.fmradioindia.common.models.MusicNode;
+import in.peerreview.fmradioindia.common.views.DImageView;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +25,8 @@ public class PlayerActivity extends AppCompatActivity
   ImageView radio;
   private IPlayerContract.Presenter presenter;
 
-  private ImageButton btnPlay, btnNext, btnPrev, btnRefersh, btnVol, btnDownload;
+  private ImageButton btnPlay, btnNext, btnPrev,btnDownload;
+  private DImageView btnRepeat,btnVol,btnRefersh;
   private TextView tvTitle, tvSubtitle, tvTotalDur, tvCurDuration, tvAlbumTitle;
   private ImageView ivCover, ivLogo;
   private SeekBar mSeekBar;
@@ -48,9 +51,10 @@ public class PlayerActivity extends AppCompatActivity
     btnPlay = (ImageButton) findViewById(R.id.play);
     btnNext = (ImageButton) findViewById(R.id.next);
     btnPrev = (ImageButton) findViewById(R.id.prev);
-    btnRefersh = (ImageButton) findViewById(R.id.restart);
-    btnVol = (ImageButton) findViewById(R.id.vol);
+    btnRefersh = (DImageView) findViewById(R.id.restart);
+    btnVol = (DImageView) findViewById(R.id.vol);
     btnDownload = (ImageButton) findViewById(R.id.download);
+    btnRepeat = (DImageView) findViewById(R.id.repeat);
 
     btnPlay.setOnClickListener(this);
     btnNext.setOnClickListener(this);
@@ -58,6 +62,7 @@ public class PlayerActivity extends AppCompatActivity
     btnRefersh.setOnClickListener(this);
     btnVol.setOnClickListener(this);
     btnDownload.setOnClickListener(this);
+    btnRepeat.setOnClickListener(this);
 
     tvTitle = (TextView) findViewById(R.id.title);
     tvSubtitle = (TextView) findViewById(R.id.subtitle);
@@ -111,6 +116,15 @@ public class PlayerActivity extends AppCompatActivity
         break;
       case R.id.download:
         presenter.download();
+        break;
+      case R.id.repeat:
+        if(btnRepeat.isViewEnabled()){
+          btnRepeat.setViewEnabled(false);
+          presenter.setRepeat(false);
+        } else{
+          btnRepeat.setViewEnabled(true);
+          presenter.setRepeat(true);
+        }
         break;
     }
   }

@@ -60,6 +60,10 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
               @Override
               public void onSeekBarPossionUpdate(int total, int cur) {
                 mView.updateSeekBarInfo(total, cur);
+                //tricks to restrat without buffering again.
+                if ((total -cur < 5 ) && mIsRepeat) {
+                  restart();
+                }
               }
 
               @Override
@@ -113,7 +117,7 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
 
   @Override
   public void restart() {
-    mPlayer.seekTo(0);
+      mPlayer.seekTo(0);
   }
 
   @Override
