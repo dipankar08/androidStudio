@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Player implements IPlayer {
+    private boolean mIsPaused = false;
 
-  // interface
+    // interface
 
   public interface IPlayerCallback {
     void onTryPlaying(String id);
@@ -38,6 +39,7 @@ public class Player implements IPlayer {
 
   @Override
   public void stop() {
+      mIsPaused = false;
     if (mPlayer != null) {
       mPlayer.stop();
       mPlayer.reset();
@@ -57,6 +59,7 @@ public class Player implements IPlayer {
     if (mPlayer != null && mPlayer.isPlaying()) {
       mPlayer.pause();
       mPlayerCallback.onPause(mTitle);
+        mIsPaused = true;
     }
   }
 
@@ -66,7 +69,9 @@ public class Player implements IPlayer {
     if (mPlayer != null && mPlayer.isPlaying() == false) {
       mPlayer.start();
       mPlayerCallback.onResume(mTitle);
+      mIsPaused = false;
     }
+
   }
 
   @Override
@@ -75,6 +80,7 @@ public class Player implements IPlayer {
     if (mUrl != null) {
       play(mTitle, mUrl);
     }
+      mIsPaused = false;
   }
 
   @Override
@@ -83,7 +89,12 @@ public class Player implements IPlayer {
   @Override
   public void unmute() {}
 
-  public void seekTo(int progress) {
+    @Override
+    public boolean isPaused() {
+        return mIsPaused;
+    }
+
+    public void seekTo(int progress) {
     Log.d(TAG, "Pause Called");
     if (s_playing) {
       int msec = (int) (mTotalDuration * (progress / 100.0));
@@ -94,6 +105,7 @@ public class Player implements IPlayer {
   @Override
   public void play(final String title, final String url) {
     Log.d(TAG, "Play Called");
+      mIsPaused = false;
     Thread backgroudThread =
         new Thread(
             new Runnable() {

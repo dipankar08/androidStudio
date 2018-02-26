@@ -17,4 +17,6 @@ public interface IPlayer {
   void mute();
 
   void unmute();
+
+  boolean isPaused();
 }

@@ -7,6 +7,7 @@ import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.home.IHomeContract;
 import in.peerreview.fmradioindia.activities.home.presenter.HomePresenter;
 import in.peerreview.fmradioindia.activities.player.view.PlayerActivity;
+import in.peerreview.fmradioindia.common.Constants;
 import in.peerreview.fmradioindia.common.models.MusicNode;
 import in.peerreview.fmradioindia.common.views.MusicHozListView;
 import java.util.ArrayList;
@@ -16,8 +17,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeContract.Vie
 
   private static final String TAG = "MainActivity";
   private IHomeContract.Presenter presenter;
-  private MusicHozListView mMusicHozListView;
-  private MusicHozListView mMusicHozListView2;
+  private List<PinnedSetach> pinnedSetachList;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -29,41 +29,56 @@ public class HomeActivity extends AppCompatActivity implements IHomeContract.Vie
 
   private void initViews() {
     // update versions.
-    mMusicHozListView = (MusicHozListView) findViewById(R.id.belgali);
-    mMusicHozListView2 = (MusicHozListView) findViewById(R.id.hindi);
+      pinnedSetachList = new ArrayList<>();
+      pinnedSetachList.add(
+              new PinnedSetach(Constants.PINNED_SERACH_TITLE_RECENT,
+                      Constants.PINNED_SERACH_KEYWORD_RECENT,
+                      (MusicHozListView) findViewById(R.id.recent)));
+      pinnedSetachList.add(
+              new PinnedSetach(Constants.PINNED_SERACH_TITLE_TREADING,
+                      Constants.PINNED_SERACH_KEYWORD_TREADING,
+                      (MusicHozListView) findViewById(R.id.trading)));
+      pinnedSetachList.add(
+              new PinnedSetach(Constants.PINNED_SERACH_TITLE_BENGALI_MOVIE,
+                      Constants.PINNED_SERACH_KEYWORD_BENGALI_MOVIE,
+                      (MusicHozListView) findViewById(R.id.bengali_movie)));
+      pinnedSetachList.add(
+              new PinnedSetach(Constants.PINNED_SERACH_TITLE_HINDI_MOVIE,
+                      Constants.PINNED_SERACH_KEYWORD_HINDI_MOVIE,
+                      (MusicHozListView) findViewById(R.id.hindi_movie)));
+      pinnedSetachList.add(
+              new PinnedSetach(Constants.PINNED_SERACH_TITLE_RADIO,
+                      Constants.PINNED_SERACH_KEYWORD_RADIO,
+                      (MusicHozListView) findViewById(R.id.radio)));
+      pinnedSetachList.add(
+              new PinnedSetach(Constants.PINNED_SERACH_TITLE_BENGALI_OLD,
+                      Constants.PINNED_SERACH_KEYWORD_BENGALI_OLD,
+                      (MusicHozListView) findViewById(R.id.bengali_old)));
+      pinnedSetachList.add(
+              new PinnedSetach(Constants.PINNED_SERACH_TITLE_BENGALI_BAND,
+                      Constants.PINNED_SERACH_KEYWORD_BENGALI_BAND,
+                      (MusicHozListView) findViewById(R.id.bengali_band)));
 
-    mMusicHozListView.prepareView(
-        "Latest Bengali Music",
-        "Play all",
-        new MusicHozListView.IMusicHozListViewCallback() {
-          @Override
-          public void onButtonClicked() {
-            moveToPlayerActivity("benagli", 0);
-          }
 
-          @Override
-          public void onItemClicked(int pos) {
-            moveToPlayerActivity("benagli", pos);
-          }
-        });
-
-    mMusicHozListView2.prepareView(
-        "Latest Hindi Music",
-        "Play all",
-        new MusicHozListView.IMusicHozListViewCallback() {
-          @Override
-          public void onButtonClicked() {
-            moveToPlayerActivity("hindi", 0);
-          }
-
-          @Override
-          public void onItemClicked(int pos) {
-            moveToPlayerActivity("hindi", pos);
-          }
-        });
-
-    presenter.loadAlbum("bengali");
-    presenter.loadAlbum("hindi");
+      for (final PinnedSetach entry : pinnedSetachList) {
+        MusicHozListView view = entry.getView();
+        String title = entry.getTitle();
+        final String serach_keyword = entry.getSearch_keyword();
+        view.prepareView(
+                 title.toUpperCase()+" SONGS",
+                "Play all",
+                new MusicHozListView.IMusicHozListViewCallback() {
+                    @Override
+                    public void onButtonClicked() {
+                        moveToPlayerActivity(serach_keyword, 0);
+                    }
+                    @Override
+                    public void onItemClicked(int pos) {
+                        moveToPlayerActivity( serach_keyword, pos);
+                    }
+                });
+        presenter.loadAlbum(serach_keyword);
+      }
   }
 
   private void moveToPlayerActivity(String name, int start) {
@@ -78,12 +93,34 @@ public class HomeActivity extends AppCompatActivity implements IHomeContract.Vie
 
   @Override
   public void renderItem(String type, List<MusicNode> list) {
-
-    if (type.equals("bengali")) {
-      mMusicHozListView.updateData(list);
-    }
-    if (type.equals("hindi")) {
-      mMusicHozListView2.updateData(list);
-    }
+      for( PinnedSetach entry : pinnedSetachList){
+          if(entry.getSearch_keyword().equals(type)){
+              entry.getView().updateData(list);
+          }
+      }
   }
+
+  private class PinnedSetach{
+    String title;
+    String search_keyword;
+    MusicHozListView view;
+
+      public PinnedSetach(String title, String search_keyword, MusicHozListView view) {
+          this.title = title;
+          this.search_keyword = search_keyword;
+          this.view = view;
+      }
+
+      public String getTitle() {
+          return title;
+      }
+
+      public String getSearch_keyword() {
+          return search_keyword;
+      }
+
+      public MusicHozListView getView() {
+          return view;
+      }
+  };
 }

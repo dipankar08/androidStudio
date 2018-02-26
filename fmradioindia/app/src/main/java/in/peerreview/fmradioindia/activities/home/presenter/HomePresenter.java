@@ -8,8 +8,11 @@ import in.peerreview.fmradioindia.common.models.MusicNode;
 import in.peerreview.fmradioindia.common.utils.Configuration;
 import in.peerreview.fmradioindia.common.utils.Network;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,11 +31,11 @@ public class HomePresenter implements IHomeContract.Presenter {
 
   @Override
   public void loadAlbum(final String type) {
-    String url = Configuration.MUSIC_ENDPOINT + "?limit=30&album_name=" + type;
+    String url = Configuration.MUSIC_ENDPOINT + "?limit=30&tag=" + type;
     Network.getInstance()
         .retrive(
             url,
-            Network.CacheControl.GET_CACHE_ELSE_LIVE,
+            Network.CacheControl.GET_LIVE_ELSE_CACHE,
             new Network.INetworkCallback() {
               @Override
               public void onSuccess(JSONObject jsonObject) {
@@ -50,6 +53,8 @@ public class HomePresenter implements IHomeContract.Presenter {
                             js.getString("image_url")));
                   }
                   if (list.size() > 0) {
+                      long seed = System.nanoTime();
+                      Collections.shuffle(list, new Random(seed));
                     mMusicMap.put(type, list);
 
                     new Handler(Looper.getMainLooper())

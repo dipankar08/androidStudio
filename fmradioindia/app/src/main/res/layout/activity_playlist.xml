@@ -62,8 +62,8 @@
         android:text="Jani Dekha Hobe"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/logo"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="2dp"
         android:textSize="30dp"
         android:textColor="#e0ffffff"
         android:layout_height="wrap_content" />
@@ -76,30 +76,35 @@
         android:textSize="15dp"
         android:textColor="#c0ffffff"
         android:layout_height="wrap_content" />
-    <ImageButton
-        android:id="@+id/vol"
-        android:background="@drawable/pl_volume"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_below="@+id/title"
-        android:layout_alignParentRight="true"/>
-    <ImageButton
-        android:id="@+id/restart"
-        android:background="@drawable/pl_refresh"
-        android:layout_width="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_height="20dp"
-        android:layout_below="@+id/title"
-        android:layout_alignParentLeft="true"/>
+
+    <!-- EXtra Controls -->
+    <LinearLayout
+        android:id="@+id/holder_extra_control"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+       android:layout_centerHorizontal="true"
+        android:layout_above="@+id/holder_music_control"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/vol"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/pl_volume"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+        <ImageButton
+            android:id="@+id/restart"
+            android:background="@drawable/pl_refresh"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+    </LinearLayout>
 
     <!-- Seek bar navigation -->
     <RelativeLayout
+        android:id="@+id/holder_music_control"
         android:layout_width="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:layout_height="wrap_content">
-
         <SeekBar xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
@@ -121,6 +126,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <!-- Music navigation -->
         <ImageButton
             android:id="@+id/play"

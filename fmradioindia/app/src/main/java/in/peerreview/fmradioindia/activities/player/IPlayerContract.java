@@ -70,5 +70,7 @@ public interface IPlayerContract {
     void setRepeat(boolean isRepeat);
 
     boolean isPlaying();
+
+      void playOrResume();
   }
 }

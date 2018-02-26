@@ -94,7 +94,7 @@ public class PlayerActivity extends AppCompatActivity
         if (presenter.isPlaying()) {
           presenter.pause();
         } else {
-          presenter.play();
+          presenter.playOrResume();
         }
         break;
       case R.id.next:

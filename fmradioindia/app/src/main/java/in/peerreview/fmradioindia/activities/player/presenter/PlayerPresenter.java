@@ -28,7 +28,10 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
         new Player(
             new Player.IPlayerCallback() {
               @Override
-              public void onTryPlaying(String id) {}
+              public void onTryPlaying(String id) {
+                MusicNode m = getMusicNodeForID(id);
+                mView.showPauseUI(m);
+              }
 
               @Override
               public void onSuccess(String id) {
@@ -154,6 +157,15 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
   @Override
   public boolean isPlaying() {
     return mPlayer.isPlaying();
+  }
+
+  @Override
+  public void playOrResume() {
+    if(mPlayer.isPaused()){
+      mPlayer.resume();
+    } else{
+      play();
+    }
   }
 
   private MusicNode getMusicNodeForID(String id) {
