@@ -71,6 +71,6 @@ public interface IPlayerContract {
 
     boolean isPlaying();
 
-      void playOrResume();
+    void playOrResume();
   }
 }

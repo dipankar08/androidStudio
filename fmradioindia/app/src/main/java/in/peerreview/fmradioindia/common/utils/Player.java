@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Player implements IPlayer {
-    private boolean mIsPaused = false;
+  private boolean mIsPaused = false;
 
-    // interface
+  // interface
 
   public interface IPlayerCallback {
     void onTryPlaying(String id);
@@ -39,7 +39,7 @@ public class Player implements IPlayer {
 
   @Override
   public void stop() {
-      mIsPaused = false;
+    mIsPaused = false;
     if (mPlayer != null) {
       mPlayer.stop();
       mPlayer.reset();
@@ -59,7 +59,7 @@ public class Player implements IPlayer {
     if (mPlayer != null && mPlayer.isPlaying()) {
       mPlayer.pause();
       mPlayerCallback.onPause(mTitle);
-        mIsPaused = true;
+      mIsPaused = true;
     }
   }
 
@@ -71,7 +71,6 @@ public class Player implements IPlayer {
       mPlayerCallback.onResume(mTitle);
       mIsPaused = false;
     }
-
   }
 
   @Override
@@ -80,7 +79,7 @@ public class Player implements IPlayer {
     if (mUrl != null) {
       play(mTitle, mUrl);
     }
-      mIsPaused = false;
+    mIsPaused = false;
   }
 
   @Override
@@ -89,12 +88,12 @@ public class Player implements IPlayer {
   @Override
   public void unmute() {}
 
-    @Override
-    public boolean isPaused() {
-        return mIsPaused;
-    }
+  @Override
+  public boolean isPaused() {
+    return mIsPaused;
+  }
 
-    public void seekTo(int progress) {
+  public void seekTo(int progress) {
     Log.d(TAG, "Pause Called");
     if (s_playing) {
       int msec = (int) (mTotalDuration * (progress / 100.0));
@@ -105,7 +104,7 @@ public class Player implements IPlayer {
   @Override
   public void play(final String title, final String url) {
     Log.d(TAG, "Play Called");
-      mIsPaused = false;
+    mIsPaused = false;
     Thread backgroudThread =
         new Thread(
             new Runnable() {

@@ -12,5 +12,4 @@ public class Configuration {
   // test data end points
   public static String TEST_NETWORK_DATA =
       "http://simplestore.dipankar.co.in/api/test_bengalifm_data";
-
 }

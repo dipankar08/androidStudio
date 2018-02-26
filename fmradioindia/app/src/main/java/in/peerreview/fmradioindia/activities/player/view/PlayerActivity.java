@@ -13,7 +13,6 @@ import in.peerreview.fmradioindia.activities.player.IPlayerContract;
 import in.peerreview.fmradioindia.activities.player.presenter.PlayerPresenter;
 import in.peerreview.fmradioindia.common.models.MusicNode;
 import in.peerreview.fmradioindia.common.views.DImageView;
-
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -25,8 +24,8 @@ public class PlayerActivity extends AppCompatActivity
   ImageView radio;
   private IPlayerContract.Presenter presenter;
 
-  private ImageButton btnPlay, btnNext, btnPrev,btnDownload;
-  private DImageView btnRepeat,btnVol,btnRefersh;
+  private ImageButton btnPlay, btnNext, btnPrev, btnDownload;
+  private DImageView btnRepeat, btnVol, btnRefersh;
   private TextView tvTitle, tvSubtitle, tvTotalDur, tvCurDuration, tvAlbumTitle;
   private ImageView ivCover, ivLogo;
   private SeekBar mSeekBar;
@@ -118,10 +117,10 @@ public class PlayerActivity extends AppCompatActivity
         presenter.download();
         break;
       case R.id.repeat:
-        if(btnRepeat.isViewEnabled()){
+        if (btnRepeat.isViewEnabled()) {
           btnRepeat.setViewEnabled(false);
           presenter.setRepeat(false);
-        } else{
+        } else {
           btnRepeat.setViewEnabled(true);
           presenter.setRepeat(true);
         }

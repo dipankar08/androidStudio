@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -53,8 +52,8 @@ public class HomePresenter implements IHomeContract.Presenter {
                             js.getString("image_url")));
                   }
                   if (list.size() > 0) {
-                      long seed = System.nanoTime();
-                      Collections.shuffle(list, new Random(seed));
+                    long seed = System.nanoTime();
+                    Collections.shuffle(list, new Random(seed));
                     mMusicMap.put(type, list);
 
                     new Handler(Looper.getMainLooper())
