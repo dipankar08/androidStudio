@@ -2,6 +2,7 @@
 <LinearLayout
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="#232b2b"
@@ -11,7 +12,7 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:layout_height="wrap_content">
-        <TextView
+        <in.peerreview.fmradioindia.common.views.DTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:paddingLeft="15dp"
@@ -19,8 +20,9 @@
             android:textColor="#ffffff"
             android:layout_alignParentLeft="true"
             android:text="Section Text"
+            app:font="Ubuntu.ttf"
             android:layout_height="wrap_content" />
-        <TextView
+        <in.peerreview.fmradioindia.common.views.DTextView
             android:id="@+id/showall"
             android:layout_width="wrap_content"
             android:padding="5dp"
@@ -29,6 +31,7 @@
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
             android:textSize="12dp"
+            app:font="Ubuntu.ttf"
             android:textColor="#ffffff"/>
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView

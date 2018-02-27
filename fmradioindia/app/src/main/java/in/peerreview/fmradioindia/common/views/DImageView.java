@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import in.peerreview.fmradioindia.R;
 
-public class DImageView extends android.support.v7.widget.AppCompatImageView {
+public class DImageView extends android.support.v7.widget.AppCompatImageButton {
 
   private Drawable enableBack, disableBack;
   boolean mViewEnable = true;

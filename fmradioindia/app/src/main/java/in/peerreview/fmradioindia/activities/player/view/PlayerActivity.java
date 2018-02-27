@@ -21,12 +21,10 @@ public class PlayerActivity extends AppCompatActivity
     implements IPlayerContract.View, View.OnClickListener {
 
   private static final String TAG = "MainActivity";
-  ImageView radio;
   private IPlayerContract.Presenter presenter;
 
-  private ImageButton btnPlay, btnNext, btnPrev, btnDownload;
-  private DImageView btnRepeat, btnVol, btnRefersh;
-  private TextView tvTitle, tvSubtitle, tvTotalDur, tvCurDuration, tvAlbumTitle;
+  private DImageView btnRepeat, btnVol, btnLove, btnPlay, btnNext, btnPrev, btnDownload, btnClose;
+  private TextView tvTitle, tvSubtitle, tvTotalDur, tvCurDuration;
   private ImageView ivCover, ivLogo;
   private SeekBar mSeekBar;
 
@@ -47,21 +45,25 @@ public class PlayerActivity extends AppCompatActivity
   }
 
   private void initViews() {
-    btnPlay = (ImageButton) findViewById(R.id.play);
-    btnNext = (ImageButton) findViewById(R.id.next);
-    btnPrev = (ImageButton) findViewById(R.id.prev);
-    btnRefersh = (DImageView) findViewById(R.id.restart);
+    btnPlay = (DImageView) findViewById(R.id.play);
+    btnNext = (DImageView) findViewById(R.id.next);
+    btnPrev = (DImageView) findViewById(R.id.prev);
+    btnLove= (DImageView) findViewById(R.id.like);
     btnVol = (DImageView) findViewById(R.id.vol);
-    btnDownload = (ImageButton) findViewById(R.id.download);
+    btnDownload = (DImageView) findViewById(R.id.download);
     btnRepeat = (DImageView) findViewById(R.id.repeat);
+    btnDownload = (DImageView) findViewById(R.id.download);
+    btnClose = (DImageView) findViewById(R.id.close);
 
     btnPlay.setOnClickListener(this);
     btnNext.setOnClickListener(this);
     btnPrev.setOnClickListener(this);
-    btnRefersh.setOnClickListener(this);
+    btnLove.setOnClickListener(this);
     btnVol.setOnClickListener(this);
     btnDownload.setOnClickListener(this);
     btnRepeat.setOnClickListener(this);
+    btnDownload.setOnClickListener(this);
+    btnClose.setOnClickListener(this);
 
     tvTitle = (TextView) findViewById(R.id.title);
     tvSubtitle = (TextView) findViewById(R.id.subtitle);
@@ -107,14 +109,21 @@ public class PlayerActivity extends AppCompatActivity
       case R.id.prev:
         presenter.playPrevious();
         break;
-      case R.id.restart:
-        presenter.restart();
+      case R.id.like:
+        boolean state = btnLove.isViewEnabled();
+        btnLove.setViewEnabled(!state);
+        presenter.setLikeState(!state);
         break;
       case R.id.vol:
-        presenter.mute();
+        boolean state1 = btnVol.isViewEnabled();
+        btnVol.setViewEnabled(!state1);
+        presenter.setMuteState(!state1);
         break;
       case R.id.download:
         presenter.download();
+        break;
+      case R.id.close:
+        finish();
         break;
       case R.id.repeat:
         if (btnRepeat.isViewEnabled()) {
@@ -130,7 +139,7 @@ public class PlayerActivity extends AppCompatActivity
 
   @Override
   public void showPlayUI(MusicNode musicNode) {
-    btnPlay.setBackgroundResource(R.drawable.pl_play);
+    btnPlay.setViewEnabled(true);
     Picasso.with(this).load(musicNode.getImage_url()).fit().centerCrop().into(ivCover);
     Picasso.with(this).load(musicNode.getImage_url()).into(ivLogo);
     tvTitle.setText(musicNode.getTitle());
@@ -143,20 +152,28 @@ public class PlayerActivity extends AppCompatActivity
     Picasso.with(this).load(musicNode.getImage_url()).into(ivLogo);
     tvTitle.setText(musicNode.getTitle());
     tvSubtitle.setText(musicNode.getSubtitle());
-    btnPlay.setBackgroundResource(R.drawable.pl_pause);
+    btnPlay.setViewEnabled(false);
   }
 
   @Override
-  public void enableNext() {}
+  public void enableNext() {
+    btnNext.setViewEnabled(true);
+  }
 
   @Override
-  public void disableNext() {}
+  public void disableNext() {
+    btnNext.setViewEnabled(false);
+  }
 
   @Override
-  public void enablePrevious() {}
+  public void enablePrevious() {
+    btnPrev.setViewEnabled(true);
+  }
 
   @Override
-  public void disablePrevious() {}
+  public void disablePrevious() {
+    btnPrev.setViewEnabled(false);
+  }
 
   @Override
   public void updateSeekBarInfo(int total, int cur) {
@@ -177,28 +194,44 @@ public class PlayerActivity extends AppCompatActivity
   }
 
   @Override
-  public void showDownloading() {}
+  public void showDownloading() {
+    btnDownload.setViewEnabled(true);
+  }
 
   @Override
-  public void hideDownloading() {}
+  public void hideDownloading() {
+    btnDownload.setViewEnabled(false);
+  }
 
   @Override
-  public void markFavorite() {}
+  public void markFavorite() {
+    btnLove.setViewEnabled(true);
+  }
 
   @Override
-  public void unmarkFavorite() {}
+  public void unmarkFavorite() {
+    btnLove.setViewEnabled(false);
+  }
 
   @Override
-  public void showMute() {}
+  public void showMute() {
+    btnVol.setViewEnabled(false);
+  }
 
   @Override
-  public void hideMute() {}
+  public void hideMute() {
+    btnVol.setViewEnabled(true);
+  }
 
   @Override
-  public void markRepeat() {}
+  public void markRepeat() {
+    btnRepeat.setViewEnabled(true);
+  }
 
   @Override
-  public void unmarkRepeat() {}
+  public void unmarkRepeat() {
+    btnRepeat.setViewEnabled(false);
+  }
 
   private String MiliToStr(int millis) {
     return String.format(

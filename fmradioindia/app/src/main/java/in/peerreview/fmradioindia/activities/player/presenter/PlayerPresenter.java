@@ -126,20 +126,7 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
   }
 
   @Override
-  public void mute() {
-    mPlayer.mute();
-  }
-
-  @Override
-  public void unMute() {
-    mPlayer.unmute();
-  }
-
-  @Override
   public void download() {}
-
-  @Override
-  public void SetFavorite(boolean isFev) {}
 
   @Override
   public void setSeekLocation(int time) {
@@ -170,6 +157,16 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
     } else {
       play();
     }
+  }
+
+  @Override
+  public void setMuteState(boolean b) {
+
+  }
+
+  @Override
+  public void setLikeState(boolean b) {
+
   }
 
   private MusicNode getMusicNodeForID(String id) {

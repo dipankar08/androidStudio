@@ -55,13 +55,7 @@ public interface IPlayerContract {
 
     void resume();
 
-    void mute();
-
-    void unMute();
-
     void download();
-
-    void SetFavorite(boolean isFev);
 
     void setSeekLocation(int progress);
 
@@ -72,5 +66,8 @@ public interface IPlayerContract {
     boolean isPlaying();
 
     void playOrResume();
+
+    void setMuteState(boolean b);
+    void setLikeState(boolean b);
   }
 }
