@@ -67,7 +67,6 @@ public class PlayerActivity extends AppCompatActivity
 
     tvTitle = (TextView) findViewById(R.id.title);
     tvSubtitle = (TextView) findViewById(R.id.subtitle);
-    tvAlbumTitle = (TextView) findViewById(R.id.almumtitle);
     tvTotalDur = (TextView) findViewById(R.id.total_duration);
     tvCurDuration = (TextView) findViewById(R.id.cur_duration);
 
