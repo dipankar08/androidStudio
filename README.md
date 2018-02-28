@@ -98,6 +98,15 @@ Build, Deployment and user EngageMents
 4. Build libs and [publish in Jcenter](https://medium.com/@sachit.wadhawan/how-to-publish-android-library-on-bintray-jcenter-3636a8bf3979) 
 
 
+Java Fundamentals and Advnace  Topics
+--------------------------------------
+1. Objcect Creation and Destrction: [link](https://www.javacodegeeks.com/2015/09/how-to-create-and-destroy-objects.html)
+2. [common methods:clone, ==, equlal, hashcode, tostring](https://www.javacodegeeks.com/2015/09/using-methods-common-to-all-objects.html), 
+3. Better Design of class and interface: [link](https://www.javacodegeeks.com/2015/09/how-to-design-classes-and-interfaces.html), [how to write methods](https://www.javacodegeeks.com/2015/09/how-to-write-methods-efficiently.html), [naming convenstions](https://www.javacodegeeks.com/2015/09/general-programming-guidelines.html), 
+4. Language Constructs like [Java Generics](https://www.javacodegeeks.com/2015/09/how-and-when-to-use-generics.html),[Enum and Anotaion](https://www.javacodegeeks.com/2015/09/how-and-when-to-use-enums-and-annotations.html),[Anotatio  process](https://www.javacodegeeks.com/2015/09/java-annotation-processors.html), [Exceptions](https://www.javacodegeeks.com/2015/09/how-and-when-to-use-exceptions.html), [Serialization](https://www.javacodegeeks.com/2015/09/built-in-serialization-techniques.html), 
+5. Concurrency: [All in One](https://www.javacodegeeks.com/2015/09/concurrency-best-practices.html)
+6. Dynamic Runtimes: [Refrection](https://www.javacodegeeks.com/2015/09/how-to-use-reflection-effectively.html), [Other lang integration](https://www.javacodegeeks.com/2015/09/dynamic-languages-support.html), [compiler APIs](https://www.javacodegeeks.com/2015/09/java-compiler-api.html), [Java Agent](https://www.javacodegeeks.com/2015/09/java-agents.html)
+
 Others
 --------
 1. [Live walpaper](http://www.vogella.com/tutorials/AndroidLiveWallpaper/article.html)
