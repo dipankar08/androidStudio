@@ -219,83 +219,35 @@ public class MainActivity extends AppCompatActivity {
 
     // Call Request
     public void sendCallRequest(View button){
-        init();
-        // create a sdp and set to local and send to other
-        peerConnection.createOffer(new SdpObserver() {
-            @Override
-            public void onCreateSuccess(SessionDescription sessionDescription) {
-                peerConnection.setLocalDescription(sdpObserver, sessionDescription);
-                try {
-                    JSONObject obj = new JSONObject();
-                    obj.put("to", "DIP111");
-                    obj.put("from", "ID");
-                    obj.put(SDP, sessionDescription.description);
-                    socket.emit(OFFER, obj);
-                    Log.d("DIP111"," SHOW OUTGOING RING UI");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onSetSuccess() {
-                Log.d("DIP111"," onSetSuccess Success");
-            }
-
-            @Override
-            public void onCreateFailure(String s) {
-                Log.d("DIP111"," onCreateFailure fail");
-            }
-
-            @Override
-            public void onSetFailure(String s) {
-                Log.d("DIP111"," onSetFailure fail");
-            }
-        }, new MediaConstraints());
+        createOffer = true;
+        peerConnection.createOffer(sdpObserver, new MediaConstraints());
     }
 
     // WE
     public void acceptCall(View button){
-        peerConnection.createOffer(new SdpObserver() {
-            @Override
-            public void onCreateSuccess(SessionDescription sessionDescription) {
-                peerConnection.setLocalDescription(sdpObserver, sessionDescription);
-                try {
-                    JSONObject obj = new JSONObject();
-                    obj.put(SDP, sessionDescription.description);
-                    socket.emit(ANSWER, obj);
-                    Log.d("DIP111"," SHOW CONNECTING UI");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onSetSuccess() {
-                //Move to OutGoung ring UI
-            }
-
-            @Override
-            public void onCreateFailure(String s) {
-                //Move to Not
-            }
-
-            @Override
-            public void onSetFailure(String s) {
-
-            }
-        }, new MediaConstraints());
+        peerConnection.createAnswer(sdpObserver, new MediaConstraints());
     }
 
     public void rejectCall(View button){
         Log.d("DIP111"," SHOW REJECTION UI");
     }
 
-    //this is only used for set.
+    // Note that this must be shared.
     SdpObserver sdpObserver = new SdpObserver() {
         @Override
         public void onCreateSuccess(SessionDescription sessionDescription) {
-            Log.d("DIP111"," onCreateSuccess Success");
+            peerConnection.setLocalDescription(sdpObserver, sessionDescription);
+            try {
+                JSONObject obj = new JSONObject();
+                obj.put(SDP, sessionDescription.description);
+                if (createOffer) {
+                    socket.emit(OFFER, obj);
+                } else {
+                    socket.emit(ANSWER, obj);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
