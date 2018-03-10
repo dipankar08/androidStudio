@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    tools:context=".MainActivity">
+    <ImageView
+        android:id="@+id/backgroud_picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:src="@drawable/ic_user"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/name"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:text="Dipankar Calling..."
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/online_status"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:text="from Jhargram"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp">
+        <ImageButton
+            android:id="@+id/reject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
+            android:background="@null"
+            android:padding="16dp"
+            android:src="@drawable/ic_reject" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/accept"
+            android:textColor="#fff"
+            android:layout_marginLeft="20dp"
+            android:text="Accept"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/reject"
+            android:background="@null"
+            android:padding="16dp"
+            android:src="@drawable/ic_accept" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/accept"
+            android:textColor="#fff"
+            android:layout_alignRight="@+id/accept"
+            android:text="Accept"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

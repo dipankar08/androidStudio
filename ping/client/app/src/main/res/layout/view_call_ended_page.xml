@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null">
+    <ImageView
+        android:id="@+id/backgroud_picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:src="@drawable/ic_user"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/title"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:text="Call Ended"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/subtitle"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:text="You talk for 25 Mins"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp">
+        <ImageButton
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
+            android:background="@null"
+            android:padding="16dp"
+            android:src="@drawable/ic_reject" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Cancel"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@id/close"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/redail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/close"
+            android:background="@null"
+            android:padding="16dp"
+            android:src="@drawable/ic_video_call" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Call Again"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/close"
+            android:layout_below="@id/redail"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

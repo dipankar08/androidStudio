@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_call"
+    android:layout_width="match_parent"
+    android:background="#000000"
+    android:layout_height="match_parent">
+
+    <in.co.dipankar.ping.activities.CallVideoGridView
+        android:id="@+id/call_video_grid_view"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </in.co.dipankar.ping.activities.CallVideoGridView>
+
+    <in.co.dipankar.ping.activities.CallLandingPageView
+        android:id="@+id/call_landing_page_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </in.co.dipankar.ping.activities.CallLandingPageView>
+
+    <in.co.dipankar.ping.activities.CallEndedPageView
+        android:id="@+id/call_ended_page_view"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+    </in.co.dipankar.ping.activities.CallEndedPageView>
+
+    <in.co.dipankar.ping.activities.CallIncommingPageView
+        android:id="@+id/call_incoming_page_view"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+    </in.co.dipankar.ping.activities.CallIncommingPageView>
+
+    <in.co.dipankar.ping.activities.CallOngoingPageView
+        android:id="@+id/call_ongoing_page_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </in.co.dipankar.ping.activities.CallOngoingPageView>
+
+    <in.co.dipankar.ping.activities.CallOutgoingPageView
+        android:id="@+id/call_outgoing_page_view"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+    </in.co.dipankar.ping.activities.CallOutgoingPageView>
+</RelativeLayout>
