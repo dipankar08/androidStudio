@@ -5,13 +5,15 @@
     android:background="@null"
     android:layout_height="match_parent">
         <org.webrtc.SurfaceViewRenderer
-            android:id="@+id/fullscreen_video_view"
+            android:id="@+id/self_view"
+            android:layout_gravity="bottom|end"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
         <org.webrtc.SurfaceViewRenderer
-            android:id="@+id/pip_video_view"
-            android:layout_height="400dp"
-            android:layout_width="300dp"
+            android:id="@+id/peer_view"
+            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_gravity="bottom|end"
             />
 </FrameLayout>

@@ -1,22 +1,57 @@
-package in.co.dipankar.ping.activities;
+package in.co.dipankar.ping.activities.callscreen;
 
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import org.webrtc.SurfaceViewRenderer;
 
 import in.co.dipankar.ping.R;
-import in.co.dipankar.ping.common.signaling.IVideoView;
+import in.co.dipankar.ping.contracts.IVideoView;
 
 
 public class CallVideoGridView extends RelativeLayout implements View.OnClickListener, IVideoView{
+
+    public void setlayout(Layout layout) {
+        switch(layout){
+            case SELF_VIEW_FULL_SCREEN:
+                FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                FrameLayout.LayoutParams lay1 = new FrameLayout.LayoutParams(mDeviceWidth/5, mDeviceHeight/5);
+                mSelfView.setLayoutParams(lay);
+                mPeerView.setLayoutParams(lay1);
+                mSelfView.bringToFront();
+                break;
+            case PEER_VIEW_FULL_SCREEN:
+                FrameLayout.LayoutParams lay2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                FrameLayout.LayoutParams lay3 = new FrameLayout.LayoutParams(mDeviceWidth/5, mDeviceHeight/5);
+                mPeerView.setLayoutParams(lay2);
+                mSelfView.setLayoutParams(lay3);
+                mPeerView.bringToFront();
+                break;
+            case SPLIT_VIEW:
+                FrameLayout.LayoutParams lay5 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, mDeviceHeight/2);
+                FrameLayout.LayoutParams lay6 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, mDeviceHeight/2);
+                lay5.gravity= Gravity.TOP;
+                lay6.gravity= Gravity.BOTTOM;
+                mPeerView.setLayoutParams(lay5);
+                mSelfView.setLayoutParams(lay6);
+                break;
+        }
+        mSelfView.requestLayout();
+        mPeerView.requestLayout();
+    }
+
+    public enum Layout {
+        SELF_VIEW_FULL_SCREEN,
+        PEER_VIEW_FULL_SCREEN,
+        SPLIT_VIEW
+    }
 
     public interface Callback {
         void onClickedEnd();
@@ -30,6 +65,8 @@ public class CallVideoGridView extends RelativeLayout implements View.OnClickLis
     private  MediaPlayer ring;
     private SurfaceViewRenderer mPeerView;
     private SurfaceViewRenderer mSelfView;
+
+    private int mDeviceHeight, mDeviceWidth;
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -54,12 +91,16 @@ public class CallVideoGridView extends RelativeLayout implements View.OnClickLis
         mContext = context;
         mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_video_grid, this, true);
-        mPeerView = (SurfaceViewRenderer) findViewById(R.id.pip_video_view);
-        mSelfView = (SurfaceViewRenderer) findViewById(R.id.fullscreen_video_view);
+        mPeerView = (SurfaceViewRenderer) findViewById(R.id.peer_view);
+        mSelfView = (SurfaceViewRenderer) findViewById(R.id.self_view);
         mPeerView.setOnClickListener(this);
         mSelfView.setOnClickListener(this);
-    }
 
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        mDeviceWidth = displayMetrics.widthPixels;
+        mDeviceHeight = displayMetrics.heightPixels;
+    }
+/*
     private void makeFullScreen(View view){
         FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(lay);
@@ -71,19 +112,15 @@ public class CallVideoGridView extends RelativeLayout implements View.OnClickLis
         view.setLayoutParams(lay);
         view.requestLayout();
     }
-
+*/
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.pip_video_view:
-                makeFullScreen((View)mPeerView);
-                makeSmallView((View)mSelfView);
-                mSelfView.bringToFront();
+            case R.id.peer_view:
+                setlayout(Layout.PEER_VIEW_FULL_SCREEN);
                 break;
-            case R.id.fullscreen_video_view:
-                makeFullScreen((View)mSelfView);
-                makeSmallView((View)mPeerView);
-                mPeerView.bringToFront();
+            case R.id.self_view:
+                setlayout(Layout.SELF_VIEW_FULL_SCREEN);
                 break;
         }
     }

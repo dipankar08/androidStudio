@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mTest;
 
 
-    private final int PANEL_WIDTH  = 450;
+    private final int PANEL_WIDTH  = 600;
     private final float PANEL_HIDE_CUTOFF_DISTANCE = PANEL_WIDTH/2;
     private final float PANEL_VALID_TOUCH_MOVE_CUTOFF_DISTANCE = 20;
     private int BUTTON_MARGIN = 8;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderCameraControlRemoteButtonView(){
-        RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) mRemoteButtonView.getLayoutParams();
+        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(440, 440);
         switch(mOrientation){
             case PORTRAIT:
                 buttonParams.setMargins(0,0,TWO_BUTTON_GAP,0);
@@ -170,10 +170,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderCameraControlZoomButtonView(){
-        RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) mZoomButtomView.getLayoutParams();
+        RelativeLayout.LayoutParams buttonParams;// = new RelativeLayout.LayoutParams(200, 440);
         switch(mOrientation){
             case PORTRAIT:
-                //buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_WIDTH,ZOOM_BUTTON_HEIGHT);
+                buttonParams = new RelativeLayout.LayoutParams(200, 440);
                 buttonParams.removeRule(RelativeLayout.BELOW);
                 buttonParams.addRule(RelativeLayout.RIGHT_OF,R.id.move_btn);
                 buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 mZoomButtomView.setLayoutParams(buttonParams);
                 break;
             case LANDSCAPE:
-                //buttonParams = new RelativeLayout.LayoutParams(ZOOM_BUTTON_HEIGHT,ZOOM_BUTTON_WIDTH);
+                buttonParams = new RelativeLayout.LayoutParams(440, 200);
                 buttonParams.removeRule(RelativeLayout.RIGHT_OF);
                 buttonParams.addRule(RelativeLayout.BELOW,R.id.move_btn);
                 buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT);

@@ -6,7 +6,6 @@ import android.opengl.GLSurfaceView;
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
-import in.co.dipankar.ping.activities.CallIncommingPageView;
 
 /**
  * Created by dip on 3/10/18.

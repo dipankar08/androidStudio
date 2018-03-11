@@ -32,7 +32,8 @@ dependencies {
 
     //compile 'io.pristine:libjingle:9694@aar'
     compile 'org.webrtc:google-webrtc:1.0.+'
-    compile ('io.socket:socket.io-client:0.8.2') {
+    compile 'com.github.dipankar08:quick-android:0.1'
+    compile('io.socket:socket.io-client:0.8.2') {
         exclude group: 'org.json', module: 'json'
     }
 }

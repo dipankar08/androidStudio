@@ -19,24 +19,55 @@ public interface ICallSignalingApi {
     public static final String INCOMMING_PING= "onlineusers";
 
 
+    public enum EndCallType {
+        OFFLINE("offline"),
+        BUSY ("busy"),
+        USER_REJECT ("user_reject"),
+        OTHER ("other"),
+        REGULAR("normal");
+
+
+        private final String name;
+
+        EndCallType(String s) {
+            name = s;
+        }
+        public boolean equalsName(String otherName) {
+            return name.equals(otherName);
+        }
+        public String toString() {
+            return this.name;
+        }
+
+        public static EndCallType getByString(String name){
+            for(EndCallType prop : values()){
+                if(prop.toString().equals(name)){
+                    return prop;
+                }
+            }
+            throw new IllegalArgumentException(name + " is not a valid PropName");
+        }
+    }
+
     //basic
     void connect();
     void disconnect();
 
     //RTC API
-    void sendOffer(Object description);
-    void sendAnswer(Object description);
-    void sendCandidate(IceCandidate iceCandidate);
+    void sendOffer(String peerId, String callID, Object description);
+    void sendAnswer(String callID, Object description);
+    void sendCandidate(String callId, IceCandidate iceCandidate);
+    void sendEndCall(String callID, EndCallType type, String reason);
+    void sendRegister(IRtcUser user, IRtcDeviceInfo info);
 
-    //user API
-    void ping(String userid, String username, String deviceid);
 
 
     public interface ICallSignalingCallback{
         //RTC
-        void onReceivedOffer(SessionDescription sdp);
-        void onReceivedAnswer(SessionDescription sdp);
-        void onReceivedCandidate(IceCandidate ice);
+        void onReceivedOffer(String callId, SessionDescription sdp, IRtcUser rtcUser);
+        void onReceivedAnswer(String callId, SessionDescription sdp);
+        void onReceivedCandidate(String callId, IceCandidate ice);
+        void onReceivedEndCall(String callID, EndCallType type, String reason);
     }
     void addCallback(ICallSignalingApi.ICallSignalingCallback callback);
 

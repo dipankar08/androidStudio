@@ -63,7 +63,7 @@ public class ZoomButtonView extends View {
 
     void init() {
 
-        setButtonSize(300, 120);
+        setButtonSize(440, 150);
 
         rect1 = new RectF(); //cirlcle up
         rect2 = new RectF(); //sqr up

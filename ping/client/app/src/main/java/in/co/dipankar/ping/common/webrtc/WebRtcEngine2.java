@@ -1,4 +1,4 @@
-package in.co.dipankar.ping.common.signaling;
+package in.co.dipankar.ping.common.webrtc;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -38,6 +38,7 @@ import java.util.concurrent.Executors;
 
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcEngine;
+import in.co.dipankar.ping.contracts.IRtcUser;
 
 public class WebRtcEngine2 implements IRtcEngine {
 
@@ -45,6 +46,7 @@ public class WebRtcEngine2 implements IRtcEngine {
     private boolean createOffer = false;
     //context
     Context mContext;
+    IRtcUser mRtcUser;
 
     // CallBacks
     private ICallSignalingApi mCallSingleingApi;
@@ -62,6 +64,9 @@ public class WebRtcEngine2 implements IRtcEngine {
     private static final String DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT = "DtlsSrtpKeyAgreement";
 
 
+    // Call information
+   String mCallID;
+   IRtcUser mPeerUser;
 
     //Renderer
     private SurfaceViewRenderer mSelfRenderer;
@@ -91,10 +96,13 @@ public class WebRtcEngine2 implements IRtcEngine {
     private boolean disableAudioProcessing = true;
     private boolean enableLevelControl = false;
 
-
+    //Other Info
+    private String mPeerID;
+    private String mSelfId;
 
 
     public WebRtcEngine2(Context context,
+                         IRtcUser rtcUser,
                          ICallSignalingApi callSingleingApi,
                          SurfaceViewRenderer selfView ,
                          SurfaceViewRenderer peerView ){
@@ -102,6 +110,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         mCallSingleingApi = callSingleingApi;
         mSelfRenderer = selfView;
         mPeerRenderer = peerView;
+        mSelfId = rtcUser.getUserId();
         init();
     }
     private void init(){
@@ -109,6 +118,11 @@ public class WebRtcEngine2 implements IRtcEngine {
         initAudioErrorCallbacks();
         initializedRenderer();
         initilizeRTCConfig();
+        create();
+    }
+
+    // this should be create and exposed everytime.
+    private void create(){
         createMediaConstraints();
         initializePeerConnection();
         initilizeLocalAudioVideoSource();
@@ -249,13 +263,16 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     }
 
-
+    private String getRandomCallId(){
+        return "1111";
+    }
     SdpObserver sdpObserver = new SdpObserver() {
         @Override
         public void onCreateSuccess(SessionDescription sessionDescription) {
             mPeerConnection.setLocalDescription(sdpObserver, sessionDescription);
             if (createOffer) {
-                mCallSingleingApi.sendOffer(sessionDescription.description);
+                mCallID = getRandomCallId();
+                mCallSingleingApi.sendOffer(mPeerID, mCallID, sessionDescription.description);
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
@@ -264,7 +281,7 @@ public class WebRtcEngine2 implements IRtcEngine {
                 });
 
             } else {
-                mCallSingleingApi.sendAnswer(sessionDescription.description);
+                mCallSingleingApi.sendAnswer(mCallID, sessionDescription.description);
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
@@ -433,7 +450,7 @@ public class WebRtcEngine2 implements IRtcEngine {
 
         @Override
         public void onIceCandidate(IceCandidate iceCandidate) {
-            mCallSingleingApi.sendCandidate(iceCandidate);
+            mCallSingleingApi.sendCandidate(mCallID, iceCandidate);
         }
 
         @Override
@@ -505,8 +522,12 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     @Override
     public void startAudioCall(String userid) {
+        assert(userid != null);
+        if(mPeerConnection == null){
+            init();
+        }
         createOffer = true;
-
+        mPeerID = userid;
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -517,7 +538,12 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     @Override
     public void startVideoCall(String userid) {
+        assert(userid != null);
+        if(mPeerConnection == null){
+            init();
+        }
         createOffer = true;
+        mPeerID = userid;
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -528,6 +554,9 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     @Override
     public void acceptCall() {
+        if(mPeerConnection == null){
+            init();
+        }
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -569,7 +598,11 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     @Override
     public void endCall() {
-        // Test
+        if(mPeerConnection != null){
+            mPeerConnection.dispose();
+            mPeerConnection = null;
+        }
+
     }
 
 

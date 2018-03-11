@@ -1,4 +1,4 @@
-package in.co.dipankar.ping.common.signaling;
+package in.co.dipankar.ping.contracts;
 
 import org.webrtc.SurfaceViewRenderer;
 

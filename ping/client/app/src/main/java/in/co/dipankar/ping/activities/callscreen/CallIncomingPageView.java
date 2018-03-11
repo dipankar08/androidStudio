@@ -1,4 +1,4 @@
-package in.co.dipankar.ping.activities;
+package in.co.dipankar.ping.activities.callscreen;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import in.co.dipankar.ping.R;
 
 
-public class CallIncommingPageView extends RelativeLayout implements View.OnClickListener{
+public class CallIncomingPageView extends RelativeLayout implements View.OnClickListener{
 
     public interface Callback {
         void onAccept();
@@ -24,17 +24,17 @@ public class CallIncommingPageView extends RelativeLayout implements View.OnClic
         mCallback = callback;
     }
 
-    public CallIncommingPageView(Context context, AttributeSet attrs, int defStyle) {
+    public CallIncomingPageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView(context);
     }
 
-    public CallIncommingPageView(Context context, AttributeSet attrs) {
+    public CallIncomingPageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
 
-    public CallIncommingPageView(Context context) {
+    public CallIncomingPageView(Context context) {
         super(context);
         initView(context);
     }
@@ -57,5 +57,4 @@ public class CallIncommingPageView extends RelativeLayout implements View.OnClic
                 mCallback.onReject();break;
         }
     }
-
 }

@@ -73,8 +73,8 @@ public class RemoteButtonView extends View {
         rect = new RectF();
 
         // note that height == width == 2* outerradious,
-        mRadiousOuter = 150;
-        mRadiusInner = 60;
+        mRadiousOuter = 220;
+        mRadiusInner = 85;
 
         mRadius = mRadiusInner +(mRadiousOuter - mRadiusInner )/2;
         strockSize = (mRadiousOuter - mRadiusInner );

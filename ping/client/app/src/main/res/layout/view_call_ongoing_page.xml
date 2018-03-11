@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,6 +31,17 @@
             android:gravity="right"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/control_holder"
+        android:background="@null"
+        android:padding="8dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_call_end_32" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:background="#15000000"
@@ -40,37 +52,47 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/control_holder"
         android:paddingBottom="10dp">
-        <ImageButton
+        <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:padding="16dp"
+            android:padding="8dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_camera_rotate_32" />
-        <ImageButton
+            app:disableBackground="@drawable/ic_camera_rotate_32"
+            app:enableBackground="@drawable/ic_camera_rotate_32"
+            app:is_enable="true" />
+        <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:padding="16dp"
+            android:padding="8dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_video_off_32" />
-        <ImageButton
+            app:disableBackground="@drawable/ic_video_off_32"
+            app:enableBackground="@drawable/ic_video_on_32"
+            app:is_enable="true" />
+        <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:padding="16dp"
+            android:padding="8dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_vol_off_32" />
-        <ImageButton
-            android:id="@+id/end"
+            app:disableBackground="@drawable/ic_vol_off_32"
+            app:enableBackground="@drawable/ic_vol_on_32"
+            app:is_enable="true" />
+        <in.co.dipankar.quickandorid.views.MultiStateImageButton
+            android:id="@+id/toggle_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/toggle_audio"
             android:background="@null"
-            android:padding="16dp"
-            android:src="@drawable/ic_call_end_32" />
+            android:padding="8dp"
+            android:layout_marginRight="20dp"
+            app:backgroundState0="@drawable/ic_layout_pic_in_pic_topright"
+            app:backgroundState1="@drawable/ic_layout_pic_in_pic_button_right"
+            app:backgroundState2="@drawable/ic_layout_fit_to_screen"
+            app:backgroundState3="@drawable/ic_layout_split_on_vertical"
+            app:current_state="0" />
     </LinearLayout>
 </RelativeLayout>

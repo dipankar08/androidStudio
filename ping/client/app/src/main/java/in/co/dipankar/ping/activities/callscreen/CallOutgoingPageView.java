@@ -1,4 +1,4 @@
-package in.co.dipankar.ping.activities;
+package in.co.dipankar.ping.activities.callscreen;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -9,9 +9,10 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import in.co.dipankar.ping.R;
+import in.co.dipankar.quickandorid.views.StateImageButton;
 
 
-public class CallOutgoingPageView extends RelativeLayout implements View.OnClickListener{
+public class CallOutgoingPageView extends RelativeLayout{
 
     public interface Callback {
         void onClickedEnd();
@@ -22,7 +23,6 @@ public class CallOutgoingPageView extends RelativeLayout implements View.OnClick
     private Callback mCallback;
     private Context mContext;
     LayoutInflater mInflater;
-    private  MediaPlayer ring;
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -47,34 +47,34 @@ public class CallOutgoingPageView extends RelativeLayout implements View.OnClick
         mContext = context;
         mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_call_outgoing_page, this, true);
-        ImageButton a1 = (ImageButton) v.findViewById(R.id.toggle_video);
-        ImageButton a2 = (ImageButton) v.findViewById(R.id.toggle_audio);
-        ImageButton a3 = (ImageButton) v.findViewById(R.id.end);
-        a1.setOnClickListener(this);
-        a2.setOnClickListener(this);
-        a3.setOnClickListener(this);
-        ring = MediaPlayer.create(mContext,R.raw.tone);
-        ring.setLooping(true);
-    }
+        StateImageButton video =  v.findViewById(R.id.toggle_video);
+        StateImageButton audio =  v.findViewById(R.id.toggle_audio);
+        ImageButton end = v.findViewById(R.id.end);
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.toggle_audio:
-                mCallback.onClickedToggleAudio(true);break;
-            case R.id.toggle_video:
-                mCallback.onClickedToggleVideo(true);break;
-            case R.id.end:
-                mCallback.onClickedEnd();break;
-        }
+        audio.setCallBack(new StateImageButton.Callback(){
+            @Override
+            public void click(boolean b) {
+                mCallback.onClickedToggleAudio(b);
+            }
+        });
+        video.setCallBack(new StateImageButton.Callback(){
+            @Override
+            public void click(boolean b) {
+                mCallback.onClickedToggleVideo(b);
+            }
+        });
+        end.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickedEnd();
+            }
+        });
     }
 
     public void show(){
-        ring.start();
         this.setVisibility(View.VISIBLE);
     }
     public void hide(){
-        ring.pause();
         this.setVisibility(View.GONE);
     }
 

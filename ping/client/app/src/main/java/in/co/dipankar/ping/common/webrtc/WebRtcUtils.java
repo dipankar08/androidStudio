@@ -1,4 +1,4 @@
-package in.co.dipankar.ping.common.signaling;
+package in.co.dipankar.ping.common.webrtc;
 
 /**
  * Created by dip on 3/10/18.
