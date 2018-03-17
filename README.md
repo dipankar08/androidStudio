@@ -70,6 +70,7 @@ Andorid Experineces
 3. [Firebase and cliud messging](http://www.vogella.com/tutorials/Firebase/article.html) and [GCM](http://www.vogella.com/tutorials/GoogleCloudMessaging/article.html)
 4. [Camera APIs](http://www.vogella.com/tutorials/AndroidCamera/article.html) and [Sensor](http://www.vogella.com/tutorials/AndroidSensor/article.html) API.
 5. Video and audio as [MediaPlayer](http://www.vogella.com/tutorials/AndroidMedia/article.html)
+6. Camera2 API: this [link](https://www.youtube.com/watch?v=iv0gUw7w6F8&list=PL9jCwTXYWjDIHNEGtsRdCTk79I9-95TbJ&index=21) discissed about starting with, live preview, capture, video record, time esc record, still image capture while preview and recond session.
 
 
 Android Testibility
