@@ -16,6 +16,7 @@ public interface ICallPage {
     public interface IView{
 
         void switchToView(PageViewType incomming);
+        void showNetworkNotification(String process, String s);
     }
 
     public interface IPresenter{

@@ -78,6 +78,7 @@ io.sockets.on('connection', function (client) {
      * *****************************************************************/
     // In this section we have connect and disconnect 
     client.on('register', function (data) {
+        log("in", "register",  client.id);
         if(!data.user_id){
             return;
         }
@@ -100,7 +101,6 @@ io.sockets.on('connection', function (client) {
         var session = client.id;
         allLiveConn[data.user_id]["endpoints"][session] = current_endpoint;
         SessionToUserID[session] = data.user_id;
-        log("in", "register",  client.id);
         console.log("[Info]: Now Live "+Object.keys(SessionToUserID).length)
     });
     client.on('disconnect', function (details) {
@@ -197,7 +197,7 @@ io.sockets.on('connection', function (client) {
     
     // We we recv an ice we should send it to all invites - Or Should i sned to only acceptance?
     client.on('candidate', function (details) {
-        log("in", "candidate",  client.id);
+        //log("in", "candidate",  client.id);
         if(!CallToSessionList[details.call_id]){
             return;
         }

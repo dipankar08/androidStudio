@@ -66,6 +66,10 @@ public interface ICallSignalingApi {
 
 
     public interface ICallSignalingCallback{
+        // connetion
+        void onTryConnecting();
+        void onConnected();
+        void onDisconnected();
         //RTC
         void onReceivedOffer(String callId, SessionDescription sdp, IRtcUser rtcUser);
         void onReceivedAnswer(String callId, SessionDescription sdp);

@@ -41,6 +41,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     @Override
     public void connect() {
+        mCallback.onTryConnecting();
         socket.connect();
         DLog.e("Send Connecting");
     }
@@ -48,6 +49,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
     @Override
     public void disconnect() {
         socket.disconnect();
+        mCallback.onDisconnected();
     }
 
     @Override
@@ -59,7 +61,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put(SDP,description);
             obj.put(CALLID,callId);
-            socket.emit(OFFER, obj);
+
+            if(socket.connected()) {
+                socket.emit(OFFER, obj);
+            } else{
+                mCallback.onDisconnected();
+            }
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -73,7 +82,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put(SDP, description);
             obj.put(CALLID,callId);
-            socket.emit(ANSWER, obj);
+
+            if(socket.connected()) {
+                socket.emit(ANSWER, obj);
+            } else{
+                mCallback.onDisconnected();
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,7 +105,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(SDP_MID, iceCandidate.sdpMid);
             obj.put(SDP_M_LINE_INDEX, iceCandidate.sdpMLineIndex);
             obj.put(SDP, iceCandidate.sdp);
-            socket.emit(CANDIDATE, obj);
+
+            if(socket.connected()) {
+                socket.emit(CANDIDATE, obj);
+            } else{
+                mCallback.onDisconnected();
+            }
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -105,7 +127,12 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put("type", type.toString());
             obj.put("reason", reason);
+
+            if(socket.connected()) {
             socket.emit(ENDCALL, obj);
+            } else{
+                mCallback.onDisconnected();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -124,9 +151,15 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put("device_id",mRtcDeviceInfo.getDeviceId());
             obj.put("device_loc", mRtcDeviceInfo.getDeviceLocation());
             obj.put("device_name", mRtcDeviceInfo.getDeviceName());
-            socket.emit(REGISTER, obj);
+            if(socket.connected()) {
+                socket.emit(REGISTER, obj);
+                mCallback.onConnected();
+            } else{
+                mCallback.onDisconnected();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
+            mCallback.onDisconnected();
         }
     }
 

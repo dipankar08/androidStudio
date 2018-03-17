@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#aa000000">
-
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/tv_quick_login"
         android:layout_width="wrap_content"

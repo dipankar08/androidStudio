@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="Notification_Progress">#57cabf</color>
+    <color name="Notification_Success">#9de919</color>
+    <color name="Notification_Error">#b91765</color>
 </resources>

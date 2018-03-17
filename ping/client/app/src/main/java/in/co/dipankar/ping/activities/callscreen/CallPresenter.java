@@ -32,9 +32,6 @@ public class CallPresenter implements ICallPage.IPresenter {
     //singnaling api
     ICallSignalingApi mSignalingApi;
 
-
-
-
     public CallPresenter(ICallPage.IView view, IRtcUser rtcUser, IRtcDeviceInfo rtcDeviceInfo, IMultiVideoPane multiVideoPane){
         mView = view;
         mRtcUser = rtcUser;
@@ -56,6 +53,21 @@ public class CallPresenter implements ICallPage.IPresenter {
     }
     // Callbacks ..
     private ICallSignalingApi.ICallSignalingCallback  callback = new ICallSignalingApi.ICallSignalingCallback(){
+        @Override
+        public void onTryConnecting() {
+            mView.showNetworkNotification("process","Try connecting...");
+        }
+
+        @Override
+        public void onConnected() {
+            mView.showNetworkNotification("success","Now connected...");
+        }
+
+        @Override
+        public void onDisconnected() {
+            mView.showNetworkNotification("error","Not able to connect network.");
+        }
+
         @Override
         public void onReceivedOffer(String callid, SessionDescription sdp, IRtcUser user) {
             mCallId = callid;

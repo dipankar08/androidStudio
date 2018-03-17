@@ -1,13 +1,16 @@
 package in.co.dipankar.ping.activities.callscreen;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
@@ -29,6 +32,7 @@ import in.co.dipankar.ping.contracts.IRtcEngine;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
+import in.co.dipankar.quickandorid.views.CustomFontTextView;
 
 import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.INCOMMING;
 import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.LANDING;
@@ -40,12 +44,14 @@ public class CallActivity extends Activity implements ICallPage.IView{
     private final  String TAG ="DIAPNAKR";
 
     //Views
+    RelativeLayout mRootView;
     CallLandingPageView mCallLandingPageView;
     CallIncomingPageView mCallIncomingPageView;
     CallOngoingPageView mCallOngoingPageView;
     CallOutgoingPageView mCallOutgoingPageView;
     CallEndedPageView mCallEndedPageView;
     CallVideoGridView mCallVideoGridView;
+    CustomFontTextView mNotificationView;
 
     //Presneter
     ICallPage.IPresenter mPresenter;
@@ -100,6 +106,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
     }
 
     private void initView() {
+        mRootView = findViewById(R.id.root_view);
         mCallLandingPageView = findViewById(R.id.call_landing_page_view);
         mCallLandingPageView.setCallback(mCallLandingPageViewCallBack);
         mCallLandingPageView.setRecentUser();
@@ -123,6 +130,8 @@ public class CallActivity extends Activity implements ICallPage.IView{
         mCallLandingPageView.setVisibility(View.VISIBLE);
 
         mMediaPlayer = MediaPlayer.create(this, R.raw.tone);
+
+        mNotificationView = findViewById(R.id.notification);
     }
 
     private CallLandingPageView.Callback mCallLandingPageViewCallBack= new CallLandingPageView.Callback(){
@@ -207,12 +216,11 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
         @Override
         public void onClickClose() {
-            finish();
+            switchToView(LANDING);
         }
 
         @Override
         public void onClickRedail() {
-           // mPresenter.startVideo();
         }
     };
     private CallVideoGridView.Callback mCallVideoGridViewCallBack = new CallVideoGridView.Callback(){
@@ -275,21 +283,26 @@ public class CallActivity extends Activity implements ICallPage.IView{
     }
 
     private void hideAll(){
+        mCallLandingPageView.setVisibility(false);
         mCallLandingPageView.setVisibility(View.GONE);
         mCallOutgoingPageView.setVisibility(View.GONE);
         mCallIncomingPageView.setVisibility(View.GONE);
         mCallOngoingPageView.setVisibility(View.GONE);
         mCallEndedPageView.setVisibility(View.GONE);
+        mRootView.requestLayout();
+        mCallLandingPageView.invalidate();
     }
     //all override
     @Override
     public void switchToView(ICallPage.PageViewType pageViewType) {
+        DLog.e("Swicth To View: "+pageViewType);
         hideAll();
         switch(pageViewType){
             case LANDING:
                 mCallLandingPageView.setVisibility(View.VISIBLE);
                 break;
             case INCOMMING:
+                mCallLandingPageView.setVisibility(View.GONE);
                 mCallIncomingPageView.setVisibility(View.VISIBLE);
                 break;
             case ONGOING:
@@ -310,5 +323,24 @@ public class CallActivity extends Activity implements ICallPage.IView{
                 mMediaPlayer.pause();
             }
         }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public void showNetworkNotification(String type, String s) {
+        if(type.equals("success")){
+            mNotificationView.setBackgroundResource(R.color.Notification_Success);
+        } else  if(type.equals("error")){
+            mNotificationView.setBackgroundResource(R.color.Notification_Error);
+        } else{
+            mNotificationView.setBackgroundResource(R.color.Notification_Progress);
+        }
+        mNotificationView.setText(s);
+        mNotificationView.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                mNotificationView.setVisibility(View.GONE);
+            }
+        }, 15000);
     }
 }

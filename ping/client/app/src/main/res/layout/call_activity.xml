@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_call"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:background="#000000"
     android:layout_height="match_parent">
@@ -46,4 +47,18 @@
         android:visibility="gone"
         android:layout_height="match_parent">
     </in.co.dipankar.ping.activities.callscreen.subviews.CallOutgoingPageView>
+
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/notification"
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffffff"
+        android:background="@null"
+        android:layout_above="@id/recycler_view"
+        app:customfont="Montserrat-Regular.ttf"
+        android:text="Some Notification"
+        android:textSize="14dp" />
+
 </RelativeLayout>

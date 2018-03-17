@@ -88,4 +88,12 @@ public class CallLandingPageView extends RelativeLayout{
     public void setCallback(Callback callback){
         mCallback = callback;
     }
+
+    public void setVisibility(boolean isVisible){
+        if(isVisible){
+
+        } else{
+            mRecyclerView.setVisibility(GONE);
+        }
+    }
 }

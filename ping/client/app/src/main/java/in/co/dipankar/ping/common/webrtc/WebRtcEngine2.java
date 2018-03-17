@@ -66,7 +66,6 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     // Call information
    String mCallID = "0"; //defulat
-   IRtcUser mPeerUser;
 
     //Renderer
     private SurfaceViewRenderer mSelfRenderer;
@@ -118,11 +117,11 @@ public class WebRtcEngine2 implements IRtcEngine {
         initAudioErrorCallbacks();
         initializedRenderer();
         initilizeRTCConfig();
-        create();
+        reInit();
     }
 
     // this should be create and exposed everytime.
-    private void create(){
+    private void reInit(){
         createMediaConstraints();
         initializePeerConnection();
         initilizeLocalAudioVideoSource();
@@ -522,7 +521,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         assert(userid != null);
         mCallID = callID;
         if(mPeerConnection == null){
-            init();
+            reInit();
         }
         createOffer = true;
         mPeerID = userid;
@@ -539,7 +538,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         assert(userid != null);
         mCallID = callId;
         if(mPeerConnection == null){
-            init();
+            reInit();
         }
         createOffer = true;
         mPeerID = userid;
@@ -554,7 +553,7 @@ public class WebRtcEngine2 implements IRtcEngine {
     @Override
     public void acceptCall(String callId) {
         if(mPeerConnection == null){
-            init();
+            reInit();
         }
         mCallID = callId;
         executor.execute(new Runnable() {
@@ -567,7 +566,6 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     @Override
     public void rejectCall(String callId) {
-        //TODO
         mCallID = callId;
     }
 
@@ -599,11 +597,15 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     @Override
     public void endCall() {
+        cleanup();
+
+    }
+
+    private void cleanup(){
         if(mPeerConnection != null){
             mPeerConnection.dispose();
             mPeerConnection = null;
         }
-
     }
 
 
