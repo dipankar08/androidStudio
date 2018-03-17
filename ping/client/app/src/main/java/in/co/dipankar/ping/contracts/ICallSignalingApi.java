@@ -24,7 +24,10 @@ public interface ICallSignalingApi {
         BUSY ("busy"),
         USER_REJECT ("user_reject"),
         OTHER ("other"),
-        REGULAR("normal");
+        SERVER_ERROR("server_error"),
+        RECEIVED_BY_OTHER_ENDPOINT("received_by_other_endpoint"),
+        REJECT_BY_OTHER_ENDPOINT("reject_by_other_endpoint"),
+        NORMAL("normal");
 
 
         private final String name;

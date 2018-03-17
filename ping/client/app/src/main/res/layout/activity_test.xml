@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="center|top"
         android:layout_height="match_parent">
         <TextView
             android:text="Call Test Page"
@@ -22,6 +22,11 @@
         <EditText
             android:id="@+id/id"
             android:hint="Enter Your ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/to"
+            android:hint="Enter the id of the person you want to call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button

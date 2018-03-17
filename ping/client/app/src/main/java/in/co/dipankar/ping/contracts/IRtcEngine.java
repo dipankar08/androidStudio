@@ -24,10 +24,10 @@ public interface IRtcEngine {
     void setLocalDescriptionToPeerConnection(SessionDescription sdp);
 
     //user API
-    void startAudioCall(String userid);
-    void startVideoCall(String userid);
-    void acceptCall();
-    void rejectCall();
+    void startAudioCall(String callId, String userid);
+    void startVideoCall(String callId, String userid);
+    void acceptCall(String callId);
+    void rejectCall(String callId);
 
     void toggleVideo(boolean isOn);
 

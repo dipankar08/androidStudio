@@ -1,9 +1,11 @@
 package in.co.dipankar.ping.activities.callscreen;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
@@ -11,25 +13,29 @@ import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
 import in.co.dipankar.ping.R;
+import in.co.dipankar.ping.activities.callscreen.subviews.CallEndedPageView;
+import in.co.dipankar.ping.activities.callscreen.subviews.CallIncomingPageView;
+import in.co.dipankar.ping.activities.callscreen.subviews.CallLandingPageView;
+import in.co.dipankar.ping.activities.callscreen.subviews.CallOngoingPageView;
+import in.co.dipankar.ping.activities.callscreen.subviews.CallOutgoingPageView;
+import in.co.dipankar.ping.activities.callscreen.subviews.CallVideoGridView;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
-import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
+import in.co.dipankar.ping.contracts.ICallPage;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcEngine;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 
-public class CallActivity extends Activity {
-    private enum CallState{
-        FREE,
-        OUTGOING_CALL,
-        INCOMMING_CALL,
-        ONCALL
-    };
-    IRtcEngine mRtcEngine;
-    ICallSignalingApi mSignalingApi;
+import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.INCOMMING;
+import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.LANDING;
+import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.OUTGOING;
+
+public class CallActivity extends Activity implements ICallPage.IView{
+
     private boolean VERBOSE = true;
     private final  String TAG ="DIAPNAKR";
 
@@ -41,12 +47,12 @@ public class CallActivity extends Activity {
     CallEndedPageView mCallEndedPageView;
     CallVideoGridView mCallVideoGridView;
 
-    // Utils
+    //Presneter
+    ICallPage.IPresenter mPresenter;
+
+    // Andpid Utisl
+    ICallPage.PageViewType mPageViewType;
     MediaPlayer mMediaPlayer;
-    CallState mCallState;
-    String mCallId;
-    IRtcUser mRtcUser;
-    IRtcDeviceInfo mRtcDeviceInfo;
 
 
     @Override
@@ -54,22 +60,49 @@ public class CallActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.call_activity);
 
-        processIntent();
+        RuntimePermissionUtils.getInstance().init(this);
+        RuntimePermissionUtils.getInstance().askPermission(new String[]{
+                Manifest.permission.CAMERA,
+                Manifest.permission.RECORD_AUDIO
+
+        }, new RuntimePermissionUtils.CallBack() {
+            @Override
+            public void onSuccess() {
+                proceedAfterPermission();
+            }
+
+            @Override
+            public void onFail() {
+                finish();
+            }
+        });
+    }
+
+    private void proceedAfterPermission(){
+        // this order is importnat
         initView();
-        initLibs();
+        processIntent();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        super.onNewIntent(intent);
+        proceedAfterPermission();
     }
 
     private void processIntent(){
-        //Build this from intent.
         Intent intent = getIntent();
-        mRtcUser = new RtcUser(intent.getStringExtra("name"),intent.getStringExtra("id"),"123","xxx");
-        mRtcDeviceInfo= new RtcDeviceInfo("10","Pixel","10");
+        IRtcUser mRtcUser = (IRtcUser) intent.getSerializableExtra("RtcUser");
+        String deviceid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        IRtcDeviceInfo mRtcDeviceInfo= new RtcDeviceInfo(deviceid,android.os.Build.MODEL,"10");
+        mPresenter = new CallPresenter(this, mRtcUser, mRtcDeviceInfo, mCallVideoGridView);
     }
 
     private void initView() {
         mCallLandingPageView = findViewById(R.id.call_landing_page_view);
-        mCallLandingPageView.setData(mRtcUser);
         mCallLandingPageView.setCallback(mCallLandingPageViewCallBack);
+        mCallLandingPageView.setRecentUser();
 
         mCallIncomingPageView = findViewById(R.id.call_incoming_page_view);
         mCallIncomingPageView.setCallback(mCallIncomingPageViewCallBack);
@@ -89,136 +122,29 @@ public class CallActivity extends Activity {
 
         mCallLandingPageView.setVisibility(View.VISIBLE);
 
-    }
-
-    private void initLibs() {
-        DLog.d("init Libs....");
-
-
-
-        // Singlaing info
-        mSignalingApi = new SocketIOSignaling();
-        mSignalingApi.addCallback(callback);
-        mSignalingApi.connect();
-        mSignalingApi.sendRegister(mRtcUser,mRtcDeviceInfo);
-
-        //RTC
-        mRtcEngine = new WebRtcEngine2(this,mRtcUser, mSignalingApi, mCallVideoGridView.getSelfVideoView(),
-                mCallVideoGridView.getPeerVideoView());
-        mRtcEngine.setCallback(rtcCallback);
-
-        //Mediaplayer
         mMediaPlayer = MediaPlayer.create(this, R.raw.tone);
-        mCallState = CallState.FREE;
     }
-
-    //private helper
-    void switchToView(View view) {
-        mCallLandingPageView.setVisibility(View.GONE);
-        mCallOutgoingPageView.hide();
-        mCallIncomingPageView.setVisibility(View.GONE);
-        mCallOngoingPageView.setVisibility(View.GONE);
-        mCallEndedPageView.setVisibility(View.GONE);
-        if(view != null) {
-            view.setVisibility(View.VISIBLE);
-        }
-        String viewName = view.getClass().getSimpleName();
-        if(viewName.equals("CallOutgoingPageView") || viewName.equals("CallIncomingPageView")){
-            mMediaPlayer.start();
-        }
-        else{
-            if(mMediaPlayer!= null && mMediaPlayer.isPlaying()){
-                mMediaPlayer.pause();
-            }
-        }
-        // update the state
-        switch(view.getClass().getSimpleName()){
-            case "CallOutgoingPageView":
-                mCallState = CallState.OUTGOING_CALL;
-                break;
-            case "CallIncomingPageView":
-                mCallState = CallState.INCOMMING_CALL;
-                break;
-            case "OngoingPageView":
-                mCallState = CallState.OUTGOING_CALL;
-                break;
-            case "CallEndedPageView":
-                mCallState = CallState.FREE;
-                break;
-            case "CallLandingPageView":
-                mCallState = CallState.FREE;
-                break;
-        }
-    }
-
-    // Callbacks ..
-    private ICallSignalingApi.ICallSignalingCallback  callback = new ICallSignalingApi.ICallSignalingCallback(){
-        @Override
-        public void onReceivedOffer(String callid, SessionDescription sdp, IRtcUser user) {
-            mCallId = callid;
-            if(mCallState == CallState.FREE) {
-                mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
-                switchToView(mCallIncomingPageView);
-            } else{
-                mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.BUSY ,"user is busy with:"+mCallState.toString());
-            }
-        }
-
-        @Override
-        public void onReceivedAnswer(String callid, SessionDescription sdp) {
-            mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
-            switchToView(mCallOngoingPageView);
-        }
-
-        @Override
-        public void onReceivedCandidate(String callid, IceCandidate ice) {
-            mRtcEngine.addIceCandidateToPeerConnection(ice);
-        }
-
-        @Override
-        public void onReceivedEndCall(String callid,ICallSignalingApi.EndCallType type, String reason) {
-            mCallEndedPageView.setEndString(type,reason);
-            switchToView(mCallEndedPageView);
-        }
-    };
-
-    private IRtcEngine.Callback rtcCallback = new IRtcEngine.Callback(){
-
-        @Override
-        public void onSendOffer() {
-            switchToView(mCallOutgoingPageView);
-        }
-
-        @Override
-        public void onSendAns() {
-            switchToView(mCallOngoingPageView);
-        }
-
-        @Override
-        public void onFailure(String s) {
-            Log.d("DIPANKAR","Some Error:"+s);
-        }
-    };
 
     private CallLandingPageView.Callback mCallLandingPageViewCallBack= new CallLandingPageView.Callback(){
         @Override
-        public void onClickAudioCallBtn() {
-            startAudioInternal();
+        public void onClickAudioCallBtn(IRtcUser user) {
+
+            mPresenter.startAudio(user);
         }
         @Override
-        public void onClickVideoCallBtn() {
-          startVideoInternal();
+        public void onClickVideoCallBtn(IRtcUser user) {
+          mPresenter.startVideo(user);
         }
     };
 
     private CallIncomingPageView.Callback mCallIncomingPageViewCallBack= new CallIncomingPageView.Callback(){
         @Override
         public void onAccept() {
-           acceptCallInternal();
+            mPresenter.acceptCall();
         }
         @Override
         public void onReject() {
-            rejectCallInternal();
+            mPresenter.rejectCall();
         }
     };
 
@@ -226,22 +152,21 @@ public class CallActivity extends Activity {
     private CallOngoingPageView.Callback mCallOngoingPageViewCallBack= new CallOngoingPageView.Callback(){
         @Override
         public void onClickEnd() {
-            mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.REGULAR,"Normal ends");
-            endCallInternal();
+            mPresenter.endCall();
         }
         @Override
         public void onClickToggleVideo(boolean isOn) {
-            mRtcEngine.toggleVideo(isOn);
+            mPresenter.toggleVideo(isOn);
         }
 
         @Override
         public void onClickToggleAudio(boolean isOn) {
-            mRtcEngine.toggleAudio(isOn);
+            mPresenter.toggleAudio(isOn);
         }
 
         @Override
         public void onClickToggleCamera(boolean isOn) {
-            mRtcEngine.toggleCamera(isOn);
+            mPresenter.toggleCamera(isOn);
         }
 
         @Override
@@ -265,18 +190,17 @@ public class CallActivity extends Activity {
 
         @Override
         public void onClickedEnd() {
-            mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.OTHER,"Normal ends");
-            endCallInternal();
+            mPresenter.endCall();
         }
 
         @Override
         public void onClickedToggleVideo(boolean isOn) {
-            mRtcEngine.toggleVideo(isOn);
+            mPresenter.toggleVideo(isOn);
         }
 
         @Override
         public void onClickedToggleAudio(boolean isOn) {
-            mRtcEngine.toggleAudio(isOn);
+            mPresenter.toggleAudio(isOn);
         }
     };
     private CallEndedPageView.Callback mCallEndedPageViewCallBack= new CallEndedPageView.Callback(){
@@ -288,7 +212,7 @@ public class CallActivity extends Activity {
 
         @Override
         public void onClickRedail() {
-            startVideoInternal();
+           // mPresenter.startVideo();
         }
     };
     private CallVideoGridView.Callback mCallVideoGridViewCallBack = new CallVideoGridView.Callback(){
@@ -309,28 +233,6 @@ public class CallActivity extends Activity {
         }
     };
 
-    // Intrenal Calls.
-    private void endCallInternal(){
-        mRtcEngine.endCall();
-        switchToView(mCallEndedPageView);
-    }
-    private void startAudioInternal(){
-        switchToView(mCallOutgoingPageView);
-        mRtcEngine.startAudioCall("1");
-    }
-    private  void startVideoInternal(){
-        switchToView(mCallOutgoingPageView);
-        mRtcEngine.startVideoCall("1");
-    }
-    private void acceptCallInternal(){
-        switchToView(mCallOngoingPageView);
-        mRtcEngine.acceptCall();
-    }
-    private void rejectCallInternal(){
-        mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.USER_REJECT," User reject a call");
-        mRtcEngine.rejectCall();
-        switchToView(mCallEndedPageView);
-    }
 
     @Override
     public void onStart() {
@@ -342,15 +244,12 @@ public class CallActivity extends Activity {
     public void onResume() {
         super.onResume();
         if (VERBOSE) Log.v(TAG, "+ ON RESUME +");
-        mSignalingApi.disconnect();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         if (VERBOSE) Log.v(TAG, "- ON PAUSE -");
-        mSignalingApi.connect();
-        mSignalingApi.sendRegister(mRtcUser,mRtcDeviceInfo);
     }
 
     @Override
@@ -364,5 +263,52 @@ public class CallActivity extends Activity {
         super.onDestroy();
         if (VERBOSE) Log.v(TAG, "- ON DESTROY -");
     }
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_to_right);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+                RuntimePermissionUtils.getInstance().onRequestPermissionsResult(requestCode,permissions,grantResults);
+    }
 
+    private void hideAll(){
+        mCallLandingPageView.setVisibility(View.GONE);
+        mCallOutgoingPageView.setVisibility(View.GONE);
+        mCallIncomingPageView.setVisibility(View.GONE);
+        mCallOngoingPageView.setVisibility(View.GONE);
+        mCallEndedPageView.setVisibility(View.GONE);
+    }
+    //all override
+    @Override
+    public void switchToView(ICallPage.PageViewType pageViewType) {
+        hideAll();
+        switch(pageViewType){
+            case LANDING:
+                mCallLandingPageView.setVisibility(View.VISIBLE);
+                break;
+            case INCOMMING:
+                mCallIncomingPageView.setVisibility(View.VISIBLE);
+                break;
+            case ONGOING:
+                mCallOngoingPageView.setVisibility(View.VISIBLE);
+                break;
+            case ENDED:
+                mCallEndedPageView.setVisibility(View.VISIBLE);
+                break;
+            case OUTGOING:
+                mCallOutgoingPageView.setVisibility(View.VISIBLE);
+                break;
+        }
+        if(pageViewType == OUTGOING|| pageViewType == INCOMMING){
+            mMediaPlayer.start();
+        }
+        else{
+            if(mMediaPlayer!= null && mMediaPlayer.isPlaying()){
+                mMediaPlayer.pause();
+            }
+        }
+    }
 }

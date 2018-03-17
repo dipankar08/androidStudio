@@ -13,9 +13,11 @@ import java.net.URISyntaxException;
 
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
+import in.co.dipankar.ping.contracts.Configuration;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.utils.DLog;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -30,7 +32,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
     private static final String REGISTER = "register";
     private static final String SDP_MID = "sdpMid";
     private static final String SDP_M_LINE_INDEX = "sdpMLineIndex";
-    private static final String SIGNALING_URI = "http://192.168.1.106:7000";
+
 
     private ICallSignalingApi.ICallSignalingCallback mCallback;
 
@@ -40,7 +42,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
     @Override
     public void connect() {
         socket.connect();
-        Log.e("DIP111", "Connecting ... ");
+        DLog.e("Send Connecting");
     }
 
     @Override
@@ -50,13 +52,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     @Override
     public void sendOffer(String peerID, String callId, Object description) {
-        Log.e("DIP111", "Send Offer");
+        DLog.e("Send Offer");
         try {
             JSONObject obj = new JSONObject();
             obj.put(PEER_ID,peerID);
             obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put(SDP,description);
-            obj.put(CALLID,mRtcUser.getUserId());
+            obj.put(CALLID,callId);
             socket.emit(OFFER, obj);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -65,7 +67,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     @Override
     public void sendAnswer(String callId, Object description) {
-        Log.e("DIP111", "Send Answer");
+        DLog.e("Send Answer");
         try {
             JSONObject obj = new JSONObject();
             obj.put(CALLER_ID,mRtcUser.getUserId());
@@ -80,7 +82,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     @Override
     public void sendCandidate(String callId, IceCandidate iceCandidate) {
-        Log.e("DIP111", "--> sendCandidate");
+        DLog.e("Send Ice");
         try {
             JSONObject obj = new JSONObject();
             obj.put(CALLID,callId);
@@ -96,7 +98,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     @Override
     public void sendEndCall(String callId, EndCallType type, String reason) {
-        Log.e("DIP111", "--> SendEndCall");
+        DLog.e("Send EndCall");
         try {
             JSONObject obj = new JSONObject();
             obj.put(CALLID,callId);
@@ -113,13 +115,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
     public void sendRegister(IRtcUser user, IRtcDeviceInfo device) {
         mRtcUser = user;
         mRtcDeviceInfo = device;
-        Log.e("DIP111",  "--> sendRegister");
+        DLog.e("Send Register");
         try {
             JSONObject obj = new JSONObject();
             obj.put("user_id", mRtcUser.getUserId());
             obj.put("user_name", mRtcUser.getUserName());
             obj.put("user_details", mRtcUser.toString());
-            obj.put("devjce_id",mRtcDeviceInfo.getDeviceId());
+            obj.put("device_id",mRtcDeviceInfo.getDeviceId());
             obj.put("device_loc", mRtcDeviceInfo.getDeviceLocation());
             obj.put("device_name", mRtcDeviceInfo.getDeviceName());
             socket.emit(REGISTER, obj);
@@ -132,10 +134,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
     public void addCallback(ICallSignalingApi.ICallSignalingCallback callback){
         mCallback = callback;
     }
+    private void runOnUIThread(Runnable runnable){
+        new Handler(Looper.getMainLooper()).post(runnable);
+    }
 
 
+    // Incomming call handler...
     private void onRecvAns(Object ...args ){
-        Log.e("DIP111","Receved Ans  Call");
+        DLog.e("Received Answer");
         try {
             JSONObject obj =  new JSONObject(args[0].toString());
             final SessionDescription sdp = new SessionDescription(SessionDescription.Type.ANSWER,
@@ -155,13 +161,10 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
-    private void runOnUIThread(Runnable runnable){
-        new Handler(Looper.getMainLooper()).post(runnable);
-    }
 
 
     void onRecvOffer(Object ... args){
-        Log.d("DIP111"," SHOW INCOMMING RING UI");
+        DLog.e("Received Offer");
         try {
             JSONObject obj = new JSONObject(args[0].toString());
             final SessionDescription sdp = new SessionDescription(SessionDescription.Type.OFFER,
@@ -184,7 +187,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
     void onRecvIce(Object ... args){
-        Log.d("DIP111"," SHOW INCOMMING RING UI");
+        DLog.e("Received Ice");
         try {
             JSONObject obj = new JSONObject(args[0].toString());
             final IceCandidate ice = new IceCandidate(obj.getString(SDP_MID),
@@ -206,7 +209,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
     }
 
     void onRecvEndCall(Object ... args){
-        Log.d("DIP111"," SHOW INCOMMING ENd call ");
+        DLog.e("Received EndCall");
         try {
             JSONObject obj = new JSONObject(args[0].toString());
             final String type = obj.getString("type");
@@ -216,7 +219,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedEndCall(callId, EndCallType.getByString(type), reason);
+                        mCallback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
                     }
                 });
             }
@@ -253,7 +256,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
     public SocketIOSignaling() {
         if(socket == null){
             try {
-                socket = IO.socket(SIGNALING_URI);
+                socket = IO.socket(Configuration.SIGNALING_ENDPOINT);
                 init();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
@@ -261,9 +264,6 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
-
-
     private static  Socket socket;
-    private final String TAG = "DIPANKAR";
 
 }

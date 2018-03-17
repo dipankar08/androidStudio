@@ -30,7 +30,11 @@ var SessionToUserID = {}
 var CallToSessionList = {}
 
 function getAllSessionForUser(user_id){
-    return allLiveConn[user_id][endpoints].keys()
+    if(allLiveConn[user_id]){
+        return Object.keys(allLiveConn[user_id].endpoints)
+    } else{
+        return []
+    }
 }
 
 ///////// contrats with JAVA  - please Don't mess up
@@ -46,15 +50,34 @@ function _getIcePayload(sdpMid, sdpMLineIndex, sdp, call_id){
 function _getEndCallPayload(call_id, type,reason){
     return {"type":type,"call_id":call_id,"reason":reason}
 }
+function _getInvalidRequestPayload(type,reason){
+    return {"type":type,"reason":reason}
+}
 
-
+function log(type, ops,  session){
+    if(type == 'in'){
+        type ="IN"
+    } else if(type =="out"){
+        type ="OUT"
+    }
+    // data to be snet
+    if(SessionToUserID[session] && allLiveConn[SessionToUserID[session]].endpoints){
+        console.log('['+type+'] '+ops+' Call ( session: ' + session+ ", Device:"+ allLiveConn[SessionToUserID[session]].endpoints[session].device_name+")");
+    } else{
+        console.log('['+type+'] '+ops+' Call ( session: ' + session +")");
+    }
+}
 // Socket handlaer starts here...
 io.sockets.on('connection', function (client) {
-    console.log('<-- new connection: ' + client.id);
+    log("in", "connection",  client.id);
 
-    // You must do a registration for geting any callback
+    /*******************************************************************
+     * 
+     *     Connect, Register and Diconnect
+     * 
+     * *****************************************************************/
+    // In this section we have connect and disconnect 
     client.on('register', function (data) {
-        console.log('<-- register Received: ' + JSON.stringify(data));
         if(!data.user_id){
             return;
         }
@@ -64,20 +87,50 @@ io.sockets.on('connection', function (client) {
             }
             allLiveConn[data.user_id] = {"name":data.user_name, "status":"free","endpoints":{},"user_details":data.user_details} 
         }
-        var current_endpoint ={"device_id":data.device_id, "device_location":data.location}
+        // If The Same register is comming from endpoint - You might be calling 
+        for( var ep in allLiveConn[data.user_id].endpoints){
+            if(ep.device_id == data.device_id){
+                invalidRequestDetails = _getInvalidRequestPayload("duplicate","Looks like you are calling register multiple times.")
+                sendToSelf("invalid_playload",invalidRequestDetails)
+                return;
+            }
+        }
+        //All Good update the endpoints
+        var current_endpoint = {"device_id":data.device_id,"device_name":data.device_name, "device_location":data.device_loc}
         var session = client.id;
         allLiveConn[data.user_id]["endpoints"][session] = current_endpoint;
         SessionToUserID[session] = data.user_id;
-        console.log("register: "+JSON.stringify(allLiveConn))
-        //sendToAll('onlineusers', JSON.stringify({"users":allLiveConn}));
+        log("in", "register",  client.id);
+        console.log("[Info]: Now Live "+Object.keys(SessionToUserID).length)
     });
+    client.on('disconnect', function (details) {
+        log("in", "disconnect",  client.id);
+        session = client.id
+        user_id = SessionToUserID[session]
+        delete SessionToUserID[session]
+        if(allLiveConn[user_id]){
+            delete allLiveConn[user_id]["endpoints"][session]
+        }
+        console.log("[Info]: Now Live "+Object.keys(allLiveConn).length)
+    });
+
+
+
+
+    /*******************************************************************
+     * 
+     *     Offer, Answer and candidate
+     * 
+     * *****************************************************************/
+
+
 
     // When we recved an offer(send a call request) we can do the following
     // first, check if the user if offline - just send a messege to self as endcall.
     // second, check if the user is busy - if yes Send a endCall with say busy.
     // third, find all the sessions/endpoints and send the offer to all.
     client.on('offer', function (details) {
-        console.log('<-- offer: ' + JSON.stringify(details));
+        log("in", "offer",  client.id)
         var call_id = details.call_id
         var user_id = details.user_id
         var session = client.id
@@ -85,21 +138,36 @@ io.sockets.on('connection', function (client) {
         var peer_id = details.peer_id;
         var sdp = details.sdp;
 
-        //user offline
-        if(SessionToUserID['peer_id'] == undefined){
-            endCallDetails = _getEndCallPayload(call_id,"offline","The peer is offline")
+        //caller user offline
+        if(!allLiveConn[user_id] || !allLiveConn[user_id].endpoints){
+            endCallDetails = _getEndCallPayload(call_id,"offline","Looks like you are not yet register.")
             sendToSelf("endcall",endCallDetails)
             return;
         }
-        //user busy
+        //caller user busy
         if(allLiveConn[user_id]['status'] =="busy"){
-            endCallDetails = _getEndCallPayload(call_id,"busy","This user is busy")
+            endCallDetails = _getEndCallPayload(call_id,"busy","Looks like you are are busy in another call")
+            sendToSelf("endcall",endCallDetails)
+            //TODO:
+            allLiveConn[user_id]['status'] = "free";
+            return;
+        }
+
+        //Peer user offline
+        if(!allLiveConn[peer_id] || !allLiveConn[peer_id].endpoints){
+        endCallDetails = _getEndCallPayload(call_id,"offline","Looks peer is offline")
+        sendToSelf("endcall",endCallDetails)
+        return;
+        }
+        //peer user busy
+        if(allLiveConn[user_id]['status'] =="busy"){
+            endCallDetails = _getEndCallPayload(call_id,"busy","Looks like peer is busy in another call")
             sendToSelf("endcall",endCallDetails)
             return;
         }
+
         // All is OK. send the sdp to all endpoint
         var session_list = getAllSessionForUser(peer_id);
-        var details = "todo" //JSON.stringify(details)
         var offerCallDetails = _getOfferPayload(call_id, sdp,details)
         sendToSpacificListExceptSender(session_list, 'offer',offerCallDetails)
         
@@ -112,7 +180,7 @@ io.sockets.on('connection', function (client) {
     // Here an endpoint says that a session accepted the offer - it means we should send the ans to author
     // and also send endCall Notification for all other session of that user.
     client.on('answer', function (details) {
-        console.log('<-- answer: ' + JSON.stringify(details));
+        log("in", "answer",  client.id);
 
         call_id = details.call_id
         session = client.id
@@ -122,14 +190,14 @@ io.sockets.on('connection', function (client) {
         sendToSpacific(CallToSessionList[call_id].author,"answer",ansDeatails)
 
         //send end all to all others
-        var endDetails ={}
+        var endDetails = _getEndCallPayload(call_id,'received_by_other_endpoint',"You call is received by other endpoint");
         var session_list = getAllSessionForUser(SessionToUserID[session]);
         sendToSpacificListExceptSender(session_list, "endcall", endDetails);
     });
     
     // We we recv an ice we should send it to all invites - Or Should i sned to only acceptance?
     client.on('candidate', function (details) {
-        console.log('<-- candidate: ' + JSON.stringify(details));
+        log("in", "candidate",  client.id);
         if(!CallToSessionList[details.call_id]){
             return;
         }
@@ -138,17 +206,35 @@ io.sockets.on('connection', function (client) {
         sendToSpacificListExceptSender(session_list, "candidate",details);
     });
 
+
+    /*******************************************************************
+     * 
+     *     End and Reject Calls
+     * 
+     * *****************************************************************/
+
     //We had a endCall Message - In thase case we should send endcall to all invites to that call.
     client.on('endcall', function (details) {
-        console.log('<-- endcall: ' + JSON.stringify(details));
+        log("in", "endcall",  client.id);
+        session = client.id
+        user_id = SessionToUserID[session]
+
+        //first make the user free
+        if(allLiveConn[user_id]){
+            allLiveConn[user_id]['status'] = 'free'
+        }
+        
+        // check if there is a call exist.
         if(CallToSessionList[details.call_id] == undefined){
             return;
         }
+        
         var session_list = CallToSessionList[details.call_id]['invites'];
-        sendToSpacificListExceptSender(session_list, "endcall",details);
+        var endCallDetails = _getEndCallPayload(details.call_id,"user_reject","this call is rejceted by peer")
+        sendToSpacificListExceptSender(session_list, "endcall",endCallDetails);
 
         // get all accpets and mark them free
-        var session_list = CallToSessionList[details.call_id]['accepted'];
+        var session_list = CallToSessionList[details.call_id]['invites'];
         for( var s in session_list){
             var user = SessionToUserID[s]
             if(user != undefined){
@@ -157,30 +243,31 @@ io.sockets.on('connection', function (client) {
         }
         //clean up delete the list
         delete CallToSessionList[details.call_id]
-
     });
 
+    /*******************************************************************
+     * 
+     *     Write your test and Experiments
+     * 
+     * *****************************************************************/
 
     // Listen for test and disconnect events
     client.on('test', function (details) {
-        console.log('<-- Test: "' + data + '" from client: ' + client.id);
+        log("in", "test",  client.id);
         client.emit('test', "Cheers, " + client.id);
     });
-    client.on('disconnect', function (details) {
-        console.log('<-- disconnect: from' + client.id);
-        session = client.id
-        user_id = SessionToUserID[session]
-        delete SessionToUserID[session]
-        if(allLiveConn[user_id]){
-            delete allLiveConn[user_id]["endpoints"][session]
-        }
-        console.log("Data after disconnect"+JSON.stringify(allLiveConn))
-    });
+    
  
-
+ 
+    /*******************************************************************
+     * 
+     *     Helper functions
+     * 
+     * *****************************************************************/
     //helpers
     function sendToSelf(tag, data){
-        console.log('--> sendToSelf:' + tag);
+        log("out", tag,  client.id);
+        //console.log('--> sendToSelf:' + tag);
         client.emit(tag, data);
     }
 
@@ -210,14 +297,16 @@ io.sockets.on('connection', function (client) {
     }
 
     function sendToSpacific(socketid, tag, data){
-        console.log('--> sendToSpacific:' + tag);
+        //console.log('--> sendToSpacific:' + tag);
+        log("out", tag,  socketid);
         client.broadcast.to(socketid).emit(tag,data);
     }
     function sendToSpacificListExceptSender(socketids, tag, data){
         if(socketids == undefined) return;
-        console.log('--> sendToSpacificListExceptSender: ' + tag);
         for(socketid of socketids){
             if(socketid == client.id) continue;
+            log("out", tag,  socketid);
+            //console.log("[Info] Sending messge of type "+tag+" to "+socketid)
             client.broadcast.to(socketid).emit(tag,data);
         }
     }

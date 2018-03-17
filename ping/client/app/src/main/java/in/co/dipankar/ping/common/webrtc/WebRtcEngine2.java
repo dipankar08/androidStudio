@@ -65,7 +65,7 @@ public class WebRtcEngine2 implements IRtcEngine {
 
 
     // Call information
-   String mCallID;
+   String mCallID = "0"; //defulat
    IRtcUser mPeerUser;
 
     //Renderer
@@ -263,15 +263,12 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     }
 
-    private String getRandomCallId(){
-        return "1111";
-    }
+
     SdpObserver sdpObserver = new SdpObserver() {
         @Override
         public void onCreateSuccess(SessionDescription sessionDescription) {
             mPeerConnection.setLocalDescription(sdpObserver, sessionDescription);
             if (createOffer) {
-                mCallID = getRandomCallId();
                 mCallSingleingApi.sendOffer(mPeerID, mCallID, sessionDescription.description);
                 runOnUIThread(new Runnable() {
                     @Override
@@ -521,8 +518,9 @@ public class WebRtcEngine2 implements IRtcEngine {
     }
 
     @Override
-    public void startAudioCall(String userid) {
+    public void startAudioCall(String callID, String userid) {
         assert(userid != null);
+        mCallID = callID;
         if(mPeerConnection == null){
             init();
         }
@@ -537,8 +535,9 @@ public class WebRtcEngine2 implements IRtcEngine {
     }
 
     @Override
-    public void startVideoCall(String userid) {
+    public void startVideoCall(String callId, String userid) {
         assert(userid != null);
+        mCallID = callId;
         if(mPeerConnection == null){
             init();
         }
@@ -553,10 +552,11 @@ public class WebRtcEngine2 implements IRtcEngine {
     }
 
     @Override
-    public void acceptCall() {
+    public void acceptCall(String callId) {
         if(mPeerConnection == null){
             init();
         }
+        mCallID = callId;
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -566,8 +566,9 @@ public class WebRtcEngine2 implements IRtcEngine {
     }
 
     @Override
-    public void rejectCall() {
+    public void rejectCall(String callId) {
         //TODO
+        mCallID = callId;
     }
 
     @Override

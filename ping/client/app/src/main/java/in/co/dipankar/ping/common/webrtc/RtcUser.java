@@ -8,23 +8,23 @@ import in.co.dipankar.ping.contracts.IRtcUser;
 
 public class RtcUser implements IRtcUser {
 
-    String name, id, deviceID,profilePictureUrl;
+    String name, id,profilePictureUrl, mCoverPrctureUrl;
 
-    @Override
-    public String getDeviceID() {
-        return deviceID;
-    }
-
-    public RtcUser(String name, String id, String deviceID, String profilePictureUrl) {
+    public RtcUser(String name, String id, String profilePictureUrl,String coverPictureUrl) {
         this.name = name;
         this.id = id;
-        this.deviceID = deviceID;
         this.profilePictureUrl = profilePictureUrl;
+        this.mCoverPrctureUrl = coverPictureUrl;
     }
 
     @Override
     public String getProfilePictureUrl() {
         return profilePictureUrl;
+    }
+
+    @Override
+    public String getCoverPictureUrl() {
+        return mCoverPrctureUrl;
     }
 
     @Override
