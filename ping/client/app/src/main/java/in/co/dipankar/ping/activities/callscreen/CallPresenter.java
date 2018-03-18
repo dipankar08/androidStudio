@@ -47,9 +47,10 @@ public class CallPresenter implements ICallPage.IPresenter {
         mSignalingApi.sendRegister(mRtcUser,mRtcDeviceInfo);
 
         //RTC
-        mRtcEngine = new WebRtcEngine2((Context)mView,mRtcUser, mSignalingApi, mMultiVideoPane.getSelfView(),
-                mMultiVideoPane.getPeerView());
-        mRtcEngine.setCallback(rtcCallback);
+        mRtcEngine = new WebRtcEngine2((Context)mView,mRtcUser, mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
+        if(mRtcEngine != null) {
+            mRtcEngine.setCallback(rtcCallback);
+        }
     }
     // Callbacks ..
     private ICallSignalingApi.ICallSignalingCallback  callback = new ICallSignalingApi.ICallSignalingCallback(){
@@ -71,19 +72,25 @@ public class CallPresenter implements ICallPage.IPresenter {
         @Override
         public void onReceivedOffer(String callid, SessionDescription sdp, IRtcUser user) {
             mCallId = callid;
-            mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+            if(mRtcEngine != null) {
+                mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+            }
             mView.switchToView(ICallPage.PageViewType.INCOMMING);
         }
 
         @Override
         public void onReceivedAnswer(String callid, SessionDescription sdp) {
-            mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+            if(mRtcEngine != null) {
+                mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+            }
             mView.switchToView(ICallPage.PageViewType.ONGOING);
         }
 
         @Override
         public void onReceivedCandidate(String callid, IceCandidate ice) {
-            mRtcEngine.addIceCandidateToPeerConnection(ice);
+            if(mRtcEngine != null) {
+                mRtcEngine.addIceCandidateToPeerConnection(ice);
+            }
         }
 
         @Override
@@ -117,7 +124,9 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void endCall(){
-        mRtcEngine.endCall();
+        if(mRtcEngine != null) {
+            mRtcEngine.endCall();
+        }
         mView.switchToView(ICallPage.PageViewType.ENDED);
     }
 
@@ -126,41 +135,55 @@ public class CallPresenter implements ICallPage.IPresenter {
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
         mCallId = getRandomCallId();
         mPeerRtcUser = peer;
-        mRtcEngine.startAudioCall(mCallId, mPeerRtcUser.getUserId());
+        if(mRtcEngine != null) {
+            mRtcEngine.startAudioCall(mCallId, mPeerRtcUser.getUserId());
+        }
     }
     @Override
     public void startVideo(IRtcUser peer){
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
         mCallId = getRandomCallId();
         mPeerRtcUser = peer;
-        mRtcEngine.startVideoCall(mCallId, mPeerRtcUser.getUserId());
+        if(mRtcEngine != null) {
+            mRtcEngine.startVideoCall(mCallId, mPeerRtcUser.getUserId());
+        }
     }
 
     @Override
     public void acceptCall(){
         mView.switchToView(ICallPage.PageViewType.ONGOING);
-        mRtcEngine.acceptCall(mCallId);
+        if(mRtcEngine != null) {
+            mRtcEngine.acceptCall(mCallId);
+        }
     }
 
     @Override
     public void rejectCall(){
         mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.USER_REJECT," User reject a call");
-        mRtcEngine.rejectCall(mCallId);
+        if(mRtcEngine != null) {
+            mRtcEngine.rejectCall(mCallId);
+        }
         mView.switchToView(ICallPage.PageViewType.ENDED);
     }
 
     @Override
     public void toggleVideo(boolean isOn) {
-        mRtcEngine.toggleVideo(isOn);
+        if(mRtcEngine != null) {
+            mRtcEngine.toggleVideo(isOn);
+        }
     }
 
     @Override
     public void toggleCamera(boolean isOn) {
-        mRtcEngine.toggleCamera(isOn);
+        if(mRtcEngine != null) {
+            mRtcEngine.toggleCamera(isOn);
+        }
     }
 
     @Override
     public void toggleAudio(boolean isOn) {
-        mRtcEngine.toggleAudio(isOn);
+        if(mRtcEngine != null) {
+            mRtcEngine.toggleAudio(isOn);
+        }
     }
 }

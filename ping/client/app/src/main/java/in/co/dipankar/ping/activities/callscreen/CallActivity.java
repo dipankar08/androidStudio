@@ -10,7 +10,9 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
@@ -132,6 +134,15 @@ public class CallActivity extends Activity implements ICallPage.IView{
         mMediaPlayer = MediaPlayer.create(this, R.raw.tone);
 
         mNotificationView = findViewById(R.id.notification);
+
+        // test
+        Button test = findViewById(R.id.test);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToView(ICallPage.PageViewType.ENDED);
+            }
+        });
     }
 
     private CallLandingPageView.Callback mCallLandingPageViewCallBack= new CallLandingPageView.Callback(){
@@ -283,27 +294,27 @@ public class CallActivity extends Activity implements ICallPage.IView{
     }
 
     private void hideAll(){
-        mCallLandingPageView.setVisibility(false);
+        mCallLandingPageView.requestFocus();
         mCallLandingPageView.setVisibility(View.GONE);
-        mCallOutgoingPageView.setVisibility(View.GONE);
-        mCallIncomingPageView.setVisibility(View.GONE);
-        mCallOngoingPageView.setVisibility(View.GONE);
-        mCallEndedPageView.setVisibility(View.GONE);
-        mRootView.requestLayout();
-        mCallLandingPageView.invalidate();
+        mCallOutgoingPageView.setVisibility(View.INVISIBLE);
+        mCallIncomingPageView.setVisibility(View.INVISIBLE);
+        mCallOngoingPageView.setVisibility(View.INVISIBLE);
+        mCallEndedPageView.setVisibility(View.INVISIBLE);
     }
     //all override
     @Override
     public void switchToView(ICallPage.PageViewType pageViewType) {
         DLog.e("Swicth To View: "+pageViewType);
+        Toast.makeText(getApplicationContext(), "Swicth To View: "+pageViewType, Toast.LENGTH_SHORT).show();
         hideAll();
         switch(pageViewType){
             case LANDING:
                 mCallLandingPageView.setVisibility(View.VISIBLE);
                 break;
             case INCOMMING:
-                mCallLandingPageView.setVisibility(View.GONE);
                 mCallIncomingPageView.setVisibility(View.VISIBLE);
+                mCallIncomingPageView.requestFocus();
+                //mCallIncomingPageView.invalidate();
                 break;
             case ONGOING:
                 mCallOngoingPageView.setVisibility(View.VISIBLE);
@@ -323,6 +334,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
                 mMediaPlayer.pause();
             }
         }
+
     }
 
     @SuppressLint("ResourceAsColor")

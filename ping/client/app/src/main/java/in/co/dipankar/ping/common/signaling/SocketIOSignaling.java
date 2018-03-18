@@ -38,7 +38,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     private IRtcUser mRtcUser;
     private IRtcDeviceInfo mRtcDeviceInfo;
-
+    Handler mainUIHandler = new Handler(Looper.getMainLooper());
     @Override
     public void connect() {
         mCallback.onTryConnecting();
@@ -207,12 +207,19 @@ public class SocketIOSignaling implements ICallSignalingApi {
             //TODO -- DIPANKAR
             final IRtcUser user = null;
             if(mCallback != null){
-                runOnUIThread(new Runnable() {
+                mainUIHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         mCallback.onReceivedOffer(callId, sdp, user);
                     }
                 });
+                /*
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });*/
             }
 
         } catch (JSONException e) {
