@@ -2,6 +2,8 @@ var socketIO = require('socket.io');
 var server = require('http').createServer().listen(7000, '0.0.0.0');
 var io = socketIO.listen(server);
 
+
+
 // Super simple server:
 //  * One room only. 
 //  * We expect two people max. 
@@ -38,6 +40,27 @@ function getAllSessionForUser(user_id){
 }
 
 ///////// contrats with JAVA  - please Don't mess up
+// Please be consisitance with contracts/ICallSignalingApi.java
+
+var TOPIC_IN_CONNECTION = "connection"
+var TOPIC_IN_REGISTER = "register"
+var TOPIC_IN_DISCONNECT = "disconnect"
+var TOPIC_IN_OFFER = "offer"
+var TOPIC_IN_CANDIDATE = "candidate"
+var TOPIC_IN_ANSWER = "answer"
+var TOPIC_IN_ENDCALL = "endcall"
+var TOPIC_IN_TEST = "test"
+var TOPIC_IN_NOTI = "notification"
+
+var TOPIC_OUT_TEST = "test"
+var TOPIC_OUT_OFFER = "offer"
+var TOPIC_OUT_CANDIDATE = "candidate"
+var TOPIC_OUT_ANSWER = "answer"
+var TOPIC_OUT_ENDCALL = "endcall"
+var TOPIC_OUT_INVALID_PAYLOAD = "invalid_playload"
+var TOPIC_OUT_NOTI = "notification"
+
+
 function _getOfferPayload(call_id, sdp, userinfo){
     return {"call_id":call_id,"sdp":sdp,"userinfo":userinfo}
 }
@@ -52,6 +75,9 @@ function _getEndCallPayload(call_id, type,reason){
 }
 function _getInvalidRequestPayload(type,reason){
     return {"type":type,"reason":reason}
+}
+function _getNotificationPayload(type, msg){
+    return {"type":type,"msg":msg}
 }
 
 function log(type, ops,  session){
@@ -68,7 +94,7 @@ function log(type, ops,  session){
     }
 }
 // Socket handlaer starts here...
-io.sockets.on('connection', function (client) {
+io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
     log("in", "connection",  client.id);
 
     /*******************************************************************
@@ -77,11 +103,12 @@ io.sockets.on('connection', function (client) {
      * 
      * *****************************************************************/
     // In this section we have connect and disconnect 
-    client.on('register', function (data) {
+    client.on(TOPIC_IN_REGISTER, function (data) {
         log("in", "register",  client.id);
         if(!data.user_id){
             return;
         }
+        var notificationPayload = _getNotificationPayload("connected","You are now connected!")
         if(allLiveConn[data.user_id] == undefined){
             if(!data.user_details){
                 data.user_details ={}
@@ -91,8 +118,10 @@ io.sockets.on('connection', function (client) {
         // If The Same register is comming from endpoint - You might be calling 
         for( var ep in allLiveConn[data.user_id].endpoints){
             if(ep.device_id == data.device_id){
+                // make client aware of connectd
+                endToSelf(TOPIC_OUT_NOTI,notificationPayload)
                 invalidRequestDetails = _getInvalidRequestPayload("duplicate","Looks like you are calling register multiple times.")
-                sendToSelf("invalid_playload",invalidRequestDetails)
+                sendToSelf(TOPIC_OUT_INVALID_PAYLOAD,invalidRequestDetails)
                 return;
             }
         }
@@ -102,8 +131,9 @@ io.sockets.on('connection', function (client) {
         allLiveConn[data.user_id]["endpoints"][session] = current_endpoint;
         SessionToUserID[session] = data.user_id;
         console.log("[Info]: Now Live "+Object.keys(SessionToUserID).length)
+        sendToSelf(TOPIC_OUT_NOTI,notificationPayload)
     });
-    client.on('disconnect', function (details) {
+    client.on(TOPIC_IN_DISCONNECT, function (details) {
         log("in", "disconnect",  client.id);
         session = client.id
         user_id = SessionToUserID[session]
@@ -129,7 +159,7 @@ io.sockets.on('connection', function (client) {
     // first, check if the user if offline - just send a messege to self as endcall.
     // second, check if the user is busy - if yes Send a endCall with say busy.
     // third, find all the sessions/endpoints and send the offer to all.
-    client.on('offer', function (details) {
+    client.on(TOPIC_IN_OFFER, function (details) {
         log("in", "offer",  client.id)
         var call_id = details.call_id
         var user_id = details.user_id
@@ -141,13 +171,20 @@ io.sockets.on('connection', function (client) {
         //caller user offline
         if(!allLiveConn[user_id] || !allLiveConn[user_id].endpoints){
             endCallDetails = _getEndCallPayload(call_id,"offline","Looks like you are not yet register.")
-            sendToSelf("endcall",endCallDetails)
+            sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
+            return;
+        }
+        
+        //Toself
+        if(user_id == peer_id){
+            endCallDetails = _getEndCallPayload(call_id,"busy","Self calling is not supported yet!")
+            sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
             return;
         }
         //caller user busy
         if(allLiveConn[user_id]['status'] =="busy"){
             endCallDetails = _getEndCallPayload(call_id,"busy","Looks like you are are busy in another call")
-            sendToSelf("endcall",endCallDetails)
+            sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
             //TODO:
             allLiveConn[user_id]['status'] = "free";
             return;
@@ -155,21 +192,21 @@ io.sockets.on('connection', function (client) {
 
         //Peer user offline
         if(!allLiveConn[peer_id] || !allLiveConn[peer_id].endpoints){
-        endCallDetails = _getEndCallPayload(call_id,"offline","Looks peer is offline")
-        sendToSelf("endcall",endCallDetails)
-        return;
+            endCallDetails = _getEndCallPayload(call_id,"offline","Looks peer is offline")
+            sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
+            return;
         }
         //peer user busy
         if(allLiveConn[user_id]['status'] =="busy"){
             endCallDetails = _getEndCallPayload(call_id,"busy","Looks like peer is busy in another call")
-            sendToSelf("endcall",endCallDetails)
+            sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
             return;
         }
 
         // All is OK. send the sdp to all endpoint
         var session_list = getAllSessionForUser(peer_id);
         var offerCallDetails = _getOfferPayload(call_id, sdp,details)
-        sendToSpacificListExceptSender(session_list, 'offer',offerCallDetails)
+        sendToSpacificListExceptSender(session_list, TOPIC_OUT_OFFER,offerCallDetails)
         
         // make the user busy and add entry to callToSessionList, note that caller also put into inviews
         allLiveConn[user_id]['status'] = "busy"
@@ -179,7 +216,7 @@ io.sockets.on('connection', function (client) {
 
     // Here an endpoint says that a session accepted the offer - it means we should send the ans to author
     // and also send endCall Notification for all other session of that user.
-    client.on('answer', function (details) {
+    client.on(TOPIC_IN_ANSWER, function (details) {
         log("in", "answer",  client.id);
 
         call_id = details.call_id
@@ -187,23 +224,23 @@ io.sockets.on('connection', function (client) {
 
         //send Accptance to author
         var ansDeatails = _getAnswerPayload(call_id,details.sdp)
-        sendToSpacific(CallToSessionList[call_id].author,"answer",ansDeatails)
+        sendToSpacific(CallToSessionList[call_id].author,TOPIC_OUT_ANSWER,ansDeatails)
 
         //send end all to all others
         var endDetails = _getEndCallPayload(call_id,'received_by_other_endpoint',"You call is received by other endpoint");
         var session_list = getAllSessionForUser(SessionToUserID[session]);
-        sendToSpacificListExceptSender(session_list, "endcall", endDetails);
+        sendToSpacificListExceptSender(session_list, TOPIC_OUT_ENDCALL, endDetails);
     });
     
     // We we recv an ice we should send it to all invites - Or Should i sned to only acceptance?
-    client.on('candidate', function (details) {
+    client.on(TOPIC_IN_CANDIDATE, function (details) {
         //log("in", "candidate",  client.id);
         if(!CallToSessionList[details.call_id]){
             return;
         }
         var session_list = CallToSessionList[details.call_id]['invites'];
         var icePayload = _getIcePayload(details.sdpMid,details.sdpMLineIndex,details.sdp,details.call_id)
-        sendToSpacificListExceptSender(session_list, "candidate",details);
+        sendToSpacificListExceptSender(session_list, TOPIC_OUT_CANDIDATE,details);
     });
 
 
@@ -214,7 +251,7 @@ io.sockets.on('connection', function (client) {
      * *****************************************************************/
 
     //We had a endCall Message - In thase case we should send endcall to all invites to that call.
-    client.on('endcall', function (details) {
+    client.on(TOPIC_IN_ENDCALL, function (details) {
         log("in", "endcall",  client.id);
         session = client.id
         user_id = SessionToUserID[session]
@@ -231,7 +268,7 @@ io.sockets.on('connection', function (client) {
         
         var session_list = CallToSessionList[details.call_id]['invites'];
         var endCallDetails = _getEndCallPayload(details.call_id,"user_reject","this call is rejceted by peer")
-        sendToSpacificListExceptSender(session_list, "endcall",endCallDetails);
+        sendToSpacificListExceptSender(session_list, TOPIC_OUT_ENDCALL,endCallDetails);
 
         // get all accpets and mark them free
         var session_list = CallToSessionList[details.call_id]['invites'];
@@ -252,9 +289,9 @@ io.sockets.on('connection', function (client) {
      * *****************************************************************/
 
     // Listen for test and disconnect events
-    client.on('test', function (details) {
+    client.on(TOPIC_IN_TEST, function (details) {
         log("in", "test",  client.id);
-        client.emit('test', "Cheers, " + client.id);
+        client.emit(TOPIC_OUT_TEST, "Cheers, " + client.id);
     });
     
  

@@ -14,22 +14,8 @@ import android.widget.TextView;
 
 public class CallEndedPageView extends RelativeLayout {
 
-    public void setEndString(ICallSignalingApi.EndCallType type, String reason) {
-        if(mType != null){
-            switch (type){
-                case BUSY:
-                    mType.setText("User is busy with other call as this moments!");
-                    break;
-                case OTHER:
-                    mType.setText("Can't connect call due to internal error!");
-                    break;
-                case USER_REJECT:
-                    mType.setText("User reject your call!");
-                    break;
-                case OFFLINE:
-                    mType.setText("Offline!"+reason);
-            }
-        }
+    public void setEndString(String msg) {
+        mType.setText(msg);
     }
 
     public interface Callback {

@@ -41,10 +41,7 @@ public class CallPresenter implements ICallPage.IPresenter {
     }
 
     private void  init(){
-        mSignalingApi = new SocketIOSignaling();
-        mSignalingApi.addCallback(callback);
-        mSignalingApi.connect();
-        mSignalingApi.sendRegister(mRtcUser,mRtcDeviceInfo);
+        mSignalingApi = new SocketIOSignaling(mRtcUser, mRtcDeviceInfo, mSignalingCallback);
 
         //RTC
         mRtcEngine = new WebRtcEngine2((Context)mView,mRtcUser, mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
@@ -53,7 +50,7 @@ public class CallPresenter implements ICallPage.IPresenter {
         }
     }
     // Callbacks ..
-    private ICallSignalingApi.ICallSignalingCallback  callback = new ICallSignalingApi.ICallSignalingCallback(){
+    private ICallSignalingApi.ICallSignalingCallback  mSignalingCallback = new ICallSignalingApi.ICallSignalingCallback(){
         @Override
         public void onTryConnecting() {
             mView.showNetworkNotification("process","Try connecting...");
@@ -95,6 +92,8 @@ public class CallPresenter implements ICallPage.IPresenter {
 
         @Override
         public void onReceivedEndCall(String callid,ICallSignalingApi.EndCallType type, String reason) {
+            String msg = type.toString().toUpperCase()+"!"+reason;
+            mView.updateEndView(msg);
             mView.switchToView(ICallPage.PageViewType.ENDED);
         }
     };

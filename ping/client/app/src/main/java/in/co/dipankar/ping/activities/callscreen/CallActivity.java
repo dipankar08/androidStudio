@@ -355,4 +355,9 @@ public class CallActivity extends Activity implements ICallPage.IView{
             }
         }, 15000);
     }
+
+    @Override
+    public void updateEndView(String msg) {
+        mCallEndedPageView.setEndString(msg);
+    }
 }

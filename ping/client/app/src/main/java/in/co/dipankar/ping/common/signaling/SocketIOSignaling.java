@@ -39,6 +39,73 @@ public class SocketIOSignaling implements ICallSignalingApi {
     private IRtcUser mRtcUser;
     private IRtcDeviceInfo mRtcDeviceInfo;
     Handler mainUIHandler = new Handler(Looper.getMainLooper());
+    private static  Socket socket;
+
+    public SocketIOSignaling(IRtcUser user, IRtcDeviceInfo device, ICallSignalingCallback callback) {
+        mRtcUser = user;
+        mRtcDeviceInfo = device;
+        mCallback = callback;
+        if(socket == null){
+            try {
+                socket = IO.socket(Configuration.SIGNALING_ENDPOINT);
+                init();
+                connect();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    void init(){
+        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvConnect(args);
+            }
+        }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvDisconnect(args);
+            }
+        }).on(SignalType.TOPIC_IN_OFFER.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvOffer(args);
+            }
+        }).on(SignalType.TOPIC_IN_ANSWER.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvAns(args);
+            }
+
+        }).on(SignalType.TOPIC_IN_CANDIDATE.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvIce(args);
+            }
+        }).on(SignalType.TOPIC_IN_ENDCALL.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvEndCall(args);
+            }
+        }).on(SignalType.TOPIC_IN_TEST.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvTest(args);
+            }
+        }).on(SignalType.TOPIC_IN_INVALID_PAYLOAD.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvInvalidPayload(args);
+            }
+        }).on(SignalType.TOPIC_IN_NOTI.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvNoti(args);
+            }
+        });
+    }
+
     @Override
     public void connect() {
         mCallback.onTryConnecting();
@@ -63,7 +130,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(CALLID,callId);
 
             if(socket.connected()) {
-                socket.emit(OFFER, obj);
+                socket.emit(SignalType.TOPIC_OUT_OFFER.type, obj);
             } else{
                 mCallback.onDisconnected();
             }
@@ -84,7 +151,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(CALLID,callId);
 
             if(socket.connected()) {
-                socket.emit(ANSWER, obj);
+                socket.emit(SignalType.TOPIC_OUT_ANSWER.type, obj);
             } else{
                 mCallback.onDisconnected();
             }
@@ -107,7 +174,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(SDP, iceCandidate.sdp);
 
             if(socket.connected()) {
-                socket.emit(CANDIDATE, obj);
+                socket.emit(SignalType.TOPIC_OUT_CANDIDATE.type, obj);
             } else{
                 mCallback.onDisconnected();
             }
@@ -129,7 +196,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put("reason", reason);
 
             if(socket.connected()) {
-            socket.emit(ENDCALL, obj);
+            socket.emit(SignalType.TOPIC_OUT_ENDCALL.type, obj);
             } else{
                 mCallback.onDisconnected();
             }
@@ -138,10 +205,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
-    @Override
-    public void sendRegister(IRtcUser user, IRtcDeviceInfo device) {
-        mRtcUser = user;
-        mRtcDeviceInfo = device;
+    public void sendRegister() {
         DLog.e("Send Register");
         try {
             JSONObject obj = new JSONObject();
@@ -152,14 +216,10 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put("device_loc", mRtcDeviceInfo.getDeviceLocation());
             obj.put("device_name", mRtcDeviceInfo.getDeviceName());
             if(socket.connected()) {
-                socket.emit(REGISTER, obj);
-                mCallback.onConnected();
-            } else{
-                mCallback.onDisconnected();
+                socket.emit(SignalType.TOPIC_OUT_REGISTER.type, obj);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            mCallback.onDisconnected();
         }
     }
 
@@ -173,6 +233,22 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
 
     // Incomming call handler...
+    private void onRecvConnect(Object ...args ){
+        DLog.e("Received onRecvConnect");
+        sendRegister();
+    }
+    private void onRecvDisconnect(Object ...args ){
+        DLog.e("Received onRecvDisconnect");
+        if(mCallback != null){
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    mCallback.onDisconnected();
+                }
+            });
+        }
+    }
+
     private void onRecvAns(Object ...args ){
         DLog.e("Received Answer");
         try {
@@ -193,8 +269,6 @@ public class SocketIOSignaling implements ICallSignalingApi {
             e.printStackTrace();
         }
     }
-
-
 
     void onRecvOffer(Object ... args){
         DLog.e("Received Offer");
@@ -248,14 +322,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
-    void onRecvEndCall(Object ... args){
+    void onRecvEndCall(Object ... args) {
         DLog.e("Received EndCall");
         try {
             JSONObject obj = new JSONObject(args[0].toString());
             final String type = obj.getString("type");
             final String reason = obj.getString("reason");
             final String callId = obj.getString(CALLID);
-            if(mCallback != null){
+            if (mCallback != null) {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
@@ -268,42 +342,65 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
-    void init(){
-            socket.on(OFFER, new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    onRecvOffer(args);
-                }
-            }).on(ANSWER, new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    onRecvAns(args);
-                }
-
-            }).on(CANDIDATE, new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    onRecvIce(args);
-                }
-            }).on(ENDCALL, new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    onRecvEndCall(args);
-                }
-            });
-    }
-
-    public SocketIOSignaling() {
-        if(socket == null){
-            try {
-                socket = IO.socket(Configuration.SIGNALING_ENDPOINT);
-                init();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
+    void onRecvTest(Object ... args) {
+        DLog.e("Received Test");
+        try {
+            JSONObject obj = new JSONObject(args[0].toString());
+            final String type = obj.getString("type");
+            final String reason = obj.getString("reason");
+            final String callId = obj.getString(CALLID);
+            if (mCallback != null) {
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCallback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                    }
+                });
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
-
-    private static  Socket socket;
+    void onRecvInvalidPayload(Object ... args) {
+        DLog.e("Received onRecvInvalidPayload");
+        try {
+            JSONObject obj = new JSONObject(args[0].toString());
+            final String type = obj.getString("type");
+            final String reason = obj.getString("reason");
+            final String callId = obj.getString(CALLID);
+            if (mCallback != null) {
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCallback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                    }
+                });
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    void onRecvNoti(Object ... args) {
+        DLog.e("Received onRecvInvalidPayload");
+        try {
+            JSONObject obj = new JSONObject(args[0].toString());
+            NotificationType type = NotificationType.valueOf(obj.getString("type").toUpperCase());
+            final String msg = obj.getString("msg");
+            switch (type){
+                case CONNECTED:
+                    if(mCallback != null){
+                        runOnUIThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mCallback.onConnected();
+                            }
+                        });
+                    }
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

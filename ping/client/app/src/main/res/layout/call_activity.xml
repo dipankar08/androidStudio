@@ -16,6 +16,7 @@
     <in.co.dipankar.ping.activities.callscreen.subviews.CallLandingPageView
         android:id="@+id/call_landing_page_view"
         android:visibility="gone"
+        android:descendantFocusability = "blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </in.co.dipankar.ping.activities.callscreen.subviews.CallLandingPageView>
@@ -24,6 +25,7 @@
         android:id="@+id/call_ended_page_view"
         android:layout_width="match_parent"
         android:visibility="gone"
+    android:descendantFocusability = "blocksDescendants"
         android:layout_height="match_parent">
     </in.co.dipankar.ping.activities.callscreen.subviews.CallEndedPageView>
 
@@ -31,12 +33,14 @@
         android:id="@+id/call_incoming_page_view"
         android:layout_width="match_parent"
         android:visibility="gone"
+        android:descendantFocusability = "blocksDescendants"
         android:layout_height="match_parent">
     </in.co.dipankar.ping.activities.callscreen.subviews.CallIncomingPageView>
 
     <in.co.dipankar.ping.activities.callscreen.subviews.CallOngoingPageView
         android:id="@+id/call_ongoing_page_view"
         android:visibility="gone"
+        android:descendantFocusability = "blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </in.co.dipankar.ping.activities.callscreen.subviews.CallOngoingPageView>
@@ -44,7 +48,8 @@
     <in.co.dipankar.ping.activities.callscreen.subviews.CallOutgoingPageView
         android:id="@+id/call_outgoing_page_view"
         android:layout_width="match_parent"
-        android:visibility="gone"
+    android:descendantFocusability = "blocksDescendants"
+    android:visibility="gone"
         android:layout_height="match_parent">
     </in.co.dipankar.ping.activities.callscreen.subviews.CallOutgoingPageView>
 

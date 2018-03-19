@@ -9,15 +9,39 @@ import org.webrtc.SessionDescription;
 
 public interface ICallSignalingApi {
 
-    // RTC Related
-    public static final String OFFER = "offer";
-    public static final String ANSWER = "answer";
-    public static final String CANDIDATE = "candidate";
+    public enum SignalType {
+         TOPIC_OUT_CONNECTION("connection"),
+         TOPIC_OUT_REGISTER("register"),
+         TOPIC_OUT_DISCONNECT("disconnect"),
+         TOPIC_OUT_OFFER("offer"),
+         TOPIC_OUT_CANDIDATE ("candidate"),
+         TOPIC_OUT_ANSWER ("answer"),
+         TOPIC_OUT_ENDCALL("endcall"),
+         TOPIC_OUT_TEST("test"),
+         TOPIC_OUT_NOTI("notification"),
 
-    // user API
-    public static final String OUTGOING_PING = "pingsss";
-    public static final String INCOMMING_PING= "onlineusers";
+         TOPIC_IN_TEST("test"),
+         TOPIC_IN_OFFER("offer"),
+         TOPIC_IN_CANDIDATE("candidate"),
+         TOPIC_IN_ANSWER("answer"),
+         TOPIC_IN_ENDCALL("endcall"),
+         TOPIC_IN_INVALID_PAYLOAD("invalid_playload"),
+         TOPIC_IN_NOTI("notification"),
+        ;
 
+        public final String type;
+        SignalType(String type) {
+            this.type = type;
+        }
+    };
+            
+    public enum NotificationType{
+        CONNECTED("connected");
+        public final String type;
+        NotificationType(String type) {
+            this.type = type;
+        }
+    }
 
     public enum EndCallType {
         OFFLINE("offline"),
@@ -61,7 +85,6 @@ public interface ICallSignalingApi {
     void sendAnswer(String callID, Object description);
     void sendCandidate(String callId, IceCandidate iceCandidate);
     void sendEndCall(String callID, EndCallType type, String reason);
-    void sendRegister(IRtcUser user, IRtcDeviceInfo info);
 
 
 
