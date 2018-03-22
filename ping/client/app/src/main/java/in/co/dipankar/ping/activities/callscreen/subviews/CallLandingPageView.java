@@ -2,7 +2,10 @@ package in.co.dipankar.ping.activities.callscreen.subviews;
 
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.views.CircleImageView;
+import in.co.dipankar.quickandorid.views.CustomFontTextView;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,16 +17,14 @@ import android.view.View;
 
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.webrtc.ContextUtils.getApplicationContext;
 
 public class CallLandingPageView extends RelativeLayout{
-
-    public void setRecentUser() {
-        prepareRecentUser();
-    }
 
     public interface Callback {
         void onClickAudioCallBtn(IRtcUser user);
@@ -32,10 +33,13 @@ public class CallLandingPageView extends RelativeLayout{
 
     private List<IRtcUser> userList = new ArrayList<>();
 
+    private Context mContext;
     private Callback mCallback;
     private RecyclerView mRecyclerView;
     private RecentUserAdapter mRecentUserAdapter;
 
+    CustomFontTextView selfName;
+    CircleImageView selfImage;
     public CallLandingPageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView(context);
@@ -52,12 +56,13 @@ public class CallLandingPageView extends RelativeLayout{
     }
 
     private void initView(Context context) {
+        mContext = context;
         LayoutInflater mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_call_landing_page, this, true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mRecentUserAdapter = new RecentUserAdapter(userList);
+        mRecentUserAdapter = new RecentUserAdapter(context, userList);
         RecyclerView.LayoutManager mLayoutManager =
                 new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -76,13 +81,23 @@ public class CallLandingPageView extends RelativeLayout{
             }
         }));
 
-        prepareRecentUser();
+
+        // self View
+        selfName = findViewById(R.id.self_user_name);
+        selfImage = findViewById(R.id.self_user_pic);
     }
 
-    private void prepareRecentUser() {
-        userList = PingApplication.Get().getUserManager().getRecentUserList();
-        mRecentUserAdapter.updateUserList(userList);
+    private void refreshInternal() {
+        IRtcUser me = PingApplication.Get().getMe();
+        assert (me != null);
+        selfName.setText(me.getUserName());
+        Glide.with(mContext)
+                .load(me.getProfilePictureUrl())
+                .into(selfImage);
 
+        userList = PingApplication.Get().getUserManager().getRecentUserList();
+        assert(userList!= null);
+        mRecentUserAdapter.updateUserList(userList);
     }
 
     public void setCallback(Callback callback){
@@ -95,5 +110,8 @@ public class CallLandingPageView extends RelativeLayout{
         } else{
             mRecyclerView.setVisibility(GONE);
         }
+    }
+    public void updateView(){
+        refreshInternal();
     }
 }

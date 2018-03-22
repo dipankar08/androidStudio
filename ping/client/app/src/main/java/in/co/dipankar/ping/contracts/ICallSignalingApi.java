@@ -44,15 +44,18 @@ public interface ICallSignalingApi {
     }
 
     public enum EndCallType {
-        OFFLINE("offline"),
-        BUSY ("busy"),
-        USER_REJECT ("user_reject"),
-        OTHER ("other"),
-        SERVER_ERROR("server_error"),
-        RECEIVED_BY_OTHER_ENDPOINT("received_by_other_endpoint"),
-        REJECT_BY_OTHER_ENDPOINT("reject_by_other_endpoint"),
-        NORMAL("normal");
-
+        NORMAL_END("normal_end"),
+         SELF_OFFLINE("self_offline"),
+         SELF_REJECT("self_reject"),
+         SELF_PICKUP("self_pickup"),
+         SELF_BUSY("self_busy"),
+         SELF_NOTPICKUP("self_notpickup"),
+         PEER_OFFLINE("peer_offline"),
+         PEER_REJECT("peer_reject"),
+         PEER_PICKUP("peer_pickup"),
+         PEER_BUSY("peer_busy"),
+         PEER_NOTPICKUP("peer_notpickup"),
+        ;
 
         private final String name;
 

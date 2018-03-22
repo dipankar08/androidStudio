@@ -6,9 +6,16 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import in.co.dipankar.ping.R;
+import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.views.CircleImageView;
 import in.co.dipankar.quickandorid.views.StateImageButton;
 
 
@@ -23,6 +30,12 @@ public class CallOutgoingPageView extends RelativeLayout{
     private Callback mCallback;
     private Context mContext;
     LayoutInflater mInflater;
+
+    TextView mTitle;
+    TextView mSubTitle;
+    ImageView mPeerBackgroud;
+    CircleImageView mPeerImage;
+
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -47,6 +60,12 @@ public class CallOutgoingPageView extends RelativeLayout{
         mContext = context;
         mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_call_outgoing_page, this, true);
+
+        mPeerImage = v.findViewById(R.id.peer_img);
+        mPeerBackgroud = v.findViewById(R.id.peer_back);
+        mTitle =  v.findViewById(R.id.title);
+        mSubTitle =  v.findViewById(R.id.subtitle);
+
         StateImageButton video =  v.findViewById(R.id.toggle_video);
         StateImageButton audio =  v.findViewById(R.id.toggle_audio);
         ImageButton end = v.findViewById(R.id.end);
@@ -78,4 +97,19 @@ public class CallOutgoingPageView extends RelativeLayout{
         this.setVisibility(View.GONE);
     }
 
+    public void updateView(String subtitle){
+        IRtcUser peer = PingApplication.Get().getPeer();
+        if(peer != null){
+            Glide.with(mContext)
+                    .load(peer.getProfilePictureUrl())
+                    .into(mPeerImage);
+            /*
+            Glide.with(mContext)
+                    .load(peer.getCoverPictureUrl())
+                    .into(mPeerBackgroud);
+            mTitle.setText(peer.getUserName());
+            */
+        }
+        mSubTitle.setText(subtitle);
+    }
 }

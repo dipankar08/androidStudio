@@ -18,6 +18,7 @@ import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
 import in.co.dipankar.ping.R;
+import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.activities.callscreen.subviews.CallEndedPageView;
 import in.co.dipankar.ping.activities.callscreen.subviews.CallIncomingPageView;
 import in.co.dipankar.ping.activities.callscreen.subviews.CallLandingPageView;
@@ -88,8 +89,9 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
     private void proceedAfterPermission(){
         // this order is importnat
-        initView();
         processIntent();
+        initView();
+        initPresenter();
     }
 
     @Override
@@ -104,14 +106,18 @@ public class CallActivity extends Activity implements ICallPage.IView{
         IRtcUser mRtcUser = (IRtcUser) intent.getSerializableExtra("RtcUser");
         String deviceid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         IRtcDeviceInfo mRtcDeviceInfo= new RtcDeviceInfo(deviceid,android.os.Build.MODEL,"10");
-        mPresenter = new CallPresenter(this, mRtcUser, mRtcDeviceInfo, mCallVideoGridView);
+        PingApplication.Get().setMe(mRtcUser);
+        PingApplication.Get().setDevice(mRtcDeviceInfo);
+    }
+
+    private void initPresenter(){
+        mPresenter = new CallPresenter(this, PingApplication.Get().getMe(), PingApplication.Get().getDevice(), mCallVideoGridView);
     }
 
     private void initView() {
         mRootView = findViewById(R.id.root_view);
         mCallLandingPageView = findViewById(R.id.call_landing_page_view);
         mCallLandingPageView.setCallback(mCallLandingPageViewCallBack);
-        mCallLandingPageView.setRecentUser();
 
         mCallIncomingPageView = findViewById(R.id.call_incoming_page_view);
         mCallIncomingPageView.setCallback(mCallIncomingPageViewCallBack);
@@ -140,9 +146,10 @@ public class CallActivity extends Activity implements ICallPage.IView{
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToView(ICallPage.PageViewType.ENDED);
+                switchToView(ICallPage.PageViewType.ONGOING);
             }
         });
+        mCallLandingPageView.updateView();
     }
 
     private CallLandingPageView.Callback mCallLandingPageViewCallBack= new CallLandingPageView.Callback(){
@@ -285,6 +292,9 @@ public class CallActivity extends Activity implements ICallPage.IView{
     @Override
     public void finish(){
         super.finish();
+        if(mPresenter != null) {
+            mPresenter.finish();
+        }
         overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_to_right);
     }
     @Override
@@ -357,7 +367,18 @@ public class CallActivity extends Activity implements ICallPage.IView{
     }
 
     @Override
-    public void updateEndView(String msg) {
-        mCallEndedPageView.setEndString(msg);
+    public void updateEndView(String title, String subtitle) {
+        mCallEndedPageView.updateView(title, subtitle);
     }
+
+    @Override
+    public void updateOutgoingView(String subtitle) {
+        mCallOutgoingPageView.updateView(subtitle);
+    }
+
+    @Override
+    public void updateIncomingView(String subtitle) {
+        mCallIncomingPageView.updateView(subtitle);
+    }
+
 }

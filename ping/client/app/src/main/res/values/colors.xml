@@ -6,4 +6,10 @@
     <color name="Notification_Progress">#57cabf</color>
     <color name="Notification_Success">#9de919</color>
     <color name="Notification_Error">#b91765</color>
+
+
+    <color name="grayLight">#ccE0E0E0</color>
+    <color name="grayNormal">#ccBDBDBD</color>
+    <color name="grayDeep">#cc9E9E9E</color>
+
 </resources>

@@ -32,67 +32,55 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/control_holder"
-        android:background="@null"
-        android:padding="8dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_call_end_32" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:background="#15000000"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/control_holder"
-        android:paddingBottom="10dp">
+        android:layout_marginBottom="40dp">
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_camera"
-            android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="8dp"
-            android:layout_marginRight="20dp"
-            app:disableBackground="@drawable/ic_camera_rotate_32"
-            app:enableBackground="@drawable/ic_camera_rotate_32"
-            app:is_enable="true" />
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_button"
+            android:scaleType="centerInside"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ic_camera_48"/>
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_video"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="8dp"
-            android:layout_marginRight="20dp"
-            app:disableBackground="@drawable/ic_video_off_32"
-            app:enableBackground="@drawable/ic_video_on_32"
-            app:is_enable="true" />
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_button"
+            android:scaleType="centerInside"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ic_video_48"/>
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_audio"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="8dp"
-            android:layout_marginRight="20dp"
-            app:disableBackground="@drawable/ic_vol_off_32"
-            app:enableBackground="@drawable/ic_vol_on_32"
-            app:is_enable="true" />
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_button"
+            android:scaleType="centerInside"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ic_mic_48"/>
+        <in.co.dipankar.quickandorid.views.StateImageButton
+            android:id="@+id/end"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_endcall_48"/>
         <in.co.dipankar.quickandorid.views.MultiStateImageButton
             android:id="@+id/toggle_layout"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="8dp"
-            android:layout_marginRight="20dp"
-            app:backgroundState0="@drawable/ic_layout_pic_in_pic_topright"
-            app:backgroundState1="@drawable/ic_layout_pic_in_pic_button_right"
-            app:backgroundState2="@drawable/ic_layout_fit_to_screen"
-            app:backgroundState3="@drawable/ic_layout_split_on_vertical"
-            app:current_state="0" />
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_button"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            app:backgroundState0="@drawable/ic_endcall_48"
+            android:src="@drawable/ic_endcall_48"/>
     </LinearLayout>
 </RelativeLayout>

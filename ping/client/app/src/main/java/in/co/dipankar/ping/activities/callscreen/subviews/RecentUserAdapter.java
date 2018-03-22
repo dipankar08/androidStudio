@@ -1,5 +1,6 @@
 package in.co.dipankar.ping.activities.callscreen.subviews;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 //import com.squareup.picasso.Picasso;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -17,6 +20,7 @@ import in.co.dipankar.quickandorid.views.CircleImageView;
 public class RecentUserAdapter extends RecyclerView.Adapter<RecentUserAdapter.MyViewHolder> {
 
     private List<IRtcUser> mRecentUserList;
+    Context mContext;
 
     public void updateUserList(List<IRtcUser> userList) {
         if(userList!= null) {
@@ -40,8 +44,9 @@ public class RecentUserAdapter extends RecyclerView.Adapter<RecentUserAdapter.My
         }
     }
 
-    public RecentUserAdapter(List<IRtcUser> recentUserList) {
+    public RecentUserAdapter(Context context, List<IRtcUser> recentUserList) {
         this.mRecentUserList = recentUserList;
+        this.mContext = context;
     }
 
     @Override
@@ -58,6 +63,9 @@ public class RecentUserAdapter extends RecyclerView.Adapter<RecentUserAdapter.My
         holder.name.setText(user.getUserName());
        // Picasso.get().load(user.getProfilePictureUrl()).into(holder.picture);
         //holder.picture.setImageResource();
+        Glide.with(mContext)
+                .load(user.getProfilePictureUrl())
+                .into(holder.picture);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.util.Log;
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
+import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
 import in.co.dipankar.ping.contracts.ICallPage;
@@ -72,6 +73,8 @@ public class CallPresenter implements ICallPage.IPresenter {
             if(mRtcEngine != null) {
                 mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
             }
+            PingApplication.Get().setPeer(user);
+            mView.updateIncomingView(user.getUserName() +" calling...");
             mView.switchToView(ICallPage.PageViewType.INCOMMING);
         }
 
@@ -92,8 +95,7 @@ public class CallPresenter implements ICallPage.IPresenter {
 
         @Override
         public void onReceivedEndCall(String callid,ICallSignalingApi.EndCallType type, String reason) {
-            String msg = type.toString().toUpperCase()+"!"+reason;
-            mView.updateEndView(msg);
+            mView.updateEndView(type.toString().toUpperCase(), reason);
             mView.switchToView(ICallPage.PageViewType.ENDED);
         }
     };
@@ -131,21 +133,27 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void startAudio(IRtcUser peer){
+        PingApplication.Get().setPeer(peer);
+        mView.updateOutgoingView("Ringing ....");
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
         mCallId = getRandomCallId();
         mPeerRtcUser = peer;
         if(mRtcEngine != null) {
             mRtcEngine.startAudioCall(mCallId, mPeerRtcUser.getUserId());
         }
+
     }
     @Override
     public void startVideo(IRtcUser peer){
+        PingApplication.Get().setPeer(peer);
+        mView.updateOutgoingView("Ringing ....");
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
         mCallId = getRandomCallId();
         mPeerRtcUser = peer;
         if(mRtcEngine != null) {
             mRtcEngine.startVideoCall(mCallId, mPeerRtcUser.getUserId());
         }
+
     }
 
     @Override
@@ -158,7 +166,7 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void rejectCall(){
-        mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.USER_REJECT," User reject a call");
+        mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.PEER_REJECT," User reject a call");
         if(mRtcEngine != null) {
             mRtcEngine.rejectCall(mCallId);
         }
@@ -184,5 +192,10 @@ public class CallPresenter implements ICallPage.IPresenter {
         if(mRtcEngine != null) {
             mRtcEngine.toggleAudio(isOn);
         }
+    }
+
+    @Override
+    public void finish() {
+        mSignalingApi.disconnect();
     }
 }

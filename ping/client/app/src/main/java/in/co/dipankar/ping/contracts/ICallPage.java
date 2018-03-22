@@ -17,7 +17,11 @@ public interface ICallPage {
 
         void switchToView(PageViewType incomming);
         void showNetworkNotification(String process, String s);
-        void updateEndView(String msg);
+        void updateEndView(String type, String r);
+
+        void updateOutgoingView(String subtitle);
+
+        void updateIncomingView(String subtitle);
     }
 
     public interface IPresenter{
@@ -38,5 +42,7 @@ public interface ICallPage {
         void toggleCamera(boolean isOn);
 
         void toggleAudio(boolean isOn);
+
+        void finish();
     }
 }

@@ -4,6 +4,32 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#aa000000">
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginRight="15dp"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/self_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dipankar"
+            android:textColor="#ffffff"
+            app:customfont="Montserrat-Regular.ttf"
+            android:textSize="15dp"
+            android:layout_marginRight="15dp"
+            />
+        <in.co.dipankar.quickandorid.views.CircleImageView
+            android:id="@+id/self_user_pic"
+            android:src="@drawable/user1"
+            android:layout_width="25dp"
+            android:layout_gravity="right"
+            app:civ_border_color="#55ffffff"
+            android:layout_height="25dp"/>
+    </LinearLayout>
+
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/tv_quick_login"
         android:layout_width="wrap_content"

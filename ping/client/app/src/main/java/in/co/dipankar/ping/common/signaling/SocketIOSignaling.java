@@ -1,5 +1,7 @@
 package in.co.dipankar.ping.common.signaling;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -9,7 +11,14 @@ import org.json.JSONObject;
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.URISyntaxException;
+import java.util.Base64;
 
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
@@ -26,7 +35,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     private static final String SDP = "sdp";
     private static final String CALLID = "call_id";
-    private static final String CALLER_ID = "user_id";
+    private static final String CALLER_INFO = "user_info";
     private static final String PEER_ID = "peer_id";
     private static final String ENDCALL = "endcall";
     private static final String REGISTER = "register";
@@ -125,7 +134,6 @@ public class SocketIOSignaling implements ICallSignalingApi {
         try {
             JSONObject obj = new JSONObject();
             obj.put(PEER_ID,peerID);
-            obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put(SDP,description);
             obj.put(CALLID,callId);
 
@@ -146,7 +154,6 @@ public class SocketIOSignaling implements ICallSignalingApi {
         DLog.e("Send Answer");
         try {
             JSONObject obj = new JSONObject();
-            obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put(SDP, description);
             obj.put(CALLID,callId);
 
@@ -162,13 +169,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
+
     @Override
     public void sendCandidate(String callId, IceCandidate iceCandidate) {
         DLog.e("Send Ice");
         try {
             JSONObject obj = new JSONObject();
             obj.put(CALLID,callId);
-            obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put(SDP_MID, iceCandidate.sdpMid);
             obj.put(SDP_M_LINE_INDEX, iceCandidate.sdpMLineIndex);
             obj.put(SDP, iceCandidate.sdp);
@@ -191,7 +198,6 @@ public class SocketIOSignaling implements ICallSignalingApi {
         try {
             JSONObject obj = new JSONObject();
             obj.put(CALLID,callId);
-            obj.put(CALLER_ID,mRtcUser.getUserId());
             obj.put("type", type.toString());
             obj.put("reason", reason);
 
@@ -215,6 +221,11 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put("device_id",mRtcDeviceInfo.getDeviceId());
             obj.put("device_loc", mRtcDeviceInfo.getDeviceLocation());
             obj.put("device_name", mRtcDeviceInfo.getDeviceName());
+            try {
+                obj.put(CALLER_INFO,toString(mRtcUser));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if(socket.connected()) {
                 socket.emit(SignalType.TOPIC_OUT_REGISTER.type, obj);
             }
@@ -277,23 +288,23 @@ public class SocketIOSignaling implements ICallSignalingApi {
             final SessionDescription sdp = new SessionDescription(SessionDescription.Type.OFFER,
                     obj.getString(SDP));
             final String callId = obj.getString(CALLID);
-            final String userinfo = obj.getString("userinfo");
-            //TODO -- DIPANKAR
-            final IRtcUser user = null;
+            final String peer_info = obj.getString("peer_info");
+            IRtcUser user = null;
+            try {
+                user = (IRtcUser)fromString(peer_info);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             if(mCallback != null){
+                IRtcUser finalUser = user;
                 mainUIHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedOffer(callId, sdp, user);
+                        mCallback.onReceivedOffer(callId, sdp, finalUser);
                     }
                 });
-                /*
-                runOnUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });*/
             }
 
         } catch (JSONException e) {
@@ -403,4 +414,25 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
+    /** Read the object from Base64 string. */
+    @TargetApi(Build.VERSION_CODES.O)
+    private static Object fromString(String s ) throws IOException,
+            ClassNotFoundException {
+        byte [] data = Base64.getDecoder().decode( s );
+        ObjectInputStream ois = new ObjectInputStream(
+                new ByteArrayInputStream(  data ) );
+        Object o  = ois.readObject();
+        ois.close();
+        return o;
+    }
+
+    /** Write the object to a Base64 string. */
+    @TargetApi(Build.VERSION_CODES.O)
+    private static String toString(Serializable o ) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream( baos );
+        oos.writeObject( o );
+        oos.close();
+        return Base64.getEncoder().encodeToString(baos.toByteArray());
+    }
 }

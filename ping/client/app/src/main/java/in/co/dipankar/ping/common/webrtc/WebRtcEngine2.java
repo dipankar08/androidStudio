@@ -597,6 +597,7 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     @Override
     public void endCall() {
+        mCallSingleingApi.sendEndCall(mCallID, ICallSignalingApi.EndCallType.NORMAL_END,"Call ended");
         cleanup();
 
     }

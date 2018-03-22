@@ -31,12 +31,29 @@ var SessionToUserID = {}
 // we can have multiple sessiom(users) - which makes it a conf call.
 var CallToSessionList = {}
 
+// Helpsrs
 function getAllSessionForUser(user_id){
     if(allLiveConn[user_id]){
         return Object.keys(allLiveConn[user_id].endpoints)
     } else{
         return []
     }
+}
+
+function _cleanupCall(callid){
+    var call = CallToSessionList[callid]
+    if(!call) return;
+    for( var s in call.invites){
+        userid = SessionToUserID[s]
+        if(!userid) continue;
+        allLiveConn[userid].status = "free"
+    }
+    delete CallToSessionList[callid];
+}
+
+function _getAllEndpointForEndPoint(s){
+    var userid = SessionToUserID[s]
+    return Object.keys(allLiveConn[user_id].endpoints);
 }
 
 ///////// contrats with JAVA  - please Don't mess up
@@ -60,9 +77,21 @@ var TOPIC_OUT_ENDCALL = "endcall"
 var TOPIC_OUT_INVALID_PAYLOAD = "invalid_playload"
 var TOPIC_OUT_NOTI = "notification"
 
+var ENDCALL_TYPE_NORMAL_END= "normal_end"
+var ENDCALL_TYPE_SELF_OFFLINE = "self_offline"
+var ENDCALL_TYPE_SELF_REJECT = "self_reject"
+var ENDCALL_TYPE_SELF_PICKUP = "self_pickup"
+var ENDCALL_TYPE_SELF_BUSY = "self_busy"
+var ENDCALL_TYPE_SELF_NOTPICKUP = "self_notpickup"
+var ENDCALL_TYPE_PEER_OFFLINE = "peer_offline"
+var ENDCALL_TYPE_PEER_REJECT = "peer_reject"
+var ENDCALL_TYPE_PEER_PICKUP = "peer_pickup"
+var ENDCALL_TYPE_PEER_BUSY = "peer_busy"
+var ENDCALL_TYPE_PEER_NOTPICKUP = "peer_notpickup"
+
 
 function _getOfferPayload(call_id, sdp, userinfo){
-    return {"call_id":call_id,"sdp":sdp,"userinfo":userinfo}
+    return {"call_id":call_id,"sdp":sdp,"peer_info":userinfo}
 }
 function _getAnswerPayload(call_id, sdp){
     return {"call_id":call_id,"sdp":sdp}
@@ -110,10 +139,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         }
         var notificationPayload = _getNotificationPayload("connected","You are now connected!")
         if(allLiveConn[data.user_id] == undefined){
-            if(!data.user_details){
-                data.user_details ={}
-            }
-            allLiveConn[data.user_id] = {"name":data.user_name, "status":"free","endpoints":{},"user_details":data.user_details} 
+            allLiveConn[data.user_id] = {"name":data.user_name, "status":"free","endpoints":{},"user_info":data.user_info} 
         }
         // If The Same register is comming from endpoint - You might be calling 
         for( var ep in allLiveConn[data.user_id].endpoints){
@@ -162,7 +188,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
     client.on(TOPIC_IN_OFFER, function (details) {
         log("in", "offer",  client.id)
         var call_id = details.call_id
-        var user_id = details.user_id
+        var user_id = SessionToUserID[client.id]
         var session = client.id
 
         var peer_id = details.peer_id;
@@ -170,42 +196,45 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
 
         //caller user offline
         if(!allLiveConn[user_id] || !allLiveConn[user_id].endpoints){
-            endCallDetails = _getEndCallPayload(call_id,"offline","Looks like you are not yet register.")
+            endCallDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_SELF_OFFLINE,"Looks like you are not yet register.")
             sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
+            _cleanupCall(call_id)
             return;
         }
         
         //Toself
         if(user_id == peer_id){
-            endCallDetails = _getEndCallPayload(call_id,"busy","Self calling is not supported yet!")
+            endCallDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_SELF_BUSY,"Self calling is not supported yet!")
             sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
+            _cleanupCall(call_id)
             return;
         }
         //caller user busy
         if(allLiveConn[user_id]['status'] =="busy"){
-            endCallDetails = _getEndCallPayload(call_id,"busy","Looks like you are are busy in another call")
+            endCallDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_SELF_BUSY,"Looks like you are are busy in another call")
             sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
-            //TODO:
-            allLiveConn[user_id]['status'] = "free";
+            _cleanupCall(call_id)
             return;
         }
 
         //Peer user offline
         if(!allLiveConn[peer_id] || !allLiveConn[peer_id].endpoints){
-            endCallDetails = _getEndCallPayload(call_id,"offline","Looks peer is offline")
+            endCallDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_PEER_OFFLINE,"Looks peer is offline")
             sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
+            _cleanupCall(call_id)
             return;
         }
         //peer user busy
         if(allLiveConn[user_id]['status'] =="busy"){
-            endCallDetails = _getEndCallPayload(call_id,"busy","Looks like peer is busy in another call")
+            endCallDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_PEER_BUSY,"Looks like peer is busy in another call")
             sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
+            _cleanupCall(call_id)
             return;
         }
 
         // All is OK. send the sdp to all endpoint
         var session_list = getAllSessionForUser(peer_id);
-        var offerCallDetails = _getOfferPayload(call_id, sdp,details)
+        var offerCallDetails = _getOfferPayload(call_id, sdp,allLiveConn[user_id].user_info)
         sendToSpacificListExceptSender(session_list, TOPIC_OUT_OFFER,offerCallDetails)
         
         // make the user busy and add entry to callToSessionList, note that caller also put into inviews
@@ -221,13 +250,14 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
 
         call_id = details.call_id
         session = client.id
+        var user_id = SessionToUserID[details.call_id]
 
         //send Accptance to author
         var ansDeatails = _getAnswerPayload(call_id,details.sdp)
         sendToSpacific(CallToSessionList[call_id].author,TOPIC_OUT_ANSWER,ansDeatails)
 
         //send end all to all others
-        var endDetails = _getEndCallPayload(call_id,'received_by_other_endpoint',"You call is received by other endpoint");
+        var endDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_SELF_PICKUP,"You call is received by other endpoint");
         var session_list = getAllSessionForUser(SessionToUserID[session]);
         sendToSpacificListExceptSender(session_list, TOPIC_OUT_ENDCALL, endDetails);
     });
@@ -253,33 +283,54 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
     //We had a endCall Message - In thase case we should send endcall to all invites to that call.
     client.on(TOPIC_IN_ENDCALL, function (details) {
         log("in", "endcall",  client.id);
-        session = client.id
-        user_id = SessionToUserID[session]
+        var session = client.id
+        var user_id = SessionToUserID[details.call_id]
 
-        //first make the user free
-        if(allLiveConn[user_id]){
-            allLiveConn[user_id]['status'] = 'free'
-        }
-        
+
         // check if there is a call exist.
-        if(CallToSessionList[details.call_id] == undefined){
-            return;
-        }
-        
-        var session_list = CallToSessionList[details.call_id]['invites'];
-        var endCallDetails = _getEndCallPayload(details.call_id,"user_reject","this call is rejceted by peer")
-        sendToSpacificListExceptSender(session_list, TOPIC_OUT_ENDCALL,endCallDetails);
+        var callinfo = CallToSessionList[details.call_id];
+        if(!callinfo) return;
 
-        // get all accpets and mark them free
-        var session_list = CallToSessionList[details.call_id]['invites'];
-        for( var s in session_list){
-            var user = SessionToUserID[s]
-            if(user != undefined){
-                allLiveConn[user]['status'] = 'free'
-            }
+        var type = details.type
+        switch(type) {
+            case ENDCALL_TYPE_PEER_REJECT:
+                // Notify author
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_REJECT,"this call is rejceted by peer")
+                sendToSpacific(callinfo.author,TOPIC_OUT_ENDCALL, endCallDetails1)
+                // Notify Other endpoint
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_SELF_REJECT,"You have rejceted this call in other endpoint")
+                sendToSpacificListExceptSender(_getAllEndpointForEndPoint(session),TOPIC_OUT_ENDCALL, endCallDetails1)
+                //clean up
+                _cleanupCall(details.call_id);
+                break;
+            case ENDCALL_TYPE_PEER_NOTPICKUP:
+                // Notify author
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_NOTPICKUP,"this call is not pickedup by peer")
+                sendToSpacific(callinfo.author,TOPIC_OUT_ENDCALL, endCallDetails1)
+                // Notify Other endpoint
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_SELF_NOTPICKUP,"this call is pickup by any endpoint")
+                sendToSpacificListExceptSender(_getAllEndpointForEndPoint(session),TOPIC_OUT_ENDCALL, endCallDetails1)
+                //clean up
+                _cleanupCall(details.call_id);
+                break;
+            case ENDCALL_TYPE_PEER_BUSY:
+                // Notify author
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_BUSY,"this call is rejceted by peer")
+                sendToSpacific(callinfo.author,TOPIC_OUT_ENDCALL, endCallDetails1)
+                _cleanupCall(details.call_id);
+                break;
+            case ENDCALL_TYPE_NORMAL_END:
+                // Notify all as tis call ends normaly
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_NORMAL_END,"This call is not ended")
+                sendToSpacificListExceptSender(callinfo.invites,TOPIC_OUT_ENDCALL, endCallDetails1)
+                _cleanupCall(details.call_id);
+                break;
+            default:
+
+            _cleanupCall(details.call_id);
         }
-        //clean up delete the list
-        delete CallToSessionList[details.call_id]
+        // double check to cleanup the call
+        _cleanupCall(details.call_id);
     });
 
     /*******************************************************************
@@ -307,7 +358,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         //console.log('--> sendToSelf:' + tag);
         client.emit(tag, data);
     }
-
+/*
     function sendToAll(tag, data){
         console.log('--> sendToAll:' + tag);
         client.emit(tag, data);
@@ -327,12 +378,11 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         console.log('--> sendToAllInRoomExceptSender:' + data);
         client.broadcast.to(room).emit(tag,data);
     }
-
     function sendToAllInRoomIncludeSender(room, tag, data){
         console.log('--> sendToAllInRoomIncludeSender:' + tag);
         io.in(room).emit(tag, data);
     }
-
+*/
     function sendToSpacific(socketid, tag, data){
         //console.log('--> sendToSpacific:' + tag);
         log("out", tag,  socketid);
