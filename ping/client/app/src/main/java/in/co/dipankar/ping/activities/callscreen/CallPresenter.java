@@ -10,6 +10,7 @@ import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
 import in.co.dipankar.ping.contracts.ICallPage;
+import java.util.UUID;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IMultiVideoPane;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
@@ -45,10 +46,11 @@ public class CallPresenter implements ICallPage.IPresenter {
         mSignalingApi = new SocketIOSignaling(mRtcUser, mRtcDeviceInfo, mSignalingCallback);
 
         //RTC
-        mRtcEngine = new WebRtcEngine2((Context)mView,mRtcUser, mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
+        mRtcEngine = new WebRtcEngine2((Context)mView, mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
         if(mRtcEngine != null) {
             mRtcEngine.setCallback(rtcCallback);
         }
+
     }
     // Callbacks ..
     private ICallSignalingApi.ICallSignalingCallback  mSignalingCallback = new ICallSignalingApi.ICallSignalingCallback(){
@@ -60,10 +62,12 @@ public class CallPresenter implements ICallPage.IPresenter {
         @Override
         public void onConnected() {
             mView.showNetworkNotification("success","Now connected...");
+            PingApplication.Get().setNetworkConn(true);
         }
 
         @Override
         public void onDisconnected() {
+            PingApplication.Get().setNetworkConn(false);
             mView.showNetworkNotification("error","Not able to connect network.");
         }
 
@@ -97,6 +101,9 @@ public class CallPresenter implements ICallPage.IPresenter {
         public void onReceivedEndCall(String callid,ICallSignalingApi.EndCallType type, String reason) {
             mView.updateEndView(type.toString().toUpperCase(), reason);
             mView.switchToView(ICallPage.PageViewType.ENDED);
+            if(mRtcEngine != null) {
+                mRtcEngine.endCall();
+            }
         }
     };
 
@@ -116,11 +123,20 @@ public class CallPresenter implements ICallPage.IPresenter {
         public void onFailure(String s) {
             Log.d("DIPANKAR","Some Error:"+s);
         }
+
+        @Override
+        public void onCameraClose() {
+            mView.onCameraOff();
+        }
+        @Override
+        public void onCameraOpen() {
+            mView.onCameraOn();
+        }
     };
 
 
     private String getRandomCallId(){
-        return "1111";
+        return UUID.randomUUID().toString();
     }
 
     @Override
@@ -133,8 +149,12 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void startAudio(IRtcUser peer){
+        if(!PingApplication.Get().hasNetworkConn()){
+            mView.showNetworkNotification("error","No network");
+            return;
+        }
         PingApplication.Get().setPeer(peer);
-        mView.updateOutgoingView("Ringing ....");
+        mView.updateOutgoingView("Ringing ....", true);
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
         mCallId = getRandomCallId();
         mPeerRtcUser = peer;
@@ -145,8 +165,12 @@ public class CallPresenter implements ICallPage.IPresenter {
     }
     @Override
     public void startVideo(IRtcUser peer){
+        if(!PingApplication.Get().hasNetworkConn()){
+            mView.showNetworkNotification("error","No network");
+            return;
+        }
         PingApplication.Get().setPeer(peer);
-        mView.updateOutgoingView("Ringing ....");
+        mView.updateOutgoingView("Ringing ....", false);
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
         mCallId = getRandomCallId();
         mPeerRtcUser = peer;

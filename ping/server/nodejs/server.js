@@ -29,7 +29,7 @@ var allLiveConn = {}
 var SessionToUserID = {}
 //it's a map which find all the session involves in a perticuler call
 // we can have multiple sessiom(users) - which makes it a conf call.
-var CallToSessionList = {}
+var CallToSessionList = {} //{"author":session,"invites":session_list,"accepted":[session],"rejected":[]}
 
 // Helpsrs
 function getAllSessionForUser(user_id){
@@ -43,7 +43,7 @@ function getAllSessionForUser(user_id){
 function _cleanupCall(callid){
     var call = CallToSessionList[callid]
     if(!call) return;
-    for( var s in call.invites){
+    for( var s of Object.values(call.invites)){
         userid = SessionToUserID[s]
         if(!userid) continue;
         allLiveConn[userid].status = "free"
@@ -52,12 +52,15 @@ function _cleanupCall(callid){
 }
 
 function _getAllEndpointForEndPoint(s){
-    var userid = SessionToUserID[s]
+    var user_id = SessionToUserID[s]
     return Object.keys(allLiveConn[user_id].endpoints);
 }
 
+
 ///////// contrats with JAVA  - please Don't mess up
 // Please be consisitance with contracts/ICallSignalingApi.java
+
+var RING_TIMEOUT = 15 // ring for 15 sec
 
 var TOPIC_IN_CONNECTION = "connection"
 var TOPIC_IN_REGISTER = "register"
@@ -68,6 +71,7 @@ var TOPIC_IN_ANSWER = "answer"
 var TOPIC_IN_ENDCALL = "endcall"
 var TOPIC_IN_TEST = "test"
 var TOPIC_IN_NOTI = "notification"
+var TOPIC_IN_ADDON = "addon"
 
 var TOPIC_OUT_TEST = "test"
 var TOPIC_OUT_OFFER = "offer"
@@ -76,6 +80,7 @@ var TOPIC_OUT_ANSWER = "answer"
 var TOPIC_OUT_ENDCALL = "endcall"
 var TOPIC_OUT_INVALID_PAYLOAD = "invalid_playload"
 var TOPIC_OUT_NOTI = "notification"
+var TOPIC_OUT_ADDON = "addon"
 
 var ENDCALL_TYPE_NORMAL_END= "normal_end"
 var ENDCALL_TYPE_SELF_OFFLINE = "self_offline"
@@ -107,6 +112,9 @@ function _getInvalidRequestPayload(type,reason){
 }
 function _getNotificationPayload(type, msg){
     return {"type":type,"msg":msg}
+}
+function _getAddonPayload(type, data){
+    return {"type":type,"msg":data}
 }
 
 function log(type, ops,  session){
@@ -238,9 +246,11 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         sendToSpacificListExceptSender(session_list, TOPIC_OUT_OFFER,offerCallDetails)
         
         // make the user busy and add entry to callToSessionList, note that caller also put into inviews
-        allLiveConn[user_id]['status'] = "busy"
         session_list.push(session)
         CallToSessionList[call_id] = {"author":session,"invites":session_list,"accepted":[session],"rejected":[]}
+        allLiveConn[user_id]['status'] = "busy"
+        //set a callback for auto cancel.
+        setTimeout(autoCancel, RING_TIMEOUT*1000, call_id);
     });
 
     // Here an endpoint says that a session accepted the offer - it means we should send the ans to author
@@ -252,9 +262,13 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         session = client.id
         var user_id = SessionToUserID[details.call_id]
 
+        var call = CallToSessionList[call_id]
+        if(!call) return;
+        // update call info
+        call.accepted.push(session)
         //send Accptance to author
         var ansDeatails = _getAnswerPayload(call_id,details.sdp)
-        sendToSpacific(CallToSessionList[call_id].author,TOPIC_OUT_ANSWER,ansDeatails)
+        sendToSpacific(call.author,TOPIC_OUT_ANSWER,ansDeatails)
 
         //send end all to all others
         var endDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_SELF_PICKUP,"You call is received by other endpoint");
@@ -273,6 +287,19 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         sendToSpacificListExceptSender(session_list, TOPIC_OUT_CANDIDATE,details);
     });
 
+    // In case of addon we just forword to all invite.
+    client.on(TOPIC_IN_ADDON, function (details) {
+        if(!CallToSessionList[details.call_id]){
+            return;
+        }
+        if(details.type && details.data){
+            var session_list = CallToSessionList[details.call_id]['invites'];
+            sendToSpacificListExceptSender(session_list, TOPIC_OUT_ADDON, details);
+        } else{
+            sendToSelf(TOPIC_OUT_INVALID_PAYLOAD,_getInvalidRequestPayload("invalid","The addon doent have type and data"))
+        }
+    });
+
 
     /*******************************************************************
      * 
@@ -289,7 +316,9 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
 
         // check if there is a call exist.
         var callinfo = CallToSessionList[details.call_id];
-        if(!callinfo) return;
+        if(!callinfo) {
+            return;
+        }
 
         var type = details.type
         switch(type) {
@@ -388,6 +417,15 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         log("out", tag,  socketid);
         client.broadcast.to(socketid).emit(tag,data);
     }
+    //include sender
+    function sendToSpacificList(socketids, tag, data){
+        if(socketids == undefined) return;
+        for(socketid of socketids){
+            log("out", tag,  socketid);
+            client.broadcast.to(socketid).emit(tag,data);
+        }
+    }
+    //exclude sender
     function sendToSpacificListExceptSender(socketids, tag, data){
         if(socketids == undefined) return;
         for(socketid of socketids){
@@ -397,9 +435,14 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
             client.broadcast.to(socketid).emit(tag,data);
         }
     }
-
-    // Here starts evertyhing!
-    // The first connection doesn't send anything (no other clients)
-    // Second connection emits the message to start the SDP negotation
-    // client.broadcast.emit('createoffer', {});
+    //Some Helper
+    function autoCancel(call_id) {
+        var call = CallToSessionList[call_id];
+        if(!call) return;
+        if(call.accepted.length > 1) return;
+        //auto dismis
+        sendToSpacificList(call.invites, TOPIC_OUT_ENDCALL,
+             _getEndCallPayload(call_id,ENDCALL_TYPE_PEER_NOTPICKUP,"Peer not peakup!"));
+        _cleanupCall(call_id)
+    }
 });

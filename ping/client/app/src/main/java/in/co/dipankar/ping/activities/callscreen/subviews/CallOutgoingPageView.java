@@ -1,6 +1,7 @@
 package in.co.dipankar.ping.activities.callscreen.subviews;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -28,14 +29,10 @@ public class CallOutgoingPageView extends RelativeLayout{
     }
 
     private Callback mCallback;
-    private Context mContext;
     LayoutInflater mInflater;
 
-    TextView mTitle;
-    TextView mSubTitle;
-    ImageView mPeerBackgroud;
-    CircleImageView mPeerImage;
 
+    UserInfoView mPeerInfo;
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -57,18 +54,14 @@ public class CallOutgoingPageView extends RelativeLayout{
     }
 
     private void initView(Context context) {
-        mContext = context;
         mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_call_outgoing_page, this, true);
 
-        mPeerImage = v.findViewById(R.id.peer_img);
-        mPeerBackgroud = v.findViewById(R.id.peer_back);
-        mTitle =  v.findViewById(R.id.title);
-        mSubTitle =  v.findViewById(R.id.subtitle);
+        mPeerInfo =  v.findViewById(R.id.peer_info);
 
         StateImageButton video =  v.findViewById(R.id.toggle_video);
         StateImageButton audio =  v.findViewById(R.id.toggle_audio);
-        ImageButton end = v.findViewById(R.id.end);
+        StateImageButton end = v.findViewById(R.id.end);
 
         audio.setCallBack(new StateImageButton.Callback(){
             @Override
@@ -90,26 +83,19 @@ public class CallOutgoingPageView extends RelativeLayout{
         });
     }
 
-    public void show(){
-        this.setVisibility(View.VISIBLE);
-    }
-    public void hide(){
-        this.setVisibility(View.GONE);
+    public void updateView(String subtitle, boolean isAudiocalll) {
+        IRtcUser peer = PingApplication.Get().getPeer();
+        mPeerInfo.updateView(peer);
+        mPeerInfo.mTitle.setText("Calling "+ peer.getUserName() + " ...");
+        mPeerInfo.mSubTitle.setText("Ringing ...");
+        if(isAudiocalll){
+            mPeerInfo.mPeerBackgroud.setVisibility(INVISIBLE);
+        } else{
+            mPeerInfo.mPeerBackgroud.setVisibility(VISIBLE);
+        }
     }
 
-    public void updateView(String subtitle){
-        IRtcUser peer = PingApplication.Get().getPeer();
-        if(peer != null){
-            Glide.with(mContext)
-                    .load(peer.getProfilePictureUrl())
-                    .into(mPeerImage);
-            /*
-            Glide.with(mContext)
-                    .load(peer.getCoverPictureUrl())
-                    .into(mPeerBackgroud);
-            mTitle.setText(peer.getUserName());
-            */
-        }
-        mSubTitle.setText(subtitle);
+    public void setVisibilityOfPeerInfo(boolean v){
+        mPeerInfo.setVisibility(v?VISIBLE:GONE);
     }
 }

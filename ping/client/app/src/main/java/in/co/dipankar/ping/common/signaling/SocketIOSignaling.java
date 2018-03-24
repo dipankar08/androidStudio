@@ -18,7 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
-import java.util.Base64;
+import android.util.Base64;
 
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
@@ -117,7 +117,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
     @Override
     public void connect() {
-        mCallback.onTryConnecting();
+        if(mCallback != null){
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    mCallback.onTryConnecting();
+                }
+            });
+        }
         socket.connect();
         DLog.e("Send Connecting");
     }
@@ -125,7 +132,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
     @Override
     public void disconnect() {
         socket.disconnect();
-        mCallback.onDisconnected();
+        if(mCallback != null){
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    mCallback.onDisconnected();
+                }
+            });
+        }
     }
 
     @Override
@@ -140,7 +154,15 @@ public class SocketIOSignaling implements ICallSignalingApi {
             if(socket.connected()) {
                 socket.emit(SignalType.TOPIC_OUT_OFFER.type, obj);
             } else{
-                mCallback.onDisconnected();
+                if(mCallback != null){
+                    runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onDisconnected();
+                        }
+                    });
+                }
+
             }
 
 
@@ -160,7 +182,15 @@ public class SocketIOSignaling implements ICallSignalingApi {
             if(socket.connected()) {
                 socket.emit(SignalType.TOPIC_OUT_ANSWER.type, obj);
             } else{
-                mCallback.onDisconnected();
+                if(mCallback != null){
+                    runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onDisconnected();
+                        }
+                    });
+                }
+
             }
 
 
@@ -183,7 +213,15 @@ public class SocketIOSignaling implements ICallSignalingApi {
             if(socket.connected()) {
                 socket.emit(SignalType.TOPIC_OUT_CANDIDATE.type, obj);
             } else{
-                mCallback.onDisconnected();
+                if(mCallback != null){
+                    runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onDisconnected();
+                        }
+                    });
+                }
+
             }
 
 
@@ -204,7 +242,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
             if(socket.connected()) {
             socket.emit(SignalType.TOPIC_OUT_ENDCALL.type, obj);
             } else{
-                mCallback.onDisconnected();
+                if(mCallback != null){
+                    runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onDisconnected();
+                        }
+                    });
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -222,7 +267,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put("device_loc", mRtcDeviceInfo.getDeviceLocation());
             obj.put("device_name", mRtcDeviceInfo.getDeviceName());
             try {
-                obj.put(CALLER_INFO,toString(mRtcUser));
+                obj.put(CALLER_INFO,Base64Coder.toString(mRtcUser));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -291,7 +336,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             final String peer_info = obj.getString("peer_info");
             IRtcUser user = null;
             try {
-                user = (IRtcUser)fromString(peer_info);
+                user = (IRtcUser)Base64Coder.fromString(peer_info);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -414,25 +459,35 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
-    /** Read the object from Base64 string. */
-    @TargetApi(Build.VERSION_CODES.O)
-    private static Object fromString(String s ) throws IOException,
-            ClassNotFoundException {
-        byte [] data = Base64.getDecoder().decode( s );
-        ObjectInputStream ois = new ObjectInputStream(
-                new ByteArrayInputStream(  data ) );
-        Object o  = ois.readObject();
-        ois.close();
-        return o;
+    private static class Base64Coder {
+        public static byte[] fromBase64(String s) {
+            return Base64.decode(s, Base64.DEFAULT);
+        }
+
+        public static String toBase64(byte[] bytes) {
+            return new String(Base64.encode(bytes, Base64.DEFAULT));
+        }
+        private static Object fromString(String s ) throws IOException,
+                ClassNotFoundException {
+            byte [] data = fromBase64(s);
+            ObjectInputStream ois = new ObjectInputStream(
+                    new ByteArrayInputStream( data ));
+            Object o  = ois.readObject();
+            ois.close();
+            return o;
+        }
+        private static String toString(Serializable o ) throws IOException {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream( baos );
+            oos.writeObject( o );
+            oos.close();
+            return toBase64(baos.toByteArray());
+        }
     }
 
+    /** Read the object from Base64 string. */
+
+
     /** Write the object to a Base64 string. */
-    @TargetApi(Build.VERSION_CODES.O)
-    private static String toString(Serializable o ) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream( baos );
-        oos.writeObject( o );
-        oos.close();
-        return Base64.getEncoder().encodeToString(baos.toByteArray());
-    }
+
 }

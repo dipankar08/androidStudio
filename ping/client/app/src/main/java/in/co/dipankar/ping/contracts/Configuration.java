@@ -5,5 +5,6 @@ package in.co.dipankar.ping.contracts;
  */
 
 public final class Configuration {
+    //public static String  SIGNALING_ENDPOINT = "http://172.21.157.104:7000" ;//192.168.1.108";
     public static String  SIGNALING_ENDPOINT = "http://192.168.1.108:7000" ;//192.168.1.108";
 }

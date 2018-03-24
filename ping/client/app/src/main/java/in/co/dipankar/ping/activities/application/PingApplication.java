@@ -74,4 +74,12 @@ public class PingApplication extends Application {
     public void setPeer(IRtcUser  user) {
          mPeerUser = user;
     }
+
+    boolean mNetworkConnection  = false;
+    public boolean hasNetworkConn() {
+        return mNetworkConnection;
+    }
+    public void setNetworkConn(boolean networkConn){
+        mNetworkConnection = networkConn;
+    }
 }

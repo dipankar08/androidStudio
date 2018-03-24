@@ -1,6 +1,7 @@
 package in.co.dipankar.ping.activities.callscreen.subviews;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +27,10 @@ public class CallIncomingPageView extends RelativeLayout implements View.OnClick
     }
 
     private Callback mCallback;
-    private Context mContext;
+
     LayoutInflater mInflater;
 
-    TextView mTitle;
-    TextView mSubTitle;
-    ImageView mPeerBackgroud;
-    CircleImageView mPeerImage;
+    UserInfoView mPeerInfo;
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -54,15 +52,12 @@ public class CallIncomingPageView extends RelativeLayout implements View.OnClick
     }
 
     private void initView(Context context) {
-        mContext = context;
+
         mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_call_incomming_page, this, true);
 
 
-        mPeerImage = v.findViewById(R.id.peer_img);
-        mPeerBackgroud = v.findViewById(R.id.peer_back);
-        mTitle =  v.findViewById(R.id.title);
-        mSubTitle =  v.findViewById(R.id.subtitle);
+        mPeerInfo =  v.findViewById(R.id.peer_info);
 
 
 
@@ -83,18 +78,12 @@ public class CallIncomingPageView extends RelativeLayout implements View.OnClick
         }
     }
 
-    public void updateView(String subtitle){
-        IRtcUser peer = PingApplication.Get().getPeer();
-        if(peer != null){
-            Glide.with(mContext)
-                    .load(peer.getProfilePictureUrl())
-                    .into(mPeerImage);
-            Glide.with(mContext)
-                    .load(peer.getCoverPictureUrl())
-                    .into(mPeerBackgroud);
-            mTitle.setText(peer.getUserName());
-        }
-        mSubTitle.setText(subtitle);
-    }
 
+    public void updateView(String subtitle) {
+        IRtcUser peer = PingApplication.Get().getPeer();
+        mPeerInfo.updateView(peer);
+        mPeerInfo.mTitle.setText(peer.getUserName() + " Calling ...");
+        mPeerInfo.mSubTitle.setText(subtitle);
+        mPeerInfo.mPeerBackgroud.setVisibility(INVISIBLE);
+    }
 }

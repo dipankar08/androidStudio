@@ -7,47 +7,11 @@
     android:layout_height="match_parent"
     android:background="@null">
 
-
-    <!-- user banner -->
-    <ImageView
-        android:id="@+id/peer_back"
+    <in.co.dipankar.ping.activities.callscreen.subviews.UserInfoView
+        android:id="@+id/peer_info"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <in.co.dipankar.quickandorid.views.CircleImageView
-            android:id="@+id/peer_img"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="15dp"
-            app:civ_border_color="@color/grayLight"
-            app:civ_border_width="3dp" />
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:textColor="#ffffff"
-            android:maxLines="1"
-            android:textAlignment="center"
-            app:customfont="Ubuntu-Regular.ttf"
-            android:textSize="24dp"/>
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:id="@+id/subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:textColor="#ffffff"
-            android:maxLines="3"
-            android:textAlignment="center"
-            app:customfont="Ubuntu-Regular.ttf"
-            android:textSize="20dp"/>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,13 +27,13 @@
             android:background="@drawable/bg_button"
             android:scaleType="centerInside"
             android:layout_marginRight="100dp"
-            android:src="@drawable/ic_tick_48"/>
+            android:src="@drawable/ic_cross_48"/>
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/accept"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:background="@drawable/bg_button"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_cross_48"/>
+            android:src="@drawable/ic_tick_48"/>
     </LinearLayout>
 </RelativeLayout>

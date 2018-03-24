@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +12,11 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
@@ -25,6 +29,7 @@ import in.co.dipankar.ping.activities.callscreen.subviews.CallLandingPageView;
 import in.co.dipankar.ping.activities.callscreen.subviews.CallOngoingPageView;
 import in.co.dipankar.ping.activities.callscreen.subviews.CallOutgoingPageView;
 import in.co.dipankar.ping.activities.callscreen.subviews.CallVideoGridView;
+import in.co.dipankar.ping.activities.callscreen.subviews.UserInfoView;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
@@ -53,8 +58,10 @@ public class CallActivity extends Activity implements ICallPage.IView{
     CallOngoingPageView mCallOngoingPageView;
     CallOutgoingPageView mCallOutgoingPageView;
     CallEndedPageView mCallEndedPageView;
+
     CallVideoGridView mCallVideoGridView;
     CustomFontTextView mNotificationView;
+    UserInfoView mUserInfoView;
 
     //Presneter
     ICallPage.IPresenter mPresenter;
@@ -135,6 +142,9 @@ public class CallActivity extends Activity implements ICallPage.IView{
         mCallVideoGridView = findViewById(R.id.call_video_grid_view);
         mCallVideoGridView.setCallback(mCallVideoGridViewCallBack);
 
+        mUserInfoView = findViewById(R.id.user_info);
+        mUserInfoView.updateView(PingApplication.Get().getMe());
+
         mCallLandingPageView.setVisibility(View.VISIBLE);
 
         mMediaPlayer = MediaPlayer.create(this, R.raw.tone);
@@ -155,12 +165,18 @@ public class CallActivity extends Activity implements ICallPage.IView{
     private CallLandingPageView.Callback mCallLandingPageViewCallBack= new CallLandingPageView.Callback(){
         @Override
         public void onClickAudioCallBtn(IRtcUser user) {
-
             mPresenter.startAudio(user);
+            mCallOutgoingPageView.setVisibilityOfPeerInfo(true);
         }
         @Override
         public void onClickVideoCallBtn(IRtcUser user) {
           mPresenter.startVideo(user);
+          mCallOutgoingPageView.setVisibilityOfPeerInfo(false);
+        }
+
+        @Override
+        public void onClickPokeBtn(IRtcUser user) {
+            //todo
         }
     };
 
@@ -320,20 +336,29 @@ public class CallActivity extends Activity implements ICallPage.IView{
         switch(pageViewType){
             case LANDING:
                 mCallLandingPageView.setVisibility(View.VISIBLE);
+                mUserInfoView.setVisibility(View.VISIBLE);
+                mCallVideoGridView.setVisibility(View.GONE);
                 break;
             case INCOMMING:
                 mCallIncomingPageView.setVisibility(View.VISIBLE);
                 mCallIncomingPageView.requestFocus();
-                //mCallIncomingPageView.invalidate();
+                mUserInfoView.setVisibility(View.GONE);
+                mCallVideoGridView.setVisibility(View.GONE);
                 break;
             case ONGOING:
                 mCallOngoingPageView.setVisibility(View.VISIBLE);
+                //mUserInfoView.setVisibility(View.GONE);
+                //mCallVideoGridView.setVisibility(View.GONE);
                 break;
             case ENDED:
                 mCallEndedPageView.setVisibility(View.VISIBLE);
+                mUserInfoView.setVisibility(View.GONE);
+                mCallVideoGridView.setVisibility(View.GONE);
                 break;
             case OUTGOING:
                 mCallOutgoingPageView.setVisibility(View.VISIBLE);
+                mUserInfoView.setVisibility(View.GONE);
+                mCallVideoGridView.setVisibility(View.GONE);
                 break;
         }
         if(pageViewType == OUTGOING|| pageViewType == INCOMMING){
@@ -372,13 +397,27 @@ public class CallActivity extends Activity implements ICallPage.IView{
     }
 
     @Override
-    public void updateOutgoingView(String subtitle) {
-        mCallOutgoingPageView.updateView(subtitle);
+    public void updateOutgoingView(String subtitle, boolean isAudio) {
+        mCallOutgoingPageView.updateView(subtitle, isAudio);
     }
 
     @Override
     public void updateIncomingView(String subtitle) {
         mCallIncomingPageView.updateView(subtitle);
+    }
+
+    @Override
+    public void onCameraOff() {
+        DLog.e("onCameraOff");
+        mCallVideoGridView.setVisibility(View.GONE);
+        mUserInfoView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCameraOn() {
+        DLog.e("onCameraOn");
+        mCallVideoGridView.setVisibility(View.VISIBLE);
+        mUserInfoView.setVisibility(View.GONE);
     }
 
 }

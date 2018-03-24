@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@null"
-    android:layout_margin="8dp"
+    android:layout_margin="10dp"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center"
@@ -12,10 +12,10 @@
     <in.co.dipankar.quickandorid.views.CircleImageView
         android:id="@+id/picture"
         android:src="@drawable/user1"
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         app:civ_border_color="#55ffffff"
         android:layout_marginBottom="8dp"
-        android:layout_height="40dp"/>
+        android:layout_height="60dp"/>
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
@@ -25,5 +25,5 @@
         android:text="sample"
         android:textAlignment="center"
         app:customfont="Ubuntu-Regular.ttf"
-        android:textSize="12dp"/>
+        android:textSize="13dp"/>
 </LinearLayout>

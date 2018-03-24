@@ -8,10 +8,16 @@
 
     <in.co.dipankar.ping.activities.callscreen.subviews.CallVideoGridView
         android:id="@+id/call_video_grid_view"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </in.co.dipankar.ping.activities.callscreen.subviews.CallVideoGridView>
+
+    <in.co.dipankar.ping.activities.callscreen.subviews.UserInfoView
+        android:id="@+id/user_info"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <in.co.dipankar.ping.activities.callscreen.subviews.CallLandingPageView
         android:id="@+id/call_landing_page_view"
@@ -56,18 +62,22 @@
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/notification"
         android:layout_width="match_parent"
-        android:padding="8dp"
+        android:padding="2dp"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:textColor="#ffffffff"
         android:background="@null"
         android:layout_above="@id/recycler_view"
         app:customfont="Montserrat-Regular.ttf"
-        android:text="Some Notification"
-        android:textSize="14dp" />
+        android:textSize="10dp" />
 <Button
     android:id="@+id/test"
     android:text="Test"
+    android:visibility="gone"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
+
+<in.co.dipankar.ping.common.webrtc.RtcStatView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
 </RelativeLayout>

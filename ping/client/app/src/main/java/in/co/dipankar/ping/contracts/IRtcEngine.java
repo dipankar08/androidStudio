@@ -4,20 +4,12 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 
 import org.webrtc.IceCandidate;
+import org.webrtc.RendererCommon;
 import org.webrtc.SessionDescription;
 
-
-/**
- * Created by dip on 3/10/18.
- */
+import in.co.dipankar.ping.common.webrtc.LocalStreamOptions;
 
 public interface IRtcEngine {
-
-    void init(Context context,
-                 ICallSignalingApi callSingleingApi,
-                 GLSurfaceView selfView ,
-                 GLSurfaceView peerView );
-
     // Signling API
     void addIceCandidateToPeerConnection(IceCandidate ice);
     void setRemoteDescriptionToPeerConnection(SessionDescription sdp);
@@ -28,20 +20,26 @@ public interface IRtcEngine {
     void startVideoCall(String callId, String userid);
     void acceptCall(String callId);
     void rejectCall(String callId);
+    void endCall();
 
+    // Config API
+    void setLocalVideoOption(LocalStreamOptions opt);
     void toggleVideo(boolean isOn);
-
     void toggleAudio(boolean isOn);
-
     void toggleCamera(boolean isOn);
+    void switchVideoScaling(RendererCommon.ScalingType scalingType);
+
 
     interface Callback{
         void onSendOffer();
         void onSendAns();
         void onFailure(String s);
-    }
 
-    void endCall();
+        // UI APIs
+        void onCameraClose();
+
+        void onCameraOpen();
+    }
 
     void setCallback(Callback callback);
 }

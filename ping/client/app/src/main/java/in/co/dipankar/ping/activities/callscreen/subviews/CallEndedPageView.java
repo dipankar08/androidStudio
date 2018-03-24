@@ -7,6 +7,7 @@ import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.CircleImageView;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,7 @@ public class CallEndedPageView extends RelativeLayout {
     private Context mContext;
     LayoutInflater mInflater;
 
-    TextView mTitle;
-    TextView mSubTitle;
-    ImageView mPeerBackgroud;
-    CircleImageView mPeerImage;
+    UserInfoView mPeerInfo;
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -60,10 +58,7 @@ public class CallEndedPageView extends RelativeLayout {
         ImageButton close =  v.findViewById(R.id.close);
         ImageButton redail =  v.findViewById(R.id.redail);
 
-        mPeerImage = v.findViewById(R.id.peer_img);
-        mPeerBackgroud = v.findViewById(R.id.peer_back);
-        mTitle =  v.findViewById(R.id.title);
-        mSubTitle =  v.findViewById(R.id.subtitle);
+        mPeerInfo =  v.findViewById(R.id.peer_info);
 
         close.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,15 +75,9 @@ public class CallEndedPageView extends RelativeLayout {
     }
     public void updateView(String title, String subtitle){
         IRtcUser peer = PingApplication.Get().getPeer();
-        if(peer != null){
-            Glide.with(mContext)
-                    .load(peer.getProfilePictureUrl())
-                    .into(mPeerImage);
-            Glide.with(mContext)
-                    .load(peer.getCoverPictureUrl())
-                    .into(mPeerBackgroud);
-        }
-        mTitle.setText(title);
-        mSubTitle.setText(subtitle);
+        mPeerInfo.updateView(peer);
+        mPeerInfo.mTitle.setText(title);
+        mPeerInfo.mSubTitle.setText(subtitle);
+        mPeerInfo.mPeerBackgroud.setVisibility(INVISIBLE);
     }
 }

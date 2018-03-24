@@ -8,8 +8,10 @@ import android.util.Log;
 
 import org.webrtc.AudioSource;
 import org.webrtc.AudioTrack;
+import org.webrtc.Camera1Enumerator;
 import org.webrtc.Camera2Enumerator;
 import org.webrtc.CameraEnumerator;
+import org.webrtc.CameraVideoCapturer;
 import org.webrtc.DataChannel;
 import org.webrtc.EglBase;
 import org.webrtc.IceCandidate;
@@ -36,26 +38,15 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcEngine;
 import in.co.dipankar.ping.contracts.IRtcUser;
 
 public class WebRtcEngine2 implements IRtcEngine {
 
-    //flag to check if sdp is offer or answer
-    private boolean createOffer = false;
-    //context
-    Context mContext;
-    IRtcUser mRtcUser;
-
-    // CallBacks
-    private ICallSignalingApi mCallSingleingApi;
-    private IRtcEngine.Callback mCallback;
-
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
-
     private static final String TAG = "MainActivity";
-
     private static final String AUDIO_ECHO_CANCELLATION_CONSTRAINT = "googEchoCancellation";
     private static final String AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT = "googAutoGainControl";
     private static final String AUDIO_HIGH_PASS_FILTER_CONSTRAINT = "googHighpassFilter";
@@ -64,8 +55,20 @@ public class WebRtcEngine2 implements IRtcEngine {
     private static final String DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT = "DtlsSrtpKeyAgreement";
 
 
+
+    private boolean createOffer = false;
+    Context mContext;
+
+    // CallBacks
+    private ICallSignalingApi mCallSingleingApi;
+    private IRtcEngine.Callback mCallback;
+
+
+
+
     // Call information
-   String mCallID = "0"; //defulat
+    String mCallID = "0"; //defulat
+    private String mPeerID;
 
     //Renderer
     private SurfaceViewRenderer mSelfRenderer;
@@ -79,6 +82,8 @@ public class WebRtcEngine2 implements IRtcEngine {
     //video and audio tracks
     private VideoTrack mLocalVideoTrack;
     private AudioTrack mLocalAudioTrack;
+    VideoCapturer mVideoCapturer;
+    private MediaStream mLocalMediaStream;
 
     //peerconnection and mPeerConnectionFactory objects
     private PeerConnectionFactory mPeerConnectionFactory;
@@ -95,13 +100,15 @@ public class WebRtcEngine2 implements IRtcEngine {
     private boolean disableAudioProcessing = true;
     private boolean enableLevelControl = false;
 
-    //Other Info
-    private String mPeerID;
-    private String mSelfId;
+
+    // user configurations
+    private boolean mIsAudioEnabled = true;
+    private boolean mIsVideoEnabled = true;
+    LocalStreamOptions mLocalStreamOptions;
+    private RendererCommon.ScalingType mScaleType = RendererCommon.ScalingType.SCALE_ASPECT_FIT;
 
 
     public WebRtcEngine2(Context context,
-                         IRtcUser rtcUser,
                          ICallSignalingApi callSingleingApi,
                          SurfaceViewRenderer selfView ,
                          SurfaceViewRenderer peerView ){
@@ -109,7 +116,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         mCallSingleingApi = callSingleingApi;
         mSelfRenderer = selfView;
         mPeerRenderer = peerView;
-        mSelfId = rtcUser.getUserId();
+        mLocalStreamOptions = new LocalStreamOptions();
         init();
     }
     private void init(){
@@ -117,9 +124,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         initAudioErrorCallbacks();
         initializedRenderer();
         initilizeRTCConfig();
-        reInit();
     }
-
     // this should be create and exposed everytime.
     private void reInit(){
         createMediaConstraints();
@@ -127,40 +132,197 @@ public class WebRtcEngine2 implements IRtcEngine {
         initilizeLocalAudioVideoSource();
     }
 
+
+    // All the Overrite functions here..
+    @Override
+    public void startAudioCall(String callID, String userid) {
+        assert(userid != null);
+        mCallID = callID;
+        mLocalStreamOptions.setVideoEnabled(false);
+        if(mPeerConnection == null){
+            reInit();
+        }
+        createOffer = true;
+        mPeerID = userid;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mPeerConnection.createOffer(sdpObserver, new MediaConstraints());
+            }
+        });
+    }
+
+    @Override
+    public void startVideoCall(String callId, String userid) {
+        assert(userid != null);
+        mCallID = callId;
+        mLocalStreamOptions.setVideoEnabled(true);
+        if(mPeerConnection == null){
+            reInit();
+        }
+        createOffer = true;
+        mPeerID = userid;
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mPeerConnection.createOffer(sdpObserver, new MediaConstraints());
+            }
+        });
+    }
+
+    @Override
+    public void acceptCall(String callId) {
+        if(mPeerConnection == null){
+            reInit();
+        }
+        createOffer = false;
+        mCallID = callId;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mPeerConnection.createAnswer(sdpObserver, new MediaConstraints());
+            }
+        });
+    }
+
+    @Override
+    public void rejectCall(String callId) {
+        createOffer = false;
+        mCallID = callId;
+    }
+
+    @Override
+    public void endCall() {
+        mCallSingleingApi.sendEndCall(mCallID, ICallSignalingApi.EndCallType.NORMAL_END,"Call ended");
+        cleanup();
+    }
+
+    @Override
+    public void toggleVideo(final boolean isOn) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mLocalVideoTrack.setEnabled(isOn);
+            }
+        });
+    }
+
+    @Override
+    public void toggleAudio(final boolean isOn) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mLocalAudioTrack.setEnabled(isOn);
+            }
+        });
+    }
+    @Override
+    public void toggleCamera(boolean isOn) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (mVideoCapturer instanceof CameraVideoCapturer) {
+                    if (mLocalStreamOptions.isVideoEnabled()) {
+                        Log.e(TAG, "Failed to switch camera as Video is not eanbled!");
+                        return;
+                    }
+                    Log.d(TAG, "Switch camera");
+                    CameraVideoCapturer cameraVideoCapturer = (CameraVideoCapturer) mVideoCapturer;
+                    cameraVideoCapturer.switchCamera(null);
+                } else {
+                    Log.d(TAG, "Will not switch camera, video caputurer is not a camera");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void switchVideoScaling(RendererCommon.ScalingType scalingType) {
+        //todo
+    }
+
+    @Override
+    public void setLocalVideoOption(LocalStreamOptions opt) {
+        mLocalStreamOptions = opt;
+    }
+
+    // All private functions
     private void initilizeLocalAudioVideoSource() {
 
-        // 1. Create Audio track
-        mLocalAudioSource = mPeerConnectionFactory.createAudioSource(new MediaConstraints());
-        mLocalAudioTrack = mPeerConnectionFactory.createAudioTrack("LocalAudio", mLocalAudioSource);
-        mLocalAudioTrack.setEnabled(true);
+        // 1. Local Audio Stream
+        if(mLocalStreamOptions.isAudioEnabled()) {
+            mLocalAudioSource = mPeerConnectionFactory.createAudioSource(new MediaConstraints());
+            mLocalAudioTrack = mPeerConnectionFactory.createAudioTrack("LocalAudio", mLocalAudioSource);
+            mLocalAudioTrack.setEnabled(true);
+        }
 
-        // 2 A. create video capturer
-        VideoCapturer videoCapturer = createCameraCapturer(new Camera2Enumerator(mContext));
+        // 2. Local Video Stream
+        if(mLocalStreamOptions.isVideoEnabled()){
+            mVideoCapturer = createVideoCapturer(mContext);
 
-        // 2.B create Video Track
-        mLocalVideoSource = mPeerConnectionFactory.createVideoSource(videoCapturer);
-        videoCapturer.startCapture(240, 320, 30);
+            mLocalVideoSource = mPeerConnectionFactory.createVideoSource(mVideoCapturer);
+            mLocalVideoTrack = mPeerConnectionFactory.createVideoTrack("VIDEO_TRACK_ID", mLocalVideoSource);
+            mLocalVideoTrack.setEnabled(true);
 
-        ProxyRenderer proxyRenderer = new ProxyRenderer();
-        proxyRenderer.setTarget(mSelfRenderer);
+            mVideoCapturer.startCapture(mLocalStreamOptions.getDimension().width, mLocalStreamOptions.getDimension().height, mLocalStreamOptions.getVideoFps());
+            mCallback.onCameraOpen();
+        }
 
-        ProxyVideoSink sink = new ProxyVideoSink();
-        sink.setTarget(mSelfRenderer);
+        // 3. Build Stream and attach to Peer Connection.
+        mLocalMediaStream = mPeerConnectionFactory.createLocalMediaStream("localstream");
+        if(mLocalAudioTrack != null) {
+            mLocalMediaStream.addTrack(mLocalAudioTrack);
+        }
+        if(mLocalVideoTrack != null) {
+            mLocalMediaStream.addTrack(mLocalVideoTrack);
+        }
+        mPeerConnection.addStream(mLocalMediaStream);
 
-        VideoRenderer renderer = new VideoRenderer(proxyRenderer);
 
-        mLocalVideoTrack = mPeerConnectionFactory.createVideoTrack("VIDEO_TRACK_ID", mLocalVideoSource);
-        mLocalVideoTrack.setEnabled(true);
-        mLocalVideoTrack.addRenderer(renderer);
-        mLocalVideoTrack.addSink(sink);
+        // 4. Configure Video Output.
+        if(mLocalStreamOptions.isVideoEnabled()) {
+            ProxyRenderer proxyRenderer = new ProxyRenderer();
+            proxyRenderer.setTarget(mSelfRenderer);
 
-        // 3. create media stream and add Tracks created earlier
-        final MediaStream stream = mPeerConnectionFactory.createLocalMediaStream("ARDAMS");
-        stream.addTrack(mLocalAudioTrack);
-        stream.addTrack(mLocalVideoTrack);
+            ProxyVideoSink sink = new ProxyVideoSink();
+            sink.setTarget(mSelfRenderer);
 
-        // 4. add Stream to peer connection
-        mPeerConnection.addStream(stream);
+            VideoRenderer renderer = new VideoRenderer(proxyRenderer);
+            mLocalVideoTrack.setEnabled(true);
+            mLocalVideoTrack.addRenderer(renderer);
+            mLocalVideoTrack.addSink(sink);
+        }
+
+    }
+
+    private CameraVideoCapturer createVideoCapturer(Context context) {
+        CameraEnumerator enumerator;
+        if (Camera2Enumerator.isSupported(context)) {
+            enumerator = new Camera2Enumerator(context);
+        } else {
+            enumerator = new Camera1Enumerator(true);
+        }
+
+        final String[] deviceNames = enumerator.getDeviceNames();
+
+        for (String deviceName : deviceNames) {
+            if (enumerator.isFrontFacing(deviceName)) {
+                CameraVideoCapturer videoCapturer = enumerator.createCapturer(deviceName, null);
+                if (videoCapturer != null) {
+                    return videoCapturer;
+                }
+            }
+        }
+        for (String deviceName : deviceNames) {
+            if (!enumerator.isFrontFacing(deviceName)) {
+                CameraVideoCapturer videoCapturer = enumerator.createCapturer(deviceName, null);
+                if (videoCapturer != null) {
+                    return videoCapturer;
+                }
+            }
+        }
+        return null;
     }
 
     private void initilizeRTCConfig() {
@@ -317,14 +479,12 @@ public class WebRtcEngine2 implements IRtcEngine {
     //create camera capturer
     private VideoCapturer createCameraCapturer(CameraEnumerator enumerator) {
         final String[] deviceNames = enumerator.getDeviceNames();
-
         // First, try to find front facing camera
         Logging.d(TAG, "Looking for front facing cameras.");
         for (String deviceName : deviceNames) {
             if (enumerator.isFrontFacing(deviceName)) {
                 Logging.d(TAG, "Creating front facing camera capturer.");
                 VideoCapturer videoCapturer = enumerator.createCapturer(deviceName, null);
-
                 if (videoCapturer != null) {
                     return videoCapturer;
                 }
@@ -343,7 +503,6 @@ public class WebRtcEngine2 implements IRtcEngine {
                 }
             }
         }
-
         return null;
     }
 
@@ -492,121 +651,74 @@ public class WebRtcEngine2 implements IRtcEngine {
     };
 
 
-
-
-
-
-    @Override
-    public void init(Context context, ICallSignalingApi callSingleingApi, GLSurfaceView selfView, GLSurfaceView peerView) {
-        //We did the stuff in cons
-    }
-
     @Override
     public void addIceCandidateToPeerConnection(IceCandidate ice) {
+        if(mPeerConnection == null){
+            reInit();
+        }
         mPeerConnection.addIceCandidate(ice);
     }
 
     @Override
     public void setRemoteDescriptionToPeerConnection(SessionDescription sdp) {
+        if(mPeerConnection == null){
+            reInit();
+        }
         mPeerConnection.setRemoteDescription(sdpObserver,sdp);
     }
 
     @Override
     public void setLocalDescriptionToPeerConnection(SessionDescription sdp) {
+        if(mPeerConnection == null){
+            reInit();
+        }
         mPeerConnection.setLocalDescription(sdpObserver,sdp);
     }
 
-    @Override
-    public void startAudioCall(String callID, String userid) {
-        assert(userid != null);
-        mCallID = callID;
-        if(mPeerConnection == null){
-            reInit();
+    private synchronized void cleanup(){
+
+        //>>> clean peer
+
+
+        //>>> clean video
+        try {
+            if(mVideoCapturer!= null) {
+                mVideoCapturer.stopCapture();
+                mVideoCapturer.dispose();
+                mVideoCapturer = null;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        createOffer = true;
-        mPeerID = userid;
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mPeerConnection.createOffer(sdpObserver, new MediaConstraints());
-            }
-        });
-    }
-
-    @Override
-    public void startVideoCall(String callId, String userid) {
-        assert(userid != null);
-        mCallID = callId;
-        if(mPeerConnection == null){
-            reInit();
+        if (mLocalVideoSource != null) {
+            mLocalVideoSource.dispose();
+            mLocalVideoSource = null;
         }
-        createOffer = true;
-        mPeerID = userid;
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mPeerConnection.createOffer(sdpObserver, new MediaConstraints());
-            }
-        });
-    }
-
-    @Override
-    public void acceptCall(String callId) {
-        if(mPeerConnection == null){
-            reInit();
+        if(mLocalVideoTrack!= null) {
+            mLocalVideoTrack.dispose();
         }
-        mCallID = callId;
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mPeerConnection.createAnswer(sdpObserver, new MediaConstraints());
-            }
-        });
-    }
 
-    @Override
-    public void rejectCall(String callId) {
-        mCallID = callId;
-    }
-
-    @Override
-    public void toggleVideo(final boolean isOn) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mLocalVideoTrack.setEnabled(isOn);
-            }
-        });
-    }
-
-    @Override
-    public void toggleAudio(final boolean isOn) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mLocalAudioTrack.setEnabled(isOn);
-            }
-        });
-    }
-
-    @Override
-    public void toggleCamera(boolean isOn) {
-
-    }
+        //>>> clean audio
+        if (mLocalAudioSource != null) {
+            mLocalAudioSource.dispose();
+            mLocalAudioSource = null;
+        }
+        if(mLocalAudioTrack!= null) {
+            mLocalAudioTrack.dispose();
+        }
 
 
-    @Override
-    public void endCall() {
-        mCallSingleingApi.sendEndCall(mCallID, ICallSignalingApi.EndCallType.NORMAL_END,"Call ended");
-        cleanup();
-
-    }
-
-    private void cleanup(){
-        if(mPeerConnection != null){
+        if (mPeerConnection != null) {
+            mPeerConnection.removeStream(mLocalMediaStream);
+            mPeerConnection.close();
             mPeerConnection.dispose();
             mPeerConnection = null;
         }
+        if (mLocalMediaStream != null) {
+           // mLocalMediaStream.dispose();
+            mLocalMediaStream = null;
+        }
+        mCallback.onCameraClose();
     }
 
 

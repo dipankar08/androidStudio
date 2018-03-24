@@ -18,10 +18,12 @@ public interface ICallPage {
         void switchToView(PageViewType incomming);
         void showNetworkNotification(String process, String s);
         void updateEndView(String type, String r);
-
-        void updateOutgoingView(String subtitle);
-
+        void updateOutgoingView(String subtitle, boolean isAudio);
         void updateIncomingView(String subtitle);
+
+        void onCameraOff();
+
+        void onCameraOn();
     }
 
     public interface IPresenter{

@@ -6,6 +6,7 @@ import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.CircleImageView;
 import in.co.dipankar.quickandorid.views.CustomFontTextView;
+import in.co.dipankar.quickandorid.views.StateImageButton;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,6 +30,7 @@ public class CallLandingPageView extends RelativeLayout{
     public interface Callback {
         void onClickAudioCallBtn(IRtcUser user);
         void onClickVideoCallBtn(IRtcUser user);
+        void onClickPokeBtn(IRtcUser user);
     }
 
     private List<IRtcUser> userList = new ArrayList<>();
@@ -38,8 +40,13 @@ public class CallLandingPageView extends RelativeLayout{
     private RecyclerView mRecyclerView;
     private RecentUserAdapter mRecentUserAdapter;
 
-    CustomFontTextView selfName;
-    CircleImageView selfImage;
+    StateImageButton mAudio, mVideo, mPoke;
+
+    UserInfoView mPeerInfo;
+
+    IRtcUser mSelectedUser = null;
+
+
     public CallLandingPageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView(context);
@@ -60,6 +67,8 @@ public class CallLandingPageView extends RelativeLayout{
         LayoutInflater mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_call_landing_page, this, true);
 
+        mPeerInfo =  v.findViewById(R.id.peer_info);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         mRecentUserAdapter = new RecentUserAdapter(context, userList);
@@ -73,28 +82,40 @@ public class CallLandingPageView extends RelativeLayout{
             @Override
             public void onClick(View view, final int position) {
                 IRtcUser userClicked  = userList.get(position);
-                mCallback.onClickVideoCallBtn(userClicked);
+                mPeerInfo.updateView(userClicked);
+                mSelectedUser = userClicked;
             }
             @Override
             public void onLongClick(View view, int position) {
-               //TODO
+
             }
         }));
 
+        mAudio  = findViewById(R.id.start_audio_call);
+        mVideo  = findViewById(R.id.start_video_call);
+        mPoke  = findViewById(R.id.start_poke);
 
-        // self View
-        selfName = findViewById(R.id.self_user_name);
-        selfImage = findViewById(R.id.self_user_pic);
+        mAudio.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickAudioCallBtn(mSelectedUser);
+            }
+        });
+        mVideo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickVideoCallBtn(mSelectedUser);
+            }
+        });
+        mPoke.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickPokeBtn(mSelectedUser);
+            }
+        });
     }
 
     private void refreshInternal() {
-        IRtcUser me = PingApplication.Get().getMe();
-        assert (me != null);
-        selfName.setText(me.getUserName());
-        Glide.with(mContext)
-                .load(me.getProfilePictureUrl())
-                .into(selfImage);
-
         userList = PingApplication.Get().getUserManager().getRecentUserList();
         assert(userList!= null);
         mRecentUserAdapter.updateUserList(userList);

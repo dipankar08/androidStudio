@@ -24,6 +24,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.callscreen.CallActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
         </activity>
         <activity android:name=".activities.login.LoginActivity">
