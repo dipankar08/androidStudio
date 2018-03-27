@@ -7,6 +7,7 @@ import in.co.dipankar.ping.common.model.UserManager;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 
 /**
  * Created by dip on 3/16/18.
@@ -27,6 +28,7 @@ public class PingApplication extends Application {
         super.onCreate();
         // Required initialization logic here!
         mUserManager = new UserManager();
+        SharedPrefsUtil.getInstance().init(this);
         sPingApplication = this;
     }
 

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Ping</string>
     <string name="connect">Connect</string>
+
+    <string name="facebook_app_id">2016782931878184</string>
+    <string name="fb_login_protocol_scheme">fb2016782931878184</string>
+
 </resources>
+

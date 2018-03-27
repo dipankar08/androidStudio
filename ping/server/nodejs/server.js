@@ -95,8 +95,8 @@ var ENDCALL_TYPE_PEER_BUSY = "peer_busy"
 var ENDCALL_TYPE_PEER_NOTPICKUP = "peer_notpickup"
 
 
-function _getOfferPayload(call_id, sdp, userinfo){
-    return {"call_id":call_id,"sdp":sdp,"peer_info":userinfo}
+function _getOfferPayload(call_id, sdp, userinfo,is_video_enabled){
+    return {"call_id":call_id,"sdp":sdp,"peer_info":userinfo,"is_video_enabled":is_video_enabled}
 }
 function _getAnswerPayload(call_id, sdp){
     return {"call_id":call_id,"sdp":sdp}
@@ -198,6 +198,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         var call_id = details.call_id
         var user_id = SessionToUserID[client.id]
         var session = client.id
+        var is_video_enabled = details.is_video_enabled;
 
         var peer_id = details.peer_id;
         var sdp = details.sdp;
@@ -242,7 +243,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
 
         // All is OK. send the sdp to all endpoint
         var session_list = getAllSessionForUser(peer_id);
-        var offerCallDetails = _getOfferPayload(call_id, sdp,allLiveConn[user_id].user_info)
+        var offerCallDetails = _getOfferPayload(call_id, sdp,allLiveConn[user_id].user_info, is_video_enabled)
         sendToSpacificListExceptSender(session_list, TOPIC_OUT_OFFER,offerCallDetails)
         
         // make the user busy and add entry to callToSessionList, note that caller also put into inviews

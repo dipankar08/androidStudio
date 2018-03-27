@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:background="@null"
     android:layout_height="match_parent">
-        <org.webrtc.SurfaceViewRenderer
+        <in.co.dipankar.ping.common.webrtc.ExtendedSurfaceView
             android:id="@+id/self_view"
             android:layout_gravity="bottom|end"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
-        <org.webrtc.SurfaceViewRenderer
+        <in.co.dipankar.ping.common.webrtc.ExtendedSurfaceView
             android:id="@+id/peer_view"
             android:layout_height="150dp"
             android:layout_width="100dp"

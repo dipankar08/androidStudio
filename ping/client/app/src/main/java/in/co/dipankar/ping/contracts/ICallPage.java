@@ -1,5 +1,9 @@
 package in.co.dipankar.ping.contracts;
 
+import org.webrtc.StatsReport;
+
+import java.util.Map;
+
 /**
  * Created by dip on 3/17/18.
  */
@@ -24,6 +28,10 @@ public interface ICallPage {
         void onCameraOff();
 
         void onCameraOn();
+
+        void onRtcStat(Map<String, String> reports);
+
+        void toggleViewBasedOnVideoEnabled(boolean isVideoEnabled);
     }
 
     public interface IPresenter{
@@ -40,11 +48,12 @@ public interface ICallPage {
         void rejectCall();
 
         void toggleVideo(boolean isOn);
-
         void toggleCamera(boolean isOn);
-
         void toggleAudio(boolean isOn);
+        void toggleSpeaker(boolean isOn);
 
         void finish();
+
+
     }
 }

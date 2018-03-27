@@ -84,7 +84,7 @@ public interface ICallSignalingApi {
     void disconnect();
 
     //RTC API
-    void sendOffer(String peerId, String callID, Object description);
+    void sendOffer(String peerId, String callID, Object description, boolean isVideoEnabled);
     void sendAnswer(String callID, Object description);
     void sendCandidate(String callId, IceCandidate iceCandidate);
     void sendEndCall(String callID, EndCallType type, String reason);
@@ -97,7 +97,7 @@ public interface ICallSignalingApi {
         void onConnected();
         void onDisconnected();
         //RTC
-        void onReceivedOffer(String callId, SessionDescription sdp, IRtcUser rtcUser);
+        void onReceivedOffer(String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled);
         void onReceivedAnswer(String callId, SessionDescription sdp);
         void onReceivedCandidate(String callId, IceCandidate ice);
         void onReceivedEndCall(String callID, EndCallType type, String reason);

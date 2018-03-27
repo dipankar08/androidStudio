@@ -1,13 +1,14 @@
 package in.co.dipankar.ping.contracts;
 
-import android.content.Context;
-import android.opengl.GLSurfaceView;
-
 import org.webrtc.IceCandidate;
 import org.webrtc.RendererCommon;
 import org.webrtc.SessionDescription;
+import org.webrtc.StatsReport;
 
-import in.co.dipankar.ping.common.webrtc.LocalStreamOptions;
+import java.util.Map;
+
+import static in.co.dipankar.ping.common.webrtc.Constant.AUDIO_CODEC_ISAC;
+import static in.co.dipankar.ping.common.webrtc.Constant.VIDEO_CODEC_VP8;
 
 public interface IRtcEngine {
     // Signling API
@@ -23,12 +24,14 @@ public interface IRtcEngine {
     void endCall();
 
     // Config API
-    void setLocalVideoOption(LocalStreamOptions opt);
     void toggleVideo(boolean isOn);
     void toggleAudio(boolean isOn);
     void toggleCamera(boolean isOn);
     void switchVideoScaling(RendererCommon.ScalingType scalingType);
 
+    void getStats();
+
+    void enableStatsEvents(boolean enable, int periodMs);
 
     interface Callback{
         void onSendOffer();
@@ -39,7 +42,74 @@ public interface IRtcEngine {
         void onCameraClose();
 
         void onCameraOpen();
+        void onStat(Map<String, String> reports);
     }
 
     void setCallback(Callback callback);
+
+
+    public class RtcConfiguration{
+        public RtcConfiguration(boolean videoCallEnabled,
+                                RendererCommon.ScalingType scaleType,
+                                Dimension videoDimension,
+                                int videoFps,
+                                int videoMaxBitrate,
+                                int audioStartBitrate,
+                                String videoCodec,
+                                String audioCodec) {
+            mScaleType = scaleType;
+            this.videoCallEnabled = videoCallEnabled;
+            this.videoDimention = videoDimension;
+            this.videoFps = videoFps;
+            this.videoMaxBitrate = videoMaxBitrate;
+            this.audioStartBitrate = audioStartBitrate;
+            this.videoCodec = videoCodec;
+            this.audioCodec = audioCodec;
+        }
+
+        public  boolean videoCallEnabled = true;
+
+        // Video Info
+        public Dimension videoDimention =  Dimension.Dimension_240P;
+        public int videoFps = 30;
+        public int videoMaxBitrate;
+        public RendererCommon.ScalingType mScaleType = RendererCommon.ScalingType.SCALE_ASPECT_FIT;
+
+        //Audio info
+        public int audioStartBitrate;
+
+        //Codec
+        public String videoCodec = VIDEO_CODEC_VP8;
+        public String audioCodec = AUDIO_CODEC_ISAC;
+
+        public RtcConfiguration() {
+        }
+
+       /* Thease will be supported later
+        public final boolean loopback;
+        public final boolean tracing;
+        public final boolean videoCodecHwAcceleration;
+        public final boolean videoFlexfecEnabled;
+        public final boolean noAudioProcessing;
+        public final boolean aecDump;
+        public final boolean useOpenSLES;
+        public final boolean disableBuiltInAEC;
+        public final boolean disableBuiltInAGC;
+        public final boolean disableBuiltInNS;
+        public final boolean enableLevelControl;
+        public final boolean disableWebRtcAGCAndHPF;
+        */
+    }
+
+    public enum Dimension {
+        Dimension_240P(240, 320),
+        Dimension_720P(720, 1280),
+        Dimension_1080P(1080, 1920);
+        public int width;
+        public int height;
+        Dimension(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+    }
 }

@@ -28,11 +28,10 @@ public class RtcStatView extends RelativeLayout {
     private RtcStatView.Callback mCallback;
     LayoutInflater mInflater;
 
-    TextView tx, rx, mTimeView;
+    TextView total, now, mTimeView;
     private Handler mHandler = new Handler();
     private int mTime  =0;
-    private long mStartRX = 0;
-    private long mStartTX = 0;
+    private long mStartRX, mStartTX, mPrevRX, mPrevTX;
 
     public void setCallback(RtcStatView.Callback callback){
         mCallback = callback;
@@ -52,18 +51,25 @@ public class RtcStatView extends RelativeLayout {
     public RtcStatView(Context context) {
         super(context);
         initView(context);
+    }
 
+    public void reset(){
+        mTime  =0;
+        mStartRX  = 0;
+        mStartTX = 0;
+        mPrevRX = 0;
+        mPrevTX = 0;
     }
 
     private void initView(Context context) {
         mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_rtc_stat, this, true);
         mTimeView = findViewById(R.id.time);
-        tx = findViewById(R.id.tx);
-        rx = findViewById(R.id.rx);
+        now = findViewById(R.id.now);
+        total = findViewById(R.id.total);
 
-        mStartRX = TrafficStats.getTotalRxBytes();
-        mStartTX = TrafficStats.getTotalTxBytes();
+        mStartRX = mPrevRX = TrafficStats.getTotalRxBytes();
+        mStartTX = mPrevTX = TrafficStats.getTotalTxBytes();
         if (mStartRX == TrafficStats.UNSUPPORTED || mStartTX == TrafficStats.UNSUPPORTED) {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
             alert.setTitle("Uh Oh!");
@@ -78,11 +84,15 @@ public class RtcStatView extends RelativeLayout {
     private final Runnable mRunnable = new Runnable() {
         public void run() {
             mTime++;
-            mTimeView.setText("Time: "+Long.toString(mTime)+" sec");
+
             long rxBytes = (TrafficStats.getTotalRxBytes() - mStartRX)/1024;
-            rx.setText("Byte sent: "+Long.toString(rxBytes)+" KB");
             long txBytes = (TrafficStats.getTotalTxBytes() - mStartTX)/1024;
-            tx.setText("Byte received: "+Long.toString(txBytes) +" KB");
+
+            mTimeView.setText("Time/Rate: "+Long.toString(mTime)+"/"+(rxBytes+txBytes)/mTime);
+            now.setText("Now Tx/Rx: "+(txBytes - mPrevTX)+"/"+(rxBytes -mPrevRX)+" KB");
+            total.setText("Total Tx/Rx: "+txBytes+"/"+rxBytes+" KB");
+            mPrevRX = rxBytes;
+            mPrevTX = txBytes;
             mHandler.postDelayed(mRunnable, 1000);
         }
     };

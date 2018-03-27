@@ -22,6 +22,7 @@ public class CallOngoingPageView extends RelativeLayout {
         void onClickToggleVideo(boolean isOn);
         void onClickToggleAudio(boolean isOn);
         void onClickToggleCamera(boolean isOn);
+        void onClickToggleSpeaker(boolean isOn);
         void onClickToggleLayout(int idx);
     }
 
@@ -50,18 +51,13 @@ public class CallOngoingPageView extends RelativeLayout {
     private void initView(Context context) {
         mInflater = LayoutInflater.from(context);
         View v = mInflater.inflate(R.layout.view_call_ongoing_page, this, true);
-        StateImageButton cam =  v.findViewById(R.id.toggle_camera);
         StateImageButton audio =  v.findViewById(R.id.toggle_audio);
         ImageButton end =  v.findViewById(R.id.end);
         StateImageButton video =  v.findViewById(R.id.toggle_video);
-        MultiStateImageButton layout =  v.findViewById(R.id.toggle_layout);
+        StateImageButton camera =  v.findViewById(R.id.toggle_camera);
+        StateImageButton speaker =  v.findViewById(R.id.toggle_speaker);
+        //MultiStateImageButton layout =  v.findViewById(R.id.toggle_layout);
 
-        cam.setCallBack(new StateImageButton.Callback(){
-            @Override
-            public void click(boolean b) {
-                mCallback.onClickToggleCamera(b);
-            }
-        });
         audio.setCallBack(new StateImageButton.Callback(){
             @Override
             public void click(boolean b) {
@@ -80,11 +76,25 @@ public class CallOngoingPageView extends RelativeLayout {
                 mCallback.onClickEnd();
             }
         });
-
+/*
         layout.setCallBack(new MultiStateImageButton.Callback() {
             @Override
             public void click(int i) {
                 mCallback.onClickToggleLayout(i);
+            }
+        });
+        */
+        camera.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickToggleCamera(!camera.isViewEnabled());
+            }
+        });
+
+        speaker.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickToggleSpeaker(!speaker.isViewEnabled());
             }
         });
     }

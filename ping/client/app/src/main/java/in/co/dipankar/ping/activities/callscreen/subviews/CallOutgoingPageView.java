@@ -26,6 +26,8 @@ public class CallOutgoingPageView extends RelativeLayout{
         void onClickedEnd();
         void onClickedToggleVideo(boolean isOn);
         void onClickedToggleAudio(boolean isOn);
+        void onClickedToggleCamera(boolean isOn);
+        void onClickedToggleSpeaker(boolean isOn);
     }
 
     private Callback mCallback;
@@ -60,7 +62,9 @@ public class CallOutgoingPageView extends RelativeLayout{
         mPeerInfo =  v.findViewById(R.id.peer_info);
 
         StateImageButton video =  v.findViewById(R.id.toggle_video);
-        StateImageButton audio =  v.findViewById(R.id.toggle_audio);
+        StateImageButton audio =  v.findViewById(R.id.toggle_video);
+        StateImageButton camera =  v.findViewById(R.id.toggle_camera);
+        StateImageButton speaker =  v.findViewById(R.id.toggle_speaker);
         StateImageButton end = v.findViewById(R.id.end);
 
         audio.setCallBack(new StateImageButton.Callback(){
@@ -81,10 +85,25 @@ public class CallOutgoingPageView extends RelativeLayout{
                 mCallback.onClickedEnd();
             }
         });
+
+        camera.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickedToggleCamera(!camera.isViewEnabled());
+            }
+        });
+
+        speaker.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onClickedToggleSpeaker(!speaker.isViewEnabled());
+            }
+        });
     }
 
     public void updateView(String subtitle, boolean isAudiocalll) {
         IRtcUser peer = PingApplication.Get().getPeer();
+        if(peer == null) return;
         mPeerInfo.updateView(peer);
         mPeerInfo.mTitle.setText("Calling "+ peer.getUserName() + " ...");
         mPeerInfo.mSubTitle.setText("Ringing ...");

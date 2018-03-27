@@ -5,17 +5,22 @@ import android.util.Log;
 
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
+import org.webrtc.StatsReport;
 
 import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
 import in.co.dipankar.ping.contracts.ICallPage;
+
+import java.util.Map;
 import java.util.UUID;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IMultiVideoPane;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcEngine;
 import in.co.dipankar.ping.contracts.IRtcUser;
+
+import static in.co.dipankar.ping.common.webrtc.Constant.AUDIO_CODEC_OPUS;
 
 public class CallPresenter implements ICallPage.IPresenter {
 
@@ -34,6 +39,8 @@ public class CallPresenter implements ICallPage.IPresenter {
     //singnaling api
     ICallSignalingApi mSignalingApi;
 
+
+
     public CallPresenter(ICallPage.IView view, IRtcUser rtcUser, IRtcDeviceInfo rtcDeviceInfo, IMultiVideoPane multiVideoPane){
         mView = view;
         mRtcUser = rtcUser;
@@ -44,11 +51,15 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     private void  init(){
         mSignalingApi = new SocketIOSignaling(mRtcUser, mRtcDeviceInfo, mSignalingCallback);
+        IRtcEngine.RtcConfiguration rtcConfiguration = new IRtcEngine.RtcConfiguration();
+        rtcConfiguration.audioCodec = AUDIO_CODEC_OPUS;
+        rtcConfiguration.audioStartBitrate  = 6;
 
         //RTC
-        mRtcEngine = new WebRtcEngine2((Context)mView, mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
+        mRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration, mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
         if(mRtcEngine != null) {
             mRtcEngine.setCallback(rtcCallback);
+            mRtcEngine.enableStatsEvents(true, 1000);
         }
 
     }
@@ -72,10 +83,12 @@ public class CallPresenter implements ICallPage.IPresenter {
         }
 
         @Override
-        public void onReceivedOffer(String callid, SessionDescription sdp, IRtcUser user) {
+        public void onReceivedOffer(String callid, SessionDescription sdp, IRtcUser user, boolean isVideoEnabled) {
             mCallId = callid;
             if(mRtcEngine != null) {
                 mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+                mRtcEngine.toggleVideo(isVideoEnabled);
+                mView.toggleViewBasedOnVideoEnabled(isVideoEnabled);
             }
             PingApplication.Get().setPeer(user);
             mView.updateIncomingView(user.getUserName() +" calling...");
@@ -132,6 +145,11 @@ public class CallPresenter implements ICallPage.IPresenter {
         public void onCameraOpen() {
             mView.onCameraOn();
         }
+
+        @Override
+        public void onStat(Map<String, String> reports) {
+            mView.onRtcStat(reports);
+        }
     };
 
 
@@ -149,6 +167,9 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void startAudio(IRtcUser peer){
+        if(peer == null){
+            return;
+        }
         if(!PingApplication.Get().hasNetworkConn()){
             mView.showNetworkNotification("error","No network");
             return;
@@ -165,6 +186,9 @@ public class CallPresenter implements ICallPage.IPresenter {
     }
     @Override
     public void startVideo(IRtcUser peer){
+        if(peer == null){
+            return;
+        }
         if(!PingApplication.Get().hasNetworkConn()){
             mView.showNetworkNotification("error","No network");
             return;
@@ -174,6 +198,7 @@ public class CallPresenter implements ICallPage.IPresenter {
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
         mCallId = getRandomCallId();
         mPeerRtcUser = peer;
+
         if(mRtcEngine != null) {
             mRtcEngine.startVideoCall(mCallId, mPeerRtcUser.getUserId());
         }
@@ -216,6 +241,11 @@ public class CallPresenter implements ICallPage.IPresenter {
         if(mRtcEngine != null) {
             mRtcEngine.toggleAudio(isOn);
         }
+    }
+
+    @Override
+    public void toggleSpeaker(boolean isOn) {
+       // Note to do.
     }
 
     @Override

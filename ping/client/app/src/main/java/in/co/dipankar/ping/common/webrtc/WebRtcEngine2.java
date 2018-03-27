@@ -1,6 +1,10 @@
 package in.co.dipankar.ping.common.webrtc;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,8 +26,11 @@ import org.webrtc.PeerConnection;
 import org.webrtc.PeerConnectionFactory;
 import org.webrtc.RendererCommon;
 import org.webrtc.RtpReceiver;
+import org.webrtc.ScreenCapturerAndroid;
 import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
+import org.webrtc.StatsObserver;
+import org.webrtc.StatsReport;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoCapturer;
 import org.webrtc.VideoFrame;
@@ -35,6 +42,8 @@ import org.webrtc.voiceengine.WebRtcAudioRecord;
 import org.webrtc.voiceengine.WebRtcAudioTrack;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -43,21 +52,23 @@ import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcEngine;
 import in.co.dipankar.ping.contracts.IRtcUser;
 
+import static in.co.dipankar.ping.common.webrtc.Constant.AUDIO_CODEC_OPUS;
+import static in.co.dipankar.ping.common.webrtc.WebRtcUtils.parseStatistics;
+import static in.co.dipankar.ping.common.webrtc.WebRtcUtils.preferCodec;
+import static in.co.dipankar.ping.common.webrtc.WebRtcUtils.setStartBitrate;
+
 public class WebRtcEngine2 implements IRtcEngine {
 
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static final String TAG = "MainActivity";
-    private static final String AUDIO_ECHO_CANCELLATION_CONSTRAINT = "googEchoCancellation";
-    private static final String AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT = "googAutoGainControl";
-    private static final String AUDIO_HIGH_PASS_FILTER_CONSTRAINT = "googHighpassFilter";
-    private static final String AUDIO_NOISE_SUPPRESSION_CONSTRAINT = "googNoiseSuppression";
-    private static final String AUDIO_LEVEL_CONTROL_CONSTRAINT = "levelControl";
-    private static final String DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT = "DtlsSrtpKeyAgreement";
+
+
 
 
 
     private boolean createOffer = false;
     Context mContext;
+    RtcConfiguration mRtcConfiguration;
 
     // CallBacks
     private ICallSignalingApi mCallSingleingApi;
@@ -101,22 +112,16 @@ public class WebRtcEngine2 implements IRtcEngine {
     private boolean enableLevelControl = false;
 
 
-    // user configurations
-    private boolean mIsAudioEnabled = true;
-    private boolean mIsVideoEnabled = true;
-    LocalStreamOptions mLocalStreamOptions;
-    private RendererCommon.ScalingType mScaleType = RendererCommon.ScalingType.SCALE_ASPECT_FIT;
-
-
     public WebRtcEngine2(Context context,
+                         RtcConfiguration rtcConfiguration,
                          ICallSignalingApi callSingleingApi,
                          SurfaceViewRenderer selfView ,
                          SurfaceViewRenderer peerView ){
         mContext = context;
+        mRtcConfiguration = rtcConfiguration;
         mCallSingleingApi = callSingleingApi;
         mSelfRenderer = selfView;
         mPeerRenderer = peerView;
-        mLocalStreamOptions = new LocalStreamOptions();
         init();
     }
     private void init(){
@@ -138,7 +143,7 @@ public class WebRtcEngine2 implements IRtcEngine {
     public void startAudioCall(String callID, String userid) {
         assert(userid != null);
         mCallID = callID;
-        mLocalStreamOptions.setVideoEnabled(false);
+        mRtcConfiguration.videoCallEnabled = false;
         if(mPeerConnection == null){
             reInit();
         }
@@ -156,7 +161,7 @@ public class WebRtcEngine2 implements IRtcEngine {
     public void startVideoCall(String callId, String userid) {
         assert(userid != null);
         mCallID = callId;
-        mLocalStreamOptions.setVideoEnabled(true);
+        mRtcConfiguration.videoCallEnabled = true;
         if(mPeerConnection == null){
             reInit();
         }
@@ -223,7 +228,7 @@ public class WebRtcEngine2 implements IRtcEngine {
             @Override
             public void run() {
                 if (mVideoCapturer instanceof CameraVideoCapturer) {
-                    if (mLocalStreamOptions.isVideoEnabled()) {
+                    if (!mRtcConfiguration.videoCallEnabled) {
                         Log.e(TAG, "Failed to switch camera as Video is not eanbled!");
                         return;
                     }
@@ -242,30 +247,26 @@ public class WebRtcEngine2 implements IRtcEngine {
         //todo
     }
 
-    @Override
-    public void setLocalVideoOption(LocalStreamOptions opt) {
-        mLocalStreamOptions = opt;
-    }
 
     // All private functions
     private void initilizeLocalAudioVideoSource() {
 
         // 1. Local Audio Stream
-        if(mLocalStreamOptions.isAudioEnabled()) {
+        if(true) {
             mLocalAudioSource = mPeerConnectionFactory.createAudioSource(new MediaConstraints());
             mLocalAudioTrack = mPeerConnectionFactory.createAudioTrack("LocalAudio", mLocalAudioSource);
             mLocalAudioTrack.setEnabled(true);
         }
 
         // 2. Local Video Stream
-        if(mLocalStreamOptions.isVideoEnabled()){
+        if(mRtcConfiguration.videoCallEnabled){
             mVideoCapturer = createVideoCapturer(mContext);
 
             mLocalVideoSource = mPeerConnectionFactory.createVideoSource(mVideoCapturer);
             mLocalVideoTrack = mPeerConnectionFactory.createVideoTrack("VIDEO_TRACK_ID", mLocalVideoSource);
             mLocalVideoTrack.setEnabled(true);
 
-            mVideoCapturer.startCapture(mLocalStreamOptions.getDimension().width, mLocalStreamOptions.getDimension().height, mLocalStreamOptions.getVideoFps());
+            mVideoCapturer.startCapture(mRtcConfiguration.videoDimention.width, mRtcConfiguration.videoDimention.height,mRtcConfiguration.videoFps);
             mCallback.onCameraOpen();
         }
 
@@ -281,7 +282,7 @@ public class WebRtcEngine2 implements IRtcEngine {
 
 
         // 4. Configure Video Output.
-        if(mLocalStreamOptions.isVideoEnabled()) {
+        if(mRtcConfiguration.videoCallEnabled) {
             ProxyRenderer proxyRenderer = new ProxyRenderer();
             proxyRenderer.setTarget(mSelfRenderer);
 
@@ -373,6 +374,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         // 1. initialize video renderers
         mPeerRenderer.init(rootEglBase.getEglBaseContext(), null);
         mPeerRenderer.setMirror(true);
+        mPeerRenderer.setZOrderMediaOverlay(true);
         mPeerRenderer.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT);
         mPeerRenderer.setEnableHardwareScaler(true);
 
@@ -381,7 +383,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         mSelfRenderer.setMirror(true);
         mSelfRenderer.setZOrderMediaOverlay(true);
         mSelfRenderer.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT);
-        mSelfRenderer.setEnableHardwareScaler(false);
+        mSelfRenderer.setEnableHardwareScaler(true);
     }
 
 
@@ -391,10 +393,10 @@ public class WebRtcEngine2 implements IRtcEngine {
         // Enable DTLS for normal calls and disable for loopback calls.
         if (DTLS) {
             mPeerVideoMediaConstraints.optional.add(
-                    new MediaConstraints.KeyValuePair(DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, "false"));
+                    new MediaConstraints.KeyValuePair(Constant.DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, "false"));
         } else {
             mPeerVideoMediaConstraints.optional.add(
-                    new MediaConstraints.KeyValuePair(DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, "true"));
+                    new MediaConstraints.KeyValuePair(Constant.DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, "true"));
         }
         mPeerVideoMediaConstraints.optional.add(
                 new MediaConstraints.KeyValuePair("RtpDataChannels", "true"));
@@ -404,17 +406,17 @@ public class WebRtcEngine2 implements IRtcEngine {
         // added for audio performance measurements
         if (disableAudioProcessing) {
             mPeerAudioMediaConstraints.mandatory.add(
-                    new MediaConstraints.KeyValuePair(AUDIO_ECHO_CANCELLATION_CONSTRAINT, "false"));
+                    new MediaConstraints.KeyValuePair(Constant.AUDIO_ECHO_CANCELLATION_CONSTRAINT, "false"));
             mPeerAudioMediaConstraints.mandatory.add(
-                    new MediaConstraints.KeyValuePair(AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT, "false"));
+                    new MediaConstraints.KeyValuePair(Constant.AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT, "false"));
             mPeerAudioMediaConstraints.mandatory.add(
-                    new MediaConstraints.KeyValuePair(AUDIO_HIGH_PASS_FILTER_CONSTRAINT, "false"));
+                    new MediaConstraints.KeyValuePair(Constant.AUDIO_HIGH_PASS_FILTER_CONSTRAINT, "false"));
             mPeerAudioMediaConstraints.mandatory.add(
-                    new MediaConstraints.KeyValuePair(AUDIO_NOISE_SUPPRESSION_CONSTRAINT, "false"));
+                    new MediaConstraints.KeyValuePair(Constant.AUDIO_NOISE_SUPPRESSION_CONSTRAINT, "false"));
         }
         if (enableLevelControl) {
             mPeerAudioMediaConstraints.mandatory.add(
-                    new MediaConstraints.KeyValuePair(AUDIO_LEVEL_CONTROL_CONSTRAINT, "true"));
+                    new MediaConstraints.KeyValuePair(Constant.AUDIO_LEVEL_CONTROL_CONSTRAINT, "true"));
         }
 
         // 3. Create SDP constraints.
@@ -430,7 +432,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         public void onCreateSuccess(SessionDescription sessionDescription) {
             mPeerConnection.setLocalDescription(sdpObserver, sessionDescription);
             if (createOffer) {
-                mCallSingleingApi.sendOffer(mPeerID, mCallID, sessionDescription.description);
+                mCallSingleingApi.sendOffer(mPeerID, mCallID, sessionDescription.description, mRtcConfiguration.videoCallEnabled);
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
@@ -506,8 +508,29 @@ public class WebRtcEngine2 implements IRtcEngine {
         return null;
     }
 
+    /*
+    private static final int CAPTURE_PERMISSION_REQUEST_CODE = 11;
+
+    @TargetApi(21)
+    private void startScreenCapture() {
+        MediaProjectionManager mediaProjectionManager =
+                (MediaProjectionManager) mContext.getSystemService(
+                        Context.MEDIA_PROJECTION_SERVICE);
+        //(Activity) mContext.startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), CAPTURE_PERMISSION_REQUEST_CODE);
+    }
 
 
+    private VideoCapturer createScreenCapturer() {
+        return new ScreenCapturerAndroid(
+                mediaProjectionPermissionResultData, new MediaProjection.Callback() {
+            @Override
+            public void onStop() {
+                //reportError("User revoked permission to capture the screen.");
+            }
+        });
+    }
+
+*/
     public void initAudioErrorCallbacks() {
         // Set audio WebRtcAudioRecord error callbacks.
         WebRtcAudioRecord.setErrorCallback(new WebRtcAudioRecord.WebRtcAudioRecordErrorCallback() {
@@ -664,7 +687,16 @@ public class WebRtcEngine2 implements IRtcEngine {
         if(mPeerConnection == null){
             reInit();
         }
-        mPeerConnection.setRemoteDescription(sdpObserver,sdp);
+        String sdpDescription = sdp.description;
+
+        sdpDescription = preferCodec(sdpDescription, mRtcConfiguration.videoCodec, true);
+        sdpDescription = preferCodec(sdpDescription, mRtcConfiguration.audioCodec, false);
+        if(mRtcConfiguration.audioCodec.equals(AUDIO_CODEC_OPUS)) {
+            sdpDescription = setStartBitrate(
+                    AUDIO_CODEC_OPUS, false, sdpDescription, mRtcConfiguration.audioStartBitrate);
+        }
+        SessionDescription sdpRemote = new SessionDescription(sdp.type, sdpDescription);
+        mPeerConnection.setRemoteDescription(sdpObserver, sdpRemote);
     }
 
     @Override
@@ -730,4 +762,52 @@ public class WebRtcEngine2 implements IRtcEngine {
     private void runOnUIThread(Runnable runnable){
         new Handler(Looper.getMainLooper()).post(runnable);
     }
+
+    /* Statistic */
+    private Timer statsTimer = new Timer(true);
+    @Override
+    public void getStats() {
+        if (mPeerConnection == null) {
+            return;
+        }
+        boolean success = mPeerConnection.getStats(new StatsObserver() {
+            @Override
+            public void onComplete(final StatsReport[] reports) {
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCallback.onStat(parseStatistics(reports));
+                    }
+                });
+
+            }
+        }, null);
+        if (!success) {
+            Log.e(TAG, "getStats() returns false!");
+        }
+    }
+
+    @Override
+    public void enableStatsEvents(boolean enable, int periodMs) {
+        if (enable) {
+            try {
+                statsTimer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        executor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                getStats();
+                            }
+                        });
+                    }
+                }, 0, periodMs);
+            } catch (Exception e) {
+                Log.e(TAG, "Can not schedule statistics timer", e);
+            }
+        } else {
+            statsTimer.cancel();
+        }
+    }
+
 }

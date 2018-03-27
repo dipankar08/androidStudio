@@ -20,6 +20,9 @@ import com.bumptech.glide.Glide;
 
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
+import org.webrtc.StatsReport;
+
+import java.util.Map;
 
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.activities.application.PingApplication;
@@ -31,7 +34,9 @@ import in.co.dipankar.ping.activities.callscreen.subviews.CallOutgoingPageView;
 import in.co.dipankar.ping.activities.callscreen.subviews.CallVideoGridView;
 import in.co.dipankar.ping.activities.callscreen.subviews.UserInfoView;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
+import in.co.dipankar.ping.common.utils.AudioManagerUtils;
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
+import in.co.dipankar.ping.common.webrtc.RtcStatView;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
 import in.co.dipankar.ping.contracts.ICallPage;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
@@ -61,16 +66,18 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
     CallVideoGridView mCallVideoGridView;
     CustomFontTextView mNotificationView;
-    UserInfoView mUserInfoView;
-
+    RtcStatView mRtcStatView;
     //Presneter
     ICallPage.IPresenter mPresenter;
 
-    // Andpid Utisl
-    ICallPage.PageViewType mPageViewType;
+    // Andpid Utils
     MediaPlayer mMediaPlayer;
+    AudioManagerUtils  mAudioManagerUtils;
 
 
+
+    //private state
+    private boolean mIsCameraOpen = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,14 +149,12 @@ public class CallActivity extends Activity implements ICallPage.IView{
         mCallVideoGridView = findViewById(R.id.call_video_grid_view);
         mCallVideoGridView.setCallback(mCallVideoGridViewCallBack);
 
-        mUserInfoView = findViewById(R.id.user_info);
-        mUserInfoView.updateView(PingApplication.Get().getMe());
-
         mCallLandingPageView.setVisibility(View.VISIBLE);
 
         mMediaPlayer = MediaPlayer.create(this, R.raw.tone);
 
         mNotificationView = findViewById(R.id.notification);
+        mRtcStatView = findViewById(R.id.rtc_stat_view);
 
         // test
         Button test = findViewById(R.id.test);
@@ -160,6 +165,14 @@ public class CallActivity extends Activity implements ICallPage.IView{
             }
         });
         mCallLandingPageView.updateView();
+
+        //update
+        mAudioManagerUtils = new AudioManagerUtils(this, new AudioManagerUtils.Callback(){
+            @Override
+            public void onSpeakerOn() {}
+            @Override
+            public void onSpeakerOff() {}
+        });
     }
 
     private CallLandingPageView.Callback mCallLandingPageViewCallBack= new CallLandingPageView.Callback(){
@@ -213,6 +226,11 @@ public class CallActivity extends Activity implements ICallPage.IView{
         }
 
         @Override
+        public void onClickToggleSpeaker(boolean isOn) {
+            mAudioManagerUtils.setEnableSpeaker(isOn);
+        }
+
+        @Override
         public void onClickToggleLayout(int idx) {
             switch(idx){
                 case 0:
@@ -244,6 +262,16 @@ public class CallActivity extends Activity implements ICallPage.IView{
         @Override
         public void onClickedToggleAudio(boolean isOn) {
             mPresenter.toggleAudio(isOn);
+        }
+
+        @Override
+        public void onClickedToggleCamera(boolean isOn) {
+            mPresenter.toggleCamera(isOn);
+        }
+
+        @Override
+        public void onClickedToggleSpeaker(boolean isOn) {
+            mAudioManagerUtils.setEnableSpeaker(isOn);
         }
     };
     private CallEndedPageView.Callback mCallEndedPageViewCallBack= new CallEndedPageView.Callback(){
@@ -290,6 +318,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
     @Override
     public void onPause() {
+        killToast();
         super.onPause();
         if (VERBOSE) Log.v(TAG, "- ON PAUSE -");
     }
@@ -336,28 +365,39 @@ public class CallActivity extends Activity implements ICallPage.IView{
         switch(pageViewType){
             case LANDING:
                 mCallLandingPageView.setVisibility(View.VISIBLE);
-                mUserInfoView.setVisibility(View.VISIBLE);
-                mCallVideoGridView.setVisibility(View.GONE);
-                break;
-            case INCOMMING:
-                mCallIncomingPageView.setVisibility(View.VISIBLE);
-                mCallIncomingPageView.requestFocus();
-                mUserInfoView.setVisibility(View.GONE);
-                mCallVideoGridView.setVisibility(View.GONE);
-                break;
-            case ONGOING:
-                mCallOngoingPageView.setVisibility(View.VISIBLE);
-                //mUserInfoView.setVisibility(View.GONE);
-                //mCallVideoGridView.setVisibility(View.GONE);
-                break;
-            case ENDED:
-                mCallEndedPageView.setVisibility(View.VISIBLE);
-                mUserInfoView.setVisibility(View.GONE);
                 mCallVideoGridView.setVisibility(View.GONE);
                 break;
             case OUTGOING:
                 mCallOutgoingPageView.setVisibility(View.VISIBLE);
-                mUserInfoView.setVisibility(View.GONE);
+                if(mIsCameraOpen) {
+                    mCallVideoGridView.setVisibility(View.VISIBLE);
+                    mCallVideoGridView.setlayout(CallVideoGridView.Layout.SELF_VIEW_FULL_SCREEN);
+                } else {
+                    mCallVideoGridView.setVisibility(View.GONE);
+                }
+                break;
+            case INCOMMING:
+                mCallIncomingPageView.setVisibility(View.VISIBLE);
+                mCallIncomingPageView.requestFocus();
+                if(mIsCameraOpen) {
+                    mCallVideoGridView.setVisibility(View.VISIBLE);
+                    mCallVideoGridView.setlayout(CallVideoGridView.Layout.PEER_VIEW_FULL_SCREEN);//_VIEW_FULL_SCREEN);
+                } else  {
+                    mCallVideoGridView.setVisibility(View.GONE);
+                }
+                break;
+            case ONGOING:
+                mCallOngoingPageView.setVisibility(View.VISIBLE);
+                if(mIsCameraOpen) {
+                    mCallVideoGridView.setVisibility(View.VISIBLE);
+                    mCallVideoGridView.setlayout(CallVideoGridView.Layout.PEER_VIEW_FULL_SCREEN);
+                } else {
+                    mCallVideoGridView.setVisibility(View.GONE);
+                }
+                mRtcStatView.reset();
+                break;
+            case ENDED:
+                mCallEndedPageView.setVisibility(View.VISIBLE);
                 mCallVideoGridView.setVisibility(View.GONE);
                 break;
         }
@@ -410,14 +450,68 @@ public class CallActivity extends Activity implements ICallPage.IView{
     public void onCameraOff() {
         DLog.e("onCameraOff");
         mCallVideoGridView.setVisibility(View.GONE);
-        mUserInfoView.setVisibility(View.VISIBLE);
+        mIsCameraOpen = false;
     }
 
     @Override
     public void onCameraOn() {
         DLog.e("onCameraOn");
         mCallVideoGridView.setVisibility(View.VISIBLE);
-        mUserInfoView.setVisibility(View.GONE);
+        mIsCameraOpen = true;
     }
 
+    @Override
+    public void onRtcStat(Map<String, String> reports) {
+        DLog.e(reports.toString());
+    }
+
+    @Override
+    public void toggleViewBasedOnVideoEnabled(boolean isVideoEnabled) {
+        if(isVideoEnabled){
+            mCallVideoGridView.setVisibility(View.GONE);
+        } else{
+            mCallVideoGridView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // Doubel Press ed back
+    private boolean backPressedToExitOnce = false;
+    private Toast toast = null;
+    @Override
+    public void onBackPressed() {
+        if (backPressedToExitOnce) {
+            super.onBackPressed();
+        } else {
+            this.backPressedToExitOnce = true;
+            showToast("Press again to exit");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backPressedToExitOnce = false;
+                }
+            }, 2000);
+        }
+    }
+    private void showToast(String message) {
+        if (this.toast == null) {
+            // Create toast if found null, it would he the case of first call only
+            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+
+        } else if (this.toast.getView() == null) {
+            // Toast not showing, so create new one
+            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+
+        } else {
+            // Updating toast message is showing
+            this.toast.setText(message);
+        }
+
+        // Showing toast finally
+        this.toast.show();
+    }
+    private void killToast() {
+        if (this.toast != null) {
+            this.toast.cancel();
+        }
+    }
 }

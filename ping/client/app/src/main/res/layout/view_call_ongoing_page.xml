@@ -85,6 +85,7 @@
 
 
 
+    <!-- Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,45 +94,59 @@
         android:gravity="center"
         android:layout_marginBottom="40dp">
         <in.co.dipankar.quickandorid.views.StateImageButton
-            android:id="@+id/toggle_camera"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="@drawable/bg_button"
-            android:scaleType="centerInside"
-            android:layout_marginRight="50dp"
-            android:src="@drawable/ic_camera_48"/>
-        <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_video"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:background="@drawable/bg_button"
-            android:scaleType="centerInside"
-            android:layout_marginRight="50dp"
-            android:src="@drawable/ic_video_48"/>
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_marginRight="25dp"
+            app:enable_src= "@drawable/ic_video_enable_white_24"
+            app:enable_background="@drawable/bg_small_circle_black"
+            app:disable_src= "@drawable/ic_video_disable_black_24"
+            app:disable_background="@drawable/bg_small_circle_white"
+            app:is_enable="true" />
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_audio"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:background="@drawable/bg_button"
-            android:scaleType="centerInside"
-            android:layout_marginRight="50dp"
-            android:src="@drawable/ic_mic_48"/>
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_marginRight="25dp"
+            app:enable_src= "@drawable/ic_mute_disable_white_24"
+            app:enable_background="@drawable/bg_small_circle_black"
+            app:disable_src= "@drawable/ic_mute_enable_black_24"
+            app:disable_background="@drawable/bg_small_circle_white"
+            app:is_enable="true" />
+        <in.co.dipankar.quickandorid.views.StateImageButton
+            android:id="@+id/toggle_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_marginRight="25dp"
+            app:enable_src= "@drawable/ic_camera_disable_white_24"
+            app:enable_background="@drawable/bg_small_circle_black"
+            app:disable_src= "@drawable/ic_camera_enable_black_24"
+            app:disable_background="@drawable/bg_small_circle_white"
+            app:is_enable="true" />
+        <in.co.dipankar.quickandorid.views.StateImageButton
+            android:id="@+id/toggle_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_marginRight="25dp"
+            app:enable_src= "@drawable/ic_speaker_white_24"
+            app:enable_background="@drawable/bg_small_circle_black"
+            app:disable_src= "@drawable/ic_headphone_black_24"
+            app:disable_background="@drawable/bg_small_circle_white"
+            app:is_enable="true" />
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/end"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:background="@drawable/bg_button"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_endcall_48"/>
-        <in.co.dipankar.quickandorid.views.MultiStateImageButton
-            android:id="@+id/toggle_layout"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="@drawable/bg_button"
-            android:scaleType="centerInside"
-            android:visibility="gone"
-            app:backgroundState0="@drawable/ic_endcall_48"
-            android:src="@drawable/ic_endcall_48"/>
+            android:scaleType="center"
+            app:enable_src= "@drawable/ic_startcall_white_24"
+            app:enable_background="@drawable/bg_small_circle_red"
+            app:disable_src= "@drawable/ic_startcall_white_24"
+            app:disable_background="@drawable/bg_small_circle_red"
+            app:is_enable="true" />
     </LinearLayout>
+
 </RelativeLayout>

@@ -143,13 +143,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
     }
 
     @Override
-    public void sendOffer(String peerID, String callId, Object description) {
+    public void sendOffer(String peerID, String callId, Object description, boolean isVideoEnabled) {
         DLog.e("Send Offer");
         try {
             JSONObject obj = new JSONObject();
             obj.put(PEER_ID,peerID);
             obj.put(SDP,description);
             obj.put(CALLID,callId);
+            obj.put("is_video_enabled", isVideoEnabled);
 
             if(socket.connected()) {
                 socket.emit(SignalType.TOPIC_OUT_OFFER.type, obj);
@@ -334,6 +335,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
                     obj.getString(SDP));
             final String callId = obj.getString(CALLID);
             final String peer_info = obj.getString("peer_info");
+            final boolean isVideoEnabled = obj.getBoolean("is_video_enabled");
             IRtcUser user = null;
             try {
                 user = (IRtcUser)Base64Coder.fromString(peer_info);
@@ -347,7 +349,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
                 mainUIHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedOffer(callId, sdp, finalUser);
+                        mCallback.onReceivedOffer(callId, sdp, finalUser,isVideoEnabled);
                     }
                 });
             }

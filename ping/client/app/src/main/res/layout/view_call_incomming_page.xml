@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,20 +21,28 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_marginBottom="40dp">
-        <in.co.dipankar.quickandorid.views.StateImageButton
-            android:id="@+id/reject"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="@drawable/bg_button"
-            android:scaleType="centerInside"
-            android:layout_marginRight="100dp"
-            android:src="@drawable/ic_cross_48"/>
-        <in.co.dipankar.quickandorid.views.StateImageButton
-            android:id="@+id/accept"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="@drawable/bg_button"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_tick_48"/>
+    <in.co.dipankar.quickandorid.views.StateImageButton
+        android:id="@+id/reject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="60dp"
+        android:scaleType="center"
+        android:rotation="45"
+        app:enable_src= "@drawable/ic_callend_white_24"
+        app:enable_background="@drawable/bg_big_circle_red"
+        app:disable_src= "@drawable/ic_callend_white_24"
+        app:disable_background="@drawable/bg_big_circle_red"
+        app:is_enable="true" />
+
+    <in.co.dipankar.quickandorid.views.StateImageButton
+        android:id="@+id/accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        app:enable_src= "@drawable/ic_startcall_white_24"
+        app:enable_background="@drawable/bg_big_circle_green"
+        app:disable_src= "@drawable/ic_startcall_white_24"
+        app:disable_background="@drawable/bg_big_circle_green"
+        app:is_enable="true" />
     </LinearLayout>
 </RelativeLayout>
