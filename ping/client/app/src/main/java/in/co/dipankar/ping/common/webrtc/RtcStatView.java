@@ -7,14 +7,10 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import in.co.dipankar.ping.R;
-import in.co.dipankar.ping.activities.callscreen.subviews.CallOngoingPageView;
-import in.co.dipankar.quickandorid.views.MultiStateImageButton;
-import in.co.dipankar.quickandorid.views.StateImageButton;
 
 /**
  * Created by dip on 3/24/18.

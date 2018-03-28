@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.callscreen.CallActivity"
+            android:name=".activities.call.CallActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">

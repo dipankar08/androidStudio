@@ -1,6 +1,5 @@
 package in.co.dipankar.ping.activities.login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,8 +30,7 @@ import org.json.JSONObject;
 
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.Utils;
-import in.co.dipankar.ping.activities.application.PingApplication;
-import in.co.dipankar.ping.activities.callscreen.CallActivity;
+import in.co.dipankar.ping.activities.call.CallActivity;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
