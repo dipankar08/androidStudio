@@ -3,6 +3,8 @@ package in.co.dipankar.ping.contracts;
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
+import java.util.List;
+
 /**
  * Created by dip on 3/9/18.
  */
@@ -27,6 +29,8 @@ public interface ICallSignalingApi {
          TOPIC_IN_ENDCALL("endcall"),
          TOPIC_IN_INVALID_PAYLOAD("invalid_playload"),
          TOPIC_IN_NOTI("notification"),
+        TOPIC_IN_PRESENCE("presence"),
+        TOPIC_IN_WELCOME ("welcome"),
         ;
 
         public final String type;
@@ -42,6 +46,16 @@ public interface ICallSignalingApi {
             this.type = type;
         }
     }
+
+    public enum PresenceType{
+        ONLINE("online"),
+        OFFLINE("offline");
+        public final String type;
+        PresenceType(String type) {
+            this.type = type;
+        }
+    }
+
 
     public enum EndCallType {
         NORMAL_END("normal_end"),
@@ -89,8 +103,6 @@ public interface ICallSignalingApi {
     void sendCandidate(String callId, IceCandidate iceCandidate);
     void sendEndCall(String callID, EndCallType type, String reason);
 
-
-
     public interface ICallSignalingCallback{
         // connetion
         void onTryConnecting();
@@ -101,6 +113,8 @@ public interface ICallSignalingApi {
         void onReceivedAnswer(String callId, SessionDescription sdp);
         void onReceivedCandidate(String callId, IceCandidate ice);
         void onReceivedEndCall(String callID, EndCallType type, String reason);
+        void onPresenceChange(IRtcUser user, PresenceType type);
+        void onWelcome(List<IRtcUser> liveUserList);
     }
     void addCallback(ICallSignalingApi.ICallSignalingCallback callback);
 

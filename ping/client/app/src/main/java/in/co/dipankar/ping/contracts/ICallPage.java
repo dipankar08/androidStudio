@@ -1,5 +1,6 @@
 package in.co.dipankar.ping.contracts;
 
+import org.webrtc.SessionDescription;
 import org.webrtc.StatsReport;
 
 import java.util.Map;
@@ -36,15 +37,11 @@ public interface ICallPage {
 
     public interface IPresenter{
 
+
+        void startOutgoingCall();
+        void startIncommingCall(String callId, SessionDescription sdp);
         void endCall();
-
-
-        void startAudio(IRtcUser peer);
-
-        void startVideo(IRtcUser peer);
-
         void acceptCall();
-
         void rejectCall();
 
         void toggleVideo(boolean isOn);
@@ -53,7 +50,5 @@ public interface ICallPage {
         void toggleSpeaker(boolean isOn);
 
         void finish();
-
-
     }
 }

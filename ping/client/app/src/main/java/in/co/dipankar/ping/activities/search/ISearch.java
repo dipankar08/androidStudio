@@ -5,4 +5,12 @@ package in.co.dipankar.ping.activities.search;
  */
 
 public class ISearch {
+
+    public interface View{
+
+    }
+
+    public interface Presenter{
+
+    }
 }

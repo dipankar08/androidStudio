@@ -1,8 +1,11 @@
 package in.co.dipankar.ping.activities.search;
 
-/**
- * Created by dip on 3/27/18.
- */
 
-public class SearchPresenter {
+public class SearchPresenter implements ISearch.Presenter {
+
+    ISearch.View mView;
+    SearchPresenter(ISearch.View view){
+        mView = view;
+    }
+
 }

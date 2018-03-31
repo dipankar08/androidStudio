@@ -3,22 +3,22 @@ package in.co.dipankar.ping.activities.application;
 import android.app.Application;
 import android.content.res.Configuration;
 
-import in.co.dipankar.ping.common.model.UserManager;
-import in.co.dipankar.ping.common.webrtc.RtcUser;
+import in.co.dipankar.ping.common.model.ContactManger;
+import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
+import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 
-/**
- * Created by dip on 3/16/18.
- */
-
 public class PingApplication extends Application {
 
-    private UserManager mUserManager;
+    private ContactManger mContactManger;
     private IRtcUser mSelfUser;
     private IRtcUser mPeerUser;
     private IRtcDeviceInfo mSelfDevice;
+
+    private ICallSignalingApi mCallSignalingApi;
+
 
     private static PingApplication sPingApplication;
     // Called when the application is starting, before any other application objects have been created.
@@ -27,7 +27,7 @@ public class PingApplication extends Application {
     public void onCreate() {
         super.onCreate();
         // Required initialization logic here!
-        mUserManager = new UserManager();
+        mContactManger = new ContactManger();
         SharedPrefsUtil.getInstance().init(this);
         sPingApplication = this;
     }
@@ -47,8 +47,8 @@ public class PingApplication extends Application {
         super.onLowMemory();
     }
 
-    public UserManager getUserManager(){
-        return mUserManager;
+    public ContactManger getUserManager(){
+        return mContactManger;
     }
 
     public static PingApplication Get(){
@@ -83,5 +83,15 @@ public class PingApplication extends Application {
     }
     public void setNetworkConn(boolean networkConn){
         mNetworkConnection = networkConn;
+    }
+
+    public void setCallSignalingApi(ICallSignalingApi api) {
+        mCallSignalingApi = api;
+    }
+    public ICallSignalingApi getCallSignalingApi() {
+        if(mCallSignalingApi == null){
+            mCallSignalingApi = new SocketIOSignaling(mSelfUser,mSelfDevice);
+        }
+        return mCallSignalingApi;
     }
 }

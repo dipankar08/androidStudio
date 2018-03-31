@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:background="@null"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+    <in.co.dipankar.quickandorid.views.CircleImageView
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="3dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/picture"
+        android:src="@drawable/user1"
+        app:civ_border_color="#55ffffff"/>
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/picture"
+        android:layout_marginBottom="8dp"
+        android:textColor="#ffffff"
+        android:maxLines="1"
+        android:text="sample"
+        app:customfont="Montserrat-Regular.ttf"
+        android:textSize="12dp"/>
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/name"
+        android:textColor="#95ffffff"
+        android:maxLines="1"
+        android:text="Online now"
+        app:customfont="Ubuntu-Regular.ttf"
+        android:textSize="10dp"/>
+</RelativeLayout>

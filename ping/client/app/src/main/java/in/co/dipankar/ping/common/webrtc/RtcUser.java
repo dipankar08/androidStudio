@@ -8,13 +8,15 @@ import in.co.dipankar.ping.contracts.IRtcUser;
 
 public class RtcUser implements IRtcUser {
 
-    String name, id,profilePictureUrl, mCoverPrctureUrl;
+    public String name, id,profilePictureUrl, mCoverPrctureUrl;
+    public boolean mOnline;
 
     public RtcUser(String name, String id, String profilePictureUrl,String coverPictureUrl) {
         this.name = name;
         this.id = id;
         this.profilePictureUrl = profilePictureUrl;
         this.mCoverPrctureUrl = coverPictureUrl;
+        this.mOnline = false;
     }
 
     @Override
@@ -35,5 +37,10 @@ public class RtcUser implements IRtcUser {
     @Override
     public String getUserName() {
         return name;
+    }
+
+    @Override
+    public boolean isOnline() {
+        return mOnline;
     }
 }

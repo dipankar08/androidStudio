@@ -1,16 +1,24 @@
 package in.co.dipankar.ping.activities.call;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
 import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.common.model.CallInfo;
+import in.co.dipankar.ping.common.model.IContactManager;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
+import in.co.dipankar.ping.contracts.ICallInfo;
 import in.co.dipankar.ping.contracts.ICallPage;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
@@ -22,15 +30,12 @@ import in.co.dipankar.ping.contracts.IRtcUser;
 import static in.co.dipankar.ping.common.webrtc.Constant.AUDIO_CODEC_OPUS;
 
 public class CallPresenter implements ICallPage.IPresenter {
-
-    //view
     private ICallPage.IView mView;
 
     // Utils
     String mCallId;
-    IRtcUser mRtcUser;
     IRtcUser mPeerRtcUser;
-    IRtcDeviceInfo mRtcDeviceInfo;
+    ICallInfo mCallInfo;
     IMultiVideoPane mMultiVideoPane;
 
     //rtc engine
@@ -38,60 +43,67 @@ public class CallPresenter implements ICallPage.IPresenter {
     //singnaling api
     ICallSignalingApi mSignalingApi;
 
+    //Stat
+    private int mDuration =0;
+    private int mByteUse =0;
 
-
-    public CallPresenter(ICallPage.IView view, IRtcUser rtcUser, IRtcDeviceInfo rtcDeviceInfo, IMultiVideoPane multiVideoPane){
+    public CallPresenter(ICallPage.IView view, IRtcUser peer, boolean isVideo, IMultiVideoPane multiVideoPane){
         mView = view;
-        mRtcUser = rtcUser;
-        mRtcDeviceInfo =rtcDeviceInfo;
+        mPeerRtcUser = peer;
         mMultiVideoPane = multiVideoPane;
         init();
+        this.mCallInfo = new CallInfo(getRandomCallId(),
+                ICallInfo.CallType.OUTGOING_CALL,
+                isVideo,
+                PingApplication.Get().getMe().getUserId(),
+                peer.getUserId(),
+                "0",
+                getTimeNow(),
+                "0 Kb");
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private String getTimeNow() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now).toString(); //2016/11/16 12:08:43
     }
 
     private void  init(){
-        mSignalingApi = new SocketIOSignaling(mRtcUser, mRtcDeviceInfo, mSignalingCallback);
         IRtcEngine.RtcConfiguration rtcConfiguration = new IRtcEngine.RtcConfiguration();
         rtcConfiguration.audioCodec = AUDIO_CODEC_OPUS;
         rtcConfiguration.audioStartBitrate  = 6;
-
-        //RTC
-        mRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration, mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
+        mSignalingApi = PingApplication.Get().getCallSignalingApi();
+        //TODO - NOW THIS WILL BE CALLED MUTIPLE TIMES.
+        mSignalingApi.addCallback(mSignalingCallback);
+        mRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration,mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
         if(mRtcEngine != null) {
             mRtcEngine.setCallback(rtcCallback);
             mRtcEngine.enableStatsEvents(true, 1000);
         }
-
     }
-    // Callbacks ..
+
+
     private ICallSignalingApi.ICallSignalingCallback  mSignalingCallback = new ICallSignalingApi.ICallSignalingCallback(){
         @Override
-        public void onTryConnecting() {
-            mView.showNetworkNotification("process","Try connecting...");
-        }
+        public void onTryConnecting() {}
 
         @Override
-        public void onConnected() {
-            mView.showNetworkNotification("success","Now connected...");
-            PingApplication.Get().setNetworkConn(true);
-        }
+        public void onConnected() {}
 
         @Override
-        public void onDisconnected() {
-            PingApplication.Get().setNetworkConn(false);
-            mView.showNetworkNotification("error","Not able to connect network.");
-        }
+        public void onDisconnected() {}
+
+        @Override
+        public void onPresenceChange(IRtcUser user, ICallSignalingApi.PresenceType type) {}
+
+        @Override
+        public void onWelcome(List<IRtcUser> liveUserList) {}
 
         @Override
         public void onReceivedOffer(String callid, SessionDescription sdp, IRtcUser user, boolean isVideoEnabled) {
-            mCallId = callid;
-            if(mRtcEngine != null) {
-                mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
-                mRtcEngine.toggleVideo(isVideoEnabled);
-                mView.toggleViewBasedOnVideoEnabled(isVideoEnabled);
-            }
-            PingApplication.Get().setPeer(user);
-            mView.updateIncomingView(user.getUserName() +" calling...");
-            mView.switchToView(ICallPage.PageViewType.INCOMMING);
+            // This will taken care bt HomePresenter
+            // TODO Incase of Conflict Call
         }
 
         @Override
@@ -100,6 +112,7 @@ public class CallPresenter implements ICallPage.IPresenter {
                 mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
             }
             mView.switchToView(ICallPage.PageViewType.ONGOING);
+            mCallInfo.setType(ICallInfo.CallType.OUTGOING_CALL);
         }
 
         @Override
@@ -111,24 +124,22 @@ public class CallPresenter implements ICallPage.IPresenter {
 
         @Override
         public void onReceivedEndCall(String callid,ICallSignalingApi.EndCallType type, String reason) {
-            mView.updateEndView(type.toString().toUpperCase(), reason);
-            mView.switchToView(ICallPage.PageViewType.ENDED);
-            if(mRtcEngine != null) {
-                mRtcEngine.endCall();
-            }
+            handleEndCallInternal(type,reason);
         }
+
     };
 
     private IRtcEngine.Callback rtcCallback = new IRtcEngine.Callback(){
-
         @Override
         public void onSendOffer() {
             mView.switchToView(ICallPage.PageViewType.OUTGOING);
+            mCallInfo.setType(ICallInfo.CallType.MISS_CALL_OUTGOING);
         }
 
         @Override
         public void onSendAns() {
             mView.switchToView(ICallPage.PageViewType.ONGOING);
+            mCallInfo.setType(ICallInfo.CallType.INCOMMING_CALL);
         }
 
         @Override
@@ -151,74 +162,68 @@ public class CallPresenter implements ICallPage.IPresenter {
         }
     };
 
+    @Override
+    public void startOutgoingCall(){
+        if(mCallInfo == null){
+            return;
+        }
+        if(!PingApplication.Get().hasNetworkConn()){
+            mView.showNetworkNotification("error","No network");
+            finish();
+            return;
+        }
+        mView.updateOutgoingView("Ringing ....", mCallInfo.getIsVideo());
+        mView.switchToView(ICallPage.PageViewType.OUTGOING);
+        if(mRtcEngine != null) {
+            if(mCallInfo.getIsVideo()){
+                mRtcEngine.startVideoCall(mCallInfo.getId(),mCallInfo.getTo());
+            } else {
+                mRtcEngine.startAudioCall(mCallInfo.getId(),mCallInfo.getTo());
+            }
+        }
+    }
 
-    private String getRandomCallId(){
-        return UUID.randomUUID().toString();
+    @Override
+    public void startIncommingCall(String callId, SessionDescription sdp) {
+        if(mCallInfo == null){
+            return;
+        }
+        if(!PingApplication.Get().hasNetworkConn()){
+            mView.showNetworkNotification("error","No network");
+            finish();
+            return;
+        }
+
+        mCallId = callId;
+        if(mRtcEngine != null) {
+            mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+            mRtcEngine.toggleVideo(mCallInfo.getIsVideo());
+            mView.toggleViewBasedOnVideoEnabled(mCallInfo.getIsVideo());
+        }
+
+        mView.updateIncomingView(mPeerRtcUser.getUserName() +" calling...");
+        mView.switchToView(ICallPage.PageViewType.INCOMMING);
+        mCallInfo.setType(ICallInfo.CallType.MISS_CALL_INCOMMING);
     }
 
     @Override
     public void endCall(){
-        if(mRtcEngine != null) {
-            mRtcEngine.endCall();
-        }
-        mView.switchToView(ICallPage.PageViewType.ENDED);
+        handleEndCallInternal(ICallSignalingApi.EndCallType.NORMAL_END,"You ended the call");
     }
-
-    @Override
-    public void startAudio(IRtcUser peer){
-        if(peer == null){
-            return;
-        }
-        if(!PingApplication.Get().hasNetworkConn()){
-            mView.showNetworkNotification("error","No network");
-            return;
-        }
-        PingApplication.Get().setPeer(peer);
-        mView.updateOutgoingView("Ringing ....", true);
-        mView.switchToView(ICallPage.PageViewType.OUTGOING);
-        mCallId = getRandomCallId();
-        mPeerRtcUser = peer;
-        if(mRtcEngine != null) {
-            mRtcEngine.startAudioCall(mCallId, mPeerRtcUser.getUserId());
-        }
-
-    }
-    @Override
-    public void startVideo(IRtcUser peer){
-        if(peer == null){
-            return;
-        }
-        if(!PingApplication.Get().hasNetworkConn()){
-            mView.showNetworkNotification("error","No network");
-            return;
-        }
-        PingApplication.Get().setPeer(peer);
-        mView.updateOutgoingView("Ringing ....", false);
-        mView.switchToView(ICallPage.PageViewType.OUTGOING);
-        mCallId = getRandomCallId();
-        mPeerRtcUser = peer;
-
-        if(mRtcEngine != null) {
-            mRtcEngine.startVideoCall(mCallId, mPeerRtcUser.getUserId());
-        }
-
-    }
-
     @Override
     public void acceptCall(){
+        assert(mRtcEngine != null);
+        mRtcEngine.acceptCall(mCallId);
         mView.switchToView(ICallPage.PageViewType.ONGOING);
-        if(mRtcEngine != null) {
-            mRtcEngine.acceptCall(mCallId);
-        }
+        mCallInfo.setType(ICallInfo.CallType.INCOMMING_CALL);
     }
 
     @Override
     public void rejectCall(){
+        assert(mRtcEngine != null);
         mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.PEER_REJECT," User reject a call");
-        if(mRtcEngine != null) {
-            mRtcEngine.rejectCall(mCallId);
-        }
-        mView.switchToView(ICallPage.PageViewType.ENDED);
+        mRtcEngine.rejectCall(mCallId);
+        handleEndCallInternal(ICallSignalingApi.EndCallType.PEER_REJECT," User reject a call" );
     }
 
     @Override
@@ -249,6 +254,23 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void finish() {
-        mSignalingApi.disconnect();
+        // Not to do anything here..
+        mView = null;
+    }
+
+    private void handleEndCallInternal(ICallSignalingApi.EndCallType type, String reason) {
+        mView.updateEndView(type.toString().toUpperCase(), reason);
+        mView.switchToView(ICallPage.PageViewType.ENDED);
+        if(mRtcEngine != null) {
+            mRtcEngine.endCall();
+        }
+        IContactManager contactManager = PingApplication.Get().getUserManager();
+        mCallInfo.setDataUses(mByteUse+"");
+        mCallInfo.setDuration(mDuration+"");
+        contactManager.addCallInfo(mCallInfo);
+    }
+
+    private String getRandomCallId(){
+        return UUID.randomUUID().toString();
     }
 }

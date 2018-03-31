@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.webrtc.IceCandidate;
@@ -18,11 +19,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.util.Base64;
 
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.Configuration;
+import in.co.dipankar.ping.contracts.IAddOn;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
@@ -37,36 +42,36 @@ public class SocketIOSignaling implements ICallSignalingApi {
     private static final String CALLID = "call_id";
     private static final String CALLER_INFO = "user_info";
     private static final String PEER_ID = "peer_id";
-    private static final String ENDCALL = "endcall";
-    private static final String REGISTER = "register";
     private static final String SDP_MID = "sdpMid";
     private static final String SDP_M_LINE_INDEX = "sdpMLineIndex";
 
 
-    private ICallSignalingApi.ICallSignalingCallback mCallback;
+    private List<ICallSignalingApi.ICallSignalingCallback> mCallbackList;
 
     private IRtcUser mRtcUser;
     private IRtcDeviceInfo mRtcDeviceInfo;
     Handler mainUIHandler = new Handler(Looper.getMainLooper());
-    private static  Socket socket;
+    private Socket mSocket;
 
-    public SocketIOSignaling(IRtcUser user, IRtcDeviceInfo device, ICallSignalingCallback callback) {
+    public SocketIOSignaling(IRtcUser user, IRtcDeviceInfo device) {
+        mCallbackList = new ArrayList<>();
         mRtcUser = user;
         mRtcDeviceInfo = device;
-        mCallback = callback;
-        if(socket == null){
+        if(mSocket == null){
             try {
-                socket = IO.socket(Configuration.SIGNALING_ENDPOINT);
+                mSocket = IO.socket(Configuration.SIGNALING_ENDPOINT);
                 init();
-                connect();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    public void addCallback(ICallSignalingCallback callback){
+        mCallbackList.add(callback);
+    }
     void init(){
-        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 onRecvConnect(args);
@@ -112,31 +117,49 @@ public class SocketIOSignaling implements ICallSignalingApi {
             public void call(Object... args) {
                 onRecvNoti(args);
             }
+        }).on("presence", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvPresence(args);
+            }
+        }).on(SignalType.TOPIC_IN_WELCOME.type, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onRecvWelcome(args);
+            }
         });
     }
 
     @Override
     public void connect() {
-        if(mCallback != null){
-            runOnUIThread(new Runnable() {
-                @Override
-                public void run() {
-                    mCallback.onTryConnecting();
-                }
-            });
+        if(!mSocket.connected()) {
+            if (mCallbackList != null) {
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (ICallSignalingCallback callback : mCallbackList) {
+                            callback.onTryConnecting();
+                        }
+                    }
+                });
+            }
+            mSocket.connect();
+            DLog.e("Send Connecting");
+        } else {
+            DLog.e("Already Connected");
         }
-        socket.connect();
-        DLog.e("Send Connecting");
     }
 
     @Override
     public void disconnect() {
-        socket.disconnect();
-        if(mCallback != null){
+        mSocket.disconnect();
+        if(mCallbackList != null){
             runOnUIThread(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onDisconnected();
+                    for(ICallSignalingCallback callback : mCallbackList) {
+                        callback.onDisconnected();
+                    }
                 }
             });
         }
@@ -152,14 +175,16 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(CALLID,callId);
             obj.put("is_video_enabled", isVideoEnabled);
 
-            if(socket.connected()) {
-                socket.emit(SignalType.TOPIC_OUT_OFFER.type, obj);
+            if(mSocket.connected()) {
+                mSocket.emit(SignalType.TOPIC_OUT_OFFER.type, obj);
             } else{
-                if(mCallback != null){
+                if(mCallbackList != null){
                     runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
-                            mCallback.onDisconnected();
+                            for(ICallSignalingCallback callback : mCallbackList) {
+                                callback.onDisconnected();
+                            }
                         }
                     });
                 }
@@ -180,14 +205,16 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(SDP, description);
             obj.put(CALLID,callId);
 
-            if(socket.connected()) {
-                socket.emit(SignalType.TOPIC_OUT_ANSWER.type, obj);
+            if(mSocket.connected()) {
+                mSocket.emit(SignalType.TOPIC_OUT_ANSWER.type, obj);
             } else{
-                if(mCallback != null){
+                if(mCallbackList != null){
                     runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
-                            mCallback.onDisconnected();
+                            for(ICallSignalingCallback callback : mCallbackList) {
+                                callback.onDisconnected();
+                            }
                         }
                     });
                 }
@@ -211,14 +238,16 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put(SDP_M_LINE_INDEX, iceCandidate.sdpMLineIndex);
             obj.put(SDP, iceCandidate.sdp);
 
-            if(socket.connected()) {
-                socket.emit(SignalType.TOPIC_OUT_CANDIDATE.type, obj);
+            if(mSocket.connected()) {
+                mSocket.emit(SignalType.TOPIC_OUT_CANDIDATE.type, obj);
             } else{
-                if(mCallback != null){
+                if(mCallbackList != null){
                     runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
-                            mCallback.onDisconnected();
+                            for(ICallSignalingCallback callback : mCallbackList) {
+                                callback.onDisconnected();
+                            }
                         }
                     });
                 }
@@ -240,14 +269,16 @@ public class SocketIOSignaling implements ICallSignalingApi {
             obj.put("type", type.toString());
             obj.put("reason", reason);
 
-            if(socket.connected()) {
-            socket.emit(SignalType.TOPIC_OUT_ENDCALL.type, obj);
+            if(mSocket.connected()) {
+            mSocket.emit(SignalType.TOPIC_OUT_ENDCALL.type, obj);
             } else{
-                if(mCallback != null){
+                if(mCallbackList != null){
                     runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
-                            mCallback.onDisconnected();
+                            for(ICallSignalingCallback callback : mCallbackList) {
+                                callback.onDisconnected();
+                            }
                         }
                     });
                 }
@@ -272,18 +303,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(socket.connected()) {
-                socket.emit(SignalType.TOPIC_OUT_REGISTER.type, obj);
+            if(mSocket.connected()) {
+                mSocket.emit(SignalType.TOPIC_OUT_REGISTER.type, obj);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void addCallback(ICallSignalingApi.ICallSignalingCallback callback){
-        mCallback = callback;
-    }
     private void runOnUIThread(Runnable runnable){
         new Handler(Looper.getMainLooper()).post(runnable);
     }
@@ -296,11 +323,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
     }
     private void onRecvDisconnect(Object ...args ){
         DLog.e("Received onRecvDisconnect");
-        if(mCallback != null){
+        if(mCallbackList != null){
             runOnUIThread(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onDisconnected();
+                    for(ICallSignalingCallback callback : mCallbackList) {
+                        callback.onDisconnected();
+                    }
                 }
             });
         }
@@ -314,11 +343,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
                     obj.getString(SDP));
             final String callId = obj.getString(CALLID);
 
-            if(mCallback != null){
+            if(mCallbackList != null){
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedAnswer(callId, sdp);
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onReceivedAnswer(callId, sdp);
+                        }
                     }
                 });
             }
@@ -344,12 +375,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            if(mCallback != null){
+            if(mCallbackList != null){
                 IRtcUser finalUser = user;
                 mainUIHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedOffer(callId, sdp, finalUser,isVideoEnabled);
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onReceivedOffer(callId, sdp, finalUser,isVideoEnabled);
+                        }
                     }
                 });
             }
@@ -366,11 +399,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
                     obj.getInt(SDP_M_LINE_INDEX),
                     obj.getString(SDP));
             final String callId = obj.getString(CALLID);
-            if(mCallback != null){
+            if(mCallbackList != null){
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedCandidate(callId, ice);
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onReceivedCandidate(callId, ice);
+                        }
                     }
                 });
             }
@@ -387,11 +422,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
             final String type = obj.getString("type");
             final String reason = obj.getString("reason");
             final String callId = obj.getString(CALLID);
-            if (mCallback != null) {
+            if (mCallbackList != null) {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                        }
                     }
                 });
             }
@@ -407,11 +444,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
             final String type = obj.getString("type");
             final String reason = obj.getString("reason");
             final String callId = obj.getString(CALLID);
-            if (mCallback != null) {
+            if (mCallbackList != null) {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                        }
                     }
                 });
             }
@@ -426,11 +465,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
             final String type = obj.getString("type");
             final String reason = obj.getString("reason");
             final String callId = obj.getString(CALLID);
-            if (mCallback != null) {
+            if (mCallbackList != null) {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onReceivedEndCall(callId, EndCallType.valueOf(type.toUpperCase()), reason);
+                        }
                     }
                 });
             }
@@ -446,15 +487,83 @@ public class SocketIOSignaling implements ICallSignalingApi {
             final String msg = obj.getString("msg");
             switch (type){
                 case CONNECTED:
-                    if(mCallback != null){
+                    if(mCallbackList != null){
                         runOnUIThread(new Runnable() {
                             @Override
                             public void run() {
-                                mCallback.onConnected();
+                                for(ICallSignalingCallback callback : mCallbackList) {
+                                    callback.onConnected();
+                                }
                             }
                         });
                     }
                     break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void onRecvPresence(Object ... args) {
+        DLog.e("Received onRecvPresence");
+        try {
+            JSONObject obj = new JSONObject(args[0].toString());
+            PresenceType type = PresenceType.valueOf(obj.getString("type").toUpperCase());
+
+            final String user_info = obj.getString("user_info");
+            IRtcUser user = null;
+            try {
+                user = (IRtcUser)Base64Coder.fromString(user_info);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            if(mCallbackList != null){
+                IRtcUser finalUser = user;
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onPresenceChange(finalUser,type);
+                        }
+                    }
+                });
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    void onRecvWelcome(Object ... args) {
+        DLog.e("Received onRecvWelcome");
+        try {
+            JSONObject obj = new JSONObject(args[0].toString());
+
+            final JSONArray live_users = obj.getJSONArray("live_users");
+            List<IRtcUser> userList = new ArrayList<>();
+
+            for (int i = 0 ; i < live_users.length(); i++) {
+                String userStr = live_users.getString(i);
+                try {
+                    IRtcUser userObj = (RtcUser) Base64Coder.fromString(userStr);
+                    userList.add(userObj);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(mCallbackList != null){
+                List<IRtcUser> finalUser = userList;
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(ICallSignalingCallback callback : mCallbackList) {
+                            callback.onWelcome(finalUser);
+                        }
+                    }
+                });
             }
         } catch (JSONException e) {
             e.printStackTrace();

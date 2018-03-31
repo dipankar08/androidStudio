@@ -28,7 +28,7 @@ public class CallLandingPageView extends RelativeLayout{
         void onClickPokeBtn(IRtcUser user);
     }
 
-    private List<IRtcUser> userList = new ArrayList<>();
+    private List<IRtcUser> mUserList = new ArrayList<>();
 
     private Context mContext;
     private Callback mCallback;
@@ -65,8 +65,7 @@ public class CallLandingPageView extends RelativeLayout{
         mPeerInfo =  v.findViewById(R.id.peer_info);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        mRecentUserAdapter = new RecentUserAdapter(context, userList);
+        mRecentUserAdapter = new RecentUserAdapter(context, mUserList);
         RecyclerView.LayoutManager mLayoutManager =
                 new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -76,7 +75,7 @@ public class CallLandingPageView extends RelativeLayout{
                 mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                IRtcUser userClicked  = userList.get(position);
+                IRtcUser userClicked  = mUserList.get(position);
                 mPeerInfo.updateView(userClicked);
                 mSelectedUser = userClicked;
             }
@@ -110,24 +109,14 @@ public class CallLandingPageView extends RelativeLayout{
         });
     }
 
-    private void refreshInternal() {
-        userList = PingApplication.Get().getUserManager().getRecentUserList();
+    public void updateUserList(List<IRtcUser> userList) {
         assert(userList!= null);
-        mRecentUserAdapter.updateUserList(userList);
+        mUserList = userList;
+        mRecentUserAdapter.updateUserList(mUserList);
     }
 
     public void setCallback(Callback callback){
         mCallback = callback;
     }
 
-    public void setVisibility(boolean isVisible){
-        if(isVisible){
-
-        } else{
-            mRecyclerView.setVisibility(GONE);
-        }
-    }
-    public void updateView(){
-        refreshInternal();
-    }
 }

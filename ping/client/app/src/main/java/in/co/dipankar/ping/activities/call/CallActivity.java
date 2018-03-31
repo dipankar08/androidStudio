@@ -14,9 +14,14 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.webrtc.SessionDescription;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import in.co.dipankar.ping.R;
+import in.co.dipankar.ping.Utils;
 import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.activities.call.subviews.CallEndedPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallIncomingPageView;
@@ -24,9 +29,13 @@ import in.co.dipankar.ping.activities.call.subviews.CallLandingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallOngoingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallOutgoingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallVideoGridView;
+import in.co.dipankar.ping.activities.home.HomePresenter;
+import in.co.dipankar.ping.common.model.CallInfo;
+import in.co.dipankar.ping.common.model.IContactManager;
 import in.co.dipankar.ping.common.utils.AudioManagerUtils;
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.RtcStatView;
+import in.co.dipankar.ping.contracts.ICallInfo;
 import in.co.dipankar.ping.contracts.ICallPage;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
@@ -69,50 +78,39 @@ public class CallActivity extends Activity implements ICallPage.IView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
-
-        RuntimePermissionUtils.getInstance().init(this);
-        RuntimePermissionUtils.getInstance().askPermission(new String[]{
-                Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
-
-        }, new RuntimePermissionUtils.CallBack() {
-            @Override
-            public void onSuccess() {
-                proceedAfterPermission();
-            }
-
-            @Override
-            public void onFail() {
-                finish();
-            }
-        });
+        proceedAfterPermission();
     }
 
     private void proceedAfterPermission(){
-        // this order is importnat
-        processIntent();
         initView();
-        initPresenter();
+        initCall();
     }
 
     @Override
-    protected void onNewIntent(Intent intent)
-    {
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         proceedAfterPermission();
     }
 
-    private void processIntent(){
+    private void initCall(){
         Intent intent = getIntent();
-        IRtcUser mRtcUser = (IRtcUser) intent.getSerializableExtra("RtcUser");
-        String deviceid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        IRtcDeviceInfo mRtcDeviceInfo= new RtcDeviceInfo(deviceid,android.os.Build.MODEL,"10");
-        PingApplication.Get().setMe(mRtcUser);
-        PingApplication.Get().setDevice(mRtcDeviceInfo);
-    }
+        boolean isComing = intent.getBooleanExtra("isComing",false);
+        IRtcUser peer = (IRtcUser) intent.getSerializableExtra("peer");
+        PingApplication.Get().setPeer(peer);
 
-    private void initPresenter(){
-        mPresenter = new CallPresenter(this, PingApplication.Get().getMe(), PingApplication.Get().getDevice(), mCallVideoGridView);
+        boolean isVideo = intent.getBooleanExtra("isVideo",false);
+        PingApplication.Get().getUserManager().addCallback(mContactMangerCallback);
+
+        mPresenter = new CallPresenter(this, peer, isVideo , mCallVideoGridView);
+        if(!isComing) {
+            mPresenter.startOutgoingCall();
+        } else{
+            String callId = intent.getStringExtra("callId");
+            String sdp_data = intent.getStringExtra("sdp_data");
+            String sdp_type = intent.getStringExtra("sdp_type");
+            SessionDescription sdp = new SessionDescription(SessionDescription.Type.valueOf(sdp_type),sdp_data);
+            mPresenter.startIncommingCall(callId, sdp);
+        }
     }
 
     private void initView() {
@@ -151,7 +149,6 @@ public class CallActivity extends Activity implements ICallPage.IView{
                 switchToView(ICallPage.PageViewType.ONGOING);
             }
         });
-        mCallLandingPageView.updateView();
 
         //update
         mAudioManagerUtils = new AudioManagerUtils(this, new AudioManagerUtils.Callback(){
@@ -165,13 +162,13 @@ public class CallActivity extends Activity implements ICallPage.IView{
     private CallLandingPageView.Callback mCallLandingPageViewCallBack= new CallLandingPageView.Callback(){
         @Override
         public void onClickAudioCallBtn(IRtcUser user) {
-            mPresenter.startAudio(user);
-            mCallOutgoingPageView.setVisibilityOfPeerInfo(true);
+            //mPresenter.startAudio(user);
+            //mCallOutgoingPageView.setVisibilityOfPeerInfo(true);
         }
         @Override
         public void onClickVideoCallBtn(IRtcUser user) {
-          mPresenter.startVideo(user);
-          mCallOutgoingPageView.setVisibilityOfPeerInfo(false);
+         // mPresenter.startVideo(user);
+         // mCallOutgoingPageView.setVisibilityOfPeerInfo(false);
         }
 
         @Override
@@ -265,7 +262,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
         @Override
         public void onClickClose() {
-            switchToView(LANDING);
+            finish();
         }
 
         @Override
@@ -303,12 +300,6 @@ public class CallActivity extends Activity implements ICallPage.IView{
         if (VERBOSE) Log.v(TAG, "+ ON RESUME +");
     }
 
-    @Override
-    public void onPause() {
-        killToast();
-        super.onPause();
-        if (VERBOSE) Log.v(TAG, "- ON PAUSE -");
-    }
 
     @Override
     public void onStop() {
@@ -328,6 +319,8 @@ public class CallActivity extends Activity implements ICallPage.IView{
             mPresenter.finish();
         }
         overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_to_right);
+        mCallEndedPageView = null;
+        mPresenter = null;
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -404,6 +397,11 @@ public class CallActivity extends Activity implements ICallPage.IView{
     public void showNetworkNotification(String type, String s) {
         if(type.equals("success")){
             mNotificationView.setBackgroundResource(R.color.Notification_Success);
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    mNotificationView.setVisibility(View.GONE);
+                }
+            }, 5000);
         } else  if(type.equals("error")){
             mNotificationView.setBackgroundResource(R.color.Notification_Error);
         } else{
@@ -411,11 +409,6 @@ public class CallActivity extends Activity implements ICallPage.IView{
         }
         mNotificationView.setText(s);
         mNotificationView.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                mNotificationView.setVisibility(View.GONE);
-            }
-        }, 15000);
     }
 
     @Override
@@ -461,44 +454,23 @@ public class CallActivity extends Activity implements ICallPage.IView{
         }
     }
 
-    // Doubel Press ed back
-    private boolean backPressedToExitOnce = false;
-    private Toast toast = null;
-    @Override
-    public void onBackPressed() {
-        if (backPressedToExitOnce) {
-            super.onBackPressed();
-        } else {
-            this.backPressedToExitOnce = true;
-            showToast("Press again to exit");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    backPressedToExitOnce = false;
-                }
-            }, 2000);
+    private IContactManager.Callback mContactMangerCallback= new IContactManager.Callback(){
+        @Override
+        public void onContactListChange(List<IRtcUser> userList) {
+            mCallLandingPageView.updateUserList(userList);
         }
-    }
-    private void showToast(String message) {
-        if (this.toast == null) {
-            // Create toast if found null, it would he the case of first call only
-            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        @Override
+        public void onSingleContactChange(IRtcUser user) {
 
-        } else if (this.toast.getView() == null) {
-            // Toast not showing, so create new one
-            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        }
+        @Override
+        public void onPresenceChange(IRtcUser user, boolean isOnline) {
 
-        } else {
-            // Updating toast message is showing
-            this.toast.setText(message);
         }
 
-        // Showing toast finally
-        this.toast.show();
-    }
-    private void killToast() {
-        if (this.toast != null) {
-            this.toast.cancel();
+        @Override
+        public void onCallListChange(List<ICallInfo> mCallInfo) {
+
         }
-    }
+    };
 }

@@ -18,7 +18,7 @@ var io = socketIO.listen(server);
 // A sample structure of it is given below:
 // allLiveConn = {"uid1":{ "name": "Dipankar",
 //                         "status":"free",
-//                         "user_details":{"name":"Dipankar","profile_pic":"xyz"...}
+//                         "user_info":{"name":"Dipankar","profile_pic":"xyz"...}
 //                         "endpoints" = {  "sessoon1": {"device_id":"1234","location":"1234#1234"},
 //                                          "sessoon2": {"device_id":"1234","location":"1234#1234"}
 //                                       }             
@@ -56,6 +56,27 @@ function _getAllEndpointForEndPoint(s){
     return Object.keys(allLiveConn[user_id].endpoints);
 }
 
+function _getUserInfo(user_id){
+    if(user_id && allLiveConn[user_id]){
+        return allLiveConn[user_id].user_info
+    } else{
+        return null;
+    }
+}
+//reply all live user which should visible to user_id
+function _getAllLiveUserInfo(user_id){
+    if(user_id && allLiveConn[user_id]){
+        var result =[]
+        for( var ui of Object.values(allLiveConn)){
+            result.push(ui.user_info)
+        }
+        return result;
+    } else{
+        return [];
+    }
+}
+
+
 
 ///////// contrats with JAVA  - please Don't mess up
 // Please be consisitance with contracts/ICallSignalingApi.java
@@ -81,6 +102,8 @@ var TOPIC_OUT_ENDCALL = "endcall"
 var TOPIC_OUT_INVALID_PAYLOAD = "invalid_playload"
 var TOPIC_OUT_NOTI = "notification"
 var TOPIC_OUT_ADDON = "addon"
+var TOPIC_OUT_PRESENCE = "presence"
+var TOPIC_OUT_WELCOME = "welcome"
 
 var ENDCALL_TYPE_NORMAL_END= "normal_end"
 var ENDCALL_TYPE_SELF_OFFLINE = "self_offline"
@@ -93,6 +116,9 @@ var ENDCALL_TYPE_PEER_REJECT = "peer_reject"
 var ENDCALL_TYPE_PEER_PICKUP = "peer_pickup"
 var ENDCALL_TYPE_PEER_BUSY = "peer_busy"
 var ENDCALL_TYPE_PEER_NOTPICKUP = "peer_notpickup"
+
+var PRESENCE_TYPE_ONLINE = "online"
+var PRESENCE_TYPE_OFFLINE = "offline"
 
 
 function _getOfferPayload(call_id, sdp, userinfo,is_video_enabled){
@@ -115,6 +141,13 @@ function _getNotificationPayload(type, msg){
 }
 function _getAddonPayload(type, data){
     return {"type":type,"msg":data}
+}
+function _getPresencePayload(type, user){
+    return {"type":type,"user_info":user}
+}
+
+function _getWelcomePayload(live_users){
+    return {"live_users":live_users}
 }
 
 function log(type, ops,  session){
@@ -166,7 +199,19 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         SessionToUserID[session] = data.user_id;
         console.log("[Info]: Now Live "+Object.keys(SessionToUserID).length)
         sendToSelf(TOPIC_OUT_NOTI,notificationPayload)
+
+        // send to welcome payload
+        var all_liveinfo = _getAllLiveUserInfo(data.user_id);
+        if(all_liveinfo){
+            var welcome_payload = _getWelcomePayload(all_liveinfo)
+            sendToSelf(TOPIC_OUT_WELCOME,welcome_payload)
+        }
+        
+        // Send Avoivlibity onfo to all the live pairs.
+        var presence_payload = _getPresencePayload(PRESENCE_TYPE_ONLINE,_getUserInfo(data.user_id))
+        sendToAllExceptSender(TOPIC_OUT_PRESENCE,presence_payload)
     });
+    
     client.on(TOPIC_IN_DISCONNECT, function (details) {
         log("in", "disconnect",  client.id);
         session = client.id
@@ -174,6 +219,13 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         delete SessionToUserID[session]
         if(allLiveConn[user_id]){
             delete allLiveConn[user_id]["endpoints"][session]
+            
+            // Send Avoivlibity onfo to all the live pairs.
+            if(isEmpty(allLiveConn[user_id]["endpoints"])){
+                var presence_payload = _getPresencePayload(PRESENCE_TYPE_OFFLINE,_getUserInfo(user_id))
+                sendToAllExceptSender(TOPIC_OUT_PRESENCE,presence_payload)
+                delete allLiveConn[user_id]
+            }
         }
         console.log("[Info]: Now Live "+Object.keys(allLiveConn).length)
     });
@@ -388,11 +440,6 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         //console.log('--> sendToSelf:' + tag);
         client.emit(tag, data);
     }
-/*
-    function sendToAll(tag, data){
-        console.log('--> sendToAll:' + tag);
-        client.emit(tag, data);
-    }
 
     function sendToAllIncludeSender(tag, data){
         console.log('--> sendToAllIncludeSender:' + tag);
@@ -403,7 +450,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         console.log('--> sendToAllExceptSender:' + tag);
         client.broadcast.emit(tag, data);
     }
-
+/*
     function sendToAllInRoomExceptSender(room, tag, data){
         console.log('--> sendToAllInRoomExceptSender:' + data);
         client.broadcast.to(room).emit(tag,data);
@@ -447,3 +494,9 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         _cleanupCall(call_id)
     }
 });
+
+
+//jshelper
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Notifcation -->
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/notification"
+        android:layout_width="match_parent"
+        android:padding="2dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffffff"
+        android:background="@null"
+        android:layout_above="@id/recycler_view"
+        app:customfont="Montserrat-Regular.ttf"
+        android:textSize="10dp" />
+    <LinearLayout
+        android:id="@+id/top_list_holder"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@id/notification"
+        android:paddingTop="8dp"
+        android:orientation="vertical"
+        android:background="#2979FF">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:maxLines="1"
+            android:text="-- Recent Contacts --"
+            app:customfont="Montserrat-Regular.ttf"
+            android:textSize="15dp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_quick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/other_list_holder"
+        android:layout_below="@+id/top_list_holder"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/tv_call"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:maxLines="1"
+            android:text="-- Recent Calls --"
+            app:customfont="Montserrat-Regular.ttf"
+            android:textSize="15dp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_recent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+</RelativeLayout>

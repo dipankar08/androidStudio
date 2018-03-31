@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,16 +29,17 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.Utils;
-import in.co.dipankar.ping.activities.call.CallActivity;
+import in.co.dipankar.ping.activities.home.HomeActivity;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
-
-/**
- * Created by dip on 3/16/18.
- */
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,11 +55,44 @@ public class LoginActivity extends AppCompatActivity {
 
         IRtcUser user = getUser();
         if(user != null){
-            navigateToCallScreen(user);
+            navigateToHomeScreen(user);
         } else{
+            setupAnonymousLogin();
             setupGoogleLogin();
             setupFacebookLogin();
         }
+    }
+
+    private void setupAnonymousLogin() {
+        Button AnonymousButton = findViewById(R.id.anonymous_btn);
+        AnonymousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IRtcUser  user = new RtcUser("Anonymous", genRandomId(), genRandonPic(), genRandonPic());
+                navigateToHomeScreen(user);
+            }
+        });
+    }
+
+    private String genRandomId() {
+        String uuid = UUID.randomUUID().toString();
+        return "uuid = " + uuid;
+    }
+
+    private String genRandonPic() {
+        List<String > picList = Arrays.asList(
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/06/sexy_tattoo_girl.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/06/sexy_tattoo_girl.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/06/sexy_tattoo_girl.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/10/beautiful_monochrome_girl_wallpaper.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/10/beautiful_monochrome_girl_wallpaper.jpg",
+                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/10/beautiful_monochrome_girl_wallpaper.jpg");
+        Random rand = new Random();
+        return picList.get(rand.nextInt(10));
     }
 
     private void setupFacebookLogin() {
@@ -86,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String profile_pic = object.getJSONObject("picture").getJSONObject("data").getString("url");
                                     IRtcUser  user = new RtcUser(name, email, profile_pic, profile_pic);
                                     saveUser(user);
-                                    navigateToCallScreen(user);
+                                    navigateToHomeScreen(user);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     onLoginFailed();
@@ -148,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                 String pic = result.getSignInAccount().getPhotoUrl().toString();
                 IRtcUser  user = new RtcUser(name, id, pic, pic);
                 saveUser(user);
-                navigateToCallScreen(user);
+                navigateToHomeScreen(user);
             } else{
                 onLoginFailed();
             }
@@ -173,8 +208,8 @@ public class LoginActivity extends AppCompatActivity {
         RtcUser obj = gson.fromJson(json, RtcUser.class);
         return obj;
     }
-    private void navigateToCallScreen(IRtcUser user) {
-        Intent myIntent = new Intent(this, CallActivity.class);
+    private void navigateToHomeScreen(IRtcUser user) {
+        Intent myIntent = new Intent(this, HomeActivity.class);
         myIntent.putExtra("RtcUser", user);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
                 Intent.FLAG_ACTIVITY_CLEAR_TASK|

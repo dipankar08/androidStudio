@@ -7,4 +7,5 @@ public interface IRtcUser extends Serializable {
     String getCoverPictureUrl();
     String getUserId();
     String getUserName();
+    boolean isOnline();
 }
