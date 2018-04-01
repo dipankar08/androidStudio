@@ -7,83 +7,18 @@
     android:layout_height="match_parent"
     android:background="@null">
 
-    <ImageView
-        android:id="@+id/backgroud_picture"
+    <!-- Call View -->
+    <in.co.dipankar.ping.activities.call.subviews.ViewletPeerInfoAudio
+        android:id="@+id/peer_audio_info"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:padding="8dp"
-        android:background="@null"
+
+    <in.co.dipankar.ping.activities.call.subviews.ViewletPeerInfoAudio
+        android:id="@+id/peer_video_info"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/name"
-            android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:text="Dipankar"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/time"
-            android:textColor="#ffffff"
-            android:layout_width="fill_parent"
-            android:text="5:20"
-            android:gravity="right"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-    <!-- user banner -->
-    <RelativeLayout
-        android:id="@+id/peer_info"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/peer_back"
-            android:scaleType="fitXY"
-            android:tint="#50000000"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <LinearLayout
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:padding="50dp"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-            <in.co.dipankar.quickandorid.views.CircleImageView
-                android:id="@+id/peer_img"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginBottom="15dp"
-                app:civ_border_color="@color/grayLight"
-                app:civ_border_width="3dp" />
-            <in.co.dipankar.quickandorid.views.CustomFontTextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:textColor="#ffffff"
-                android:maxLines="1"
-                android:textAlignment="center"
-                app:customfont="Ubuntu-Regular.ttf"
-                android:textSize="22dp"/>
-            <in.co.dipankar.quickandorid.views.CustomFontTextView
-                android:id="@+id/subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:textColor="#ffffff"
-                android:maxLines="3"
-                android:textAlignment="center"
-                app:customfont="Ubuntu-Regular.ttf"
-                android:textSize="17dp"/>
-        </LinearLayout>
-    </RelativeLayout>
-
-
+        android:layout_height="match_parent" />
 
     <!-- Buttons -->
     <LinearLayout

@@ -12,7 +12,7 @@ import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.contracts.IRtcUser;
 
 
-public class CallIncomingPageView extends RelativeLayout implements View.OnClickListener{
+public class CallIncomingPageView extends RelativeLayout{
 
 
     public interface Callback {
@@ -24,7 +24,9 @@ public class CallIncomingPageView extends RelativeLayout implements View.OnClick
 
     LayoutInflater mInflater;
 
-    UserInfoView mPeerInfo;
+    private View mRootView;
+    private ViewletPeerInfoAudio mViewletPeerInfoAudio;
+    private ViewletPeerInfoAudio mViewletPeerInfoVideo;
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -46,38 +48,46 @@ public class CallIncomingPageView extends RelativeLayout implements View.OnClick
     }
 
     private void initView(Context context) {
-
         mInflater = LayoutInflater.from(context);
-        View v = mInflater.inflate(R.layout.view_call_incomming_page, this, true);
-
-
-        mPeerInfo =  v.findViewById(R.id.peer_info);
-
-
-
-        ImageButton accept = (ImageButton) v.findViewById(R.id.accept);
-        ImageButton reject = (ImageButton) v.findViewById(R.id.reject);
-
-        accept.setOnClickListener(this);
-        reject.setOnClickListener(this);
+        mRootView= mInflater.inflate(R.layout.view_call_incomming_page, this, true);
+        initButtons();
+        mViewletPeerInfoAudio = findViewById(R.id.peer_audio_info);
+        mViewletPeerInfoVideo = findViewById(R.id.peer_video_info);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.accept:
-                mCallback.onAccept();break;
-            case R.id.reject:
-                mCallback.onReject();break;
-        }
+    private void initButtons(){
+        ImageButton accept = (ImageButton) mRootView.findViewById(R.id.accept);
+        ImageButton reject = (ImageButton) mRootView.findViewById(R.id.reject);
+        accept.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onAccept();
+            }
+        });
+        reject.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onReject();
+            }
+        });
     }
 
+    public void renderAudioPeerView(IRtcUser user){
+        mViewletPeerInfoAudio.setVisibility(VISIBLE);
+        mViewletPeerInfoVideo.setVisibility(GONE);
+        mViewletPeerInfoAudio.updateView(user);
+    }
 
-    public void updateView(String subtitle) {
-        IRtcUser peer = PingApplication.Get().getPeer();
-        mPeerInfo.updateView(peer);
-        mPeerInfo.mTitle.setText(peer.getUserName() + " Calling ...");
-        mPeerInfo.mSubTitle.setText(subtitle);
-        mPeerInfo.mPeerBackgroud.setVisibility(INVISIBLE);
+    public void renderVideoPeerView(IRtcUser user){
+        mViewletPeerInfoAudio.setVisibility(GONE);
+        mViewletPeerInfoVideo.setVisibility(VISIBLE);
+        mViewletPeerInfoVideo.updateView(user);
+    }
+
+    public void updateTitle(String title){
+        mViewletPeerInfoAudio.updateTitle(title);
+    }
+    public void updateSubtitle(String title){
+        mViewletPeerInfoAudio.updateSubTitle(title);
     }
 }

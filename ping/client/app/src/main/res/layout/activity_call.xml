@@ -73,6 +73,7 @@
 
 <in.co.dipankar.ping.common.webrtc.RtcStatView
     android:id="@+id/rtc_stat_view"
+    android:visibility="gone"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
 </RelativeLayout>

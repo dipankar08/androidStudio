@@ -1,13 +1,14 @@
-package in.co.dipankar.ping.contracts;
+package in.co.dipankar.ping.activities.call;
 
 import org.webrtc.SessionDescription;
 import org.webrtc.StatsReport;
 
 import java.util.Map;
 
-/**
- * Created by dip on 3/17/18.
- */
+import in.co.dipankar.ping.common.webrtc.RtcUser;
+import in.co.dipankar.ping.contracts.ICallInfo;
+import in.co.dipankar.ping.contracts.IRtcUser;
+
 
 public interface ICallPage {
 
@@ -20,11 +21,9 @@ public interface ICallPage {
     }
     public interface IView{
 
-        void switchToView(PageViewType incomming);
+        void switchToView(PageViewType type);
+
         void showNetworkNotification(String process, String s);
-        void updateEndView(String type, String r);
-        void updateOutgoingView(String subtitle, boolean isAudio);
-        void updateIncomingView(String subtitle);
 
         void onCameraOff();
 
@@ -33,13 +32,21 @@ public interface ICallPage {
         void onRtcStat(Map<String, String> reports);
 
         void toggleViewBasedOnVideoEnabled(boolean isVideoEnabled);
+
+        void prepareCallUI(IRtcUser peer, ICallInfo callinfo);
+        void updateOutgoingView(String title, String subtitle);
+        void updateIncomingView(String title, String subtitle);
+        void updateEndView(String title, String subtitle);
+
+        void updateOngoingView(String title, String subtitle);
     }
 
     public interface IPresenter{
 
 
         void startOutgoingCall();
-        void startIncommingCall(String callId, SessionDescription sdp);
+        void startIncomingCall(String callId, SessionDescription sdp);
+
         void endCall();
         void acceptCall();
         void rejectCall();

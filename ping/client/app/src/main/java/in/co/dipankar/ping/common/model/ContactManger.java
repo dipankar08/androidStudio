@@ -51,7 +51,7 @@ public class ContactManger implements IContactManager{
     @Override
     public void addContact(IRtcUser user) {
         if(! isUserExist(user)){
-            mUserList.add(user);
+            mUserList.add(0, user);
             for (Callback cb: mCallbackList){
                 cb.onContactListChange(mUserList);
             }
@@ -71,7 +71,7 @@ public class ContactManger implements IContactManager{
         boolean isChanged = false;
         for( IRtcUser u: userList){
             if(! isUserExist(u)){
-                mUserList.add(u);
+                mUserList.add(0, u);
                 isChanged = true;
             }
         }
@@ -106,6 +106,15 @@ public class ContactManger implements IContactManager{
     @Override
     public void addCallback(Callback callback) {
         mCallbackList.add(callback);
+    }
+
+    @Override
+    public void removeCallback(Callback callback) {
+        for(Callback callback1: mCallbackList){
+            if(callback1 == callback){
+                mCallbackList.remove(callback);
+            }
+        }
     }
 
     public IRtcUser getPeerUserForCall(ICallInfo call) {

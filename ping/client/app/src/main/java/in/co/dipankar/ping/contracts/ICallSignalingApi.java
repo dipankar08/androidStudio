@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface ICallSignalingApi {
 
+    void removeCallback(ICallSignalingCallback mSignalingCallback);
+
     public enum SignalType {
          TOPIC_OUT_CONNECTION("connection"),
          TOPIC_OUT_REGISTER("register"),
@@ -29,7 +31,7 @@ public interface ICallSignalingApi {
          TOPIC_IN_ENDCALL("endcall"),
          TOPIC_IN_INVALID_PAYLOAD("invalid_playload"),
          TOPIC_IN_NOTI("notification"),
-        TOPIC_IN_PRESENCE("presence"),
+         TOPIC_IN_PRESENCE("presence"),
         TOPIC_IN_WELCOME ("welcome"),
         ;
 

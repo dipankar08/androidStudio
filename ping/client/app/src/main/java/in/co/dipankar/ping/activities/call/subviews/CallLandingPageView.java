@@ -1,7 +1,6 @@
 package in.co.dipankar.ping.activities.call.subviews;
 
 import in.co.dipankar.ping.R;
-import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.StateImageButton;
 
@@ -37,7 +36,7 @@ public class CallLandingPageView extends RelativeLayout{
 
     StateImageButton mAudio, mVideo, mPoke;
 
-    UserInfoView mPeerInfo;
+    ViewletPeerInfoAudio mPeerInfo;
 
     IRtcUser mSelectedUser = null;
 

@@ -14,13 +14,13 @@ import com.bumptech.glide.Glide;
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.CircleImageView;
-public class UserInfoView extends RelativeLayout {
+public class ViewletPeerInfoVideo extends RelativeLayout {
 
     public interface Callback {
         void onClick();
     }
 
-    private UserInfoView.Callback mCallback;
+    private ViewletPeerInfoAudio.Callback mCallback;
 
     private Context mContext;
     LayoutInflater mInflater;
@@ -31,17 +31,17 @@ public class UserInfoView extends RelativeLayout {
     public ImageView mPeerBackgroud;
     CircleImageView mPeerImage;
 
-     public UserInfoView(Context context, AttributeSet attrs, int defStyle) {
+    public ViewletPeerInfoVideo(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView(context);
     }
 
-    public UserInfoView(Context context, AttributeSet attrs) {
+    public ViewletPeerInfoVideo(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
 
-    public UserInfoView(Context context) {
+    public ViewletPeerInfoVideo(Context context) {
         super(context);
         initView(context);
     }
@@ -61,14 +61,10 @@ public class UserInfoView extends RelativeLayout {
             Glide.with(mContext).load(peer.getProfilePictureUrl()).into(mPeerImage);
             Glide.with(mContext).load(peer.getCoverPictureUrl()).fitCenter().into(mPeerBackgroud);
             mPeerBackgroud.setColorFilter(0x50000000, PorterDuff.Mode.SRC_ATOP);
-            mTitle.setText("Welcome "+ peer.getUserName() + "!");
+            mTitle.setText(peer.getUserName());
         }
     }
-
-    public void updateStatus(String status){
-        mSubTitle.setText(status);
-    }
-    public void setCallback(UserInfoView.Callback callback){
+    public void setCallback(ViewletPeerInfoAudio.Callback callback){
         mCallback = callback;
     }
 

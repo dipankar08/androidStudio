@@ -16,6 +16,7 @@ public interface IContactManager {
     void changeOnlineState(List<IRtcUser> userList, boolean isOnline);
 
     void addCallback(Callback mContactManagerCallback);
+    void removeCallback(Callback mContactMangerCallback);
 
     public interface Callback{
         void onContactListChange(List<IRtcUser> userList);

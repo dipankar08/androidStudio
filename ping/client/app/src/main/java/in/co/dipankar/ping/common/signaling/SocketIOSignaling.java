@@ -67,9 +67,21 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
+    @Override
     public void addCallback(ICallSignalingCallback callback){
         mCallbackList.add(callback);
     }
+
+    @Override
+    public void removeCallback(ICallSignalingCallback callback){
+        for( ICallSignalingCallback callback1: mCallbackList){
+            if(callback == callback1){
+                DLog.e("We remove this callback");
+                mCallbackList.remove(callback1);
+            }
+        }
+    }
+
     void init(){
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
@@ -117,7 +129,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             public void call(Object... args) {
                 onRecvNoti(args);
             }
-        }).on("presence", new Emitter.Listener() {
+        }).on(SignalType.TOPIC_IN_PRESENCE.type, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 onRecvPresence(args);

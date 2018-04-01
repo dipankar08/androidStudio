@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <in.co.dipankar.ping.activities.call.subviews.UserInfoView
+    <in.co.dipankar.ping.activities.call.subviews.ViewletPeerInfoAudio
         android:id="@+id/peer_info"
         android:visibility="visible"
         android:layout_width="match_parent"

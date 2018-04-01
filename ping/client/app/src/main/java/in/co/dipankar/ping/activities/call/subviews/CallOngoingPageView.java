@@ -5,9 +5,15 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import in.co.dipankar.ping.R;
+import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.common.webrtc.RtcUser;
+import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.views.CircleImageView;
+import in.co.dipankar.quickandorid.views.CustomFontTextView;
 import in.co.dipankar.quickandorid.views.StateImageButton;
 
 
@@ -24,6 +30,11 @@ public class CallOngoingPageView extends RelativeLayout {
 
     private Callback mCallback;
     LayoutInflater mInflater;
+
+    private View mRootView;
+    private ViewletPeerInfoAudio mViewletPeerInfoAudio;
+    private ViewletPeerInfoAudio mViewletPeerInfoVideo;
+
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -46,14 +57,18 @@ public class CallOngoingPageView extends RelativeLayout {
 
     private void initView(Context context) {
         mInflater = LayoutInflater.from(context);
-        View v = mInflater.inflate(R.layout.view_call_ongoing_page, this, true);
-        StateImageButton audio =  v.findViewById(R.id.toggle_audio);
-        ImageButton end =  v.findViewById(R.id.end);
-        StateImageButton video =  v.findViewById(R.id.toggle_video);
-        StateImageButton camera =  v.findViewById(R.id.toggle_camera);
-        StateImageButton speaker =  v.findViewById(R.id.toggle_speaker);
-        //MultiStateImageButton layout =  v.findViewById(R.id.toggle_layout);
+        mRootView = mInflater.inflate(R.layout.view_call_ongoing_page, this, true);
+        initButtons();
+        mViewletPeerInfoAudio = findViewById(R.id.peer_audio_info);
+        mViewletPeerInfoVideo = findViewById(R.id.peer_video_info);
+    }
 
+    private void initButtons(){
+        StateImageButton audio =  mRootView.findViewById(R.id.toggle_audio);
+        ImageButton end =  mRootView.findViewById(R.id.end);
+        StateImageButton video =  mRootView.findViewById(R.id.toggle_video);
+        StateImageButton camera =  mRootView.findViewById(R.id.toggle_camera);
+        StateImageButton speaker =  mRootView.findViewById(R.id.toggle_speaker);
         audio.setCallBack(new StateImageButton.Callback(){
             @Override
             public void click(boolean b) {
@@ -72,21 +87,12 @@ public class CallOngoingPageView extends RelativeLayout {
                 mCallback.onClickEnd();
             }
         });
-/*
-        layout.setCallBack(new MultiStateImageButton.Callback() {
-            @Override
-            public void click(int i) {
-                mCallback.onClickToggleLayout(i);
-            }
-        });
-        */
         camera.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCallback.onClickToggleCamera(!camera.isViewEnabled());
             }
         });
-
         speaker.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,4 +101,22 @@ public class CallOngoingPageView extends RelativeLayout {
         });
     }
 
+    public void renderAudioPeerView(IRtcUser user){
+        mViewletPeerInfoAudio.setVisibility(VISIBLE);
+        mViewletPeerInfoVideo.setVisibility(GONE);
+        mViewletPeerInfoAudio.updateView(user);
+    }
+
+    public void renderVideoPeerView(IRtcUser user){
+        mViewletPeerInfoAudio.setVisibility(GONE);
+        mViewletPeerInfoVideo.setVisibility(VISIBLE);
+        mViewletPeerInfoVideo.updateView(user);
+    }
+
+    public void updateTitle(String title){
+        mViewletPeerInfoAudio.updateSubTitle(title);
+    }
+    public void updateSubtitle(String title){
+        mViewletPeerInfoAudio.updateSubTitle(title);
+    }
 }

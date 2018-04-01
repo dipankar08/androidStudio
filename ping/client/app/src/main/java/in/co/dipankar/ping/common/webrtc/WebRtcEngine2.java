@@ -42,6 +42,7 @@ import org.webrtc.voiceengine.WebRtcAudioRecord;
 import org.webrtc.voiceengine.WebRtcAudioTrack;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -72,7 +73,7 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     // CallBacks
     private ICallSignalingApi mCallSingleingApi;
-    private IRtcEngine.Callback mCallback;
+    private List<Callback> mCallbackList;
 
 
 
@@ -111,6 +112,8 @@ public class WebRtcEngine2 implements IRtcEngine {
     private boolean disableAudioProcessing = true;
     private boolean enableLevelControl = false;
 
+    private boolean mSafeInit = false;
+
 
     public WebRtcEngine2(Context context,
                          RtcConfiguration rtcConfiguration,
@@ -124,11 +127,15 @@ public class WebRtcEngine2 implements IRtcEngine {
         mPeerRenderer = peerView;
         init();
     }
-    private void init(){
+    private synchronized void init(){
         //initialize audio source and audio error callbacks to log errors
-        initAudioErrorCallbacks();
-        initializedRenderer();
-        initilizeRTCConfig();
+        if(!mSafeInit) {
+            initAudioErrorCallbacks();
+            initializedRenderer();
+            initilizeRTCConfig();
+            mSafeInit = true;
+        }
+        mCallbackList = new ArrayList<>();
     }
     // this should be create and exposed everytime.
     private void reInit(){
@@ -267,7 +274,9 @@ public class WebRtcEngine2 implements IRtcEngine {
             mLocalVideoTrack.setEnabled(true);
 
             mVideoCapturer.startCapture(mRtcConfiguration.videoDimention.width, mRtcConfiguration.videoDimention.height,mRtcConfiguration.videoFps);
-            mCallback.onCameraOpen();
+            for(Callback cb: mCallbackList) {
+                cb.onCameraOpen();
+            }
         }
 
         // 3. Build Stream and attach to Peer Connection.
@@ -436,7 +445,9 @@ public class WebRtcEngine2 implements IRtcEngine {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onSendOffer();
+                        for(Callback cb: mCallbackList) {
+                            cb.onSendOffer();
+                        }
                     }
                 });
 
@@ -445,7 +456,9 @@ public class WebRtcEngine2 implements IRtcEngine {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onSendAns();
+                        for(Callback cb: mCallbackList) {
+                            cb.onSendAns();
+                        }
                     }
                 });
             }
@@ -461,7 +474,9 @@ public class WebRtcEngine2 implements IRtcEngine {
             runOnUIThread(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onFailure("SDP Creation failed");
+                    for(Callback cb: mCallbackList) {
+                        cb.onFailure("SDP Creation failed");
+                    }
                 }
             });
         }
@@ -472,7 +487,9 @@ public class WebRtcEngine2 implements IRtcEngine {
             runOnUIThread(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onFailure("set SDP failed");
+                    for(Callback cb: mCallbackList) {
+                        cb.onFailure("set SDP failed");
+                    }
                 }
             });
         }
@@ -750,13 +767,19 @@ public class WebRtcEngine2 implements IRtcEngine {
            // mLocalMediaStream.dispose();
             mLocalMediaStream = null;
         }
-        mCallback.onCameraClose();
+        for(Callback cb: mCallbackList) {
+            cb.onCameraClose();
+        }
     }
 
+    @Override
+    public void addCallback(Callback callback) {
+        mCallbackList.add(callback);
+    }
 
     @Override
-    public void setCallback(Callback callback) {
-        mCallback = callback;
+    public void removeCallback(Callback callback) {
+        mCallbackList.remove(callback);
     }
 
     private void runOnUIThread(Runnable runnable){
@@ -776,7 +799,9 @@ public class WebRtcEngine2 implements IRtcEngine {
                 runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onStat(parseStatistics(reports));
+                        for(Callback cb: mCallbackList) {
+                            cb.onStat(parseStatistics(reports));
+                        }
                     }
                 });
 

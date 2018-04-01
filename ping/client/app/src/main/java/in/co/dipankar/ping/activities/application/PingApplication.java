@@ -94,4 +94,8 @@ public class PingApplication extends Application {
         }
         return mCallSignalingApi;
     }
+
+    public boolean isOnCall(){
+        return getPeer() != null;
+    }
 }

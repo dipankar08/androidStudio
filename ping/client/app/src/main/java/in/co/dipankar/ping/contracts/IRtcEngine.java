@@ -29,6 +29,9 @@ public interface IRtcEngine {
     void toggleCamera(boolean isOn);
     void switchVideoScaling(RendererCommon.ScalingType scalingType);
 
+    void addCallback(Callback callback);
+    void removeCallback(Callback callback);
+
     void getStats();
 
     void enableStatsEvents(boolean enable, int periodMs);
@@ -44,9 +47,6 @@ public interface IRtcEngine {
         void onCameraOpen();
         void onStat(Map<String, String> reports);
     }
-
-    void setCallback(Callback callback);
-
 
     public class RtcConfiguration{
         public RtcConfiguration(boolean videoCallEnabled,

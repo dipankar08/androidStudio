@@ -7,9 +7,7 @@ import java.util.List;
 
 import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.common.model.IContactManager;
-import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.contracts.ICallInfo;
-import in.co.dipankar.ping.contracts.ICallPage;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcUser;
 
@@ -72,19 +70,11 @@ public class HomePresenter implements IHome.Presenter {
         //RTC - Nothing to do here.
         @Override
         public void onReceivedOffer(String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled) {
-            mView.navigateToInComingCallView(callId,sdp,rtcUser,isVideoEnabled);
-            /*
-            mCallId = callid;
-            if(mRtcEngine != null) {
-                mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
-                mRtcEngine.toggleVideo(isVideoEnabled);
-                mView.toggleViewBasedOnVideoEnabled(isVideoEnabled);
+            if(PingApplication.Get().isOnCall()){
+                //TODO : Handling Conflicting calls. We recv a call when I am in another call.
+            } else {
+                mView.navigateToInComingCallView(callId, sdp, rtcUser, isVideoEnabled);
             }
-            PingApplication.Get().setPeer(user);
-            mView.updateIncomingView(user.getUserName() +" calling...");
-            mView.switchToView(ICallPage.PageViewType.INCOMMING);
-            mCallInfo.setType(ICallInfo.CallType.MISS_CALL_INCOMMING);*/
-
         }
 
         @Override
@@ -127,6 +117,10 @@ public class HomePresenter implements IHome.Presenter {
 
     @Override
     public void finish(){
+        mCallSignalingApi.removeCallback(mCallSignalingCallback);
+        mContactManager.removeCallback(mContactManagerCallback);
         mCallSignalingApi.disconnect();
+        mContactManager = null;
+        mCallSignalingApi = null;
     }
 }

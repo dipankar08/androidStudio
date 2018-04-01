@@ -3,6 +3,9 @@ package in.co.dipankar.ping.activities.call;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import org.webrtc.IceCandidate;
@@ -11,21 +14,22 @@ import org.webrtc.SessionDescription;
 import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.common.model.CallInfo;
 import in.co.dipankar.ping.common.model.IContactManager;
-import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
+import in.co.dipankar.ping.common.utils.DataUsesReporter;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
 import in.co.dipankar.ping.contracts.ICallInfo;
-import in.co.dipankar.ping.contracts.ICallPage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IMultiVideoPane;
-import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcEngine;
 import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.utils.DLog;
 
 import static in.co.dipankar.ping.common.webrtc.Constant.AUDIO_CODEC_OPUS;
 
@@ -46,6 +50,8 @@ public class CallPresenter implements ICallPage.IPresenter {
     //Stat
     private int mDuration =0;
     private int mByteUse =0;
+
+    DataUsesReporter mDataUsesReporter;
 
     public CallPresenter(ICallPage.IView view, IRtcUser peer, boolean isVideo, IMultiVideoPane multiVideoPane){
         mView = view;
@@ -74,13 +80,14 @@ public class CallPresenter implements ICallPage.IPresenter {
         rtcConfiguration.audioCodec = AUDIO_CODEC_OPUS;
         rtcConfiguration.audioStartBitrate  = 6;
         mSignalingApi = PingApplication.Get().getCallSignalingApi();
-        //TODO - NOW THIS WILL BE CALLED MUTIPLE TIMES.
         mSignalingApi.addCallback(mSignalingCallback);
         mRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration,mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
         if(mRtcEngine != null) {
-            mRtcEngine.setCallback(rtcCallback);
+            mRtcEngine.addCallback(mWebrtcEngineCallback);
             mRtcEngine.enableStatsEvents(true, 1000);
         }
+        mDataUsesReporter = new DataUsesReporter();
+        mDataUsesReporter.addCallback(mDataUsesReporterCallback);
     }
 
 
@@ -111,8 +118,10 @@ public class CallPresenter implements ICallPage.IPresenter {
             if(mRtcEngine != null) {
                 mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
             }
-            mView.switchToView(ICallPage.PageViewType.ONGOING);
             mCallInfo.setType(ICallInfo.CallType.OUTGOING_CALL);
+            mView.switchToView(ICallPage.PageViewType.ONGOING);
+            startTimerInternal();
+
         }
 
         @Override
@@ -129,7 +138,7 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     };
 
-    private IRtcEngine.Callback rtcCallback = new IRtcEngine.Callback(){
+    private IRtcEngine.Callback mWebrtcEngineCallback = new IRtcEngine.Callback(){
         @Override
         public void onSendOffer() {
             mView.switchToView(ICallPage.PageViewType.OUTGOING);
@@ -172,19 +181,21 @@ public class CallPresenter implements ICallPage.IPresenter {
             finish();
             return;
         }
-        mView.updateOutgoingView("Ringing ....", mCallInfo.getIsVideo());
-        mView.switchToView(ICallPage.PageViewType.OUTGOING);
-        if(mRtcEngine != null) {
-            if(mCallInfo.getIsVideo()){
-                mRtcEngine.startVideoCall(mCallInfo.getId(),mCallInfo.getTo());
-            } else {
-                mRtcEngine.startAudioCall(mCallInfo.getId(),mCallInfo.getTo());
-            }
+        if(mRtcEngine == null) {
+            return;
         }
+        if(mCallInfo.getIsVideo()){
+            mRtcEngine.startVideoCall(mCallInfo.getId(),mCallInfo.getTo());
+        } else {
+            mRtcEngine.startAudioCall(mCallInfo.getId(),mCallInfo.getTo());
+        }
+        mView.prepareCallUI(mPeerRtcUser, mCallInfo);
+        mView.updateOutgoingView("Calling "+mPeerRtcUser.getUserName()+"...","Ringing...");
+        mView.switchToView(ICallPage.PageViewType.OUTGOING);
     }
 
     @Override
-    public void startIncommingCall(String callId, SessionDescription sdp) {
+    public void startIncomingCall(String callId, SessionDescription sdp) {
         if(mCallInfo == null){
             return;
         }
@@ -193,17 +204,20 @@ public class CallPresenter implements ICallPage.IPresenter {
             finish();
             return;
         }
-
-        mCallId = callId;
-        if(mRtcEngine != null) {
-            mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
-            mRtcEngine.toggleVideo(mCallInfo.getIsVideo());
-            mView.toggleViewBasedOnVideoEnabled(mCallInfo.getIsVideo());
+        if(mRtcEngine == null) {
+            return;
         }
 
-        mView.updateIncomingView(mPeerRtcUser.getUserName() +" calling...");
-        mView.switchToView(ICallPage.PageViewType.INCOMMING);
         mCallInfo.setType(ICallInfo.CallType.MISS_CALL_INCOMMING);
+        mCallId = callId;
+
+        mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+        mRtcEngine.toggleVideo(mCallInfo.getIsVideo());
+
+        mView.prepareCallUI(mPeerRtcUser, mCallInfo);
+        mView.toggleViewBasedOnVideoEnabled(mCallInfo.getIsVideo());
+        mView.updateIncomingView(mPeerRtcUser.getUserName() +" calling...",mPeerRtcUser.getUserName() +" calling you..");
+        mView.switchToView(ICallPage.PageViewType.INCOMMING);
     }
 
     @Override
@@ -214,8 +228,9 @@ public class CallPresenter implements ICallPage.IPresenter {
     public void acceptCall(){
         assert(mRtcEngine != null);
         mRtcEngine.acceptCall(mCallId);
-        mView.switchToView(ICallPage.PageViewType.ONGOING);
         mCallInfo.setType(ICallInfo.CallType.INCOMMING_CALL);
+        mView.switchToView(ICallPage.PageViewType.ONGOING);
+        startTimerInternal();
     }
 
     @Override
@@ -254,11 +269,20 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void finish() {
-        // Not to do anything here..
+        // Please cleanup Eveeything.
+        mRtcEngine.removeCallback(mWebrtcEngineCallback);
+        mSignalingApi.removeCallback(mSignalingCallback);
+        mDataUsesReporter.removeCallback(mDataUsesReporterCallback);
+
+        mRtcEngine = null;
+        mSignalingApi = null;
         mView = null;
+        // This is the last thing indicate I am not in call.
+        PingApplication.Get().setPeer(null);
     }
 
     private void handleEndCallInternal(ICallSignalingApi.EndCallType type, String reason) {
+        mDataUsesReporter.stop();
         mView.updateEndView(type.toString().toUpperCase(), reason);
         mView.switchToView(ICallPage.PageViewType.ENDED);
         if(mRtcEngine != null) {
@@ -272,5 +296,53 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     private String getRandomCallId(){
         return UUID.randomUUID().toString();
+    }
+
+    private void startTimerInternal(){
+      mDataUsesReporter.start();
+        /*
+        mView.updateOngoingView(mPeerRtcUser.getUserName(),"00:00");
+        mDuration = 0;
+        mCallTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                mDuration++;
+                String min = mDuration/60 < 10 ? "0"+mDuration/60+"": mDuration/60+"";
+                String sec = mDuration%60 < 10 ? "0"+mDuration%60+"": mDuration%60+"";
+                String status = min+":"+sec;
+                runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.updateOngoingView(null,status);
+                    }
+                });
+            }
+        }, 0, 1000);
+        */
+    }
+    private void runOnUIThread(Runnable runnable){
+        new Handler(Looper.getMainLooper()).post(runnable);
+    }
+
+    DataUsesReporter.Callback mDataUsesReporterCallback = new DataUsesReporter.Callback() {
+        @Override
+        public void onUpdate(int time, long tx, long rx) {
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    String status =fix(time/60)+":"+fix(time%60)+"s  *  "+tx+ "kbps  *  "+rx+"kbps";
+                    mView.updateOngoingView(null,status);
+                }
+            });
+        }
+
+        @Override
+        public void onFinish(int time, long TxTotal, long RxTotal) {
+
+        }
+    };
+
+    private String fix(int i) {
+        return (i <10 ? "0"+i : i +"") ;
     }
 }

@@ -13,7 +13,6 @@ import in.co.dipankar.quickandorid.views.StateImageButton;
 
 
 public class CallOutgoingPageView extends RelativeLayout{
-
     public interface Callback {
         void onClickedEnd();
         void onClickedToggleVideo(boolean isOn);
@@ -25,8 +24,10 @@ public class CallOutgoingPageView extends RelativeLayout{
     private Callback mCallback;
     LayoutInflater mInflater;
 
+    private View mRootView;
+    private ViewletPeerInfoAudio mViewletPeerInfoAudio;
+    private ViewletPeerInfoAudio mViewletPeerInfoVideo;
 
-    UserInfoView mPeerInfo;
 
     public void setCallback(Callback callback){
         mCallback = callback;
@@ -49,15 +50,18 @@ public class CallOutgoingPageView extends RelativeLayout{
 
     private void initView(Context context) {
         mInflater = LayoutInflater.from(context);
-        View v = mInflater.inflate(R.layout.view_call_outgoing_page, this, true);
+        mRootView = mInflater.inflate(R.layout.view_call_outgoing_page, this, true);
+        initButtons();
+        mViewletPeerInfoAudio = findViewById(R.id.peer_audio_info);
+        mViewletPeerInfoVideo = findViewById(R.id.peer_video_info);
+    }
 
-        mPeerInfo =  v.findViewById(R.id.peer_info);
-
-        StateImageButton video =  v.findViewById(R.id.toggle_video);
-        StateImageButton audio =  v.findViewById(R.id.toggle_video);
-        StateImageButton camera =  v.findViewById(R.id.toggle_camera);
-        StateImageButton speaker =  v.findViewById(R.id.toggle_speaker);
-        StateImageButton end = v.findViewById(R.id.end);
+    private void initButtons(){
+        StateImageButton video =  mRootView.findViewById(R.id.toggle_video);
+        StateImageButton audio =  mRootView.findViewById(R.id.toggle_video);
+        StateImageButton camera =  mRootView.findViewById(R.id.toggle_camera);
+        StateImageButton speaker =  mRootView.findViewById(R.id.toggle_speaker);
+        StateImageButton end = mRootView.findViewById(R.id.end);
 
         audio.setCallBack(new StateImageButton.Callback(){
             @Override
@@ -93,20 +97,22 @@ public class CallOutgoingPageView extends RelativeLayout{
         });
     }
 
-    public void updateView(String subtitle, boolean isAudiocalll) {
-        IRtcUser peer = PingApplication.Get().getPeer();
-        if(peer == null) return;
-        mPeerInfo.updateView(peer);
-        mPeerInfo.mTitle.setText("Calling "+ peer.getUserName() + " ...");
-        mPeerInfo.mSubTitle.setText("Ringing ...");
-        if(isAudiocalll){
-            mPeerInfo.mPeerBackgroud.setVisibility(INVISIBLE);
-        } else{
-            mPeerInfo.mPeerBackgroud.setVisibility(VISIBLE);
-        }
+    public void renderAudioPeerView(IRtcUser user){
+        mViewletPeerInfoAudio.setVisibility(VISIBLE);
+        mViewletPeerInfoVideo.setVisibility(GONE);
+        mViewletPeerInfoAudio.updateView(user);
     }
 
-    public void setVisibilityOfPeerInfo(boolean v){
-        mPeerInfo.setVisibility(v?VISIBLE:GONE);
+    public void renderVideoPeerView(IRtcUser user){
+        mViewletPeerInfoAudio.setVisibility(GONE);
+        mViewletPeerInfoVideo.setVisibility(VISIBLE);
+        mViewletPeerInfoVideo.updateView(user);
+    }
+
+    public void updateTitle(String title){
+        mViewletPeerInfoAudio.updateTitle(title);
+    }
+    public void updateSubtitle(String title){
+        mViewletPeerInfoAudio.updateSubTitle(title);
     }
 }

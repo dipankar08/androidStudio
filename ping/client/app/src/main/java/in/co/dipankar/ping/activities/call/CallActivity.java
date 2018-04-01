@@ -1,13 +1,11 @@
 package in.co.dipankar.ping.activities.call;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,12 +14,10 @@ import android.widget.Toast;
 
 import org.webrtc.SessionDescription;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import in.co.dipankar.ping.R;
-import in.co.dipankar.ping.Utils;
 import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.activities.call.subviews.CallEndedPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallIncomingPageView;
@@ -29,23 +25,17 @@ import in.co.dipankar.ping.activities.call.subviews.CallLandingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallOngoingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallOutgoingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallVideoGridView;
-import in.co.dipankar.ping.activities.home.HomePresenter;
-import in.co.dipankar.ping.common.model.CallInfo;
 import in.co.dipankar.ping.common.model.IContactManager;
 import in.co.dipankar.ping.common.utils.AudioManagerUtils;
-import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.RtcStatView;
 import in.co.dipankar.ping.contracts.ICallInfo;
-import in.co.dipankar.ping.contracts.ICallPage;
-import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.co.dipankar.quickandorid.views.CustomFontTextView;
 
-import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.INCOMMING;
-import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.LANDING;
-import static in.co.dipankar.ping.contracts.ICallPage.PageViewType.OUTGOING;
+import static in.co.dipankar.ping.activities.call.ICallPage.PageViewType.INCOMMING;
+import static in.co.dipankar.ping.activities.call.ICallPage.PageViewType.OUTGOING;
 
 public class CallActivity extends Activity implements ICallPage.IView{
 
@@ -62,7 +52,6 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
     CallVideoGridView mCallVideoGridView;
     CustomFontTextView mNotificationView;
-    RtcStatView mRtcStatView;
     //Presneter
     ICallPage.IPresenter mPresenter;
 
@@ -82,6 +71,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
     }
 
     private void proceedAfterPermission(){
+
         initView();
         initCall();
     }
@@ -109,8 +99,9 @@ public class CallActivity extends Activity implements ICallPage.IView{
             String sdp_data = intent.getStringExtra("sdp_data");
             String sdp_type = intent.getStringExtra("sdp_type");
             SessionDescription sdp = new SessionDescription(SessionDescription.Type.valueOf(sdp_type),sdp_data);
-            mPresenter.startIncommingCall(callId, sdp);
+            mPresenter.startIncomingCall(callId, sdp);
         }
+        DLog.e("Call Presenter Initilized");
     }
 
     private void initView() {
@@ -139,7 +130,6 @@ public class CallActivity extends Activity implements ICallPage.IView{
         mMediaPlayer = MediaPlayer.create(this, R.raw.tone);
 
         mNotificationView = findViewById(R.id.notification);
-        mRtcStatView = findViewById(R.id.rtc_stat_view);
 
         // test
         Button test = findViewById(R.id.test);
@@ -315,6 +305,8 @@ public class CallActivity extends Activity implements ICallPage.IView{
     @Override
     public void finish(){
         super.finish();
+        PingApplication.Get().getUserManager().removeCallback(mContactMangerCallback);
+
         if(mPresenter != null) {
             mPresenter.finish();
         }
@@ -340,7 +332,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
     @Override
     public void switchToView(ICallPage.PageViewType pageViewType) {
         DLog.e("Swicth To View: "+pageViewType);
-        Toast.makeText(getApplicationContext(), "Swicth To View: "+pageViewType, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), "Swicth To View: "+pageViewType, Toast.LENGTH_SHORT).show();
         hideAll();
         switch(pageViewType){
             case LANDING:
@@ -374,7 +366,6 @@ public class CallActivity extends Activity implements ICallPage.IView{
                 } else {
                     mCallVideoGridView.setVisibility(View.GONE);
                 }
-                mRtcStatView.reset();
                 break;
             case ENDED:
                 mCallEndedPageView.setVisibility(View.VISIBLE);
@@ -409,21 +400,6 @@ public class CallActivity extends Activity implements ICallPage.IView{
         }
         mNotificationView.setText(s);
         mNotificationView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void updateEndView(String title, String subtitle) {
-        mCallEndedPageView.updateView(title, subtitle);
-    }
-
-    @Override
-    public void updateOutgoingView(String subtitle, boolean isAudio) {
-        mCallOutgoingPageView.updateView(subtitle, isAudio);
-    }
-
-    @Override
-    public void updateIncomingView(String subtitle) {
-        mCallIncomingPageView.updateView(subtitle);
     }
 
     @Override
@@ -473,4 +449,58 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
         }
     };
+
+    @Override
+    public void prepareCallUI(IRtcUser peer, ICallInfo callinfo){
+        if(callinfo.getIsVideo()){
+            mCallIncomingPageView.renderVideoPeerView(peer);
+            mCallOutgoingPageView.renderVideoPeerView(peer);
+            mCallOngoingPageView.renderVideoPeerView(peer);
+        } else{
+            mCallIncomingPageView.renderAudioPeerView(peer);
+            mCallOutgoingPageView.renderAudioPeerView(peer);
+            mCallOngoingPageView.renderAudioPeerView(peer);
+        }
+        mCallEndedPageView.renderAudioPeerView(peer);
+    }
+
+    @Override
+    public void updateEndView(String title, String subtitle) {
+        if(title!= null){
+            mCallEndedPageView.updateTitle(title);
+        }
+        if(subtitle!= null){
+            mCallEndedPageView.updateSubtitle(subtitle);
+        }
+    }
+
+    @Override
+    public void updateOutgoingView(String title, String subtitle) {
+        if(title!= null){
+            mCallOutgoingPageView.updateTitle(title);
+        }
+        if(subtitle!= null){
+            mCallOutgoingPageView.updateSubtitle(subtitle);
+        }
+    }
+
+    @Override
+    public void updateIncomingView(String title, String subtitle) {
+        if(title!= null){
+            mCallIncomingPageView.updateTitle(title);
+        }
+        if(subtitle!= null){
+            mCallIncomingPageView.updateSubtitle(subtitle);
+        }
+    }
+
+    @Override
+    public void updateOngoingView(String title, String subtitle) {
+        if(title!= null){
+            mCallOngoingPageView.updateTitle(title);
+        }
+        if(subtitle!= null){
+            mCallOngoingPageView.updateSubtitle(subtitle);
+        }
+    }
 }
