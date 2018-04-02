@@ -26,7 +26,7 @@ public class CallOutgoingPageView extends RelativeLayout{
 
     private View mRootView;
     private ViewletPeerInfoAudio mViewletPeerInfoAudio;
-    private ViewletPeerInfoAudio mViewletPeerInfoVideo;
+    private ViewletPeerInfoVideo mViewletPeerInfoVideo;
 
 
     public void setCallback(Callback callback){
@@ -86,6 +86,7 @@ public class CallOutgoingPageView extends RelativeLayout{
             @Override
             public void onClick(View v) {
                 mCallback.onClickedToggleCamera(!camera.isViewEnabled());
+                camera.setViewEnabled(!camera.isViewEnabled());
             }
         });
 
@@ -93,8 +94,10 @@ public class CallOutgoingPageView extends RelativeLayout{
             @Override
             public void onClick(View v) {
                 mCallback.onClickedToggleSpeaker(!speaker.isViewEnabled());
+                speaker.setViewEnabled(!speaker.isViewEnabled());
             }
         });
+
     }
 
     public void renderAudioPeerView(IRtcUser user){

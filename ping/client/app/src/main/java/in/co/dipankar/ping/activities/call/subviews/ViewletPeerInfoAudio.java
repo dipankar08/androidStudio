@@ -47,7 +47,7 @@ public class ViewletPeerInfoAudio extends RelativeLayout {
 
     private void initView(Context context) {
         mInflater = LayoutInflater.from(context);
-        View v = mInflater.inflate(R.layout.view_call_userinfo, this, true);
+        View v = mInflater.inflate(R.layout.viewlet_peer_audio_view, this, true);
         mPeerInfo =  v.findViewById(R.id.peer_info);
         mPeerImage = v.findViewById(R.id.peer_img);
         mPeerBackgroud = v.findViewById(R.id.peer_back);
@@ -59,7 +59,7 @@ public class ViewletPeerInfoAudio extends RelativeLayout {
         if (peer != null) {
             Glide.with(mContext).load(peer.getProfilePictureUrl()).into(mPeerImage);
             Glide.with(mContext).load(peer.getCoverPictureUrl()).fitCenter().into(mPeerBackgroud);
-            mPeerBackgroud.setColorFilter(0x50000000, PorterDuff.Mode.SRC_ATOP);
+            mPeerBackgroud.setColorFilter(0x90000000, PorterDuff.Mode.SRC_ATOP);
             mTitle.setText("Welcome "+ peer.getUserName() + "!");
         }
     }
@@ -74,5 +74,4 @@ public class ViewletPeerInfoAudio extends RelativeLayout {
     public void setCallback(ViewletPeerInfoAudio.Callback callback){
         mCallback = callback;
     }
-
 }

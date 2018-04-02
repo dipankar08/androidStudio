@@ -1,11 +1,10 @@
 package in.co.dipankar.ping.common.webrtc;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
-import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -26,7 +25,6 @@ import org.webrtc.PeerConnection;
 import org.webrtc.PeerConnectionFactory;
 import org.webrtc.RendererCommon;
 import org.webrtc.RtpReceiver;
-import org.webrtc.ScreenCapturerAndroid;
 import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
 import org.webrtc.StatsObserver;
@@ -41,6 +39,7 @@ import org.webrtc.VideoTrack;
 import org.webrtc.voiceengine.WebRtcAudioRecord;
 import org.webrtc.voiceengine.WebRtcAudioTrack;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -48,10 +47,15 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.common.webrtc.fork.effect.EffectCamera1Capturer;
+import in.co.dipankar.ping.common.webrtc.fork.effect.EffectCamera1Enumerator;
+import in.co.dipankar.ping.common.webrtc.fork.effect.RTCVideoEffector;
+import in.co.dipankar.ping.common.webrtc.fork.filecapture.FileVideoCapturer;
+import in.co.dipankar.ping.common.webrtc.fork.screencapture.ScreenCapturerAndroid;
+import in.co.dipankar.ping.contracts.ICallInfo;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcEngine;
-import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.utils.DLog;
 
 import static in.co.dipankar.ping.common.webrtc.Constant.AUDIO_CODEC_OPUS;
 import static in.co.dipankar.ping.common.webrtc.WebRtcUtils.parseStatistics;
@@ -113,6 +117,8 @@ public class WebRtcEngine2 implements IRtcEngine {
     private boolean enableLevelControl = false;
 
     private boolean mSafeInit = false;
+    private ICallInfo mCallInfo;
+    private String mVideoFileAsCamera;
 
 
     public WebRtcEngine2(Context context,
@@ -137,44 +143,66 @@ public class WebRtcEngine2 implements IRtcEngine {
         }
         mCallbackList = new ArrayList<>();
     }
+
+
     // this should be create and exposed everytime.
     private void reInit(){
+        cangeMediaConfig();
+        initializeParams();
         createMediaConstraints();
         initializePeerConnection();
         initilizeLocalAudioVideoSource();
+        //DONOT make a call here as This method also called in case of Incmmong call and
+        // we should not call start call from here.
     }
 
-
-    // All the Overrite functions here..
-    @Override
-    public void startAudioCall(String callID, String userid) {
-        assert(userid != null);
-        mCallID = callID;
-        mRtcConfiguration.videoCallEnabled = false;
-        if(mPeerConnection == null){
-            reInit();
+    private void cangeMediaConfig() {
+        if(mCallInfo.getShareType() == ICallInfo.ShareType.SCREEN_SHARE) {
+            mPeerRenderer.setMirror(false);
+            mSelfRenderer.setMirror(false);
+            mRtcConfiguration.videoDimention = Dimension.Dimension_720P;
+            mRtcConfiguration.videoFps = 5;
+        } else{
+            mPeerRenderer.setMirror(true);
+            mSelfRenderer.setMirror(true);
         }
-        createOffer = true;
-        mPeerID = userid;
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mPeerConnection.createOffer(sdpObserver, new MediaConstraints());
+
+    }
+
+    private void initializeParams() {
+        if(mCallInfo != null){
+            mPeerID = mCallInfo.getTo();
+            mCallID = mCallInfo.getId();
+            mRtcConfiguration.videoCallEnabled =
+                mCallInfo.getShareType() == ICallInfo.ShareType.SCREEN_SHARE ||
+                mCallInfo.getShareType() == ICallInfo.ShareType.VIDEO_SHARE ||
+                mCallInfo.getShareType() == ICallInfo.ShareType.VIDEO_CALL;
+            if(mCallInfo.getShareType() == ICallInfo.ShareType.VIDEO_SHARE){
+                mVideoFileAsCamera = mCallInfo.getExtra("file");
+                mVideoFileAsCamera = "/sdcard/videoplayback.mp4";
             }
-        });
+        }
     }
 
-    @Override
-    public void startVideoCall(String callId, String userid) {
-        assert(userid != null);
-        mCallID = callId;
-        mRtcConfiguration.videoCallEnabled = true;
-        if(mPeerConnection == null){
-            reInit();
-        }
-        createOffer = true;
-        mPeerID = userid;
 
+
+    public void startGenericCall(ICallInfo callInfo) {
+        mCallInfo = callInfo;
+        mPeerID = callInfo.getTo();
+        mCallID = callInfo.getId();
+        createOffer = true;
+        if (mPeerConnection == null) {
+            switch (mCallInfo.getShareType()) {
+                case SCREEN_SHARE:
+                    startScreenCapture();
+                    break;
+                default:
+                    reInit();
+                    startCallInternal();
+            }
+        }
+    }
+    private void startCallInternal(){
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -306,7 +334,71 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     }
 
-    private CameraVideoCapturer createVideoCapturer(Context context) {
+    private VideoCapturer createVideoCapturer(Context context) {
+        switch (mCallInfo.getShareType()) {
+            case VIDEO_CALL:
+                 //return getCamera1Capture(context);
+                //return getEffectCapture(context);
+                return getCameraCapture(context);
+            case SCREEN_SHARE:
+                return getScreenCapture(context);
+            case VIDEO_SHARE:
+            case AUDIO_SHARE:
+                return getVideoFileCapture(mVideoFileAsCamera);
+        }
+        return null;
+    }
+
+
+    private CameraVideoCapturer getEffectCapture(Context context) {
+        RTCVideoEffector rtcEffect = new RTCVideoEffector();
+        EffectCamera1Enumerator  enumerator = new EffectCamera1Enumerator(rtcEffect);
+        final String[] deviceNames = enumerator.getDeviceNames();
+
+        for (String deviceName : deviceNames) {
+            if (enumerator.isFrontFacing(deviceName)) {
+                CameraVideoCapturer videoCapturer = enumerator.createCapturer(deviceName, null);
+                if (videoCapturer != null) {
+                    return videoCapturer;
+                }
+            }
+        }
+        for (String deviceName : deviceNames) {
+            if (!enumerator.isFrontFacing(deviceName)) {
+                CameraVideoCapturer videoCapturer = enumerator.createCapturer(deviceName, null);
+                if (videoCapturer != null) {
+                    return videoCapturer;
+                }
+            }
+        }
+        return null;
+    }
+
+    private CameraVideoCapturer getCamera1Capture(Context context) {
+        RTCVideoEffector rtcEffect = new RTCVideoEffector();
+        in.co.dipankar.ping.common.webrtc.fork.cameraCapture.Camera1Enumerator  enumerator = new in.co.dipankar.ping.common.webrtc.fork.cameraCapture.Camera1Enumerator();
+        final String[] deviceNames = enumerator.getDeviceNames();
+
+        for (String deviceName : deviceNames) {
+            if (enumerator.isFrontFacing(deviceName)) {
+                CameraVideoCapturer videoCapturer = enumerator.createCapturer(deviceName, null);
+                if (videoCapturer != null) {
+                    return videoCapturer;
+                }
+            }
+        }
+        for (String deviceName : deviceNames) {
+            if (!enumerator.isFrontFacing(deviceName)) {
+                CameraVideoCapturer videoCapturer = enumerator.createCapturer(deviceName, null);
+                if (videoCapturer != null) {
+                    return videoCapturer;
+                }
+            }
+        }
+        return null;
+    }
+
+    private CameraVideoCapturer getCameraCapture(Context context) {
         CameraEnumerator enumerator;
         if (Camera2Enumerator.isSupported(context)) {
             enumerator = new Camera2Enumerator(context);
@@ -333,6 +425,78 @@ public class WebRtcEngine2 implements IRtcEngine {
             }
         }
         return null;
+    }
+
+    // TODO - THIS CODE NEED TO MOVED OUT.
+    int CAPTURE_PERMISSION_REQUEST_CODE = 111;
+    private static Intent mediaProjectionPermissionResultData;
+    private static int mediaProjectionPermissionResultCode;
+
+    private void startScreenCapture() {
+        MediaProjectionManager mediaProjectionManager =
+                (MediaProjectionManager) ((Activity)mContext).getApplication().getSystemService(
+                        Context.MEDIA_PROJECTION_SERVICE);
+        ((Activity)mContext).startActivityForResult(
+                mediaProjectionManager.createScreenCaptureIntent(), CAPTURE_PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != CAPTURE_PERMISSION_REQUEST_CODE)
+            return;
+        mediaProjectionPermissionResultCode = resultCode;
+        mediaProjectionPermissionResultData = data;
+        reInit();
+        startCallInternal();
+    }
+
+    @Override
+    public void setIncomingCallInfo(ICallInfo callInfo) {
+        //Says that we are getting an incomming call.
+        createOffer = false;
+        mCallInfo = callInfo;
+    }
+
+    private VideoCapturer getScreenCapture(Context context) {
+        return new ScreenCapturerAndroid(
+                mediaProjectionPermissionResultData, new MediaProjection.Callback() {
+            @Override
+            public void onStop() {
+                reportError("User revoked permission to capture the screen.");
+            }
+        });
+    }
+
+
+    // Video FIle Capture
+    private VideoCapturer getVideoFileCapture(String videoFileAsCamera) {
+        final VideoCapturer videoCapturer;
+        if (videoFileAsCamera != null) {
+            try {
+                videoCapturer = new FileVideoCapturer(videoFileAsCamera);
+                return videoCapturer;
+            } catch (IOException e) {
+                reportError("Failed to open video file for emulated camera");
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private void reportError(String s) {
+        //TODO
+        /*
+        private void reportError(final String description) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!isError) {
+                        isError = true;
+                        disconnectWithErrorMessage(description);
+                    }
+                }
+            });
+        }*/
     }
 
     private void initilizeRTCConfig() {
@@ -382,17 +546,18 @@ public class WebRtcEngine2 implements IRtcEngine {
 
         // 1. initialize video renderers
         mPeerRenderer.init(rootEglBase.getEglBaseContext(), null);
-        mPeerRenderer.setMirror(true);
         mPeerRenderer.setZOrderMediaOverlay(true);
         mPeerRenderer.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT);
         mPeerRenderer.setEnableHardwareScaler(true);
 
         // 2. initialize video renderers
         mSelfRenderer.init(rootEglBase.getEglBaseContext(), null);
-        mSelfRenderer.setMirror(true);
         mSelfRenderer.setZOrderMediaOverlay(true);
         mSelfRenderer.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT);
         mSelfRenderer.setEnableHardwareScaler(true);
+
+            mPeerRenderer.setMirror(true);
+            mSelfRenderer.setMirror(true);
     }
 
 
@@ -525,29 +690,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         return null;
     }
 
-    /*
-    private static final int CAPTURE_PERMISSION_REQUEST_CODE = 11;
 
-    @TargetApi(21)
-    private void startScreenCapture() {
-        MediaProjectionManager mediaProjectionManager =
-                (MediaProjectionManager) mContext.getSystemService(
-                        Context.MEDIA_PROJECTION_SERVICE);
-        //(Activity) mContext.startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), CAPTURE_PERMISSION_REQUEST_CODE);
-    }
-
-
-    private VideoCapturer createScreenCapturer() {
-        return new ScreenCapturerAndroid(
-                mediaProjectionPermissionResultData, new MediaProjection.Callback() {
-            @Override
-            public void onStop() {
-                //reportError("User revoked permission to capture the screen.");
-            }
-        });
-    }
-
-*/
     public void initAudioErrorCallbacks() {
         // Set audio WebRtcAudioRecord error callbacks.
         WebRtcAudioRecord.setErrorCallback(new WebRtcAudioRecord.WebRtcAudioRecordErrorCallback() {
@@ -697,6 +840,7 @@ public class WebRtcEngine2 implements IRtcEngine {
             reInit();
         }
         mPeerConnection.addIceCandidate(ice);
+        DLog.e("WebRtcEngine: addIceCandidateToPeerConnection");
     }
 
     @Override
@@ -714,6 +858,7 @@ public class WebRtcEngine2 implements IRtcEngine {
         }
         SessionDescription sdpRemote = new SessionDescription(sdp.type, sdpDescription);
         mPeerConnection.setRemoteDescription(sdpObserver, sdpRemote);
+        DLog.e("WebRtcEngine: setRemoteDescriptionToPeerConnection");
     }
 
     @Override
@@ -788,6 +933,7 @@ public class WebRtcEngine2 implements IRtcEngine {
 
     /* Statistic */
     private Timer statsTimer = new Timer(true);
+
     @Override
     public void getStats() {
         if (mPeerConnection == null) {

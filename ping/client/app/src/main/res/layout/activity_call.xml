@@ -64,6 +64,7 @@
         android:layout_above="@id/recycler_view"
         app:customfont="Montserrat-Regular.ttf"
         android:textSize="10dp" />
+    <!-- Test -->
 <Button
     android:id="@+id/test"
     android:text="Test"

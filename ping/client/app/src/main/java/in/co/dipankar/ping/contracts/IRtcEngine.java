@@ -1,11 +1,15 @@
 package in.co.dipankar.ping.contracts;
 
+import android.content.Intent;
+
 import org.webrtc.IceCandidate;
 import org.webrtc.RendererCommon;
 import org.webrtc.SessionDescription;
 import org.webrtc.StatsReport;
 
 import java.util.Map;
+
+import in.co.dipankar.ping.common.model.CallInfo;
 
 import static in.co.dipankar.ping.common.webrtc.Constant.AUDIO_CODEC_ISAC;
 import static in.co.dipankar.ping.common.webrtc.Constant.VIDEO_CODEC_VP8;
@@ -17,8 +21,13 @@ public interface IRtcEngine {
     void setLocalDescriptionToPeerConnection(SessionDescription sdp);
 
     //user API
-    void startAudioCall(String callId, String userid);
-    void startVideoCall(String callId, String userid);
+    //void startAudioCall(String callId, String peerid);
+    //void startVideoCall(String callId, String userid);
+
+    // This is a New API which support mutiple type like screen shreing , local video sharing.
+    void startGenericCall(ICallInfo callInfo);
+
+
     void acceptCall(String callId);
     void rejectCall(String callId);
     void endCall();
@@ -35,6 +44,11 @@ public interface IRtcEngine {
     void getStats();
 
     void enableStatsEvents(boolean enable, int periodMs);
+
+    // TODO: This should be the busicess of RTC Engine.
+    void onActivityResult(int requestCode, int resultcode, Intent data);
+
+    void setIncomingCallInfo(ICallInfo mCallInfo);
 
     interface Callback{
         void onSendOffer();

@@ -129,7 +129,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             public void call(Object... args) {
                 onRecvNoti(args);
             }
-        }).on(SignalType.TOPIC_IN_PRESENCE.type, new Emitter.Listener() {
+        }).on("presence", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 onRecvPresence(args);
@@ -608,6 +608,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
+    @Override
+    public void onResume(){
+        sendRegister();
+    }
+    @Override
+    public void onPause(){
+        disconnect();
+    }
     /** Read the object from Base64 string. */
 
 

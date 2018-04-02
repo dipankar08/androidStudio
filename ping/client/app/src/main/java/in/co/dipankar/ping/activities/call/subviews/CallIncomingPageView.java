@@ -26,7 +26,7 @@ public class CallIncomingPageView extends RelativeLayout{
 
     private View mRootView;
     private ViewletPeerInfoAudio mViewletPeerInfoAudio;
-    private ViewletPeerInfoAudio mViewletPeerInfoVideo;
+    private ViewletPeerInfoVideo mViewletPeerInfoVideo;
 
     public void setCallback(Callback callback){
         mCallback = callback;

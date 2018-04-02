@@ -1,16 +1,22 @@
 package in.co.dipankar.ping.common.model;
 
+import android.util.ArrayMap;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import in.co.dipankar.ping.contracts.ICallInfo;
 
 public class CallInfo implements ICallInfo {
 
     private String mId;
+    private ShareType mShareType;
     private CallType mType;
     private String mFrom;
     private String mTo;
     private String mDuration;
     private String mStartTime;
-    private boolean mIsVideo;
+    private Map<String, String> mExtra;
 
     public void setDuration(String mDuration) {
         this.mDuration = mDuration;
@@ -25,15 +31,26 @@ public class CallInfo implements ICallInfo {
         this.mDataUses = mDataUses;
     }
 
-    public CallInfo(String mId, CallType mType, boolean mIsVideo, String mFrom, String mTo, String mDuration, String mStartTime, String mDataUses) {
+    @Override
+    public String getExtra(String key) {
+        return mExtra.get(key);
+    }
+
+    @Override
+    public boolean getIsVideo() {
+        return (mShareType == ShareType.VIDEO_SHARE || mShareType == ShareType.VIDEO_CALL || mShareType == ShareType.SCREEN_SHARE);
+    }
+
+    public CallInfo(String mId, ShareType shareType, CallType mType, String mFrom, String mTo, String mDuration, String mStartTime, String mDataUses) {
         this.mId = mId;
+        this.mShareType = shareType;
         this.mType = mType;
         this.mFrom = mFrom;
         this.mTo = mTo;
         this.mDuration = mDuration;
         this.mStartTime = mStartTime;
         this.mDataUses = mDataUses;
-        this.mIsVideo = mIsVideo;
+        this.mExtra = new HashMap<>();
     }
 
     private String mDataUses;
@@ -46,6 +63,11 @@ public class CallInfo implements ICallInfo {
     @Override
     public CallType getType() {
         return mType;
+    }
+
+    @Override
+    public ShareType getShareType() {
+        return mShareType;
     }
 
     @Override
@@ -78,8 +100,8 @@ public class CallInfo implements ICallInfo {
         return mDataUses;
     }
 
-    @Override
-    public boolean getIsVideo() {
-        return mIsVideo;
+    public void addExtra(String key, String value){
+        mExtra.put(key, value);
     }
+
 }

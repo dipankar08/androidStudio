@@ -17,7 +17,7 @@ public class ContactManger implements IContactManager{
         mUserList = new ArrayList<>();
         ICallInfoList = new ArrayList<>();
         mCallbackList = new ArrayList<>();
-        createTestUser();
+       // createTestUser();
     }
 
     public  List<IRtcUser> getUserList(){
@@ -31,11 +31,6 @@ public class ContactManger implements IContactManager{
         mUserList.add( new RtcUser("Sharuk Khan","120","https://images-na.ssl-images-amazon.com/images/M/MV5BZDk1ZmU0NGYtMzQ2Yi00N2NjLTkyNWEtZWE2NTU4NTJiZGUzXkEyXkFqcGdeQXVyMTExNDQ2MTI@._V1_UY317_CR4,0,214,317_AL_.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Sharukhan.jpg/1200px-Sharukhan.jpg"));
         mUserList.add( new RtcUser("Prasenjit Chakraborty","121","http://www.prosenjit.in/yahoo_site_admin/assets/images/contact-us1.81155628_std.jpg","https://i2.wp.com/short-biography.com/wp-content/uploads/prosenjit-chatterjee/Prosenjit_Chatterjee1.jpg?w=1280&ssl=1"));
         mUserList.add( new RtcUser("Katrina","122","https://pbs.twimg.com/profile_images/654550917778305024/hcAaURmF_400x400.jpg","https://www.indiatoday.in/movies/celebrities/story/katrina-kaif-34th-birthday-plans-jagga-jasoos-982859-2017-06-15"));
-
-        ICallInfoList.add(new CallInfo("123", ICallInfo.CallType.INCOMMING_CALL,true,"120","121","5min 10sec","10:00PM","10kB"));
-        ICallInfoList.add(new CallInfo("123", ICallInfo.CallType.OUTGOING_CALL,false,"121","120","5min 11sec","11:00PM","10kB"));
-        ICallInfoList.add(new CallInfo("123", ICallInfo.CallType.MISS_CALL_OUTGOING,true,"121","120","5min 12sec","12:00PM","10kB"));
-        ICallInfoList.add(new CallInfo("123", ICallInfo.CallType.MISS_CALL_INCOMMING,false,"120","121","5min 13sec","13:00PM","10kB"));
 
     }
 
@@ -85,10 +80,32 @@ public class ContactManger implements IContactManager{
     @Override
     public void changeOnlineState(IRtcUser user, boolean isOnline) {
         ((RtcUser)user).mOnline = isOnline;
-        addContact(user);
-        for (Callback cb: mCallbackList){
-            cb.onContactListChange(mUserList);
-            cb.onSingleContactChange(user);
+        //TODO: We need update the state if the user is present
+        boolean isPresent = false;
+        boolean isChange = false;
+        for( IRtcUser user1: mUserList){
+            if(user1.getUserId().equals(user.getUserId())){
+                if(user1.isOnline() == user.isOnline()){
+                    //exist and no status changes
+                    return;
+                } else{
+                    mUserList.remove(user1);
+                    mUserList.add(user);
+                    isChange = true;
+                    isPresent = true;
+                    break;
+                }
+            }
+        }
+        if(isPresent == false){
+            isChange = true;
+            mUserList.add(0, user);
+        }
+        if(isChange) {
+            for (Callback cb : mCallbackList) {
+                cb.onContactListChange(mUserList);
+                cb.onSingleContactChange(user);
+            }
         }
     }
 

@@ -36,6 +36,8 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
     private final int mButtonHeight = 400;
 
     private Layout mCurrentLayout = SELF_VIEW_FULL_SCREEN;
+    private final int TOP_OFFSET = 50;
+    private final int BUTTOM_OFFSET = 250;
 
     private int mDeviceHeight, mDeviceWidth;
 
@@ -92,6 +94,9 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
         mCurrentLayout = layout;
         switch(layout){
             case SELF_VIEW_FULL_SCREEN:
+                mSelfView.setVisibility(VISIBLE);
+                mPeerView.setVisibility(VISIBLE);
+
                 FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                 mSelfView.setLayoutParams(lay);
                 FrameLayout.LayoutParams lay1 = new FrameLayout.LayoutParams(mMiniViewSize, mMiniViewSize);
@@ -104,6 +109,8 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
                 mSelfView.setY(0);
                 break;
             case PEER_VIEW_FULL_SCREEN:
+                mSelfView.setVisibility(VISIBLE);
+                mPeerView.setVisibility(VISIBLE);
 
                 FrameLayout.LayoutParams lay3 = new FrameLayout.LayoutParams(mMiniViewSize, mMiniViewSize);
                 mSelfView.setLayoutParams(lay3);
@@ -118,7 +125,12 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
                 mPeerView.setY(0);
                 break;
             case SPLIT_VIEW:
-
+                break;
+            case HIDE_VIEW:
+                mPeerView.setZOrderOnTop(false);
+                mSelfView.setZOrderOnTop(false);
+                mSelfView.setVisibility(GONE);
+                mPeerView.setVisibility(GONE);
                 break;
         }
         alignMiniView(mCurMiniViewAlign);
@@ -140,7 +152,8 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
     public enum Layout {
         SELF_VIEW_FULL_SCREEN,
         PEER_VIEW_FULL_SCREEN,
-        SPLIT_VIEW
+        SPLIT_VIEW,
+        HIDE_VIEW
     }
 
     private ExtendedSurfaceView getCurrentMiniView(){
@@ -164,19 +177,19 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
         switch (alignment){
             case TOP_LEFT:
                 x = 0;
-                y =0;
+                y =TOP_OFFSET;
                 break;
             case TOP_RIGHT:
                 x = mDeviceWidth - mMiniViewSize;
-                y =0;
+                y = TOP_OFFSET;
                 break;
             case BOTTOM_LEFT:
                 x = 0;
-                y =mDeviceHeight-mMiniViewSize-mButtonHeight;
+                y =mDeviceHeight-mMiniViewSize- BUTTOM_OFFSET;
                 break;
             case BOTTOM_RIGHT:
                 x = mDeviceWidth - mMiniViewSize;
-                y =mDeviceHeight-mMiniViewSize -mButtonHeight;
+                y =mDeviceHeight-mMiniViewSize - BUTTOM_OFFSET;
                 break;
         }
         curMini.setX(x);

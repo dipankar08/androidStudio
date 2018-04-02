@@ -1,5 +1,6 @@
 package in.co.dipankar.ping.common.subview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,18 +50,27 @@ public class RecentCallAdapter extends RecyclerView.Adapter<RecentCallAdapter.My
         return new MyViewHolder(itemView);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ICallInfo call = mCallInfoList.get(position);
         IRtcUser user = PingApplication.Get().getUserManager().getPeerUserForCall(call);
-        holder.name.setText(user.getUserName());
-        String StatusText = "You have a "+ call.getType().mType
-                +" of duration of"+call.getDuration();
-        holder.status.setText(StatusText);
-        holder.time.setText(call.getStartTime());
-        Glide.with(mContext)
-                .load(user.getProfilePictureUrl())
-                .into(holder.picture);
+        if(user != null) {
+            holder.name.setText(user.getUserName());
+            String StatusText = "You have a " + call.getType().mType
+                    + " of duration of" + call.getDuration();
+            holder.status.setText(StatusText);
+            holder.time.setText(call.getStartTime());
+            Glide.with(mContext)
+                    .load(user.getProfilePictureUrl())
+                    .into(holder.picture);
+
+            if (user.isOnline()) {
+                holder.picture.setDotColor(R.color.green);
+            } else {
+                holder.picture.setDotColor(R.color.red);
+            }
+        }
     }
 
     @Override

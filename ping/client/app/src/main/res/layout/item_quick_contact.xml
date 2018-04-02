@@ -16,6 +16,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="3dp"
         android:layout_centerHorizontal="true"
+        app:civ_dot_color="@color/grayLight"
+        app:civ_dot_width="5dp"
         android:id="@+id/picture"
         android:src="@drawable/user1"
         app:civ_border_color="#55ffffff"/>

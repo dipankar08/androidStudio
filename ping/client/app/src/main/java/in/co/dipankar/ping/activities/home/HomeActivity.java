@@ -10,24 +10,22 @@ import android.provider.Settings;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import org.webrtc.SessionDescription;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.co.dipankar.ping.R;
-import in.co.dipankar.ping.Utils;
 import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.activities.call.CallActivity;
 import in.co.dipankar.ping.activities.call.subviews.RecyclerTouchListener;
+import in.co.dipankar.ping.common.utils.SheetItem;
 import in.co.dipankar.ping.common.subview.QuickContactAdapter;
 import in.co.dipankar.ping.common.subview.RecentCallAdapter;
+import in.co.dipankar.ping.common.utils.CustomButtonSheetView;
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.contracts.ICallInfo;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
@@ -41,11 +39,15 @@ public class HomeActivity extends Activity implements IHome.View{
     private IHome.Presenter mPresenter;
     private RecyclerView quickRecyclerView;
     private RecyclerView mRecentRecyclerView;
+    private CustomButtonSheetView mCustomButtonSheetView;
+
+
     private QuickContactAdapter mQuickContactAdapter;
     private RecentCallAdapter mRecentCallAdapter;
 
     private List<IRtcUser> mQuickUserList;
     private List<ICallInfo> mRecentCallList;
+    IRtcUser mCurrentFocusUser = null;
 
     CustomFontTextView mNotificationView;
 
@@ -58,7 +60,9 @@ public class HomeActivity extends Activity implements IHome.View{
         RuntimePermissionUtils.getInstance().init(this);
         RuntimePermissionUtils.getInstance().askPermission(new String[]{
                 Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
 
         }, new RuntimePermissionUtils.CallBack() {
             @Override
@@ -76,7 +80,51 @@ public class HomeActivity extends Activity implements IHome.View{
     private void initView() {
         initQuickList();
         initRecentList();
+        initOtherViews();
+
+    }
+
+    private void initOtherViews() {
         mNotificationView = findViewById(R.id.notification);
+        mCustomButtonSheetView = findViewById(R.id.custom_button_sheetview);
+        List<CustomButtonSheetView.ISheetItem> mSheetItems = new ArrayList<>();
+        mSheetItems.add( new SheetItem(100, "Audio Call", new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.AUDIO_CALL,null, null);
+                mCustomButtonSheetView.hide();
+            }
+        }));
+        mSheetItems.add( new SheetItem(101, "Video Call", new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.VIDEO_CALL,null, null);
+                mCustomButtonSheetView.hide();
+            }
+        }));
+        mSheetItems.add( new SheetItem(102, "Screen share", new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.SCREEN_SHARE,null, null);
+                mCustomButtonSheetView.hide();
+            }
+        }));
+        mSheetItems.add( new SheetItem(102, "Stream local file", new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.VIDEO_SHARE,null, null);
+                mCustomButtonSheetView.hide();
+            }
+        }));
+        mSheetItems.add( new SheetItem(102, "Share Music", new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                DLog.e("Share music Clicked");
+                mCustomButtonSheetView.hide();
+            }
+        }));
+        mCustomButtonSheetView.addMenu(mSheetItems);
+        mCustomButtonSheetView.hide();
     }
 
     private void initQuickList(){
@@ -94,11 +142,12 @@ public class HomeActivity extends Activity implements IHome.View{
             public void onClick(View view, final int position) {
                 IRtcUser userClicked  = mQuickUserList.get(position);
                 DLog.e("RV Cliecked"+position);
-                navigateToCallViewInternal(false, userClicked,false,null, null);
+                navigateToCallViewInternal(false, userClicked, ICallInfo.ShareType.AUDIO_CALL,null, null);
             }
             @Override
             public void onLongClick(View view, int position) {
-
+                mCurrentFocusUser = mQuickUserList.get(position);
+                mCustomButtonSheetView.show();
             }
         }));
     }
@@ -121,7 +170,8 @@ public class HomeActivity extends Activity implements IHome.View{
             }
             @Override
             public void onLongClick(View view, int position) {
-
+                mCurrentFocusUser = mQuickUserList.get(position);
+                mCustomButtonSheetView.show();
             }
         }));
     }
@@ -180,14 +230,15 @@ public class HomeActivity extends Activity implements IHome.View{
 
     @Override
     public void navigateToInComingCallView(String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled) {
-        navigateToCallViewInternal(true, rtcUser,isVideoEnabled, callId,sdp);
+        ICallInfo.ShareType shareType = isVideoEnabled? ICallInfo.ShareType.VIDEO_CALL : ICallInfo.ShareType.AUDIO_CALL;
+        navigateToCallViewInternal(true, rtcUser,shareType, callId,sdp);
     }
 
-    private void navigateToCallViewInternal(boolean isComing, IRtcUser peer, boolean isVideo,String callId, SessionDescription sdp) {
+    private void navigateToCallViewInternal(boolean isComing, IRtcUser peer, ICallInfo.ShareType shareType, String callId, SessionDescription sdp) {
         Intent myIntent = new Intent(this, CallActivity.class);
         myIntent.putExtra("isComing", isComing);
         myIntent.putExtra("peer", peer);
-        myIntent.putExtra("isVideo", isVideo);
+        myIntent.putExtra("shareType", shareType.mType);
         if(isComing) {
             myIntent.putExtra("sdp_data", sdp.description);
             myIntent.putExtra("sdp_type", sdp.type.toString());

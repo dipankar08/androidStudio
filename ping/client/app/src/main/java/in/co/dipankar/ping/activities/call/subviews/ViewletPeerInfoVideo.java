@@ -14,22 +14,26 @@ import com.bumptech.glide.Glide;
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.CircleImageView;
+import in.co.dipankar.quickandorid.views.CustomFontTextView;
+
 public class ViewletPeerInfoVideo extends RelativeLayout {
+
+    private CustomFontTextView mName;
 
     public interface Callback {
         void onClick();
     }
 
-    private ViewletPeerInfoAudio.Callback mCallback;
+    private ViewletPeerInfoVideo.Callback mCallback;
 
     private Context mContext;
     LayoutInflater mInflater;
-
     RelativeLayout mPeerInfo;
     public TextView mTitle;
     public TextView mSubTitle;
     public ImageView mPeerBackgroud;
     CircleImageView mPeerImage;
+    private  View mCenterHolder;
 
     public ViewletPeerInfoVideo(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -48,24 +52,37 @@ public class ViewletPeerInfoVideo extends RelativeLayout {
 
     private void initView(Context context) {
         mInflater = LayoutInflater.from(context);
-        View v = mInflater.inflate(R.layout.view_call_userinfo, this, true);
+        View v = mInflater.inflate(R.layout.viewlet_peer_video_view, this, true);
         mPeerInfo =  v.findViewById(R.id.peer_info);
         mPeerImage = v.findViewById(R.id.peer_img);
-        mPeerBackgroud = v.findViewById(R.id.peer_back);
+        mName =  v.findViewById(R.id.title);
         mTitle =  v.findViewById(R.id.title);
         mSubTitle =  v.findViewById(R.id.subtitle);
         mContext = context;
+        mCenterHolder = findViewById(R.id.center_holder);
     }
     public void updateView(IRtcUser peer) {
         if (peer != null) {
             Glide.with(mContext).load(peer.getProfilePictureUrl()).into(mPeerImage);
-            Glide.with(mContext).load(peer.getCoverPictureUrl()).fitCenter().into(mPeerBackgroud);
-            mPeerBackgroud.setColorFilter(0x50000000, PorterDuff.Mode.SRC_ATOP);
-            mTitle.setText(peer.getUserName());
+            mName.setText(peer.getUserName());
+            mTitle.setText("Calling "+peer.getUserName()+"...");
         }
     }
-    public void setCallback(ViewletPeerInfoAudio.Callback callback){
+
+    public void updateTitle(String title){
+        mTitle.setText(title);
+    }
+
+    public void updateSubTitle(String subTitle){
+        mSubTitle.setText(subTitle);
+    }
+
+    public void setCallback(ViewletPeerInfoVideo.Callback callback){
         mCallback = callback;
+    }
+
+    public void setVisibilityCenterView(int v){
+        mCenterHolder.setVisibility(v);
     }
 
 }

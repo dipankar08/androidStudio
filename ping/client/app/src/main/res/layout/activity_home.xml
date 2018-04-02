@@ -63,4 +63,9 @@
             android:scrollbars="vertical" />
     </LinearLayout>
 
+    <in.co.dipankar.ping.common.utils.CustomButtonSheetView
+        android:id="@+id/custom_button_sheetview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>

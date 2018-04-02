@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</android.support.constraint.ConstraintLayout>
+<!-- user banner -->
+<RelativeLayout android:id="@+id/peer_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:orientation="horizontal"
+        android:weightSum="1.0"
+        android:background="#50000000">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="15dp"
+            android:gravity="left"
+            android:textColor="#ffffff"
+            android:text="Dipankar"
+            android:layout_gravity="left"
+            app:customfont="Ubuntu-Regular.ttf"
+            android:textSize="12dp"/>
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/subtitle"
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="right"
+            android:textColor="#ffffff"
+            android:text="Dipankar"
+            app:customfont="Ubuntu-Regular.ttf"
+            android:textSize="12dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/center_holder"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:padding="50dp"
+        android:background="@null"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CircleImageView
+            android:id="@+id/peer_img"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginBottom="3dp"
+            app:civ_border_color="@color/grayLight"
+            app:civ_border_width="3dp" />
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:maxLines="1"
+            android:textAlignment="center"
+            app:customfont="Ubuntu-Regular.ttf"
+            android:text="Calling..."
+            android:textSize="22dp"/>
+    </LinearLayout>
+</RelativeLayout>

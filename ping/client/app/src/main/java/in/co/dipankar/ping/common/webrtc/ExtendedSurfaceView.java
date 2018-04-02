@@ -29,7 +29,7 @@ public class ExtendedSurfaceView extends SurfaceViewRenderer {
 
     private void init() {
     }
-    /*
+/*
     @Override
     protected void dispatchDraw(Canvas canvas) {
         Path clipPath = new Path();
@@ -42,10 +42,10 @@ public class ExtendedSurfaceView extends SurfaceViewRenderer {
 
         canvas.clipPath(clipPath);
         canvas.drawPath(clipPath, paint);
-        this.setZOrderOnTop(true);
+        //this.setZOrderOnTop(true);
         super.dispatchDraw(canvas);
     }
-    */
+*/
     public int dpToPx(int dp) {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));

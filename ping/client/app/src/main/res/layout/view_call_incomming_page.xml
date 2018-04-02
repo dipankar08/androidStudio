@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <in.co.dipankar.ping.activities.call.subviews.ViewletPeerInfoAudio
+    <in.co.dipankar.ping.activities.call.subviews.ViewletPeerInfoVideo
         android:id="@+id/peer_video_info"
         android:visibility="gone"
         android:layout_width="match_parent"

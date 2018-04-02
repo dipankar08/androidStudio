@@ -1,11 +1,10 @@
 package in.co.dipankar.ping.common.utils;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.net.TrafficStats;
 import android.os.Handler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,6 +12,13 @@ import java.util.List;
  */
 
 public class DataUsesReporter {
+    public HashMap<String, Long> getInfo() {
+        return new HashMap<String, Long>() {{
+            put("time", Long.valueOf(mTime));
+            put("data",mPrevRX+mPrevTX-mStartRX -mStartTX);
+        }};
+    }
+
     public interface Callback {
         void onUpdate(int time, long TxNow, long RxNow);
         void onFinish(int time, long TxTotal, long RxTotal);

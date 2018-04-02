@@ -33,7 +33,7 @@ public class CallOngoingPageView extends RelativeLayout {
 
     private View mRootView;
     private ViewletPeerInfoAudio mViewletPeerInfoAudio;
-    private ViewletPeerInfoAudio mViewletPeerInfoVideo;
+    private ViewletPeerInfoVideo mViewletPeerInfoVideo;
 
 
     public void setCallback(Callback callback){
@@ -111,12 +111,15 @@ public class CallOngoingPageView extends RelativeLayout {
         mViewletPeerInfoAudio.setVisibility(GONE);
         mViewletPeerInfoVideo.setVisibility(VISIBLE);
         mViewletPeerInfoVideo.updateView(user);
+        mViewletPeerInfoVideo.setVisibilityCenterView(View.GONE);
     }
 
     public void updateTitle(String title){
         mViewletPeerInfoAudio.updateSubTitle(title);
+        mViewletPeerInfoVideo.updateSubTitle(title);
     }
     public void updateSubtitle(String title){
         mViewletPeerInfoAudio.updateSubTitle(title);
+        mViewletPeerInfoVideo.updateSubTitle(title);
     }
 }

@@ -67,8 +67,10 @@ function _getUserInfo(user_id){
 function _getAllLiveUserInfo(user_id){
     if(user_id && allLiveConn[user_id]){
         var result =[]
-        for( var ui of Object.values(allLiveConn)){
-            result.push(ui.user_info)
+        for( var key of Object.keys(allLiveConn)){
+            if(key == user_id) continue;
+            var value = allLiveConn[key]
+            result.push(value.user_info)
         }
         return result;
     } else{
@@ -377,33 +379,33 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         switch(type) {
             case ENDCALL_TYPE_PEER_REJECT:
                 // Notify author
-                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_REJECT,"this call is rejceted by peer")
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_REJECT,"This call is rejceted by your friend")
                 sendToSpacific(callinfo.author,TOPIC_OUT_ENDCALL, endCallDetails1)
                 // Notify Other endpoint
-                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_SELF_REJECT,"You have rejceted this call in other endpoint")
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_SELF_REJECT,"You have rejceted this call from other mobile")
                 sendToSpacificListExceptSender(_getAllEndpointForEndPoint(session),TOPIC_OUT_ENDCALL, endCallDetails1)
                 //clean up
                 _cleanupCall(details.call_id);
                 break;
             case ENDCALL_TYPE_PEER_NOTPICKUP:
                 // Notify author
-                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_NOTPICKUP,"this call is not pickedup by peer")
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_NOTPICKUP,"This call is not pickedup by your friend")
                 sendToSpacific(callinfo.author,TOPIC_OUT_ENDCALL, endCallDetails1)
                 // Notify Other endpoint
-                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_SELF_NOTPICKUP,"this call is pickup by any endpoint")
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_SELF_NOTPICKUP,"This call is pickup by your friend.")
                 sendToSpacificListExceptSender(_getAllEndpointForEndPoint(session),TOPIC_OUT_ENDCALL, endCallDetails1)
                 //clean up
                 _cleanupCall(details.call_id);
                 break;
             case ENDCALL_TYPE_PEER_BUSY:
                 // Notify author
-                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_BUSY,"this call is rejceted by peer")
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_BUSY,"This call is rejceted by your friend")
                 sendToSpacific(callinfo.author,TOPIC_OUT_ENDCALL, endCallDetails1)
                 _cleanupCall(details.call_id);
                 break;
             case ENDCALL_TYPE_NORMAL_END:
                 // Notify all as tis call ends normaly
-                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_NORMAL_END,"This call is not ended")
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_NORMAL_END,"This call is ended by either you or by your friend.")
                 sendToSpacificListExceptSender(callinfo.invites,TOPIC_OUT_ENDCALL, endCallDetails1)
                 _cleanupCall(details.call_id);
                 break;
@@ -466,11 +468,15 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         client.broadcast.to(socketid).emit(tag,data);
     }
     //include sender
-    function sendToSpacificList(socketids, tag, data){
+    function sendToSpacificListIncludeSender(socketids, tag, data){
         if(socketids == undefined) return;
         for(socketid of socketids){
             log("out", tag,  socketid);
-            client.broadcast.to(socketid).emit(tag,data);
+            if(client.id == socketid){
+                client.emit(tag, data);
+            } else{
+                client.broadcast.to(socketid).emit(tag,data);
+            }
         }
     }
     //exclude sender
@@ -489,8 +495,8 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         if(!call) return;
         if(call.accepted.length > 1) return;
         //auto dismis
-        sendToSpacificList(call.invites, TOPIC_OUT_ENDCALL,
-             _getEndCallPayload(call_id,ENDCALL_TYPE_PEER_NOTPICKUP,"Peer not peakup!"));
+        sendToSpacificListIncludeSender(call.invites, TOPIC_OUT_ENDCALL,
+             _getEndCallPayload(call_id,ENDCALL_TYPE_PEER_NOTPICKUP,"Your frined has not peaked up this call!"));
         _cleanupCall(call_id)
     }
 });

@@ -13,6 +13,10 @@ public interface ICallSignalingApi {
 
     void removeCallback(ICallSignalingCallback mSignalingCallback);
 
+    void onResume();
+
+    void onPause();
+
     public enum SignalType {
          TOPIC_OUT_CONNECTION("connection"),
          TOPIC_OUT_REGISTER("register"),

@@ -1,5 +1,7 @@
 package in.co.dipankar.ping.activities.call;
 
+import android.content.Intent;
+
 import org.webrtc.SessionDescription;
 import org.webrtc.StatsReport;
 
@@ -57,5 +59,7 @@ public interface ICallPage {
         void toggleSpeaker(boolean isOn);
 
         void finish();
+
+        void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 }

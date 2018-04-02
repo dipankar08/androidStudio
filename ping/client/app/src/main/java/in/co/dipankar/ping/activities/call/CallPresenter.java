@@ -2,6 +2,7 @@ package in.co.dipankar.ping.activities.call;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -51,16 +52,19 @@ public class CallPresenter implements ICallPage.IPresenter {
     private int mDuration =0;
     private int mByteUse =0;
 
+    //Incoming Calls
+    SessionDescription mPeerSdp;
+
     DataUsesReporter mDataUsesReporter;
 
-    public CallPresenter(ICallPage.IView view, IRtcUser peer, boolean isVideo, IMultiVideoPane multiVideoPane){
+    public CallPresenter(ICallPage.IView view, IRtcUser peer, ICallInfo.ShareType shareType, IMultiVideoPane multiVideoPane){
         mView = view;
         mPeerRtcUser = peer;
         mMultiVideoPane = multiVideoPane;
         init();
         this.mCallInfo = new CallInfo(getRandomCallId(),
+                shareType,
                 ICallInfo.CallType.OUTGOING_CALL,
-                isVideo,
                 PingApplication.Get().getMe().getUserId(),
                 peer.getUserId(),
                 "0",
@@ -184,11 +188,14 @@ public class CallPresenter implements ICallPage.IPresenter {
         if(mRtcEngine == null) {
             return;
         }
+        mRtcEngine.startGenericCall(mCallInfo);
+        /*
         if(mCallInfo.getIsVideo()){
             mRtcEngine.startVideoCall(mCallInfo.getId(),mCallInfo.getTo());
         } else {
             mRtcEngine.startAudioCall(mCallInfo.getId(),mCallInfo.getTo());
         }
+        */
         mView.prepareCallUI(mPeerRtcUser, mCallInfo);
         mView.updateOutgoingView("Calling "+mPeerRtcUser.getUserName()+"...","Ringing...");
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
@@ -210,9 +217,9 @@ public class CallPresenter implements ICallPage.IPresenter {
 
         mCallInfo.setType(ICallInfo.CallType.MISS_CALL_INCOMMING);
         mCallId = callId;
-
-        mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
-        mRtcEngine.toggleVideo(mCallInfo.getIsVideo());
+        mPeerSdp = sdp;
+        // This is the first talk to RTC - So first set the callInfo
+        mRtcEngine.setIncomingCallInfo(mCallInfo);
 
         mView.prepareCallUI(mPeerRtcUser, mCallInfo);
         mView.toggleViewBasedOnVideoEnabled(mCallInfo.getIsVideo());
@@ -227,6 +234,7 @@ public class CallPresenter implements ICallPage.IPresenter {
     @Override
     public void acceptCall(){
         assert(mRtcEngine != null);
+        mRtcEngine.setRemoteDescriptionToPeerConnection(mPeerSdp);
         mRtcEngine.acceptCall(mCallId);
         mCallInfo.setType(ICallInfo.CallType.INCOMMING_CALL);
         mView.switchToView(ICallPage.PageViewType.ONGOING);
@@ -236,9 +244,9 @@ public class CallPresenter implements ICallPage.IPresenter {
     @Override
     public void rejectCall(){
         assert(mRtcEngine != null);
-        mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.PEER_REJECT," User reject a call");
+        mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.PEER_REJECT," You have rejected this call");
         mRtcEngine.rejectCall(mCallId);
-        handleEndCallInternal(ICallSignalingApi.EndCallType.PEER_REJECT," User reject a call" );
+        handleEndCallInternal(ICallSignalingApi.EndCallType.PEER_REJECT," You have rejected this call" );
     }
 
     @Override
@@ -281,8 +289,16 @@ public class CallPresenter implements ICallPage.IPresenter {
         PingApplication.Get().setPeer(null);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mRtcEngine.onActivityResult(requestCode, requestCode, data);
+    }
+
     private void handleEndCallInternal(ICallSignalingApi.EndCallType type, String reason) {
         mDataUsesReporter.stop();
+        Map<String, Long> info = mDataUsesReporter.getInfo();
+        reason = "This call is ended because of "+type.toString()+"("+reason+")"+
+                ". The Duration of the call is:"+info.get("time")+"sec and the total data uses is:"+info.get("data")+" kb";
         mView.updateEndView(type.toString().toUpperCase(), reason);
         mView.switchToView(ICallPage.PageViewType.ENDED);
         if(mRtcEngine != null) {

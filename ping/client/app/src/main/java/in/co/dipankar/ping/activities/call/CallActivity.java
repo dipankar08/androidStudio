@@ -88,10 +88,10 @@ public class CallActivity extends Activity implements ICallPage.IView{
         IRtcUser peer = (IRtcUser) intent.getSerializableExtra("peer");
         PingApplication.Get().setPeer(peer);
 
-        boolean isVideo = intent.getBooleanExtra("isVideo",false);
+        String shareType = intent.getStringExtra("shareType");
         PingApplication.Get().getUserManager().addCallback(mContactMangerCallback);
 
-        mPresenter = new CallPresenter(this, peer, isVideo , mCallVideoGridView);
+        mPresenter = new CallPresenter(this, peer, ICallInfo.ShareType.valueOf(shareType.toUpperCase()), mCallVideoGridView);
         if(!isComing) {
             mPresenter.startOutgoingCall();
         } else{
@@ -320,6 +320,11 @@ public class CallActivity extends Activity implements ICallPage.IView{
                 RuntimePermissionUtils.getInstance().onRequestPermissionsResult(requestCode,permissions,grantResults);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mPresenter.onActivityResult(requestCode,resultCode, data );
+    }
+
     private void hideAll(){
         mCallLandingPageView.requestFocus();
         mCallLandingPageView.setVisibility(View.GONE);
@@ -369,6 +374,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
                 break;
             case ENDED:
                 mCallEndedPageView.setVisibility(View.VISIBLE);
+                mCallVideoGridView.setlayout(CallVideoGridView.Layout.HIDE_VIEW);
                 mCallVideoGridView.setVisibility(View.GONE);
                 break;
         }
@@ -418,7 +424,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
     @Override
     public void onRtcStat(Map<String, String> reports) {
-        DLog.e(reports.toString());
+        //DLog.e(reports.toString());
     }
 
     @Override
@@ -453,15 +459,24 @@ public class CallActivity extends Activity implements ICallPage.IView{
     @Override
     public void prepareCallUI(IRtcUser peer, ICallInfo callinfo){
         if(callinfo.getIsVideo()){
+            mCallVideoGridView.setVisibility(View.VISIBLE);
             mCallIncomingPageView.renderVideoPeerView(peer);
             mCallOutgoingPageView.renderVideoPeerView(peer);
             mCallOngoingPageView.renderVideoPeerView(peer);
         } else{
+            mCallVideoGridView.setVisibility(View.GONE);
             mCallIncomingPageView.renderAudioPeerView(peer);
             mCallOutgoingPageView.renderAudioPeerView(peer);
             mCallOngoingPageView.renderAudioPeerView(peer);
         }
         mCallEndedPageView.renderAudioPeerView(peer);
+
+        if(callinfo.getType() == ICallInfo.CallType.INCOMMING_CALL ||
+                callinfo.getType() == ICallInfo.CallType.MISS_CALL_INCOMMING){
+            mCallVideoGridView.setlayout(CallVideoGridView.Layout.SELF_VIEW_FULL_SCREEN);
+        } else{
+            mCallVideoGridView.setlayout(CallVideoGridView.Layout.PEER_VIEW_FULL_SCREEN);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package in.co.dipankar.ping.common.subview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,14 +46,21 @@ public class QuickContactAdapter extends RecyclerView.Adapter<QuickContactAdapte
         return new MyViewHolder(itemView);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         IRtcUser user = mUserList.get(position);
         holder.name.setText(user.getUserName());
-        holder.status.setText("Online");
         Glide.with(mContext)
                 .load(user.getProfilePictureUrl())
                 .into(holder.picture);
+        if(user.isOnline()) {
+            holder.picture.setDotColor(R.color.green);
+            holder.status.setText("Online");
+        } else{
+            holder.picture.setDotColor(R.color.red);
+            holder.status.setText("Offline");
+        }
     }
 
     @Override
