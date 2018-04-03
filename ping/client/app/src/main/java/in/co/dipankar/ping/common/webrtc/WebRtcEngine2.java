@@ -337,9 +337,9 @@ public class WebRtcEngine2 implements IRtcEngine {
     private VideoCapturer createVideoCapturer(Context context) {
         switch (mCallInfo.getShareType()) {
             case VIDEO_CALL:
-                 //return getCamera1Capture(context);
+                 return getCamera1Capture(context);
                 //return getEffectCapture(context);
-                return getCameraCapture(context);
+                //return getCameraCapture(context);
             case SCREEN_SHARE:
                 return getScreenCapture(context);
             case VIDEO_SHARE:
@@ -537,7 +537,7 @@ public class WebRtcEngine2 implements IRtcEngine {
                 mRTCConfiguration,
                 mPeerVideoMediaConstraints,
                 mPeerConnectionObserver);
-
+        //mPeerConnection.setConfiguration(mRTCConfiguration);
     }
 
     private void initializedRenderer() {

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import org.webrtc.SessionDescription;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,8 @@ import in.co.dipankar.ping.activities.call.subviews.CallOutgoingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallVideoGridView;
 import in.co.dipankar.ping.common.model.IContactManager;
 import in.co.dipankar.ping.common.utils.AudioManagerUtils;
+import in.co.dipankar.ping.common.utils.CustomButtonSheetView;
+import in.co.dipankar.ping.common.utils.SheetItem;
 import in.co.dipankar.ping.common.webrtc.RtcStatView;
 import in.co.dipankar.ping.contracts.ICallInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
@@ -59,6 +62,8 @@ public class CallActivity extends Activity implements ICallPage.IView{
     MediaPlayer mMediaPlayer;
     AudioManagerUtils  mAudioManagerUtils;
 
+    private CustomButtonSheetView mCustomButtonSheetView;
+
 
 
     //private state
@@ -70,17 +75,55 @@ public class CallActivity extends Activity implements ICallPage.IView{
         proceedAfterPermission();
     }
 
-    private void proceedAfterPermission(){
-
-        initView();
-        initCall();
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         proceedAfterPermission();
     }
+
+
+    private void proceedAfterPermission(){
+        initView();
+        initButtonSheet();
+        initCall();
+    }
+
+    private void initButtonSheet() {
+        mCustomButtonSheetView = findViewById(R.id.custom_button_sheetview);
+        List<CustomButtonSheetView.ISheetItem> mSheetItems = new ArrayList<>();
+        mSheetItems.add( new SheetItem(102, "Test", CustomButtonSheetView.Type.BUTTON,  new CustomButtonSheetView.Callback(){
+            @Override
+            public void onClick(int v) {
+                DLog.e("Test");
+            }
+        }, null));
+        mSheetItems.add( new SheetItem(102, "Change Audio Quality", CustomButtonSheetView.Type.OPTIONS,  new CustomButtonSheetView.Callback(){
+            @Override
+            public void onClick(int v) {
+                switch (v){
+                    case 0:
+                        mPresenter.changeAudioBitrate(56);
+                        break;
+                    case 1:
+                        mPresenter.changeAudioBitrate(42);
+                        break;
+                    case 2:
+                        mPresenter.changeAudioBitrate(6);
+                }
+                DLog.e("Share music Clicked");
+            }
+        }, new CharSequence[]{"HD", "Medium","low"}));
+        mCustomButtonSheetView.addMenu(mSheetItems);
+        mCustomButtonSheetView.hide();
+        mCallOngoingPageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mCustomButtonSheetView.show();
+                return false;
+            }
+        });
+    }
+
 
     private void initCall(){
         Intent intent = getIntent();

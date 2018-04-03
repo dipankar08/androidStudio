@@ -88,41 +88,49 @@ public class HomeActivity extends Activity implements IHome.View{
         mNotificationView = findViewById(R.id.notification);
         mCustomButtonSheetView = findViewById(R.id.custom_button_sheetview);
         List<CustomButtonSheetView.ISheetItem> mSheetItems = new ArrayList<>();
-        mSheetItems.add( new SheetItem(100, "Audio Call", new View.OnClickListener(){
+        mSheetItems.add( new SheetItem(100, "Audio Call", CustomButtonSheetView.Type.BUTTON,  new CustomButtonSheetView.Callback(){
             @Override
-            public void onClick(View v) {
+            public void onClick(int i) {
                 navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.AUDIO_CALL,null, null);
                 mCustomButtonSheetView.hide();
             }
-        }));
-        mSheetItems.add( new SheetItem(101, "Video Call", new View.OnClickListener(){
+        }, null));
+
+        mSheetItems.add( new SheetItem(101, "Video Call", CustomButtonSheetView.Type.BUTTON,  new CustomButtonSheetView.Callback(){
             @Override
-            public void onClick(View v) {
+            public void onClick(int v) {
                 navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.VIDEO_CALL,null, null);
-                mCustomButtonSheetView.hide();
+              //  mCustomButtonSheetView.hide();
             }
-        }));
-        mSheetItems.add( new SheetItem(102, "Screen share", new View.OnClickListener(){
+        }, null));
+        mSheetItems.add( new SheetItem(102, "Screen share",CustomButtonSheetView.Type.BUTTON,  new CustomButtonSheetView.Callback(){
             @Override
-            public void onClick(View v) {
+            public void onClick(int v) {
                 navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.SCREEN_SHARE,null, null);
-                mCustomButtonSheetView.hide();
+              //  mCustomButtonSheetView.hide();
             }
-        }));
-        mSheetItems.add( new SheetItem(102, "Stream local file", new View.OnClickListener(){
+        }, null));
+        mSheetItems.add( new SheetItem(102, "Stream local file", CustomButtonSheetView.Type.BUTTON,  new CustomButtonSheetView.Callback(){
             @Override
-            public void onClick(View v) {
+            public void onClick(int v) {
                 navigateToCallViewInternal(false,mCurrentFocusUser, ICallInfo.ShareType.VIDEO_SHARE,null, null);
-                mCustomButtonSheetView.hide();
+               // mCustomButtonSheetView.hide();
             }
-        }));
-        mSheetItems.add( new SheetItem(102, "Share Music", new View.OnClickListener(){
+        }, null));
+        mSheetItems.add( new SheetItem(102, "Share Music", CustomButtonSheetView.Type.BUTTON,  new CustomButtonSheetView.Callback(){
             @Override
-            public void onClick(View v) {
+            public void onClick(int v) {
                 DLog.e("Share music Clicked");
-                mCustomButtonSheetView.hide();
+               // mCustomButtonSheetView.hide();
             }
-        }));
+        }, null));
+        mSheetItems.add( new SheetItem(102, "Options", CustomButtonSheetView.Type.OPTIONS,  new CustomButtonSheetView.Callback(){
+            @Override
+            public void onClick(int v) {
+                DLog.e("Share music Clicked");
+                //mCustomButtonSheetView.hide();
+            }
+        }, new CharSequence[]{"Hello", "World"}));
         mCustomButtonSheetView.addMenu(mSheetItems);
         mCustomButtonSheetView.hide();
     }
@@ -140,9 +148,8 @@ public class HomeActivity extends Activity implements IHome.View{
                 quickRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                IRtcUser userClicked  = mQuickUserList.get(position);
-                DLog.e("RV Cliecked"+position);
-                navigateToCallViewInternal(false, userClicked, ICallInfo.ShareType.AUDIO_CALL,null, null);
+                mCurrentFocusUser = mQuickUserList.get(position);
+                mCustomButtonSheetView.show();
             }
             @Override
             public void onLongClick(View view, int position) {
@@ -165,8 +172,8 @@ public class HomeActivity extends Activity implements IHome.View{
                 mRecentRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                ICallInfo call  = mRecentCallList.get(position);
-                DLog.e("RV Cliecked"+position);
+                mCurrentFocusUser = mQuickUserList.get(position);
+                mCustomButtonSheetView.show();
             }
             @Override
             public void onLongClick(View view, int position) {

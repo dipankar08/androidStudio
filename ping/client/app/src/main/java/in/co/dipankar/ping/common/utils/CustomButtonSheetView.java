@@ -1,7 +1,9 @@
 package in.co.dipankar.ping.common.utils;
 
 import android.animation.Animator;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -13,7 +15,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import in.co.dipankar.ping.R;
 
@@ -21,17 +26,23 @@ public class CustomButtonSheetView extends RelativeLayout {
 
     private Context mContext;
     private View mRootView;
+    private Map<Integer, DialogInterface> mDialogMap;
+
+    public enum Type{
+        BUTTON,
+        OPTIONS,
+    }
 
     public interface ISheetItem{
+        Type getType();
         int getId();
         String getName();
-        OnClickListener getOnClickListener();
+        CharSequence[] getPossibleValue();
+        Callback getCallback();
     };
 
     public interface  Callback{
-        public void onClick(String id);
-        public void onShow();
-        public void onHide();
+        public void onClick(int id);
     }
 
     private Callback mCallback;
@@ -66,6 +77,7 @@ public class CustomButtonSheetView extends RelativeLayout {
             }
         });
         mRootView.setVisibility(GONE);
+        mDialogMap = new HashMap<>();
     }
 
     public void show(){
@@ -90,9 +102,7 @@ public class CustomButtonSheetView extends RelativeLayout {
 
             }
         });
-        if(mCallback != null){
-            mCallback.onShow();
-        }
+
     }
 
     public void hide(){
@@ -117,22 +127,71 @@ public class CustomButtonSheetView extends RelativeLayout {
             }
         });
 
-        if(mCallback != null){
-            mCallback.onHide();
-        }
     }
 
     public void addMenu(List<ISheetItem> items){
         mItemList = items;
         for (ISheetItem menu: items) {
-            Button btnTag = new Button(mContext);
-            btnTag.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            btnTag.setText(menu.getName());
-            btnTag.setBackgroundColor(Color.TRANSPARENT);
-            btnTag.setOnClickListener(menu.getOnClickListener());
-            mMenuHolder.addView(btnTag);
+            switch (menu.getType()){
+                case BUTTON:
+                    Button btnTag = new Button(mContext);
+                    btnTag.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    btnTag.setText(menu.getName());
+                    btnTag.setBackgroundColor(Color.TRANSPARENT);
+                    btnTag.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Callback callback = menu.getCallback();
+                            if(callback!= null){
+                                callback.onClick(0);
+                            }
+                            hide();
+                        }
+                    });
+                    mMenuHolder.addView(btnTag);
+                    break;
+                case OPTIONS:
+                    btnTag = new Button(mContext);
+                    btnTag.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    btnTag.setText(menu.getName());
+                    btnTag.setBackgroundColor(Color.TRANSPARENT);
+                    Callback callback = menu.getCallback();
+                    btnTag.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog alertDialog1 = null;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            builder.setTitle("Select the choice");
+                            final AlertDialog finalAlertDialog = alertDialog1;
+                            builder.setSingleChoiceItems(menu.getPossibleValue(), -1, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int item) {
+                                    if(callback!= null){
+                                        callback.onClick(item);
+                                    }
+                                    getDialog(menu.getId()).dismiss();
+                                    hide();
+                                }
+                            });
+                            alertDialog1 = builder.create();
+                            alertDialog1.show();
+                            setDialog(menu.getId(), alertDialog1);
+                        }
+                    });
+                    mMenuHolder.addView(btnTag);
+                    break;
+
+            }
+
         }
         mRootView.setTranslationY(mMenuHolder.getHeight());
+    }
+
+    private void setDialog(int id, AlertDialog alertDialog1) {
+        mDialogMap.put(id,alertDialog1);
+    }
+
+    private DialogInterface getDialog(int id) {
+        return mDialogMap.get(id);
     }
 
     public void setCallback(Callback callback){

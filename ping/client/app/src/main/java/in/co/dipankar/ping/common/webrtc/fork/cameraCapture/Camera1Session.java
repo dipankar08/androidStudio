@@ -31,6 +31,8 @@ import org.webrtc.SurfaceTextureHelper.OnTextureFrameAvailableListener;
 import org.webrtc.VideoFrame;
 import org.webrtc.VideoFrame.Buffer;
 
+import in.co.dipankar.quickandorid.utils.DLog;
+
 class Camera1Session implements CameraSession {
     private static final String TAG = "Camera1Session";
     private static final int NUMBER_OF_CAPTURE_BUFFERS = 3;
@@ -258,7 +260,7 @@ class Camera1Session implements CameraSession {
                       //  Camera1Session.camera1StartTimeMsHistogram.addSample(startTimeMs);
                         Camera1Session.this.firstFrameReported = true;
                     }
-
+                    DLog.e("Data Receivded");
                     Buffer frameBuffer = new NV21Buffer(data, Camera1Session.this.captureFormat.width, Camera1Session.this.captureFormat.height, () -> {
                         Camera1Session.this.cameraThreadHandler.post(() -> {
                             if(Camera1Session.this.state == Camera1Session.SessionState.RUNNING) {

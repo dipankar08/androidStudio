@@ -44,7 +44,7 @@ public class CallPresenter implements ICallPage.IPresenter {
     IMultiVideoPane mMultiVideoPane;
 
     //rtc engine
-    IRtcEngine mRtcEngine;
+    IRtcEngine mWebRtcEngine;
     //singnaling api
     ICallSignalingApi mSignalingApi;
 
@@ -85,10 +85,10 @@ public class CallPresenter implements ICallPage.IPresenter {
         rtcConfiguration.audioStartBitrate  = 6;
         mSignalingApi = PingApplication.Get().getCallSignalingApi();
         mSignalingApi.addCallback(mSignalingCallback);
-        mRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration,mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
-        if(mRtcEngine != null) {
-            mRtcEngine.addCallback(mWebrtcEngineCallback);
-            mRtcEngine.enableStatsEvents(true, 1000);
+        mWebRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration,mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
+        if(mWebRtcEngine != null) {
+            mWebRtcEngine.addCallback(mWebrtcEngineCallback);
+            mWebRtcEngine.enableStatsEvents(true, 1000);
         }
         mDataUsesReporter = new DataUsesReporter();
         mDataUsesReporter.addCallback(mDataUsesReporterCallback);
@@ -119,8 +119,8 @@ public class CallPresenter implements ICallPage.IPresenter {
 
         @Override
         public void onReceivedAnswer(String callid, SessionDescription sdp) {
-            if(mRtcEngine != null) {
-                mRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
+            if(mWebRtcEngine != null) {
+                mWebRtcEngine.setRemoteDescriptionToPeerConnection(sdp);
             }
             mCallInfo.setType(ICallInfo.CallType.OUTGOING_CALL);
             mView.switchToView(ICallPage.PageViewType.ONGOING);
@@ -130,8 +130,8 @@ public class CallPresenter implements ICallPage.IPresenter {
 
         @Override
         public void onReceivedCandidate(String callid, IceCandidate ice) {
-            if(mRtcEngine != null) {
-                mRtcEngine.addIceCandidateToPeerConnection(ice);
+            if(mWebRtcEngine != null) {
+                mWebRtcEngine.addIceCandidateToPeerConnection(ice);
             }
         }
 
@@ -185,15 +185,15 @@ public class CallPresenter implements ICallPage.IPresenter {
             finish();
             return;
         }
-        if(mRtcEngine == null) {
+        if(mWebRtcEngine == null) {
             return;
         }
-        mRtcEngine.startGenericCall(mCallInfo);
+        mWebRtcEngine.startGenericCall(mCallInfo);
         /*
         if(mCallInfo.getIsVideo()){
-            mRtcEngine.startVideoCall(mCallInfo.getId(),mCallInfo.getTo());
+            mWebRtcEngine.startVideoCall(mCallInfo.getId(),mCallInfo.getTo());
         } else {
-            mRtcEngine.startAudioCall(mCallInfo.getId(),mCallInfo.getTo());
+            mWebRtcEngine.startAudioCall(mCallInfo.getId(),mCallInfo.getTo());
         }
         */
         mView.prepareCallUI(mPeerRtcUser, mCallInfo);
@@ -211,7 +211,7 @@ public class CallPresenter implements ICallPage.IPresenter {
             finish();
             return;
         }
-        if(mRtcEngine == null) {
+        if(mWebRtcEngine == null) {
             return;
         }
 
@@ -219,7 +219,7 @@ public class CallPresenter implements ICallPage.IPresenter {
         mCallId = callId;
         mPeerSdp = sdp;
         // This is the first talk to RTC - So first set the callInfo
-        mRtcEngine.setIncomingCallInfo(mCallInfo);
+        mWebRtcEngine.setIncomingCallInfo(mCallInfo);
 
         mView.prepareCallUI(mPeerRtcUser, mCallInfo);
         mView.toggleViewBasedOnVideoEnabled(mCallInfo.getIsVideo());
@@ -233,9 +233,9 @@ public class CallPresenter implements ICallPage.IPresenter {
     }
     @Override
     public void acceptCall(){
-        assert(mRtcEngine != null);
-        mRtcEngine.setRemoteDescriptionToPeerConnection(mPeerSdp);
-        mRtcEngine.acceptCall(mCallId);
+        assert(mWebRtcEngine != null);
+        mWebRtcEngine.setRemoteDescriptionToPeerConnection(mPeerSdp);
+        mWebRtcEngine.acceptCall(mCallId);
         mCallInfo.setType(ICallInfo.CallType.INCOMMING_CALL);
         mView.switchToView(ICallPage.PageViewType.ONGOING);
         startTimerInternal();
@@ -243,30 +243,30 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void rejectCall(){
-        assert(mRtcEngine != null);
+        assert(mWebRtcEngine != null);
         mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.PEER_REJECT," You have rejected this call");
-        mRtcEngine.rejectCall(mCallId);
+        mWebRtcEngine.rejectCall(mCallId);
         handleEndCallInternal(ICallSignalingApi.EndCallType.PEER_REJECT," You have rejected this call" );
     }
 
     @Override
     public void toggleVideo(boolean isOn) {
-        if(mRtcEngine != null) {
-            mRtcEngine.toggleVideo(isOn);
+        if(mWebRtcEngine != null) {
+            mWebRtcEngine.toggleVideo(isOn);
         }
     }
 
     @Override
     public void toggleCamera(boolean isOn) {
-        if(mRtcEngine != null) {
-            mRtcEngine.toggleCamera(isOn);
+        if(mWebRtcEngine != null) {
+            mWebRtcEngine.toggleCamera(isOn);
         }
     }
 
     @Override
     public void toggleAudio(boolean isOn) {
-        if(mRtcEngine != null) {
-            mRtcEngine.toggleAudio(isOn);
+        if(mWebRtcEngine != null) {
+            mWebRtcEngine.toggleAudio(isOn);
         }
     }
 
@@ -278,11 +278,11 @@ public class CallPresenter implements ICallPage.IPresenter {
     @Override
     public void finish() {
         // Please cleanup Eveeything.
-        mRtcEngine.removeCallback(mWebrtcEngineCallback);
+        mWebRtcEngine.removeCallback(mWebrtcEngineCallback);
         mSignalingApi.removeCallback(mSignalingCallback);
         mDataUsesReporter.removeCallback(mDataUsesReporterCallback);
 
-        mRtcEngine = null;
+        mWebRtcEngine = null;
         mSignalingApi = null;
         mView = null;
         // This is the last thing indicate I am not in call.
@@ -291,7 +291,13 @@ public class CallPresenter implements ICallPage.IPresenter {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mRtcEngine.onActivityResult(requestCode, requestCode, data);
+        mWebRtcEngine.onActivityResult(requestCode, requestCode, data);
+    }
+
+    @Override
+    public void changeAudioBitrate(int i) {
+        // TODO mWebRtcEngine
+        // How to chnage Audio BitRtae at runtime.
     }
 
     private void handleEndCallInternal(ICallSignalingApi.EndCallType type, String reason) {
@@ -301,8 +307,8 @@ public class CallPresenter implements ICallPage.IPresenter {
                 ". The Duration of the call is:"+info.get("time")+"sec and the total data uses is:"+info.get("data")+" kb";
         mView.updateEndView(type.toString().toUpperCase(), reason);
         mView.switchToView(ICallPage.PageViewType.ENDED);
-        if(mRtcEngine != null) {
-            mRtcEngine.endCall();
+        if(mWebRtcEngine != null) {
+            mWebRtcEngine.endCall();
         }
         IContactManager contactManager = PingApplication.Get().getUserManager();
         mCallInfo.setDataUses(mByteUse+"");

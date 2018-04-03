@@ -11,12 +11,21 @@ import in.co.dipankar.ping.common.utils.CustomButtonSheetView;
 public class SheetItem implements CustomButtonSheetView.ISheetItem{
     int mId;
     String mName;
-    View.OnClickListener mOnClickListener;
+    CustomButtonSheetView.Type mType;
+    CustomButtonSheetView.Callback mCallback;
+    CharSequence[] mPossibleValue;
 
-    public SheetItem(int i, String s, View.OnClickListener onClickListener) {
+    public SheetItem(int i, String s, CustomButtonSheetView.Type type, CustomButtonSheetView.Callback callback, CharSequence[] mPossibleValue) {
         mId = i;
         mName = s;
-        mOnClickListener = onClickListener;
+        mCallback = callback;
+        this.mPossibleValue = mPossibleValue;
+        mType = type;
+    }
+
+    @Override
+    public CustomButtonSheetView.Type getType() {
+        return mType;
     }
 
     @Override
@@ -30,7 +39,13 @@ public class SheetItem implements CustomButtonSheetView.ISheetItem{
     }
 
     @Override
-    public View.OnClickListener getOnClickListener() {
-        return mOnClickListener;
+    public CharSequence[] getPossibleValue() {
+        return mPossibleValue;
     }
+
+    @Override
+    public CustomButtonSheetView.Callback getCallback() {
+        return mCallback;
+    }
+
 }

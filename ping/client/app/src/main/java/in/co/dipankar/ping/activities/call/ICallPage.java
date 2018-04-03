@@ -61,5 +61,7 @@ public interface ICallPage {
         void finish();
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void changeAudioBitrate(int i);
     }
 }

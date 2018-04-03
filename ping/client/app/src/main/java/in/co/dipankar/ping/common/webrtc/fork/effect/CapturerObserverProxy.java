@@ -7,6 +7,8 @@ import org.webrtc.ThreadUtils;
 import org.webrtc.VideoCapturer;
 import org.webrtc.VideoFrame;
 
+import in.co.dipankar.ping.common.webrtc.fork.imageprocessing.BitMapUtils;
+
 public class CapturerObserverProxy implements VideoCapturer.CapturerObserver {
 
     public static final String TAG = CapturerObserverProxy.class.getSimpleName();
@@ -76,6 +78,8 @@ public class CapturerObserverProxy implements VideoCapturer.CapturerObserver {
 
     @Override
     public void onFrameCaptured(VideoFrame frame) {
-        this.originalObserver.onFrameCaptured(frame);
+
+       // Bitmap b = BitMapUtils.NV21ToBitmap(frame.getBuffer().getData(),frame.getBuffer().getWidth(), frame.getBuffer().getHeight());
+                this.originalObserver.onFrameCaptured(frame);
     }
 }
