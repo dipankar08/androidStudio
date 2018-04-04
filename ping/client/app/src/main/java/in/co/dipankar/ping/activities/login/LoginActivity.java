@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -52,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Utils.makeFullScreen(this);
         setContentView(R.layout.activity_login);
-
         IRtcUser user = getUser();
         if(user != null){
             navigateToHomeScreen(user);
@@ -61,6 +61,11 @@ public class LoginActivity extends AppCompatActivity {
             setupGoogleLogin();
             setupFacebookLogin();
         }
+       // test();
+    }
+
+    public void test(){
+        //Crashlytics.getInstance().crash();
     }
 
     private void setupAnonymousLogin() {

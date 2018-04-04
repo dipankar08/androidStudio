@@ -1,8 +1,73 @@
 var socketIO = require('socket.io');
+var admin = require('firebase-admin');
+var request = require('request');
+
+
+// Ch0: Thease are keys wich is used for experimnet - We will have separte keys for Production.
+// It should be renew from here https://console.firebase.google.com/project/ping-3a5f3/settings/cloudmessaging/
+var FCM_KEY = "AAAAshJlvhs:APA91bGcOEoOhijI-KGCElGdWAUMDIRNICGIY6zC4LfCWQc1mra2D68k_Bpq7YqGHqHwDVSy8c70xvileYud164ShUY1AAUJhTW2Bn1M7ue0PrlvFn-qYLdcwNw0hWgwntBa5p7hUoHH"
+
+
+
+// Ch1. Firebase push Notification.
+// this function shoudl be called whne someone is offline and willing to get the GCM messege to awake up the app
+// In this case, we jsut send a notification that someone is in call.
+function pushNotification(token, data){
+    var options = {
+        url: 'https://fcm.googleapis.com/fcm/send',
+        headers: { 'Authorization': 'key=' + FCM_KEY},
+        json: { "to": token, "data": data}
+    };
+    request.post(options, function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            console.log('ERROR - FIREBASE POST failed:', err);
+        } else{
+            if(httpResponse.body.failure > 1){
+                console.log("[ERROR] "+httpResponse.body.results[0].error)
+            } else{
+                console.log('[SUCCESS] FCM messenge sent!\n'+ httpResponse.body.results[0].success);
+            }
+        } 
+    });
+}
+//pushNotification("dvoXqcI12g8:APA91bEdX4QaK3bwbWgVvFYn76ksxYQCM_Wt2oNSV8F5HH_yDzzedF8Kxrynwu7Z5-TIv_2OrO-0UgTcPsrMgoKZATXleXvXPFJlnPfiyXz3sbngIfs3_ajDH38i4uaK3bhSBbIEbDzc",{"hello":"hello"});
+
+
+
+
+
+// Ch2. Mongo db as databsse:
+// We need a simple database to store user infomation - We mainly support to operation four CRUD ops insert, update and serach.
+// We just run the mongd in my local box and they can just do the basic CRUB operations.
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:23456/";
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  dbo.createCollection("users", function(err, res) {
+    if (err) throw err;
+    console.log("Collection created!");
+    db.close();
+  });
+});
+
+function insert(user_id, tokens){
+    
+}
+
+
+
+
+
+
+
+
+
+
+// Ch3. Realtime Messeging system using websocket.
+// This is maily required for Signaling procedure for WebRtc and basic call mechanism.
 var server = require('http').createServer().listen(7000, '0.0.0.0');
 var io = socketIO.listen(server);
-
-
 
 // Super simple server:
 //  * One room only. 

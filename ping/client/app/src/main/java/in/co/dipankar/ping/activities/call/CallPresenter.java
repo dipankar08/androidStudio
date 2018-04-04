@@ -19,8 +19,10 @@ import in.co.dipankar.ping.common.utils.DataUsesReporter;
 import in.co.dipankar.ping.common.webrtc.WebRtcEngine2;
 import in.co.dipankar.ping.contracts.ICallInfo;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -72,11 +74,13 @@ public class CallPresenter implements ICallPage.IPresenter {
                 "0 Kb");
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
     private String getTimeNow() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-        LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now).toString(); //2016/11/16 12:08:43
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String currentDateandTime = sdf.format(new Date());
+        return currentDateandTime;
+      //  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+       // LocalDateTime now = LocalDateTime.now();
+        //return dtf.format(now).toString(); //2016/11/16 12:08:43
     }
 
     private void  init(){
