@@ -22,6 +22,7 @@ public interface ICallSignalingApi {
          TOPIC_OUT_REGISTER("register"),
          TOPIC_OUT_DISCONNECT("disconnect"),
          TOPIC_OUT_OFFER("offer"),
+         TOPIC_OUT_RESEND_OFFER("resend_offer"),
          TOPIC_OUT_CANDIDATE ("candidate"),
          TOPIC_OUT_ANSWER ("answer"),
          TOPIC_OUT_ENDCALL("endcall"),
@@ -105,6 +106,9 @@ public interface ICallSignalingApi {
 
     //RTC API
     void sendOffer(String peerId, String callID, Object description, boolean isVideoEnabled);
+
+    void resendOffer(String userId, String callId);
+
     void sendAnswer(String callID, Object description);
     void sendCandidate(String callId, IceCandidate iceCandidate);
     void sendEndCall(String callID, EndCallType type, String reason);
@@ -123,5 +127,6 @@ public interface ICallSignalingApi {
         void onWelcome(List<IRtcUser> liveUserList);
     }
     void addCallback(ICallSignalingApi.ICallSignalingCallback callback);
+
 
 }

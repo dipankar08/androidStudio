@@ -208,6 +208,31 @@ public class SocketIOSignaling implements ICallSignalingApi {
             e.printStackTrace();
         }
     }
+    @Override
+    public void resendOffer(String userId, String callId) {
+        DLog.e("Send Offer");
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put("user_id",userId);
+            obj.put("call_id",callId);
+            if(mSocket.connected()) {
+                mSocket.emit(SignalType.TOPIC_OUT_RESEND_OFFER.type, obj);
+            } else{
+                if(mCallbackList != null){
+                    runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for(ICallSignalingCallback callback : mCallbackList) {
+                                callback.onDisconnected();
+                            }
+                        }
+                    });
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void sendAnswer(String callId, Object description) {
@@ -582,7 +607,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
         }
     }
 
-    private static class Base64Coder {
+    public static class Base64Coder {
         public static byte[] fromBase64(String s) {
             return Base64.decode(s, Base64.DEFAULT);
         }
@@ -590,7 +615,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
         public static String toBase64(byte[] bytes) {
             return new String(Base64.encode(bytes, Base64.DEFAULT));
         }
-        private static Object fromString(String s ) throws IOException,
+        public static Object fromString(String s) throws IOException,
                 ClassNotFoundException {
             byte [] data = fromBase64(s);
             ObjectInputStream ois = new ObjectInputStream(
@@ -599,7 +624,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
             ois.close();
             return o;
         }
-        private static String toString(Serializable o ) throws IOException {
+        public static String toString(Serializable o) throws IOException {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream( baos );
             oos.writeObject( o );

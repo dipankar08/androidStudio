@@ -2,12 +2,21 @@ package in.co.dipankar.ping.activities.application;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.provider.Settings;
 
+import java.io.IOException;
+
+import in.co.dipankar.ping.Utils;
 import in.co.dipankar.ping.common.model.ContactManger;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
+import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
+import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.INetwork;
+import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 
 public class PingApplication extends Application {
@@ -15,10 +24,10 @@ public class PingApplication extends Application {
     private ContactManger mContactManger;
     private IRtcUser mSelfUser;
     private IRtcUser mPeerUser;
-    private IRtcDeviceInfo mSelfDevice;
+    private IRtcDeviceInfo mSelfDevice ;
 
     private ICallSignalingApi mCallSignalingApi;
-
+    private INetwork mNetwork;
 
     private static PingApplication sPingApplication;
     // Called when the application is starting, before any other application objects have been created.
@@ -30,6 +39,23 @@ public class PingApplication extends Application {
         mContactManger = new ContactManger();
         SharedPrefsUtil.getInstance().init(this);
         sPingApplication = this;
+        mNetwork = new Network();
+
+        String deviceid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        mSelfDevice= new RtcDeviceInfo(deviceid, android.os.Build.MODEL,"10");
+
+        // Restoring User..
+        String userInfoStr = SharedPrefsUtil.getInstance().getString("self_user_info",null);
+        if(userInfoStr!= null){
+            try {
+                mSelfUser = (RtcUser) SocketIOSignaling.Base64Coder.fromString(userInfoStr);
+                mCallSignalingApi = new SocketIOSignaling(mSelfUser,mSelfDevice);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Called by the system when the device configuration changes while your component is running.
@@ -57,6 +83,13 @@ public class PingApplication extends Application {
 
     public void setMe(IRtcUser user) {
         mSelfUser = user;
+        try {
+            String userStr = SocketIOSignaling.Base64Coder.toString(user);
+            SharedPrefsUtil.getInstance().setString("self_user_info",userStr);
+            DLog.e("Saved user");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public IRtcUser getMe() {
         return mSelfUser;
@@ -97,5 +130,8 @@ public class PingApplication extends Application {
 
     public boolean isOnCall(){
         return getPeer() != null;
+    }
+    public INetwork getNetwork(){
+        return mNetwork;
     }
 }

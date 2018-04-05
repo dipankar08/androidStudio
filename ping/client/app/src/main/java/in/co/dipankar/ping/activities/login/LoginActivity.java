@@ -37,9 +37,11 @@ import java.util.UUID;
 
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.Utils;
+import in.co.dipankar.ping.activities.application.PingApplication;
 import in.co.dipankar.ping.activities.home.HomeActivity;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.IRtcUser;
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 
 public class LoginActivity extends AppCompatActivity {
@@ -214,6 +216,7 @@ public class LoginActivity extends AppCompatActivity {
         return obj;
     }
     private void navigateToHomeScreen(IRtcUser user) {
+        PingApplication.Get().setMe(user);
         Intent myIntent = new Intent(this, HomeActivity.class);
         myIntent.putExtra("RtcUser", user);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|

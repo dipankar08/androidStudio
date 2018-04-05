@@ -53,6 +53,7 @@ public class HomeActivity extends Activity implements IHome.View{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        DLog.e("Info - HomeActivity::onCreate called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
@@ -77,11 +78,36 @@ public class HomeActivity extends Activity implements IHome.View{
         });
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        DLog.e("Info - HomeActivity::onNewIntent called");
+        super.onNewIntent(intent);
+        setIntent(intent);
+        proceedAfterPermission();
+    }
+
+    private void proceedAfterPermission() {
+        Intent intent = getIntent();
+
+        String pending_call_id = getIntent().getStringExtra("call_id");
+        DLog.e("Received Pending call"+pending_call_id);
+        mPresenter = new HomePresenter(this);
+        if(pending_call_id != null){
+            mPresenter.requestSdp(pending_call_id);
+        } else{
+            if(PingApplication.Get().getMe() == null){
+                DLog.e("Please Login again..");
+                finish();
+            } else{
+                DLog.e("Process with call");
+            }
+        }
+    }
+
     private void initView() {
         initQuickList();
         initRecentList();
         initOtherViews();
-
     }
 
     private void initOtherViews() {
@@ -181,23 +207,6 @@ public class HomeActivity extends Activity implements IHome.View{
                 mCustomButtonSheetView.show();
             }
         }));
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        proceedAfterPermission();
-    }
-
-    private void proceedAfterPermission() {
-        Intent intent = getIntent();
-        IRtcUser mRtcUser = (IRtcUser) intent.getSerializableExtra("RtcUser");
-        String deviceid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        IRtcDeviceInfo mRtcDeviceInfo= new RtcDeviceInfo(deviceid,android.os.Build.MODEL,"10");
-        PingApplication.Get().setMe(mRtcUser);
-        PingApplication.Get().setDevice(mRtcDeviceInfo);
-        //Thsi sould be created at end
-        mPresenter = new HomePresenter(this);
     }
 
     @SuppressLint("ResourceAsColor")

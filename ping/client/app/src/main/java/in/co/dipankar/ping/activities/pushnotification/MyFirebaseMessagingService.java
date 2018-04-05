@@ -2,7 +2,9 @@ package in.co.dipankar.ping.activities.pushnotification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -16,6 +18,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 import in.co.dipankar.ping.R;
+import in.co.dipankar.ping.activities.home.HomeActivity;
+import in.co.dipankar.ping.activities.login.LoginActivity;
 import in.co.dipankar.quickandorid.utils.DLog;
 
 
@@ -25,18 +29,30 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private NotificationManager notificationManager;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        DLog.e("Remote message recived"+remoteMessage.toString());
-        String title = remoteMessage.getData().get("title");
-        String msg = remoteMessage.getData().get("message");
-        showNotification(title, msg);
+        DLog.e("Remote message Received"+remoteMessage.toString());
+
+        String title = remoteMessage.getData().get("type");
+        String msg = remoteMessage.getData().get("msg");
+        String call_id = remoteMessage.getData().get("call_id");
+        showNotification(title, msg, call_id);
     }
 
-    private void showNotification(String title, String msg) {
+    private void showNotification(String title, String msg, String call_id) {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         //Setting up Notification channels for android O and above
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             setupChannels();
         }
+
+        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        DLog.e("Notification Call id"+call_id);
+        notificationIntent.putExtra("call_id",call_id);
+        PendingIntent intent = PendingIntent.getActivity(this, 0,
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         int notificationId = new Random().nextInt(60000);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
@@ -44,6 +60,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(msg)
                 .setAutoCancel(true)
+                .setContentIntent(intent)
                 .setSound(defaultSoundUri);
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId /* ID of notification */, notificationBuilder.build());

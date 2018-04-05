@@ -1,6 +1,6 @@
 var socketIO = require('socket.io');
-var admin = require('firebase-admin');
 var request = require('request');
+var restify = require('restify'); //npm install restify@4.3.0
 
 
 // Ch0: Thease are keys wich is used for experimnet - We will have separte keys for Production.
@@ -25,7 +25,7 @@ function pushNotification(token, data){
             if(httpResponse.body.failure > 1){
                 console.log("[ERROR] "+httpResponse.body.results[0].error)
             } else{
-                console.log('[SUCCESS] FCM messenge sent!\n'+ httpResponse.body.results[0].success);
+                console.log('[SUCCESS] FCM messenge sent to!\n'+ httpResponse.body.results[0].success);
             }
         } 
     });
@@ -51,10 +51,71 @@ MongoClient.connect(url, function(err, db) {
   });
 });
 
-function insert(user_id, tokens){
-    
+var TEMP_USER_DB_MAP = {}
+function insertToken(user_id, token){
+    if(!TEMP_USER_DB_MAP[user_id]){
+        TEMP_USER_DB_MAP[user_id] ={"tokens":[]}
+    }
+    for(t of TEMP_USER_DB_MAP[user_id].tokens){
+        if(t== token) return;
+    }
+    TEMP_USER_DB_MAP[user_id].tokens.push(token)
+    console.log("[SUCCESS] adding token for user:"+user_id+" token:"+token)
+}
+function deleteToken(user_id, tokens){
+    if(!TEMP_USER_DB_MAP[user_id]){
+        TEMP_USER_DB_MAP[user_id] ={"tokens":[]}
+    }
+    //TODO
 }
 
+function trySendPushNotification(user_id, data ){
+    var flag = false;
+    if(TEMP_USER_DB_MAP[user_id]){
+        for( var t of TEMP_USER_DB_MAP[user_id].tokens){
+            pushNotification(t, data);
+            flag = true;
+            console.log("[SUCCESS] Push Notifiation sent to :"+user_id);
+        }
+    }
+    return flag;
+}
+
+
+
+// Ch4: HHTP Rest Sreevr which is used to store the tokens
+function handleHTTP(req, res, next) {
+    if(req.getContentType() != "application/json"){
+        res.send('Please send Json Request');
+    }
+    var data = req.body
+    switch(req.getPath()){
+        case '/add_token':
+            if(data.user_id && data.token){
+                insertToken(data.user_id, data.token);
+                res.send("success")
+            } else{
+                res.send('failed');
+            }
+            break;
+        case '/remove_token':
+            removeToken(data.user_id, data.token);
+            res.send('success');
+            break;
+        default:
+            res.send('Please send correct command as path');
+    }
+  next();
+}
+
+var server = restify.createServer();
+server.use(restify.bodyParser());
+server.get('/.*', handleHTTP);
+server.post('/.*', handleHTTP);
+server.listen(7001,"0.0.0.0", function() {
+  console.log('HTTP Srever Started');
+});
+//curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:7001/api/login
 
 
 
@@ -94,7 +155,7 @@ var allLiveConn = {}
 var SessionToUserID = {}
 //it's a map which find all the session involves in a perticuler call
 // we can have multiple sessiom(users) - which makes it a conf call.
-var CallToSessionList = {} //{"author":session,"invites":session_list,"accepted":[session],"rejected":[]}
+var CallToSessionList = {} //{"author":session,"invites":session_list,"accepted":[session],"rejected":[],"cache_request":{}}
 
 // Helpsrs
 function getAllSessionForUser(user_id){
@@ -154,6 +215,8 @@ var TOPIC_IN_CONNECTION = "connection"
 var TOPIC_IN_REGISTER = "register"
 var TOPIC_IN_DISCONNECT = "disconnect"
 var TOPIC_IN_OFFER = "offer"
+var TOPIC_IN_RESEND_OFFER = "resend_offer"
+var TOPIC_IN_TRYCALL ="trycall"
 var TOPIC_IN_CANDIDATE = "candidate"
 var TOPIC_IN_ANSWER = "answer"
 var TOPIC_IN_ENDCALL = "endcall"
@@ -163,6 +226,7 @@ var TOPIC_IN_ADDON = "addon"
 
 var TOPIC_OUT_TEST = "test"
 var TOPIC_OUT_OFFER = "offer"
+var TOPIC_OUT_TRYCALL ="trycall"
 var TOPIC_OUT_CANDIDATE = "candidate"
 var TOPIC_OUT_ANSWER = "answer"
 var TOPIC_OUT_ENDCALL = "endcall"
@@ -171,6 +235,7 @@ var TOPIC_OUT_NOTI = "notification"
 var TOPIC_OUT_ADDON = "addon"
 var TOPIC_OUT_PRESENCE = "presence"
 var TOPIC_OUT_WELCOME = "welcome"
+
 
 var ENDCALL_TYPE_NORMAL_END= "normal_end"
 var ENDCALL_TYPE_SELF_OFFLINE = "self_offline"
@@ -187,6 +252,8 @@ var ENDCALL_TYPE_PEER_NOTPICKUP = "peer_notpickup"
 var PRESENCE_TYPE_ONLINE = "online"
 var PRESENCE_TYPE_OFFLINE = "offline"
 
+var TRYCALL_TYPE_CONTACTING = "contacting"
+var TRYCALL_TYPE_RINGING = "ringing"
 
 function _getOfferPayload(call_id, sdp, userinfo,is_video_enabled){
     return {"call_id":call_id,"sdp":sdp,"peer_info":userinfo,"is_video_enabled":is_video_enabled}
@@ -215,6 +282,10 @@ function _getPresencePayload(type, user){
 
 function _getWelcomePayload(live_users){
     return {"live_users":live_users}
+}
+
+function  _getTryCallPayload(call_id,type ,msg){
+    return {call_id:call_id, type:type, msg:msg}
 }
 
 function log(type, ops,  session){
@@ -347,10 +418,19 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
 
         //Peer user offline
         if(!allLiveConn[peer_id] || !allLiveConn[peer_id].endpoints){
-            endCallDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_PEER_OFFLINE,"Looks peer is offline")
-            sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
-            _cleanupCall(call_id)
-            return;
+            // Peer offline - First Try to awake up else terminate the call
+            // The data sent as push notification as same as SDP Request.
+            //var pushData = _getOfferPayload(call_id, sdp,allLiveConn[user_id].user_info, is_video_enabled);
+            var pushData = {type:"call_request", msg:"You are receiving a call from XX, Tap to start the call","call_id":call_id}
+            if (trySendPushNotification(peer_id, pushData)){
+                tryCallDetails = _getTryCallPayload(call_id,TRYCALL_TYPE_CONTACTING,"We are trying to contact the peer")
+                sendToSelf(TOPIC_OUT_TRYCALL,tryCallDetails)
+            } else{
+                endCallDetails = _getEndCallPayload(call_id,ENDCALL_TYPE_PEER_OFFLINE,"Looks peer is offline")
+                sendToSelf(TOPIC_OUT_ENDCALL,endCallDetails)
+                _cleanupCall(call_id)
+                return;
+            }
         }
         //peer user busy
         if(allLiveConn[user_id]['status'] =="busy"){
@@ -369,8 +449,25 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         session_list.push(session)
         CallToSessionList[call_id] = {"author":session,"invites":session_list,"accepted":[session],"rejected":[]}
         allLiveConn[user_id]['status'] = "busy"
+        //Let's cache the offerDeatils for resending if someone ask from FCM
+        CallToSessionList[call_id].cache_request = offerCallDetails
         //set a callback for auto cancel.
         setTimeout(autoCancel, RING_TIMEOUT*1000, call_id);
+    });
+    // This is something called pending call.Suppose you make a call when a user if offline and then
+    // we will send a push notification says that you have a call. If he clikc the notification - he might ask for
+    // to resend the offer - which is basically resedn the cached offer to him - and the story goes ahead.
+    client.on(TOPIC_IN_RESEND_OFFER, function (details) {
+        log("in", "resend_offer",  client.id)
+        user_id = details.user_id
+        call_id = details.call_id
+        var callinfo = CallToSessionList[call_id]
+        if(callinfo && callinfo.cache_request ){
+            //var session_list = getAllSessionForUser(user_id);
+            sendToSelf(TOPIC_OUT_OFFER,callinfo.cache_request)
+        } else{
+            console.log("[INFO] Resend offer droped")
+        }
     });
 
     // Here an endpoint says that a session accepted the offer - it means we should send the ans to author
@@ -406,6 +503,16 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         var icePayload = _getIcePayload(details.sdpMid,details.sdpMLineIndex,details.sdp,details.call_id)
         sendToSpacificListExceptSender(session_list, TOPIC_OUT_CANDIDATE,details);
     });
+
+    client.on(TOPIC_IN_TRYCALL, function (details) {
+        if(!CallToSessionList[details.call_id]){
+            return;
+        }
+        var session_list = CallToSessionList[details.call_id]['invites'];
+        var trycallPayload = _getTryCallPayload(details.call_id, details.type, details.msg)
+        sendToSpacificListExceptSender(session_list, TOPIC_OUT_TRYCALL,trycallPayload);
+    });
+
 
     // In case of addon we just forword to all invite.
     client.on(TOPIC_IN_ADDON, function (details) {
@@ -509,12 +616,12 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
     }
 
     function sendToAllIncludeSender(tag, data){
-        console.log('--> sendToAllIncludeSender:' + tag);
+       // console.log('--> sendToAllIncludeSender:' + tag);
         io.emit(tag, data);
     }
 
     function sendToAllExceptSender(tag, data){
-        console.log('--> sendToAllExceptSender:' + tag);
+       // console.log('--> sendToAllExceptSender:' + tag);
         client.broadcast.emit(tag, data);
     }
 /*
@@ -571,3 +678,5 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
+
+console.log("End of the script")

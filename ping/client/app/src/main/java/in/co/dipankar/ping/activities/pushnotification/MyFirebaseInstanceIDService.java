@@ -7,7 +7,14 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.contracts.Configuration;
 import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.Network;
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
@@ -19,9 +26,5 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         DLog.e("Refreshed token: " + refreshedToken);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         preferences.edit().putString("FIREBASE_TOKEN", refreshedToken).apply();
-        uploadToken();
-    }
-
-    private void uploadToken() {
     }
 }
