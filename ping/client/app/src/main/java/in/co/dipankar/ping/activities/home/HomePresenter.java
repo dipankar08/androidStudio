@@ -110,7 +110,7 @@ public class HomePresenter implements IHome.Presenter {
         //RTC - Nothing to do here.
         @Override
         public void onReceivedOffer(String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled) {
-            if(PingApplication.Get().isOnCall()){
+            if(PingApplication.Get().getCurrentCallInfo() != null){
                 //TODO : Handling Conflicting calls. We recv a call when I am in another call.
             } else {
                 mView.navigateToInComingCallView(callId, sdp, rtcUser, isVideoEnabled);

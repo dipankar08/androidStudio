@@ -63,5 +63,7 @@ public interface ICallPage {
         void onActivityResult(int requestCode, int resultCode, Intent data);
 
         void changeAudioBitrate(int i);
+
+        void reset(IRtcUser peer, ICallInfo.ShareType shareType);
     }
 }

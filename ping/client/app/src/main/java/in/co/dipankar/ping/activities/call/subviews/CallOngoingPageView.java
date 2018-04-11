@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.activities.call.addon.BaseAddonView;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.CircleImageView;
@@ -34,6 +35,7 @@ public class CallOngoingPageView extends RelativeLayout {
     private View mRootView;
     private ViewletPeerInfoAudio mViewletPeerInfoAudio;
     private ViewletPeerInfoVideo mViewletPeerInfoVideo;
+    private BaseAddonView mAddonView;
 
 
     public void setCallback(Callback callback){
@@ -61,6 +63,7 @@ public class CallOngoingPageView extends RelativeLayout {
         initButtons();
         mViewletPeerInfoAudio = findViewById(R.id.peer_audio_info);
         mViewletPeerInfoVideo = findViewById(R.id.peer_video_info);
+        mAddonView = findViewById(R.id.addon_view);
     }
 
     private void initButtons(){
@@ -121,5 +124,22 @@ public class CallOngoingPageView extends RelativeLayout {
     public void updateSubtitle(String title){
         mViewletPeerInfoAudio.updateSubTitle(title);
         mViewletPeerInfoVideo.updateSubTitle(title);
+    }
+    public void toggleAddonView(){
+        if(mAddonView.getVisibility() == VISIBLE){
+            mAddonView.setVisibility(GONE);
+            if(PingApplication.Get().getCurrentCallInfo().getIsVideo()){
+                mViewletPeerInfoVideo.setVisibility(VISIBLE);
+            } else{
+                mViewletPeerInfoAudio.setVisibility(VISIBLE);
+            }
+        } else{
+            mAddonView.setVisibility(VISIBLE);
+            if(PingApplication.Get().getCurrentCallInfo().getIsVideo()){
+                mViewletPeerInfoVideo.setVisibility(GONE);
+            } else{
+                mViewletPeerInfoAudio.setVisibility(GONE);
+            }
+        }
     }
 }

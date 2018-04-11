@@ -11,6 +11,7 @@ import in.co.dipankar.ping.common.model.ContactManger;
 import in.co.dipankar.ping.common.signaling.SocketIOSignaling;
 import in.co.dipankar.ping.common.webrtc.RtcDeviceInfo;
 import in.co.dipankar.ping.common.webrtc.RtcUser;
+import in.co.dipankar.ping.contracts.ICallInfo;
 import in.co.dipankar.ping.contracts.ICallSignalingApi;
 import in.co.dipankar.ping.contracts.IRtcDeviceInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
@@ -25,6 +26,7 @@ public class PingApplication extends Application {
     private IRtcUser mSelfUser;
     private IRtcUser mPeerUser;
     private IRtcDeviceInfo mSelfDevice ;
+    private ICallInfo mCallInfo;
 
     private ICallSignalingApi mCallSignalingApi;
     private INetwork mNetwork;
@@ -133,5 +135,12 @@ public class PingApplication extends Application {
     }
     public INetwork getNetwork(){
         return mNetwork;
+    }
+
+    public ICallInfo getCurrentCallInfo() {
+        return mCallInfo;
+    }
+    public void setCurrentCallInfo(ICallInfo callInfo) {
+         mCallInfo = callInfo;
     }
 }

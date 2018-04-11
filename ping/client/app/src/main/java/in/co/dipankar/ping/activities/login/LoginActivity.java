@@ -75,31 +75,10 @@ public class LoginActivity extends AppCompatActivity {
         AnonymousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IRtcUser  user = new RtcUser("Anonymous", genRandomId(), genRandonPic(), genRandonPic());
+                IRtcUser  user = PingApplication.Get().getUserManager().getAnonymousUser();//
                 navigateToHomeScreen(user);
             }
         });
-    }
-
-    private String genRandomId() {
-        String uuid = UUID.randomUUID().toString();
-        return "uuid = " + uuid;
-    }
-
-    private String genRandonPic() {
-        List<String > picList = Arrays.asList(
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/07/sexy_girl_in_aqua_top.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/06/sexy_tattoo_girl.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/06/sexy_tattoo_girl.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/06/sexy_tattoo_girl.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/10/beautiful_monochrome_girl_wallpaper.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/10/beautiful_monochrome_girl_wallpaper.jpg",
-                "http://www.123mobilewallpapers.com/wp-content/uploads/2014/10/beautiful_monochrome_girl_wallpaper.jpg");
-        Random rand = new Random();
-        return picList.get(rand.nextInt(10));
     }
 
     private void setupFacebookLogin() {

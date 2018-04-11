@@ -74,6 +74,19 @@ public class CallPresenter implements ICallPage.IPresenter {
                 "0 Kb");
     }
 
+    // this is a function which allows to have a call when other call ends with same presenter
+    @Override
+    public void reset(IRtcUser peer, ICallInfo.ShareType shareType) {
+        mPeerRtcUser = peer;
+        this.mCallInfo = new CallInfo(getRandomCallId(),
+                shareType,
+                ICallInfo.CallType.OUTGOING_CALL,
+                PingApplication.Get().getMe().getUserId(),
+                peer.getUserId(),
+                "0",
+                getTimeNow(),
+                "0 Kb");
+    }
     private String getTimeNow() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String currentDateandTime = sdf.format(new Date());
@@ -87,15 +100,21 @@ public class CallPresenter implements ICallPage.IPresenter {
         IRtcEngine.RtcConfiguration rtcConfiguration = new IRtcEngine.RtcConfiguration();
         rtcConfiguration.audioCodec = AUDIO_CODEC_OPUS;
         rtcConfiguration.audioStartBitrate  = 6;
-        mSignalingApi = PingApplication.Get().getCallSignalingApi();
-        mSignalingApi.addCallback(mSignalingCallback);
-        mWebRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration,mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
-        if(mWebRtcEngine != null) {
+        if(mSignalingApi == null) {
+            mSignalingApi = PingApplication.Get().getCallSignalingApi();
+            mSignalingApi.addCallback(mSignalingCallback);
+        }
+        if(mWebRtcEngine == null) {
+            mWebRtcEngine = new WebRtcEngine2((Context)mView, rtcConfiguration,mSignalingApi, mMultiVideoPane.getSelfView(),mMultiVideoPane.getPeerView());
             mWebRtcEngine.addCallback(mWebrtcEngineCallback);
             mWebRtcEngine.enableStatsEvents(true, 1000);
+        } else{
+            mWebRtcEngine.setRtcConfiguration(rtcConfiguration);
         }
-        mDataUsesReporter = new DataUsesReporter();
-        mDataUsesReporter.addCallback(mDataUsesReporterCallback);
+        if(mDataUsesReporter== null) {
+            mDataUsesReporter = new DataUsesReporter();
+            mDataUsesReporter.addCallback(mDataUsesReporterCallback);
+        }
     }
 
 
@@ -192,14 +211,8 @@ public class CallPresenter implements ICallPage.IPresenter {
         if(mWebRtcEngine == null) {
             return;
         }
+        PingApplication.Get().setCurrentCallInfo(mCallInfo);
         mWebRtcEngine.startGenericCall(mCallInfo);
-        /*
-        if(mCallInfo.getIsVideo()){
-            mWebRtcEngine.startVideoCall(mCallInfo.getId(),mCallInfo.getTo());
-        } else {
-            mWebRtcEngine.startAudioCall(mCallInfo.getId(),mCallInfo.getTo());
-        }
-        */
         mView.prepareCallUI(mPeerRtcUser, mCallInfo);
         mView.updateOutgoingView("Calling "+mPeerRtcUser.getUserName()+"...","Ringing...");
         mView.switchToView(ICallPage.PageViewType.OUTGOING);
@@ -223,6 +236,7 @@ public class CallPresenter implements ICallPage.IPresenter {
         mCallId = callId;
         mPeerSdp = sdp;
         // This is the first talk to RTC - So first set the callInfo
+        PingApplication.Get().setCurrentCallInfo(mCallInfo);
         mWebRtcEngine.setIncomingCallInfo(mCallInfo);
 
         mView.prepareCallUI(mPeerRtcUser, mCallInfo);
@@ -285,7 +299,6 @@ public class CallPresenter implements ICallPage.IPresenter {
         mWebRtcEngine.removeCallback(mWebrtcEngineCallback);
         mSignalingApi.removeCallback(mSignalingCallback);
         mDataUsesReporter.removeCallback(mDataUsesReporterCallback);
-
         mWebRtcEngine = null;
         mSignalingApi = null;
         mView = null;
@@ -304,6 +317,8 @@ public class CallPresenter implements ICallPage.IPresenter {
         // How to chnage Audio BitRtae at runtime.
     }
 
+
+
     private void handleEndCallInternal(ICallSignalingApi.EndCallType type, String reason) {
         mDataUsesReporter.stop();
         Map<String, Long> info = mDataUsesReporter.getInfo();
@@ -318,6 +333,8 @@ public class CallPresenter implements ICallPage.IPresenter {
         mCallInfo.setDataUses(mByteUse+"");
         mCallInfo.setDuration(mDuration+"");
         contactManager.addCallInfo(mCallInfo);
+        // Notify application that call is now done
+        PingApplication.Get().setCurrentCallInfo(null);
     }
 
     private String getRandomCallId(){

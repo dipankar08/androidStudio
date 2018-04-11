@@ -457,6 +457,11 @@ public class WebRtcEngine2 implements IRtcEngine {
         mCallInfo = callInfo;
     }
 
+    @Override
+    public void setRtcConfiguration(RtcConfiguration rtcConfiguration) {
+        mRtcConfiguration = rtcConfiguration;
+    }
+
     private VideoCapturer getScreenCapture(Context context) {
         return new ScreenCapturerAndroid(
                 mediaProjectionPermissionResultData, new MediaProjection.Callback() {

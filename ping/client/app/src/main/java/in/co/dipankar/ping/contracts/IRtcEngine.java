@@ -50,6 +50,8 @@ public interface IRtcEngine {
 
     void setIncomingCallInfo(ICallInfo mCallInfo);
 
+    void setRtcConfiguration(RtcConfiguration rtcConfiguration);
+
     interface Callback{
         void onSendOffer();
         void onSendAns();

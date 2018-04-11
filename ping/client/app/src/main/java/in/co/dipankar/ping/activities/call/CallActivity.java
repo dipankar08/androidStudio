@@ -20,6 +20,7 @@ import java.util.Map;
 
 import in.co.dipankar.ping.R;
 import in.co.dipankar.ping.activities.application.PingApplication;
+import in.co.dipankar.ping.activities.call.subviews.AcceptRejectNotification;
 import in.co.dipankar.ping.activities.call.subviews.CallEndedPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallIncomingPageView;
 import in.co.dipankar.ping.activities.call.subviews.CallLandingPageView;
@@ -55,6 +56,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
 
     CallVideoGridView mCallVideoGridView;
     CustomFontTextView mNotificationView;
+    AcceptRejectNotification mAcceptRejectNotification;
     //Presneter
     ICallPage.IPresenter mPresenter;
 
@@ -97,6 +99,12 @@ public class CallActivity extends Activity implements ICallPage.IView{
                 DLog.e("Test");
             }
         }, null));
+        mSheetItems.add( new SheetItem(102, "Share places in map", CustomButtonSheetView.Type.BUTTON,  new CustomButtonSheetView.Callback(){
+            @Override
+            public void onClick(int v) {
+               mCallOngoingPageView.toggleAddonView();
+            }
+        }, null));
         mSheetItems.add( new SheetItem(102, "Change Audio Quality", CustomButtonSheetView.Type.OPTIONS,  new CustomButtonSheetView.Callback(){
             @Override
             public void onClick(int v) {
@@ -134,7 +142,13 @@ public class CallActivity extends Activity implements ICallPage.IView{
         String shareType = intent.getStringExtra("shareType");
         PingApplication.Get().getUserManager().addCallback(mContactMangerCallback);
 
-        mPresenter = new CallPresenter(this, peer, ICallInfo.ShareType.valueOf(shareType.toUpperCase()), mCallVideoGridView);
+        if(mPresenter != null) {
+            // This is case - We already have a presneter
+            mPresenter.reset(peer, ICallInfo.ShareType.valueOf(shareType.toUpperCase()) );
+        } else {
+            mPresenter = new CallPresenter(this, peer, ICallInfo.ShareType.valueOf(shareType.toUpperCase()), mCallVideoGridView);
+        }
+
         if(!isComing) {
             mPresenter.startOutgoingCall();
         } else{
@@ -173,6 +187,7 @@ public class CallActivity extends Activity implements ICallPage.IView{
         mMediaPlayer = MediaPlayer.create(this, R.raw.tone);
 
         mNotificationView = findViewById(R.id.notification);
+        mAcceptRejectNotification = findViewById(R.id.peer_notification);
 
         // test
         Button test = findViewById(R.id.test);
@@ -348,8 +363,9 @@ public class CallActivity extends Activity implements ICallPage.IView{
     @Override
     public void finish(){
         super.finish();
+        mAcceptRejectNotification.hide();
+        mNotificationView.setVisibility(View.GONE);
         PingApplication.Get().getUserManager().removeCallback(mContactMangerCallback);
-
         if(mPresenter != null) {
             mPresenter.finish();
         }
@@ -561,4 +577,5 @@ public class CallActivity extends Activity implements ICallPage.IView{
             mCallOngoingPageView.updateSubtitle(subtitle);
         }
     }
+
 }

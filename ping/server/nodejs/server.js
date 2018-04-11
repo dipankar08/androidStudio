@@ -39,6 +39,7 @@ function pushNotification(token, data){
 // Ch2. Mongo db as databsse:
 // We need a simple database to store user infomation - We mainly support to operation four CRUD ops insert, update and serach.
 // We just run the mongd in my local box and they can just do the basic CRUB operations.
+/*
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:23456/";
 MongoClient.connect(url, function(err, db) {
@@ -50,7 +51,7 @@ MongoClient.connect(url, function(err, db) {
     db.close();
   });
 });
-
+*/
 var TEMP_USER_DB_MAP = {}
 function insertToken(user_id, token){
     if(!TEMP_USER_DB_MAP[user_id]){

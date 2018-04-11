@@ -1,7 +1,10 @@
 package in.co.dipankar.ping.common.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.ICallInfo;
@@ -149,5 +152,46 @@ public class ContactManger implements IContactManager{
             }
         }
         return  null;
+    }
+
+    public IRtcUser getAnonymousUser() {
+        List<String > nameList = Arrays.asList(
+                "Rabindranath",
+                "Srikanto",
+                "Nazrul",
+                "Ruponkar",
+                "Kishore Kumar",
+                "R.D Barman",
+                "Lata Mangeskar ",
+                "Asha Bhosle",
+                "Rupom Islam",
+                "Nachiketa",
+                "Shilajeet_Majumdar",
+                "Hematao",
+                "Manna Dey");
+
+        List<String > picList = Arrays.asList(
+                "http://www.nobelprize.org/nobel_prizes/literature/laureates/1913/tagore_postcard.jpg",
+                "http://1.bp.blogspot.com/_giEz4yFJ0-g/S-kEjQtwn7I/AAAAAAAAAdg/5bDx8Z_Bojg/s1600/pather+sathi+by+srikanto+acharya+with+dr.+rajib+chakraborty.jpg",
+                "http://www.virtualbangladesh.com/wp-content/uploads/2014/11/rxlnn70l.bmp",
+                "http://c.saavncdn.com/artists/Rupankar_Bagchi_500x500.jpg",
+                "https://passion4pearl.files.wordpress.com/2013/05/kishore-kumar.jpg",
+                "http://media2.intoday.in/indiatoday/images/stories/burman_650_062714034414.jpg",
+                "http://images.mid-day.com/images/2015/sep/Lata-Mangeshkar-birthday.jpg",
+                "http://fridaymoviez.com/images/news/5/680/24424/Singing-Queen-Asha-Bhosle-has-turned-78-today.jpg",
+                "https://outofpandora.com/wp-content/uploads/2017/09/outofpandora-rupam-islam-800x445.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Nachiketa_Chakraborty.jpg/1200px-Nachiketa_Chakraborty.jpg",
+                "https://upload.wikimedia.org/wikipedia/en/a/a6/Shilajeet_Majumdar.jpg",
+                "http://www.tansen.co/wp-content/uploads/2015/08/Hemanta.jpg",
+                "http://media.indiatimes.in/media/content/2013/Sep/m_1379576790_540x540.jpg"
+                );
+        Random rand = new Random();
+        int now = rand.nextInt(nameList.size());
+        return new RtcUser(nameList.get(now), genRandomId(), picList.get(now),  picList.get(now));
+    }
+
+    private String genRandomId() {
+        String uuid = UUID.randomUUID().toString();
+        return "uuid = " + uuid;
     }
 }
