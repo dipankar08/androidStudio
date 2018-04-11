@@ -1,16 +1,9 @@
 package in.co.dipankar.ping.activities.search;
 
-/**
- * Created by dip on 3/27/18.
- */
-
+/** Created by dip on 3/27/18. */
 public class ISearch {
 
-    public interface View{
+  public interface View {}
 
-    }
-
-    public interface Presenter{
-
-    }
+  public interface Presenter {}
 }

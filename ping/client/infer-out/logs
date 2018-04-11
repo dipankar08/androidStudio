@@ -1,0 +1,1904 @@
+[41880][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client
+[41880][environment] No .inferconfig file found
+[41880][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[41880][environment] INFER_ARGS = 
+[41880][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/libexec/bin/infer^--^./gradlew^build
+[41880][environment] Analyzer: checkers
+[41880][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[41880][   progress] Capturing in gradle mode...
+
+[42010][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client
+[42010][environment] No .inferconfig file found
+[42010][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42010][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_488a1a
+[42010][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_488a1a'
+[42010][environment]   capture
+[42010][environment]   --continue
+[42010][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_488a1a'
+[42010][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/lib/python/inferlib/../../../bin/infer^capture^--continue^--^javac^-source^1.8^-target^1.8^-d^/Users/dip/dipankar/androidStudio/ping/client/app/build/intermediates/classes/debug^-encoding^UTF-8^-g^-sourcepath^-proc:none^-XDuseUnsharedTable=true^-classpath^/Users/dip/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.5.2/ecf534dba3a8446ce84cbb797d314763be212a68/glide-3.5.2.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/io.socket/socket.io-client/1.0.0/28dde99672ed62a85e85a7df096c6bec698785b4/socket.io-client-1.0.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/io.socket/engine.io-client/1.0.0/45fc6115750f06a9cd5dd71632cb7fc052cd66de/engine.io-client-1.0.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.10.0/7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e/okhttp-3.10.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-messaging-11.0.4.aar/10df581076c3be2f49b91a40c1fe39ce/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-auth-11.0.4.aar/45c14f5cb22ffb0f03fcbc040e1a8234/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/crashlytics-2.9.1.aar/f9cdec2f13f673cc3794e0f73bc159c8/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-core-11.0.4.aar/007515431a314a38de295cbe9acfbc21/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/quick-android-0.7.aar/b55e746877516ae554c0fe16a732039b/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/facebook-login-4.31.0.aar/9cf588f0ad659df7cea2f59668aaccfc/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/facebook-common-4.31.0.aar/422e08e2ca9b449e935a4add6b2d2177/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/1d6c96e643c363a6922101012e566e62/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/bd9b8bd9ef6c6248d59245080a0b597b/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/51035417c9589b1c0cb283501c503004/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/google-webrtc-1.0.22672.aar/388d5a6734d4c534986bc04b4fb72405/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/facebook-core-4.31.0.aar/0d2955d6f2b23f4ab365e1c786850e7c/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.14.0/102d7be47241d781ef95f1581d414b0943053130/okio-1.14.0.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-analytics-11.0.4.aar/8ba27a33ef85f22015ff368700b6d5b6/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-11.0.4.aar/019d2d28458baa798a43e2851d65ddab/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-iid-11.0.4.aar/a31db7c6148ca2cb87626995d9673ab5/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-common-11.0.4.aar/ddb19b94d0d0cafc6edeab99014f1344/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-auth-base-11.0.4.aar/ae839870a47f9532206638988ce72d5a/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-base-11.0.4.aar/2257d097c67d58a8dfaec01e33c08989/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.0.4.aar/16e62c0fbb459aa981c9997ec187bf29/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/05c6c5c26419b3a611157ea99c83d029/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/beta-1.2.7.aar/0e982bcd6adf751cd91413048784deed/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/crashlytics-core-2.6.1.aar/83b380463ba5ecabd6373cd9d244367f/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/answers-1.4.1.aar/ab170e83bc5dbb5529f49ff5c744d77d/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/fabric-1.4.2.aar/46f6d614a0346bda70343e51a7a7b494/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/2595f07ae2d7a4e66044b28fad346082/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/c9ff1e4d40191e131d1961a72e59d8dc/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/1b9566bc9748102b49d340efb895618c/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/9c60ce1042e8831e3369bec381526ffb/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/customtabs-27.0.2.aar/8353178a590476da0f38bd05ae4dfa4a/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/2bb7605c7024483f92a98b93f895d7a9/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/df41bef56c54a472bf7dd7334b9168f5/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/59a4298bf33043a86ed5fc739414ec2f/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/10adb59af37ea9f86c42411aba96dee0/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/51b1c9cefa6a35966767d2ce6023c0e8/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/26.1.0/814258103cf26a15fcc26ecce35f5b7d24b73f8/support-annotations-26.1.0.jar:/Users/dip/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.4.0/cc174c559b5177982887bf6e1b76003aebad9516/bolts-android-1.4.0.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/767f4cdeb99693433db73a071c6119a3/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.3.0/73c49077166faa4c3c0059c5f583d1d7bd1475fe/core-3.3.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.3/7d7f60c4783872861222166f6164215f8951c7b1/common-1.0.3.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar:/Users/dip/Library/Android/sdk/platforms/android-26/android.jar^-s^/Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/apt/debug^@/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_pFaIpZ.txt
+[42010][environment]   Contents of '/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_pFaIpZ.txt'
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/buildConfig/debug/in/co/dipankar/ping/BuildConfig.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/facebook/login/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/facebook/common/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/facebook/core/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/android/gms/base/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/android/gms/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/android/gms/auth/api/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/android/gms/auth/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/android/gms/measurement/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/android/gms/measurement/impl/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/android/gms/tasks/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/firebase/messaging/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/firebase/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/firebase/iid/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/google/firebase/firebase_core/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/crashlytics/android/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/crashlytics/android/answers/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/crashlytics/android/core/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/com/crashlytics/android/beta/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/arch/lifecycle/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/constraint/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/mediacompat/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/graphics/drawable/animated/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/graphics/drawable/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/fragment/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/v4/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/customtabs/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/coreui/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/compat/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/v7/cardview/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/v7/recyclerview/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/android/support/coreutils/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/io/fabric/sdk/android/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/in/co/dipankar/quickandorid/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/in/co/dipankar/ping/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/in/co/dipankar/ping/Manifest.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/r/debug/org/webrtc/R.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/login/LoginActivity.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/pushnotification/MyFirebaseMessagingService.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/pushnotification/MyFirebaseInstanceIDService.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/pushnotification/IPushNotification.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/application/PingApplication.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/addon/BaseAddonView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/ICallPage.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/AcceptRejectNotification.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/CallVideoGridView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/ViewletPeerInfoVideo.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/CallIncomingPageView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/RecentUserAdapter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/ViewletPeerInfoAudio.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/CallOutgoingPageView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/CallOngoingPageView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/RecyclerTouchListener.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/CallEndedPageView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/subviews/CallLandingPageView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/CallPresenter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/call/CallActivity.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/search/SearchActivity.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/search/ISearch.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/search/SearchPresenter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/home/HomeActivity.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/home/HomePresenter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/activities/home/IHome.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/RtcUser.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/WebRtcUtils.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/Constant.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/RtcStatView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/ExtendedSurfaceView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/RtcDeviceInfo.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/WebRtcEngine2.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/Camera1Session.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/Histogram.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraSession.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/Camera1Enumerator.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/Camera1Capturer.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/imageprocessing/BitMapUtils.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/effect/CapturerObserverProxy.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/effect/RTCVideoEffector.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/effect/EffectCamera1Capturer.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/effect/EffectCamera1Enumerator.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/filecapture/FileVideoCapturer.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/signaling/SocketIOSignaling.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/subview/QuickContactAdapter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/subview/ContactListAdapter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/subview/CallHistoryAdapter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/subview/RecentCallAdapter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/model/CallInfo.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/model/IContactManager.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/model/ContactManger.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/utils/CustomButtonSheetView.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/utils/AudioManagerUtils.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/utils/MediaPlayer.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/common/utils/SheetItem.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/Utils.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/IAddOn.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/IRtcEngine.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/ICallInfo.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/IMultiVideoPane.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/Configuration.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/ICallSignalingApi.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/IRtcUser.java
+[42010][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/main/java/in/co/dipankar/ping/contracts/IRtcDeviceInfo.java
+[42010][environment]   /Contents of '/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_pFaIpZ.txt'
+[42010][environment] Analyzer: capture
+[42010][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42010][      debug] Current working directory: '/Users/dip/dipankar/androidStudio/ping/client'
+[42010][      debug] Trying to execute: 'javac' '-J-Duser.language=en' '@/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_pFaIpZ.txt' '@/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2a6a79' 2>'/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/javac_543f5e.out'
+[42010][      debug] *** Success. Logs:
+[42010][      debug] Translating 71 source files (500 classes)
+[42010][ intern err] create_icfg raised JBasics.Class_structure_error on void WebRtcEngine2.initializedRenderer()
+[42010][      debug] done capturing all files
+
+[42022][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client
+[42022][environment] No .inferconfig file found
+[42022][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42022][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d6fa91
+[42022][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d6fa91'
+[42022][environment]   capture
+[42022][environment]   --continue
+[42022][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d6fa91'
+[42022][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/lib/python/inferlib/../../../bin/infer^capture^--continue^--^javac^-source^1.8^-target^1.8^-d^/Users/dip/dipankar/androidStudio/ping/client/app/build/intermediates/classes/test/debug^-encoding^UTF-8^-g^-sourcepath^-proc:none^-XDuseUnsharedTable=true^-classpath^/Users/dip/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.5.2/ecf534dba3a8446ce84cbb797d314763be212a68/glide-3.5.2.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/io.socket/socket.io-client/1.0.0/28dde99672ed62a85e85a7df096c6bec698785b4/socket.io-client-1.0.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/io.socket/engine.io-client/1.0.0/45fc6115750f06a9cd5dd71632cb7fc052cd66de/engine.io-client-1.0.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.10.0/7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e/okhttp-3.10.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-messaging-11.0.4.aar/10df581076c3be2f49b91a40c1fe39ce/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-auth-11.0.4.aar/45c14f5cb22ffb0f03fcbc040e1a8234/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/crashlytics-2.9.1.aar/f9cdec2f13f673cc3794e0f73bc159c8/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-core-11.0.4.aar/007515431a314a38de295cbe9acfbc21/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/quick-android-0.7.aar/b55e746877516ae554c0fe16a732039b/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/facebook-login-4.31.0.aar/9cf588f0ad659df7cea2f59668aaccfc/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/facebook-common-4.31.0.aar/422e08e2ca9b449e935a4add6b2d2177/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/1d6c96e643c363a6922101012e566e62/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/bd9b8bd9ef6c6248d59245080a0b597b/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/51035417c9589b1c0cb283501c503004/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/google-webrtc-1.0.22672.aar/388d5a6734d4c534986bc04b4fb72405/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/facebook-core-4.31.0.aar/0d2955d6f2b23f4ab365e1c786850e7c/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.14.0/102d7be47241d781ef95f1581d414b0943053130/okio-1.14.0.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-analytics-11.0.4.aar/8ba27a33ef85f22015ff368700b6d5b6/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-11.0.4.aar/019d2d28458baa798a43e2851d65ddab/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-iid-11.0.4.aar/a31db7c6148ca2cb87626995d9673ab5/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/firebase-common-11.0.4.aar/ddb19b94d0d0cafc6edeab99014f1344/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-auth-base-11.0.4.aar/ae839870a47f9532206638988ce72d5a/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-base-11.0.4.aar/2257d097c67d58a8dfaec01e33c08989/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.0.4.aar/16e62c0fbb459aa981c9997ec187bf29/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/05c6c5c26419b3a611157ea99c83d029/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/beta-1.2.7.aar/0e982bcd6adf751cd91413048784deed/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/crashlytics-core-2.6.1.aar/83b380463ba5ecabd6373cd9d244367f/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/answers-1.4.1.aar/ab170e83bc5dbb5529f49ff5c744d77d/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/fabric-1.4.2.aar/46f6d614a0346bda70343e51a7a7b494/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/2595f07ae2d7a4e66044b28fad346082/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/c9ff1e4d40191e131d1961a72e59d8dc/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/1b9566bc9748102b49d340efb895618c/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/9c60ce1042e8831e3369bec381526ffb/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/customtabs-27.0.2.aar/8353178a590476da0f38bd05ae4dfa4a/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/2bb7605c7024483f92a98b93f895d7a9/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/df41bef56c54a472bf7dd7334b9168f5/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/59a4298bf33043a86ed5fc739414ec2f/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/10adb59af37ea9f86c42411aba96dee0/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/51b1c9cefa6a35966767d2ce6023c0e8/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/26.1.0/814258103cf26a15fcc26ecce35f5b7d24b73f8/support-annotations-26.1.0.jar:/Users/dip/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.4.0/cc174c559b5177982887bf6e1b76003aebad9516/bolts-android-1.4.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/767f4cdeb99693433db73a071c6119a3/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.3.0/73c49077166faa4c3c0059c5f583d1d7bd1475fe/core-3.3.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.3/7d7f60c4783872861222166f6164215f8951c7b1/common-1.0.3.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar:/Users/dip/dipankar/androidStudio/ping/client/app/build/intermediates/classes/debug:/Users/dip/Library/Android/sdk/platforms/android-26/android.jar^-s^/Users/dip/dipankar/androidStudio/ping/client/app/build/generated/source/apt/test/debug^@/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_NhX0Kz.txt
+[42022][environment]   Contents of '/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_NhX0Kz.txt'
+[42022][environment]   /Users/dip/dipankar/androidStudio/ping/client/app/src/test/java/in/co/dipankar/ping/ExampleUnitTest.java
+[42022][environment]   /Contents of '/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_NhX0Kz.txt'
+[42022][environment] Analyzer: capture
+[42022][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42022][      debug] Current working directory: '/Users/dip/dipankar/androidStudio/ping/client'
+[42022][      debug] Trying to execute: 'javac' '-J-Duser.language=en' '@/Users/dip/dipankar/androidStudio/ping/client/infer-out/filelists/gradle_NhX0Kz.txt' '@/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_71df72' 2>'/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/javac_0b5207.out'
+[42022][      debug] *** Success. Logs:
+[42022][      debug] Translating 1 source files (1 classes)
+[42022][      debug] done capturing all files
+[41880][   progress] Found 107 source files to analyze in /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[41880][      debug] Dynamic dispatch mode: lazy
+[41880][   progress] Starting analysis...
+[41880][   progress] 
+[41880][   progress] legend:
+[41880][   progress]   "F" analyzing a file
+[41880][   progress]   "." analyzing a procedure
+[41880][   progress] 
+[41880][   progress] 
+
+
+[42033][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42033][environment] No .inferconfig file found
+[42033][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42033][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_073fd1
+[42033][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_073fd1'
+[42033][environment]   --no-report
+[42033][environment]   --results-dir
+[42033][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42033][environment]   --cluster
+[42033][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl4.cluster
+[42033][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_073fd1'
+[42033][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl4.cluster
+[42033][environment] Analyzer: checkers
+[42033][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42033][   progress] F[42030][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42030][environment] No .inferconfig file found
+[42030][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42030][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0d61e1
+[42030][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0d61e1'
+[42030][environment]   --no-report
+[42030][environment]   --results-dir
+[42030][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42030][environment]   --cluster
+[42030][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl1.cluster
+[42030][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0d61e1'
+[42030][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl1.cluster
+[42030][environment] Analyzer: checkers
+[42034][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42034][environment] No .inferconfig file found
+[42034][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42034][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_971f81
+[42034][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_971f81'
+[42034][environment]   --no-report
+[42034][environment]   --results-dir
+[42034][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42034][environment]   --cluster
+[42034][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl5.cluster
+[42034][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_971f81'
+[42034][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl5.cluster
+[42034][environment] Analyzer: checkers
+[42030][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42034][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+
+[42034][   progress] F[42030][   progress] F
+[42031][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42031][environment] No .inferconfig file found
+[42031][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42031][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8a7a95
+[42031][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8a7a95'
+[42031][environment]   --no-report
+[42031][environment]   --results-dir
+[42031][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42031][environment]   --cluster
+[42031][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl2.cluster
+[42031][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8a7a95'
+[42031][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl2.cluster
+[42031][environment] Analyzer: checkers
+[42031][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42036][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42036][environment] No .inferconfig file found
+[42036][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42036][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3f4c4c
+[42036][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3f4c4c'
+[42036][environment]   --no-report
+[42036][environment]   --results-dir
+[42036][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42036][environment]   --cluster
+[42036][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl7.cluster
+[42036][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3f4c4c'
+[42036][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl7.cluster
+[42036][environment] Analyzer: checkers
+[42036][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42031][   progress] F[42036][   progress] F
+[42032][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42032][environment] No .inferconfig file found
+[42032][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42032][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_13c78e
+[42032][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_13c78e'
+[42032][environment]   --no-report
+[42032][environment]   --results-dir
+[42032][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42032][environment]   --cluster
+[42032][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl3.cluster
+[42032][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_13c78e'
+[42032][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl3.cluster
+[42032][environment] Analyzer: checkers
+[42032][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+
+[42032][   progress] F[42035][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42035][environment] No .inferconfig file found
+[42035][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42035][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d43b0a
+[42035][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d43b0a'
+[42035][environment]   --no-report
+[42035][environment]   --results-dir
+[42035][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42035][environment]   --cluster
+[42035][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl6.cluster
+[42035][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d43b0a'
+[42035][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl6.cluster
+[42035][environment] Analyzer: checkers
+[42035][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42035][   progress] F.
+..[42037][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42037][environment] No .inferconfig file found
+[42037][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42037][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0e6a88
+[42037][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0e6a88'
+[42037][environment]   --no-report
+[42037][environment]   --results-dir
+[42037][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42037][environment]   --cluster
+[42037][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl8.cluster
+[42037][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0e6a88'
+[42037][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl8.cluster
+[42037][environment] Analyzer: checkers
+[42037][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42037][   progress] F.....
+[42033][environment] Starting analysis of cluster xcl4.cluster...
+[42035][environment] Starting analysis of cluster xcl6.cluster...
+[42032][environment] Starting analysis of cluster xcl3.cluster
+[42031][environment] Starting analysis of cluster xcl2.cluster.............
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+.
+[42036][environment] Starting analysis of cluster xcl7.cluster..
+[42058][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42058][environment] No .inferconfig file found
+[42058][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42058][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_583304
+[42058][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_583304'
+[42058][environment]   --no-report
+[42058][environment]   --results-dir
+[42058][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42058][environment]   --cluster
+[42058][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl9.cluster
+[42058][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_583304'
+[42058][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl9.cluster
+[42058][environment] Analyzer: checkers
+[42058][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42058][   progress] F[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+
+[42063][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42063][environment] No .inferconfig file found
+[42063][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42063][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_029657
+[42063][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_029657'
+[42063][environment]   --no-report
+[42063][environment]   --results-dir
+[42063][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42063][environment]   --cluster
+[42063][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl10.cluster
+[42063][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_029657'
+[42063][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl10.cluster
+[42063][environment] Analyzer: checkers
+[42063][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+[42063][   progress] F[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.lang.StringIndexOutOfBoundsException
+[42037][   progress] .
+.[42072][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42072][environment] No .inferconfig file found
+[42072][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42072][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6430f6
+[42072][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6430f6'
+[42072][environment]   --no-report
+[42072][environment]   --results-dir
+[42072][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42072][environment]   --cluster
+[42072][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl11.cluster
+[42072][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6430f6'
+[42072][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl11.cluster
+[42072][environment] Analyzer: checkers
+[42072][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+
+.[42072][   progress] F[42073][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42073][environment] No .inferconfig file found
+[42073][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42073][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3ee24c
+[42073][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3ee24c'
+[42073][environment]   --no-report
+[42073][environment]   --results-dir
+[42073][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42073][environment]   --cluster
+[42073][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl12.cluster
+[42073][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3ee24c'
+[42073][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl12.cluster
+[42073][environment] Analyzer: checkers
+[42073][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42073][   progress] F.
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.DataOutputStream
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.DataOutputStream
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.DataOutputStream
+[42037][      debug] 
+[42037][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.DataOutputStream
+.......
+.[42084][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42084][environment] No .inferconfig file found
+[42084][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42084][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_65a10d
+[42084][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_65a10d'
+[42084][environment]   --no-report
+[42084][environment]   --results-dir
+[42084][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42084][environment]   --cluster
+[42084][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl13.cluster
+[42084][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_65a10d'
+[42084][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl13.cluster
+[42084][environment] Analyzer: checkers
+[42084][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42084][   progress] F...............
+[42072][environment] Starting analysis of cluster xcl11.cluster..[42037][   progress] ......
+[42063][environment] Starting analysis of cluster xcl10.cluster...............
+[42093][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42093][environment] No .inferconfig file found
+[42093][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42093][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_70cd09
+[42093][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_70cd09'
+[42093][environment]   --no-report
+[42093][environment]   --results-dir
+[42093][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42093][environment]   --cluster
+[42093][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl14.cluster
+[42093][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_70cd09'
+[42093][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl14.cluster
+[42093][environment] Analyzer: checkers
+[42093][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42093][   progress] F...
+[42084][environment] Starting analysis of cluster xcl13.cluster.................
+
+[42034][environment] Starting analysis of cluster xcl5.cluster..[42098][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42098][environment] No .inferconfig file found
+[42098][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42098][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7628f5
+[42098][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7628f5'
+[42098][environment]   --no-report
+[42098][environment]   --results-dir
+[42098][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42098][environment]   --cluster
+[42098][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl15.cluster
+[42098][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7628f5'
+[42098][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl15.cluster
+[42098][environment] Analyzer: checkers
+[42098][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42098][   progress] F...........................
+.[42107][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42107][environment] No .inferconfig file found
+[42107][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42107][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d79f8c
+[42107][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d79f8c'
+[42107][environment]   --no-report
+[42107][environment]   --results-dir
+[42107][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42107][environment]   --cluster
+[42107][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl16.cluster
+[42107][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d79f8c'
+[42107][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl16.cluster
+[42107][environment] Analyzer: checkers
+[42107][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+..[42107][   progress] F..
+[42073][environment] Starting analysis of cluster xcl12.cluster
+[42098][environment] Starting analysis of cluster xcl15.cluster.
+[42112][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42112][environment] No .inferconfig file found
+[42112][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42112][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d3a24f
+[42112][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d3a24f'
+[42112][environment]   --no-report
+[42112][environment]   --results-dir
+[42112][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42112][environment]   --cluster
+[42112][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl17.cluster
+[42112][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d3a24f'
+[42112][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl17.cluster
+[42112][environment] Analyzer: checkers
+[42112][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42112][   progress] F.....................
+...[42121][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42121][environment] No .inferconfig file found
+[42121][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42121][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9d7d3d
+[42121][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9d7d3d'
+[42121][environment]   --no-report
+[42121][environment]   --results-dir
+[42121][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42121][environment]   --cluster
+[42121][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl18.cluster
+[42121][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9d7d3d'
+[42121][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl18.cluster
+[42121][environment] Analyzer: checkers
+[42121][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.....[42121][   progress] F......
+...[42126][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42126][environment] No .inferconfig file found
+[42126][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42126][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5595cb
+[42126][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5595cb'
+[42126][environment]   --no-report
+[42126][environment]   --results-dir
+[42126][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42126][environment]   --cluster
+[42126][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl19.cluster
+[42126][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5595cb'
+[42126][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl19.cluster
+[42126][environment] Analyzer: checkers
+[42126][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42126][   progress] F....
+[42126][environment] Starting analysis of cluster xcl19.cluster........
+[42112][environment] Starting analysis of cluster xcl17.cluster
+[42135][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42135][environment] No .inferconfig file found
+[42135][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42135][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fc4a20
+[42135][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fc4a20'
+[42135][environment]   --no-report
+[42135][environment]   --results-dir
+[42135][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42135][environment]   --cluster
+[42135][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl20.cluster
+[42135][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fc4a20'
+[42135][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl20.cluster
+[42135][environment] Analyzer: checkers
+[42135][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42135][   progress] F..
+[42093][environment] Starting analysis of cluster xcl14.cluster................
+[42144][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42144][environment] No .inferconfig file found
+[42144][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42144][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_335b76
+[42144][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_335b76'
+[42144][environment]   --no-report
+[42144][environment]   --results-dir
+[42144][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42144][environment]   --cluster
+[42144][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl21.cluster
+[42144][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_335b76'
+[42144][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl21.cluster
+[42144][environment] Analyzer: checkers
+[42144][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42144][   progress] F....
+[42144][environment] Starting analysis of cluster xcl21.cluster
+[42149][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42149][environment] No .inferconfig file found
+[42149][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42149][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_622041
+[42149][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_622041'
+[42149][environment]   --no-report
+[42149][environment]   --results-dir
+[42149][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42149][environment]   --cluster
+[42149][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl22.cluster
+[42149][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_622041'
+[42149][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl22.cluster
+[42149][environment] Analyzer: checkers
+[42149][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42149][   progress] F.....
+[42149][environment] Starting analysis of cluster xcl22.cluster.........
+[42158][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42158][environment] No .inferconfig file found
+[42158][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42158][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_cdefb0
+[42158][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_cdefb0'
+[42158][environment]   --no-report
+[42158][environment]   --results-dir
+[42158][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42158][environment]   --cluster
+[42158][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl23.cluster
+[42158][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_cdefb0'
+[42158][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl23.cluster
+[42158][environment] Analyzer: checkers
+[42158][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42158][   progress] F........
+.[42165][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42165][environment] No .inferconfig file found
+[42165][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42165][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c3755f
+[42165][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c3755f'
+[42165][environment]   --no-report
+[42165][environment]   --results-dir
+[42165][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42165][environment]   --cluster
+[42165][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl24.cluster
+[42165][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c3755f'
+[42165][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl24.cluster
+[42165][environment] Analyzer: checkers
+[42165][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42165][   progress] F.............
+[42165][environment] Starting analysis of cluster xcl24.cluster.........
+[42172][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42172][environment] No .inferconfig file found
+[42172][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42172][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_89550d
+[42172][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_89550d'
+[42172][environment]   --no-report
+[42172][environment]   --results-dir
+[42172][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42172][environment]   --cluster
+[42172][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl25.cluster
+[42172][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_89550d'
+[42172][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl25.cluster
+[42172][environment] Analyzer: checkers
+[42172][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42172][   progress] F.................
+[42030][environment] Starting analysis of cluster xcl1.cluster...........
+[42179][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42179][environment] No .inferconfig file found
+[42179][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42179][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9c7015
+[42179][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9c7015'
+[42179][environment]   --no-report
+[42179][environment]   --results-dir
+[42179][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42179][environment]   --cluster
+[42179][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl26.cluster
+[42179][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9c7015'
+[42179][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl26.cluster
+[42179][environment] Analyzer: checkers
+[42179][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42179][   progress] F........
+[42179][environment] Starting analysis of cluster xcl26.cluster....
+[42186][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42186][environment] No .inferconfig file found
+[42186][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42186][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_31e318
+[42186][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_31e318'
+[42186][environment]   --no-report
+[42186][environment]   --results-dir
+[42186][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42186][environment]   --cluster
+[42186][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl27.cluster
+[42186][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_31e318'
+[42186][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl27.cluster
+[42186][environment] Analyzer: checkers
+[42186][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42186][   progress] F.
+[42186][environment] Starting analysis of cluster xcl27.cluster....
+[42193][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42193][environment] No .inferconfig file found
+[42193][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42193][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_078fd1
+[42193][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_078fd1'
+[42193][environment]   --no-report
+[42193][environment]   --results-dir
+[42193][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42193][environment]   --cluster
+[42193][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl28.cluster
+[42193][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_078fd1'
+[42193][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl28.cluster
+[42193][environment] Analyzer: checkers
+[42193][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42193][   progress] F...
+[42193][environment] Starting analysis of cluster xcl28.cluster.....
+[42200][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42200][environment] No .inferconfig file found
+[42200][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42200][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a7fb98
+[42200][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a7fb98'
+[42200][environment]   --no-report
+[42200][environment]   --results-dir
+[42200][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42200][environment]   --cluster
+[42200][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl29.cluster
+[42200][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a7fb98'
+[42200][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl29.cluster
+[42200][environment] Analyzer: checkers
+[42200][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42200][   progress] F....................
+[42200][environment] Starting analysis of cluster xcl29.cluster.....
+[42037][environment] Starting analysis of cluster xcl8.cluster..
+[42207][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42207][environment] No .inferconfig file found
+[42207][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42207][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4a82d4
+[42207][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4a82d4'
+[42207][environment]   --no-report
+[42207][environment]   --results-dir
+[42207][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42207][environment]   --cluster
+[42207][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl30.cluster
+[42207][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4a82d4'
+[42207][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl30.cluster
+[42207][environment] Analyzer: checkers
+[42207][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42207][   progress] F.
+[42212][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42212][environment] No .inferconfig file found
+[42212][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42212][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c81221
+[42212][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c81221'
+[42212][environment]   --no-report
+[42212][environment]   --results-dir
+[42212][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42212][environment]   --cluster
+[42212][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl31.cluster
+[42212][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c81221'
+[42212][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl31.cluster
+[42212][environment] Analyzer: checkers
+[42212][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42212][   progress] F
+[42207][environment] Starting analysis of cluster xcl30.cluster....
+[42221][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42221][environment] No .inferconfig file found
+[42221][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42221][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5bc1b3
+[42221][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5bc1b3'
+[42221][environment]   --no-report
+[42221][environment]   --results-dir
+[42221][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42221][environment]   --cluster
+[42221][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl32.cluster
+[42221][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5bc1b3'
+[42221][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl32.cluster
+[42221][environment] Analyzer: checkers
+[42221][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42221][   progress] F..........................
+[42107][environment] Starting analysis of cluster xcl16.cluster..
+[42135][environment] Starting analysis of cluster xcl20.cluster..
+[42230][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42230][environment] No .inferconfig file found
+[42230][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42230][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d5fb11
+[42230][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d5fb11'
+[42230][environment]   --no-report
+[42230][environment]   --results-dir
+[42230][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42230][environment]   --cluster
+[42230][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl33.cluster
+[42230][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d5fb11'
+[42230][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl33.cluster
+[42230][environment] Analyzer: checkers
+[42230][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42230][   progress] F..
+[42237][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42237][environment] No .inferconfig file found
+[42237][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42237][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7fa31e
+[42237][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7fa31e'
+[42237][environment]   --no-report
+[42237][environment]   --results-dir
+[42237][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42237][environment]   --cluster
+[42237][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl34.cluster
+[42237][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7fa31e'
+[42237][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl34.cluster
+[42237][environment] Analyzer: checkers
+[42237][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42237][   progress] F.....................
+[42237][environment] Starting analysis of cluster xcl34.cluster.
+[42212][environment] Starting analysis of cluster xcl31.cluster.....
+[42244][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42244][environment] No .inferconfig file found
+[42244][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42244][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8d4192
+[42244][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8d4192'
+[42244][environment]   --no-report
+[42244][environment]   --results-dir
+[42244][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42244][environment]   --cluster
+[42244][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl35.cluster
+[42244][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8d4192'
+[42244][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl35.cluster
+[42244][environment] Analyzer: checkers
+[42244][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42244][   progress] F......
+[42249][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42249][environment] No .inferconfig file found
+[42249][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42249][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ba9258
+[42249][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ba9258'
+[42249][environment]   --no-report
+[42249][environment]   --results-dir
+[42249][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42249][environment]   --cluster
+[42249][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl36.cluster
+[42249][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ba9258'
+[42249][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl36.cluster
+[42249][environment] Analyzer: checkers
+[42249][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42249][   progress] F..........
+[42249][environment] Starting analysis of cluster xcl36.cluster
+[42244][environment] Starting analysis of cluster xcl35.cluster..............
+
+[42263][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42263][environment] No .inferconfig file found
+[42263][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42263][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a9d643
+[42263][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a9d643'
+[42263][environment]   --no-report
+[42263][environment]   --results-dir
+[42263][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42263][environment]   --cluster
+[42263][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl38.cluster
+[42263][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a9d643'
+[42263][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl38.cluster
+[42263][environment] Analyzer: checkers
+[42262][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42262][environment] No .inferconfig file found
+[42262][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42262][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7920e1
+[42262][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7920e1'
+[42262][environment]   --no-report
+[42262][environment]   --results-dir
+[42262][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42262][environment]   --cluster
+[42262][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl37.cluster
+[42262][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7920e1'
+[42262][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl37.cluster
+[42262][environment] Analyzer: checkers
+[42263][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42262][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42262][   progress] F[42263][   progress] F.......
+[42262][environment] Starting analysis of cluster xcl37.cluster..............
+[42263][environment] Starting analysis of cluster xcl38.cluster.
+[42272][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42272][environment] No .inferconfig file found
+[42272][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42272][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_eb4e4b
+[42272][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_eb4e4b'
+[42272][environment]   --no-report
+[42272][environment]   --results-dir
+[42272][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42272][environment]   --cluster
+[42272][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl39.cluster
+[42272][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_eb4e4b'
+[42272][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl39.cluster
+[42272][environment] Analyzer: checkers
+[42272][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42272][   progress] F
+[42221][environment] Starting analysis of cluster xcl32.cluster...
+[42272][environment] Starting analysis of cluster xcl39.cluster
+[42277][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42277][environment] No .inferconfig file found
+[42277][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42277][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_60a6e7
+[42277][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_60a6e7'
+[42277][environment]   --no-report
+[42277][environment]   --results-dir
+[42277][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42277][environment]   --cluster
+[42277][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl40.cluster
+[42277][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_60a6e7'
+[42277][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl40.cluster
+[42277][environment] Analyzer: checkers
+[42277][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42277][   progress] F................
+.[42286][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42286][environment] No .inferconfig file found
+[42286][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42286][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c59039
+[42286][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c59039'
+[42286][environment]   --no-report
+[42286][environment]   --results-dir
+[42286][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42286][environment]   --cluster
+[42286][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl41.cluster
+[42286][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c59039'
+[42286][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl41.cluster
+[42286][environment] Analyzer: checkers
+[42286][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42286][   progress] F....
+[42291][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42291][environment] No .inferconfig file found
+[42291][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42291][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4eba8f
+[42291][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4eba8f'
+[42291][environment]   --no-report
+[42291][environment]   --results-dir
+[42291][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42291][environment]   --cluster
+[42291][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl42.cluster
+[42291][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4eba8f'
+[42291][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl42.cluster
+[42291][environment] Analyzer: checkers
+[42291][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42291][   progress] F.................
+[42286][environment] Starting analysis of cluster xcl41.cluster.......
+[42300][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42300][environment] No .inferconfig file found
+[42300][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42300][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4cdcba
+[42300][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4cdcba'
+[42300][environment]   --no-report
+[42300][environment]   --results-dir
+[42300][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42300][environment]   --cluster
+[42300][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl43.cluster
+[42300][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4cdcba'
+[42300][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl43.cluster
+[42300][environment] Analyzer: checkers
+[42300][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42300][   progress] F.....
+[42300][environment] Starting analysis of cluster xcl43.cluster..............
+[42307][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42307][environment] No .inferconfig file found
+[42307][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42307][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6da70c
+[42307][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6da70c'
+[42307][environment]   --no-report
+[42307][environment]   --results-dir
+[42307][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42307][environment]   --cluster
+[42307][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl44.cluster
+[42307][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6da70c'
+[42307][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl44.cluster
+[42307][environment] Analyzer: checkers
+[42307][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42307][   progress] F...
+[42307][environment] Starting analysis of cluster xcl44.cluster....
+[42291][environment] Starting analysis of cluster xcl42.cluster....
+[42314][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42314][environment] No .inferconfig file found
+[42314][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42314][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2e1ffe
+[42314][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2e1ffe'
+[42314][environment]   --no-report
+[42314][environment]   --results-dir
+[42314][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42314][environment]   --cluster
+[42314][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl45.cluster
+[42314][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2e1ffe'
+[42314][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl45.cluster
+[42314][environment] Analyzer: checkers
+[42314][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42314][   progress] F....
+[42319][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42319][environment] No .inferconfig file found
+[42319][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42319][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_80a9df
+[42319][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_80a9df'
+[42319][environment]   --no-report
+[42319][environment]   --results-dir
+[42319][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42319][environment]   --cluster
+[42319][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl46.cluster
+[42319][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_80a9df'
+[42319][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl46.cluster
+[42319][environment] Analyzer: checkers
+[42319][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42319][   progress] F................
+[42319][environment] Starting analysis of cluster xcl46.cluster.........
+[42329][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42329][environment] No .inferconfig file found
+[42329][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42329][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9e8867
+[42329][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9e8867'
+[42329][environment]   --no-report
+[42329][environment]   --results-dir
+[42329][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42329][environment]   --cluster
+[42329][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl47.cluster
+[42329][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9e8867'
+[42329][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl47.cluster
+[42329][environment] Analyzer: checkers
+[42329][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42329][   progress] F.........
+[42329][environment] Starting analysis of cluster xcl47.cluster............
+[42336][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42336][environment] No .inferconfig file found
+[42336][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42336][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7b653d
+[42336][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7b653d'
+[42336][environment]   --no-report
+[42336][environment]   --results-dir
+[42336][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42336][environment]   --cluster
+[42336][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl48.cluster
+[42336][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7b653d'
+[42336][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl48.cluster
+[42336][environment] Analyzer: checkers
+[42336][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42336][   progress] F.........
+[42336][environment] Starting analysis of cluster xcl48.cluster.
+[42345][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42345][environment] No .inferconfig file found
+[42345][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42345][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f73db3
+[42345][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f73db3'
+[42345][environment]   --no-report
+[42345][environment]   --results-dir
+[42345][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42345][environment]   --cluster
+[42345][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl49.cluster
+[42345][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f73db3'
+[42345][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl49.cluster
+[42345][environment] Analyzer: checkers
+[42345][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42345][   progress] F.....
+[42345][environment] Starting analysis of cluster xcl49.cluster...
+[42352][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42352][environment] No .inferconfig file found
+[42352][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42352][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f50d52
+[42352][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f50d52'
+[42352][environment]   --no-report
+[42352][environment]   --results-dir
+[42352][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42352][environment]   --cluster
+[42352][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl50.cluster
+[42352][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f50d52'
+[42352][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl50.cluster
+[42352][environment] Analyzer: checkers
+[42352][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42352][   progress] F.............
+[42352][environment] Starting analysis of cluster xcl50.cluster...
+[42359][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42359][environment] No .inferconfig file found
+[42359][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42359][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_bdce90
+[42359][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_bdce90'
+[42359][environment]   --no-report
+[42359][environment]   --results-dir
+[42359][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42359][environment]   --cluster
+[42359][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl51.cluster
+[42359][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_bdce90'
+[42359][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl51.cluster
+[42359][environment] Analyzer: checkers
+[42359][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42359][   progress] F.....................
+[42230][environment] Starting analysis of cluster xcl33.cluster
+[42277][environment] Starting analysis of cluster xcl40.cluster..
+[42367][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42367][environment] No .inferconfig file found
+[42367][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42367][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2dfcec
+[42367][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2dfcec'
+[42367][environment]   --no-report
+[42367][environment]   --results-dir
+[42367][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42367][environment]   --cluster
+[42367][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl52.cluster
+[42367][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2dfcec'
+[42367][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl52.cluster
+[42367][environment] Analyzer: checkers
+[42367][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42367][   progress] F..
+[42373][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42373][environment] No .inferconfig file found
+[42373][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42373][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_879306
+[42373][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_879306'
+[42373][environment]   --no-report
+[42373][environment]   --results-dir
+[42373][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42373][environment]   --cluster
+[42373][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl53.cluster
+[42373][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_879306'
+[42373][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl53.cluster
+[42373][environment] Analyzer: checkers
+[42373][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42373][   progress] F...........
+[42373][environment] Starting analysis of cluster xcl53.cluster..................
+[42381][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42381][environment] No .inferconfig file found
+[42381][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42381][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b0a707
+[42381][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b0a707'
+[42381][environment]   --no-report
+[42381][environment]   --results-dir
+[42381][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42381][environment]   --cluster
+[42381][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl54.cluster
+[42381][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b0a707'
+[42381][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl54.cluster
+[42381][environment] Analyzer: checkers
+[42381][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42381][   progress] F.....
+[42381][environment] Starting analysis of cluster xcl54.cluster...
+[42121][environment] Starting analysis of cluster xcl18.cluster
+[42388][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42388][environment] No .inferconfig file found
+[42388][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42388][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6eb2a4
+[42388][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6eb2a4'
+[42388][environment]   --no-report
+[42388][environment]   --results-dir
+[42388][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42388][environment]   --cluster
+[42388][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl55.cluster
+[42388][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6eb2a4'
+[42388][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl55.cluster
+[42388][environment] Analyzer: checkers
+[42388][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42388][   progress] F..
+[42394][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42394][environment] No .inferconfig file found
+[42394][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42394][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_00519f
+[42394][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_00519f'
+[42394][environment]   --no-report
+[42394][environment]   --results-dir
+[42394][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42394][environment]   --cluster
+[42394][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl56.cluster
+[42394][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_00519f'
+[42394][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl56.cluster
+[42394][environment] Analyzer: checkers
+[42394][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42394][   progress] F.........................................
+[42388][environment] Starting analysis of cluster xcl55.cluster
+[42314][environment] Starting analysis of cluster xcl45.cluster
+[42402][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42402][environment] No .inferconfig file found
+[42402][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42402][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dd78a3
+[42402][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dd78a3'
+[42402][environment]   --no-report
+[42402][environment]   --results-dir
+[42402][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42402][environment]   --cluster
+[42402][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl57.cluster
+[42402][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dd78a3'
+[42402][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl57.cluster
+[42402][environment] Analyzer: checkers
+[42402][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42402][   progress] F
+[42407][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42407][environment] No .inferconfig file found
+[42407][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42407][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ff916d
+[42407][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ff916d'
+[42407][environment]   --no-report
+[42407][environment]   --results-dir
+[42407][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42407][environment]   --cluster
+[42407][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl58.cluster
+[42407][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ff916d'
+[42407][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl58.cluster
+[42407][environment] Analyzer: checkers
+[42407][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42407][   progress] F.......................
+[42407][environment] Starting analysis of cluster xcl58.cluster........
+[42416][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42416][environment] No .inferconfig file found
+[42416][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42416][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_272f9b
+[42416][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_272f9b'
+[42416][environment]   --no-report
+[42416][environment]   --results-dir
+[42416][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42416][environment]   --cluster
+[42416][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl59.cluster
+[42416][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_272f9b'
+[42416][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl59.cluster
+[42416][environment] Analyzer: checkers
+[42416][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42416][   progress] F........................
+[42367][environment] Starting analysis of cluster xcl52.cluster...
+[42359][environment] Starting analysis of cluster xcl51.cluster........
+[42425][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42425][environment] No .inferconfig file found
+[42425][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42425][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b2849a
+[42425][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b2849a'
+[42425][environment]   --no-report
+[42425][environment]   --results-dir
+[42425][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42425][environment]   --cluster
+[42425][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl60.cluster
+[42425][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b2849a'
+[42425][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl60.cluster
+[42425][environment] Analyzer: checkers
+[42425][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42425][   progress] F..
+..[42430][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42430][environment] No .inferconfig file found
+[42430][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42430][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d34a07
+[42430][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d34a07'
+[42430][environment]   --no-report
+[42430][environment]   --results-dir
+[42430][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42430][environment]   --cluster
+[42430][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl61.cluster
+[42430][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d34a07'
+[42430][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl61.cluster
+[42430][environment] Analyzer: checkers
+[42430][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42430][   progress] F..........
+[42402][environment] Starting analysis of cluster xcl57.cluster................
+[42439][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42439][environment] No .inferconfig file found
+[42439][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42439][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_74d50e
+[42439][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_74d50e'
+[42439][environment]   --no-report
+[42439][environment]   --results-dir
+[42439][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42439][environment]   --cluster
+[42439][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl62.cluster
+[42439][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_74d50e'
+[42439][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl62.cluster
+[42439][environment] Analyzer: checkers
+[42439][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42439][   progress] F.....
+[42439][environment] Starting analysis of cluster xcl62.cluster.....
+[42446][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42446][environment] No .inferconfig file found
+[42446][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42446][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_096fb7
+[42446][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_096fb7'
+[42446][environment]   --no-report
+[42446][environment]   --results-dir
+[42446][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42446][environment]   --cluster
+[42446][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl63.cluster
+[42446][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_096fb7'
+[42446][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl63.cluster
+[42446][environment] Analyzer: checkers
+[42446][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42446][   progress] F...........................
+[42172][environment] Starting analysis of cluster xcl25.cluster
+[42453][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42453][environment] No .inferconfig file found
+[42453][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42453][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_97c3a5
+[42453][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_97c3a5'
+[42453][environment]   --no-report
+[42453][environment]   --results-dir
+[42453][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42453][environment]   --cluster
+[42453][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl64.cluster
+[42453][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_97c3a5'
+[42453][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl64.cluster
+[42453][environment] Analyzer: checkers
+[42453][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42453][   progress] F..
+[42453][environment] Starting analysis of cluster xcl64.cluster
+[42460][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42460][environment] No .inferconfig file found
+[42460][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42460][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dfdf3f
+[42460][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dfdf3f'
+[42460][environment]   --no-report
+[42460][environment]   --results-dir
+[42460][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42460][environment]   --cluster
+[42460][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl65.cluster
+[42460][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dfdf3f'
+[42460][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl65.cluster
+[42460][environment] Analyzer: checkers
+[42460][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42460][   progress] F.........
+[42394][environment] Starting analysis of cluster xcl56.cluster
+[42469][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42469][environment] No .inferconfig file found
+[42469][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42469][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fdd063
+[42469][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fdd063'
+[42469][environment]   --no-report
+[42469][environment]   --results-dir
+[42469][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42469][environment]   --cluster
+[42469][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl66.cluster
+[42469][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fdd063'
+[42469][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl66.cluster
+[42469][environment] Analyzer: checkers
+[42469][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42469][   progress] F.
+[42469][environment] Starting analysis of cluster xcl66.cluster.....
+[42476][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42476][environment] No .inferconfig file found
+[42476][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42476][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a9d1ee
+[42476][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a9d1ee'
+[42476][environment]   --no-report
+[42476][environment]   --results-dir
+[42476][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42476][environment]   --cluster
+[42476][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl67.cluster
+[42476][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a9d1ee'
+[42476][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl67.cluster
+[42476][environment] Analyzer: checkers
+[42476][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42476][   progress] F...
+[42476][environment] Starting analysis of cluster xcl67.cluster
+[42483][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42483][environment] No .inferconfig file found
+[42483][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42483][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_555c16
+[42483][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_555c16'
+[42483][environment]   --no-report
+[42483][environment]   --results-dir
+[42483][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42483][environment]   --cluster
+[42483][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl68.cluster
+[42483][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_555c16'
+[42483][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl68.cluster
+[42483][environment] Analyzer: checkers
+[42483][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42483][   progress] F....
+[42483][environment] Starting analysis of cluster xcl68.cluster
+[42490][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42490][environment] No .inferconfig file found
+[42490][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42490][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_886f7c
+[42490][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_886f7c'
+[42490][environment]   --no-report
+[42490][environment]   --results-dir
+[42490][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42490][environment]   --cluster
+[42490][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl69.cluster
+[42490][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_886f7c'
+[42490][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl69.cluster
+[42490][environment] Analyzer: checkers
+[42490][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42490][   progress] F.
+[42430][environment] Starting analysis of cluster xcl61.cluster
+[42490][environment] Starting analysis of cluster xcl69.cluster
+[42501][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42501][environment] No .inferconfig file found
+[42501][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42501][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ea2948
+[42501][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ea2948'
+[42501][environment]   --no-report
+[42501][environment]   --results-dir
+[42501][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42501][environment]   --cluster
+[42501][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl70.cluster
+[42501][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ea2948'
+[42501][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl70.cluster
+[42501][environment] Analyzer: checkers
+[42501][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+
+[42501][   progress] F[42502][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42502][environment] No .inferconfig file found
+[42502][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42502][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6d5ab2
+[42502][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6d5ab2'
+[42502][environment]   --no-report
+[42502][environment]   --results-dir
+[42502][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42502][environment]   --cluster
+[42502][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl71.cluster
+[42502][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6d5ab2'
+[42502][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl71.cluster
+[42502][environment] Analyzer: checkers
+[42502][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42502][   progress] F...........
+[42501][environment] Starting analysis of cluster xcl70.cluster...
+[42446][environment] Starting analysis of cluster xcl63.cluster..
+[42502][environment] Starting analysis of cluster xcl71.cluster
+[42511][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42511][environment] No .inferconfig file found
+[42511][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42511][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_492bba
+[42511][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_492bba'
+[42511][environment]   --no-report
+[42511][environment]   --results-dir
+[42511][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42511][environment]   --cluster
+[42511][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl72.cluster
+[42511][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_492bba'
+[42511][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl72.cluster
+[42511][environment] Analyzer: checkers
+[42511][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42511][   progress] F.
+[42511][environment] Starting analysis of cluster xcl72.cluster
+[42517][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42517][environment] No .inferconfig file found
+[42517][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42517][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c54774
+[42517][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c54774'
+[42517][environment]   --no-report
+[42517][environment]   --results-dir
+[42517][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42517][environment]   --cluster
+[42517][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl73.cluster
+[42517][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c54774'
+[42517][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl73.cluster
+[42517][environment] Analyzer: checkers
+[42517][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42517][   progress] F
+[42523][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42523][environment] No .inferconfig file found
+[42523][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42523][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8f14f7
+[42523][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8f14f7'
+[42523][environment]   --no-report
+[42523][environment]   --results-dir
+[42523][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42523][environment]   --cluster
+[42523][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl74.cluster
+[42523][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8f14f7'
+[42523][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl74.cluster
+[42523][environment] Analyzer: checkers
+[42523][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42523][   progress] F.....
+[42523][environment] Starting analysis of cluster xcl74.cluster.........
+[42532][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42532][environment] No .inferconfig file found
+[42532][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42532][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4e674e
+[42532][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4e674e'
+[42532][environment]   --no-report
+[42532][environment]   --results-dir
+[42532][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42532][environment]   --cluster
+[42532][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl75.cluster
+[42532][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4e674e'
+[42532][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl75.cluster
+[42532][environment] Analyzer: checkers
+[42532][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42532][   progress] F
+[42517][environment] Starting analysis of cluster xcl73.cluster.
+[42532][environment] Starting analysis of cluster xcl75.cluster
+[42539][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42539][environment] No .inferconfig file found
+[42539][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42539][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7d0fe2
+[42539][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7d0fe2'
+[42539][environment]   --no-report
+[42539][environment]   --results-dir
+[42539][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42539][environment]   --cluster
+[42539][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl76.cluster
+[42539][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7d0fe2'
+[42539][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl76.cluster
+[42539][environment] Analyzer: checkers
+[42539][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42539][   progress] F.
+
+[42539][environment] Starting analysis of cluster xcl76.cluster[42544][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42544][environment] No .inferconfig file found
+[42544][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42544][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a1d624
+[42544][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a1d624'
+[42544][environment]   --no-report
+[42544][environment]   --results-dir
+[42544][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42544][environment]   --cluster
+[42544][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl77.cluster
+[42544][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_a1d624'
+[42544][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl77.cluster
+[42544][environment] Analyzer: checkers
+[42544][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42544][   progress] F...
+[42551][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42551][environment] No .inferconfig file found
+[42551][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42551][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_446583
+[42551][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_446583'
+[42551][environment]   --no-report
+[42551][environment]   --results-dir
+[42551][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42551][environment]   --cluster
+[42551][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl78.cluster
+[42551][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_446583'
+[42551][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl78.cluster
+[42551][environment] Analyzer: checkers
+[42551][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42551][   progress] F......
+[42544][environment] Starting analysis of cluster xcl77.cluster...
+[42560][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42560][environment] No .inferconfig file found
+[42560][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42560][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0bd693
+[42560][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0bd693'
+[42560][environment]   --no-report
+[42560][environment]   --results-dir
+[42560][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42560][environment]   --cluster
+[42560][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl79.cluster
+[42560][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0bd693'
+[42560][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl79.cluster
+[42560][environment] Analyzer: checkers
+[42560][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42560][   progress] F.....
+[42560][environment] Starting analysis of cluster xcl79.cluster.
+.[42567][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42567][environment] No .inferconfig file found
+[42567][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42567][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c7bb70
+[42567][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c7bb70'
+[42567][environment]   --no-report
+[42567][environment]   --results-dir
+[42567][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42567][environment]   --cluster
+[42567][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl80.cluster
+[42567][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c7bb70'
+[42567][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl80.cluster
+[42567][environment] Analyzer: checkers
+[42567][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42567][   progress] F...
+[42551][environment] Starting analysis of cluster xcl78.cluster..
+.[42574][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42574][environment] No .inferconfig file found
+[42574][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42574][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b380b3
+[42574][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b380b3'
+[42574][environment]   --no-report
+[42574][environment]   --results-dir
+[42574][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42574][environment]   --cluster
+[42574][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl81.cluster
+[42574][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b380b3'
+[42574][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl81.cluster
+[42574][environment] Analyzer: checkers
+[42574][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42574][   progress] F..
+[42567][environment] Starting analysis of cluster xcl80.cluster......
+[42580][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42580][environment] No .inferconfig file found
+[42580][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42580][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0efeef
+[42580][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0efeef'
+[42580][environment]   --no-report
+[42580][environment]   --results-dir
+[42580][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42580][environment]   --cluster
+[42580][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl82.cluster
+[42580][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0efeef'
+[42580][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl82.cluster
+[42580][environment] Analyzer: checkers
+[42580][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42580][   progress] F
+[42574][environment] Starting analysis of cluster xcl81.cluster......
+[42588][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42588][environment] No .inferconfig file found
+[42588][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42588][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2ce804
+[42588][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2ce804'
+[42588][environment]   --no-report
+[42588][environment]   --results-dir
+[42588][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42588][environment]   --cluster
+[42588][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl83.cluster
+[42588][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_2ce804'
+[42588][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl83.cluster
+[42588][environment] Analyzer: checkers
+[42588][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42588][   progress] F.
+[42580][environment] Starting analysis of cluster xcl82.cluster.
+[42594][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42594][environment] No .inferconfig file found
+[42594][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42594][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_128297
+[42594][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_128297'
+[42594][environment]   --no-report
+[42594][environment]   --results-dir
+[42594][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42594][environment]   --cluster
+[42594][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl84.cluster
+[42594][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_128297'
+[42594][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl84.cluster
+[42594][environment] Analyzer: checkers
+[42594][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42594][   progress] F.....................
+.[42602][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42602][environment] No .inferconfig file found
+[42602][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42602][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b2c812
+[42602][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b2c812'
+[42602][environment]   --no-report
+[42602][environment]   --results-dir
+[42602][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42602][environment]   --cluster
+[42602][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl85.cluster
+[42602][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b2c812'
+[42602][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl85.cluster
+[42602][environment] Analyzer: checkers
+[42602][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42602][   progress] F........
+[42594][environment] Starting analysis of cluster xcl84.cluster..
+[42602][environment] Starting analysis of cluster xcl85.cluster.
+[42609][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42609][environment] No .inferconfig file found
+[42609][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42609][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7702f3
+[42609][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7702f3'
+[42609][environment]   --no-report
+[42609][environment]   --results-dir
+[42609][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42609][environment]   --cluster
+[42609][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl86.cluster
+[42609][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7702f3'
+[42609][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl86.cluster
+[42609][environment] Analyzer: checkers
+[42609][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42609][   progress] F
+[42614][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42614][environment] No .inferconfig file found
+[42614][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42614][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5de20f
+[42614][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5de20f'
+[42614][environment]   --no-report
+[42614][environment]   --results-dir
+[42614][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42614][environment]   --cluster
+[42614][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl87.cluster
+[42614][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5de20f'
+[42614][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl87.cluster
+[42614][environment] Analyzer: checkers
+[42614][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42614][   progress] F.................
+[42588][environment] Starting analysis of cluster xcl83.cluster..............
+[42614][environment] Starting analysis of cluster xcl87.cluster.
+[42058][environment] Starting analysis of cluster xcl9.cluster
+[42623][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42623][environment] No .inferconfig file found
+[42623][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42623][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_db0f4f
+[42623][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_db0f4f'
+[42623][environment]   --no-report
+[42623][environment]   --results-dir
+[42623][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42623][environment]   --cluster
+[42623][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl88.cluster
+[42623][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_db0f4f'
+[42623][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl88.cluster
+[42623][environment] Analyzer: checkers
+[42623][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42623][   progress] F.
+[42623][environment] Starting analysis of cluster xcl88.cluster..
+...[42630][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42630][environment] No .inferconfig file found
+[42630][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42630][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9382d2
+[42630][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9382d2'
+[42630][environment]   --no-report
+[42630][environment]   --results-dir
+[42630][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42630][environment]   --cluster
+[42630][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl89.cluster
+[42630][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9382d2'
+[42630][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl89.cluster
+[42630][environment] Analyzer: checkers
+[42630][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42630][   progress] F
+[42636][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42636][environment] No .inferconfig file found
+[42636][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42636][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0c2540
+[42636][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0c2540'
+[42636][environment]   --no-report
+[42636][environment]   --results-dir
+[42636][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42636][environment]   --cluster
+[42636][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl90.cluster
+[42636][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0c2540'
+[42636][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl90.cluster
+[42636][environment] Analyzer: checkers
+[42636][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42636][   progress] F
+[42636][environment] Starting analysis of cluster xcl90.cluster....
+[42645][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42645][environment] No .inferconfig file found
+[42645][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42645][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5a0e03
+[42645][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5a0e03'
+[42645][environment]   --no-report
+[42645][environment]   --results-dir
+[42645][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42645][environment]   --cluster
+[42645][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl91.cluster
+[42645][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5a0e03'
+[42645][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl91.cluster
+[42645][environment] Analyzer: checkers
+[42645][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+..[42645][   progress] F
+[42425][environment] Starting analysis of cluster xcl60.cluster...
+.[42653][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42653][environment] No .inferconfig file found
+[42653][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42653][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ed6de3
+[42653][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ed6de3'
+[42653][environment]   --no-report
+[42653][environment]   --results-dir
+[42653][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42653][environment]   --cluster
+[42653][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl92.cluster
+[42653][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ed6de3'
+[42653][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl92.cluster
+[42653][environment] Analyzer: checkers
+[42653][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42653][   progress] F.................
+...[42659][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42659][environment] No .inferconfig file found
+[42659][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42659][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5072ae
+[42659][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5072ae'
+[42659][environment]   --no-report
+[42659][environment]   --results-dir
+[42659][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42659][environment]   --cluster
+[42659][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl93.cluster
+[42659][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5072ae'
+[42659][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl93.cluster
+[42659][environment] Analyzer: checkers
+[42659][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42659][   progress] F...........
+[42653][environment] Starting analysis of cluster xcl92.cluster
+[42659][environment] Starting analysis of cluster xcl93.cluster......
+[42667][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42667][environment] No .inferconfig file found
+[42667][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42667][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c3029e
+[42667][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c3029e'
+[42667][environment]   --no-report
+[42667][environment]   --results-dir
+[42667][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42667][environment]   --cluster
+[42667][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl94.cluster
+[42667][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c3029e'
+[42667][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl94.cluster
+[42667][environment] Analyzer: checkers
+[42667][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42667][   progress] F
+.[42672][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42672][environment] No .inferconfig file found
+[42672][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42672][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e59712
+[42672][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e59712'
+[42672][environment]   --no-report
+[42672][environment]   --results-dir
+[42672][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42672][environment]   --cluster
+[42672][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl95.cluster
+[42672][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e59712'
+[42672][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl95.cluster
+[42672][environment] Analyzer: checkers
+[42672][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42672][   progress] F.......
+[42667][environment] Starting analysis of cluster xcl94.cluster...........
+[42158][environment] Starting analysis of cluster xcl23.cluster...
+[42681][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42681][environment] No .inferconfig file found
+[42681][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42681][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7f5136
+[42681][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7f5136'
+[42681][environment]   --no-report
+[42681][environment]   --results-dir
+[42681][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42681][environment]   --cluster
+[42681][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl96.cluster
+[42681][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7f5136'
+[42681][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl96.cluster
+[42681][environment] Analyzer: checkers
+[42681][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42681][   progress] F......
+..[42686][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42686][environment] No .inferconfig file found
+[42686][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42686][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b90aa9
+[42686][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b90aa9'
+[42686][environment]   --no-report
+[42686][environment]   --results-dir
+[42686][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42686][environment]   --cluster
+[42686][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl97.cluster
+[42686][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b90aa9'
+[42686][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl97.cluster
+[42686][environment] Analyzer: checkers
+[42686][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42686][   progress] F..............
+[42630][environment] Starting analysis of cluster xcl89.cluster.................
+[42686][environment] Starting analysis of cluster xcl97.cluster..
+[42681][environment] Starting analysis of cluster xcl96.cluster......
+[42695][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42695][environment] No .inferconfig file found
+[42695][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42695][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f5c0af
+[42695][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f5c0af'
+[42695][environment]   --no-report
+[42695][environment]   --results-dir
+[42695][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42695][environment]   --cluster
+[42695][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl98.cluster
+[42695][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f5c0af'
+[42695][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl98.cluster
+[42695][environment] Analyzer: checkers
+[42695][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42695][   progress] F
+[42700][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42700][environment] No .inferconfig file found
+[42700][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42700][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_084986
+[42700][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_084986'
+[42700][environment]   --no-report
+[42700][environment]   --results-dir
+[42700][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42700][environment]   --cluster
+[42700][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl99.cluster
+[42700][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_084986'
+[42700][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl99.cluster
+[42700][environment] Analyzer: checkers
+[42700][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42700][   progress] F...
+[42705][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42705][environment] No .inferconfig file found
+[42705][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42705][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5d93d5
+[42705][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5d93d5'
+[42705][environment]   --no-report
+[42705][environment]   --results-dir
+[42705][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42705][environment]   --cluster
+[42705][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl100.cluster
+[42705][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5d93d5'
+[42705][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl100.cluster
+[42705][environment] Analyzer: checkers
+[42705][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42705][   progress] F...............
+[42672][environment] Starting analysis of cluster xcl95.cluster
+[42700][environment] Starting analysis of cluster xcl99.cluster....
+[42705][environment] Starting analysis of cluster xcl100.cluster.....
+[42720][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42720][environment] No .inferconfig file found
+[42720][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42720][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8ac2f5
+[42720][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8ac2f5'
+[42720][environment]   --no-report
+[42720][environment]   --results-dir
+[42720][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42720][environment]   --cluster
+[42720][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl101.cluster
+[42720][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8ac2f5'
+[42720][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl101.cluster
+[42720][environment] Analyzer: checkers
+[42720][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[42720][   progress] F
+[42721][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42721][environment] No .inferconfig file found
+[42721][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42721][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f35db7
+[42721][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f35db7'
+[42721][environment]   --no-report
+[42721][environment]   --results-dir
+[42721][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42721][environment]   --cluster
+[42721][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl102.cluster
+[42721][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f35db7'
+[42721][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl102.cluster
+[42721][environment] Analyzer: checkers
+[42721][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42721][   progress] F.
+[42726][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42726][environment] No .inferconfig file found
+[42726][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42726][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d99434
+[42726][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d99434'
+[42726][environment]   --no-report
+[42726][environment]   --results-dir
+[42726][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42726][environment]   --cluster
+[42726][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl103.cluster
+[42726][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d99434'
+[42726][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl103.cluster
+[42726][environment] Analyzer: checkers
+[42726][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42726][   progress] F......
+[42726][environment] Starting analysis of cluster xcl103.cluster.....
+[42737][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42737][environment] No .inferconfig file found
+[42737][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42737][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_41ab97
+[42737][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_41ab97'
+[42737][environment]   --no-report
+[42737][environment]   --results-dir
+[42737][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42737][environment]   --cluster
+[42737][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl104.cluster
+[42737][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_41ab97'
+[42737][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl104.cluster
+[42737][environment] Analyzer: checkers
+[42737][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42737][   progress] F.........................................................
+[42720][environment] Starting analysis of cluster xcl101.cluster.........
+[42744][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42744][environment] No .inferconfig file found
+[42744][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42744][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b15c71
+[42744][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b15c71'
+[42744][environment]   --no-report
+[42744][environment]   --results-dir
+[42744][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42744][environment]   --cluster
+[42744][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl105.cluster
+[42744][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b15c71'
+[42744][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl105.cluster
+[42744][environment] Analyzer: checkers
+[42744][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42744][   progress] F..................................................................................
+[42460][environment] Starting analysis of cluster xcl65.cluster.........................
+.[42753][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42753][environment] No .inferconfig file found
+[42753][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42753][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_04ad88
+[42753][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_04ad88'
+[42753][environment]   --no-report
+[42753][environment]   --results-dir
+[42753][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42753][environment]   --cluster
+[42753][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl106.cluster
+[42753][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_04ad88'
+[42753][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl106.cluster
+[42753][environment] Analyzer: checkers
+[42753][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42753][   progress] F..............................
+[42753][environment] Starting analysis of cluster xcl106.cluster.............
+[42760][environment] CWD = /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore
+[42760][environment] No .inferconfig file found
+[42760][environment] Project root = /Users/dip/dipankar/androidStudio/ping/client
+[42760][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_70111a
+[42760][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_70111a'
+[42760][environment]   --no-report
+[42760][environment]   --results-dir
+[42760][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out
+[42760][environment]   --cluster
+[42760][environment]   /Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl107.cluster
+[42760][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_70111a'
+[42760][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/ping/client/infer-out^--cluster^/Users/dip/dipankar/androidStudio/ping/client/infer-out/multicore/xcl107.cluster
+[42760][environment] Analyzer: checkers
+[42760][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[42760][   progress] F
+[42760][environment] Starting analysis of cluster xcl107.cluster.......
+[42737][environment] Starting analysis of cluster xcl104.cluster
+[42721][environment] Starting analysis of cluster xcl102.cluster
+[42744][environment] Starting analysis of cluster xcl105.cluster.....................................................................................
+[42645][environment] Starting analysis of cluster xcl91.cluster.................
+[42609][environment] Starting analysis of cluster xcl86.cluster..
+[42695][environment] Starting analysis of cluster xcl98.cluster.......................................................
+[42416][environment] Starting analysis of cluster xcl59.cluster
+[41880][environment] Infer version v0.13.0
+[41880][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[41880][environment] 

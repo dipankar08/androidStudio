@@ -1,69 +1,72 @@
 package in.co.dipankar.ping.activities.call;
 
 import android.content.Intent;
-
-import org.webrtc.SessionDescription;
-import org.webrtc.StatsReport;
-
-import java.util.Map;
-
-import in.co.dipankar.ping.common.webrtc.RtcUser;
 import in.co.dipankar.ping.contracts.ICallInfo;
 import in.co.dipankar.ping.contracts.IRtcUser;
-
+import java.util.Map;
+import org.webrtc.SessionDescription;
 
 public interface ICallPage {
 
-    public enum PageViewType{
-        LANDING,
-        INCOMMING,
-        OUTGOING,
-        ONGOING,
-        ENDED
-    }
-    public interface IView{
+  public enum PageViewType {
+    LANDING,
+    INCOMMING,
+    OUTGOING,
+    ONGOING,
+    ENDED
+  }
 
-        void switchToView(PageViewType type);
+  public interface IView {
 
-        void showNetworkNotification(String process, String s);
+    void switchToView(PageViewType type);
 
-        void onCameraOff();
+    void showNetworkNotification(String process, String s);
 
-        void onCameraOn();
+    void onCameraOff();
 
-        void onRtcStat(Map<String, String> reports);
+    void onCameraOn();
 
-        void toggleViewBasedOnVideoEnabled(boolean isVideoEnabled);
+    void onRtcStat(Map<String, String> reports);
 
-        void prepareCallUI(IRtcUser peer, ICallInfo callinfo);
-        void updateOutgoingView(String title, String subtitle);
-        void updateIncomingView(String title, String subtitle);
-        void updateEndView(String title, String subtitle);
+    void toggleViewBasedOnVideoEnabled(boolean isVideoEnabled);
 
-        void updateOngoingView(String title, String subtitle);
-    }
+    void prepareCallUI(IRtcUser peer, ICallInfo callinfo);
 
-    public interface IPresenter{
+    void updateOutgoingView(String title, String subtitle);
 
+    void updateIncomingView(String title, String subtitle);
 
-        void startOutgoingCall();
-        void startIncomingCall(String callId, SessionDescription sdp);
+    void updateEndView(String title, String subtitle);
 
-        void endCall();
-        void acceptCall();
-        void rejectCall();
+    void updateOngoingView(String title, String subtitle);
+  }
 
-        void toggleVideo(boolean isOn);
-        void toggleCamera(boolean isOn);
-        void toggleAudio(boolean isOn);
-        void toggleSpeaker(boolean isOn);
+  public interface IPresenter {
 
-        void finish();
+    void startOutgoingCall();
 
-        void onActivityResult(int requestCode, int resultCode, Intent data);
+    void startIncomingCall(String callId, SessionDescription sdp);
 
-        void changeAudioBitrate(int i);
+    void endCall();
 
-        void reset(IRtcUser peer, ICallInfo.ShareType shareType);
-    }
+    void acceptCall();
+
+    void rejectCall();
+
+    void toggleVideo(boolean isOn);
+
+    void toggleCamera(boolean isOn);
+
+    void toggleAudio(boolean isOn);
+
+    void toggleSpeaker(boolean isOn);
+
+    void finish();
+
+    void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    void changeAudioBitrate(int i);
+
+    void reset(IRtcUser peer, ICallInfo.ShareType shareType);
+  }
 }
