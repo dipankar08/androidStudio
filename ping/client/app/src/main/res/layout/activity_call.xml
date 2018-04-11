@@ -6,53 +6,53 @@
     android:background="#000000"
     android:layout_height="match_parent">
 
-    <in.co.dipankar.ping.activities.call.subviews.CallVideoGridView
+    <in.peerreview.ping.activities.call.subviews.CallVideoGridView
         android:id="@+id/call_video_grid_view"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </in.co.dipankar.ping.activities.call.subviews.CallVideoGridView>
+    </in.peerreview.ping.activities.call.subviews.CallVideoGridView>
 
 
-    <in.co.dipankar.ping.activities.call.subviews.CallLandingPageView
+    <in.peerreview.ping.activities.call.subviews.CallLandingPageView
         android:id="@+id/call_landing_page_view"
         android:visibility="gone"
         android:descendantFocusability = "blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </in.co.dipankar.ping.activities.call.subviews.CallLandingPageView>
+    </in.peerreview.ping.activities.call.subviews.CallLandingPageView>
 
-    <in.co.dipankar.ping.activities.call.subviews.CallEndedPageView
+    <in.peerreview.ping.activities.call.subviews.CallEndedPageView
         android:id="@+id/call_ended_page_view"
         android:layout_width="match_parent"
         android:visibility="gone"
     android:descendantFocusability = "blocksDescendants"
         android:layout_height="match_parent">
-    </in.co.dipankar.ping.activities.call.subviews.CallEndedPageView>
+    </in.peerreview.ping.activities.call.subviews.CallEndedPageView>
 
-    <in.co.dipankar.ping.activities.call.subviews.CallIncomingPageView
+    <in.peerreview.ping.activities.call.subviews.CallIncomingPageView
         android:id="@+id/call_incoming_page_view"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:descendantFocusability = "blocksDescendants"
         android:layout_height="match_parent">
-    </in.co.dipankar.ping.activities.call.subviews.CallIncomingPageView>
+    </in.peerreview.ping.activities.call.subviews.CallIncomingPageView>
 
-    <in.co.dipankar.ping.activities.call.subviews.CallOngoingPageView
+    <in.peerreview.ping.activities.call.subviews.CallOngoingPageView
         android:id="@+id/call_ongoing_page_view"
         android:visibility="gone"
         android:descendantFocusability = "blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </in.co.dipankar.ping.activities.call.subviews.CallOngoingPageView>
+    </in.peerreview.ping.activities.call.subviews.CallOngoingPageView>
 
-    <in.co.dipankar.ping.activities.call.subviews.CallOutgoingPageView
+    <in.peerreview.ping.activities.call.subviews.CallOutgoingPageView
         android:id="@+id/call_outgoing_page_view"
         android:layout_width="match_parent"
     android:descendantFocusability = "blocksDescendants"
     android:visibility="gone"
         android:layout_height="match_parent">
-    </in.co.dipankar.ping.activities.call.subviews.CallOutgoingPageView>
+    </in.peerreview.ping.activities.call.subviews.CallOutgoingPageView>
 
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/notification"
@@ -74,19 +74,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <in.co.dipankar.ping.common.webrtc.RtcStatView
+    <in.peerreview.ping.common.webrtc.RtcStatView
         android:id="@+id/rtc_stat_view"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <in.co.dipankar.ping.common.utils.CustomButtonSheetView
+    <in.peerreview.ping.common.utils.CustomButtonSheetView
         android:id="@+id/custom_button_sheetview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <!-- Peer Notification -->
-    <in.co.dipankar.ping.activities.call.subviews.AcceptRejectNotification
+    <in.peerreview.ping.activities.call.subviews.AcceptRejectNotification
         android:id="@+id/peer_notification"
         android:layout_width="match_parent"
         android:visibility="gone"
