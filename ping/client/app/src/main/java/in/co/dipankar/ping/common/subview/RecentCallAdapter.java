@@ -57,8 +57,8 @@ public class RecentCallAdapter extends RecyclerView.Adapter<RecentCallAdapter.My
         IRtcUser user = PingApplication.Get().getUserManager().getPeerUserForCall(call);
         if(user != null) {
             holder.name.setText(user.getUserName());
-            String StatusText = "You have a " + call.getType().mType
-                    + " of duration of" + call.getDuration();
+            String StatusText = "You have a " + call.getType().name()
+                    + " with duration " + call.getDuration()+" sec and data uses of "+call.getDataUses()+" kb";
             holder.status.setText(StatusText);
             holder.time.setText(call.getStartTime());
             Glide.with(mContext)
@@ -70,6 +70,8 @@ public class RecentCallAdapter extends RecyclerView.Adapter<RecentCallAdapter.My
             } else {
                 holder.picture.setDotColor(R.color.red);
             }
+        } else{
+            holder.status.setText("");
         }
     }
 

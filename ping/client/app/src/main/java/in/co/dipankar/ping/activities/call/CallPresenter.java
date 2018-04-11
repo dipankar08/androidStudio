@@ -50,10 +50,6 @@ public class CallPresenter implements ICallPage.IPresenter {
     //singnaling api
     ICallSignalingApi mSignalingApi;
 
-    //Stat
-    private int mDuration =0;
-    private int mByteUse =0;
-
     //Incoming Calls
     SessionDescription mPeerSdp;
 
@@ -330,8 +326,8 @@ public class CallPresenter implements ICallPage.IPresenter {
             mWebRtcEngine.endCall();
         }
         IContactManager contactManager = PingApplication.Get().getUserManager();
-        mCallInfo.setDataUses(mByteUse+"");
-        mCallInfo.setDuration(mDuration+"");
+        mCallInfo.setDataUses(info.get("data")+"");
+        mCallInfo.setDuration(info.get("time")+"");
         contactManager.addCallInfo(mCallInfo);
         // Notify application that call is now done
         PingApplication.Get().setCurrentCallInfo(null);

@@ -102,8 +102,11 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
                 FrameLayout.LayoutParams lay1 = new FrameLayout.LayoutParams(mMiniViewSize, mMiniViewSize);
                 mPeerView.setLayoutParams(lay1);
 
-                mPeerView.setZOrderOnTop(true);
+                //mPeerView.setZOrderOnTop(true);
                 mSelfView.setZOrderOnTop(false);
+
+                mPeerView.setZOrderMediaOverlay(true);
+                mSelfView.setZOrderMediaOverlay(false);
 
                 mSelfView.setX(0);
                 mSelfView.setY(0);
@@ -118,8 +121,10 @@ public class CallVideoGridView extends RelativeLayout implements IMultiVideoPane
                 FrameLayout.LayoutParams lay4 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                 mPeerView.setLayoutParams(lay4);
 
-                mPeerView.setZOrderOnTop(false);
+               // mPeerView.setZOrderOnTop(false);
                 mSelfView.setZOrderOnTop(true);
+                mPeerView.setZOrderMediaOverlay(false);
+                mSelfView.setZOrderMediaOverlay(true);
 
                 mPeerView.setX(0);
                 mPeerView.setY(0);

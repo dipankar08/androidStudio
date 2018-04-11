@@ -27,12 +27,11 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:maxLines="1"
-            android:text="-- Recent Contacts --"
-            app:customfont="Montserrat-Regular.ttf"
-            android:textSize="15dp"/>
+            android:textColor="#aaffffff"
+            android:paddingLeft="10dp"
+            android:text="Quick Contacts"
+            app:customfont="Montserrat-Bold.ttf"
+            android:textSize="12dp"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_quick"
             android:layout_width="match_parent"
@@ -43,19 +42,18 @@
         android:id="@+id/other_list_holder"
         android:layout_below="@+id/top_list_holder"
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:layout_height="match_parent">
         <in.co.dipankar.quickandorid.views.CustomFontTextView
             android:id="@+id/tv_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:maxLines="1"
-            android:text="-- Recent Calls --"
-            app:customfont="Montserrat-Regular.ttf"
-            android:textSize="15dp"/>
+            android:textColor="#aa000000"
+            android:text="Recent Calls"
+            android:paddingLeft="10dp"
+            app:customfont="Montserrat-Bold.ttf"
+            android:textSize="12dp"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_recent"
             android:layout_width="match_parent"

@@ -13,7 +13,7 @@
     <in.co.dipankar.quickandorid.views.CircleImageView
         android:layout_height="50dp"
         android:layout_width="50dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="3dp"
         android:layout_centerHorizontal="true"
         app:civ_dot_color="@color/grayLight"
@@ -28,9 +28,10 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/picture"
         android:layout_marginBottom="8dp"
-        android:textColor="#ffffff"
+        android:textColor="#ccffffff"
         android:maxLines="1"
         android:text="sample"
+        android:textAlignment="center"
         app:customfont="Montserrat-Regular.ttf"
         android:textSize="12dp"/>
     <in.co.dipankar.quickandorid.views.CustomFontTextView
@@ -41,6 +42,7 @@
         android:layout_below="@id/name"
         android:textColor="#95ffffff"
         android:maxLines="1"
+        android:textAlignment="center"
         android:text="Online now"
         app:customfont="Ubuntu-Regular.ttf"
         android:textSize="10dp"/>
