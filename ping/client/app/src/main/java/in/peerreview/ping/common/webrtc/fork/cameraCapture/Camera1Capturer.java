@@ -5,12 +5,17 @@ import android.media.MediaRecorder;
 import javax.annotation.Nullable;
 import org.webrtc.*;
 
-public class Camera1Capturer extends in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer {
+public class Camera1Capturer
+    extends in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer {
   private final boolean captureToTexture;
 
   public Camera1Capturer(
       String cameraName, CameraEventsHandler eventsHandler, boolean captureToTexture) {
-    super(cameraName, eventsHandler, new in.peerreview.ping.common.webrtc.fork.cameraCapture.Camera1Enumerator(captureToTexture));
+    super(
+        cameraName,
+        eventsHandler,
+        new in.peerreview.ping.common.webrtc.fork.cameraCapture.Camera1Enumerator(
+            captureToTexture));
     this.captureToTexture = captureToTexture;
   }
 
@@ -31,7 +36,8 @@ public class Camera1Capturer extends in.peerreview.ping.common.webrtc.fork.camer
         applicationContext,
         surfaceTextureHelper,
         mediaRecorder,
-        in.peerreview.ping.common.webrtc.fork.cameraCapture.Camera1Enumerator.getCameraIndex(cameraName),
+        in.peerreview.ping.common.webrtc.fork.cameraCapture.Camera1Enumerator.getCameraIndex(
+            cameraName),
         width,
         height,
         framerate);

@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-
+import in.co.dipankar.quickandorid.views.StateImageButton;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.call.addon.BaseAddonView;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.views.StateImageButton;
 
 public class CallOngoingPageView extends RelativeLayout {
 
@@ -95,7 +94,7 @@ public class CallOngoingPageView extends RelativeLayout {
         new OnClickListener() {
           @Override
           public void onClick(View v) {
-            mCallback.onClickToggleCamera(!camera.isViewEnabled());
+            // mCallback.onClickToggleCamera(!camera.isViewEnabled());
           }
         });
     speaker.setOnClickListener(

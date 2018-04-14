@@ -8,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-
-import in.peerreview.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.CircleImageView;
-
+import in.peerreview.ping.contracts.IRtcUser;
 import java.util.List;
 
 public class QuickContactAdapter extends RecyclerView.Adapter<QuickContactAdapter.MyViewHolder> {

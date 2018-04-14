@@ -13,7 +13,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

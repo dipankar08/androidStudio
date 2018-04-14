@@ -2,7 +2,6 @@ package in.peerreview.ping.common.model;
 
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-
 import java.util.List;
 
 public interface IContactManager {

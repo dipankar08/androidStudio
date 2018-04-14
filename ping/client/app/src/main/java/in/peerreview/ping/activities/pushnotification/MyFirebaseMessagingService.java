@@ -13,10 +13,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import in.peerreview.ping.activities.home.HomeActivity;
 import in.co.dipankar.quickandorid.utils.DLog;
-
+import in.peerreview.ping.activities.home.HomeActivity;
 import java.util.Random;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {

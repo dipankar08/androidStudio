@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
+import in.co.dipankar.quickandorid.views.CustomFontTextView;
 import in.peerreview.ping.R;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.call.subviews.AcceptRejectNotification;
@@ -25,10 +28,6 @@ import in.peerreview.ping.common.utils.CustomButtonSheetView;
 import in.peerreview.ping.common.utils.SheetItem;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.utils.DLog;
-import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
-import in.co.dipankar.quickandorid.views.CustomFontTextView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -251,8 +250,8 @@ public class CallActivity extends Activity implements ICallPage.IView {
         }
 
         @Override
-        public void onReject() {
-          mPresenter.rejectCall();
+        public void onReject(String msg) {
+          mPresenter.rejectCall(msg);
         }
       };
 
@@ -401,6 +400,139 @@ public class CallActivity extends Activity implements ICallPage.IView {
     mPresenter.onActivityResult(requestCode, resultCode, data);
   }
 
+  // Override function
+  @Override
+  public void switchToView(ICallPage.PageViewType type) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            switchToViewInternal(type);
+          }
+        });
+  }
+
+  @Override
+  public void showNetworkNotification(String process, String s) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            showNetworkNotificationInternal(process, s);
+          }
+        });
+  }
+
+  @Override
+  public void onCameraOff() {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            onCameraOffInternal();
+          }
+        });
+  }
+
+  @Override
+  public void onCameraOn() {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            onCameraOnInternal();
+          }
+        });
+  }
+
+  @Override
+  public void onRtcStat(Map<String, String> reports) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            onRtcStatInternal(reports);
+          }
+        });
+  }
+
+  @Override
+  public void toggleViewBasedOnVideoEnabled(boolean type) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            toggleViewBasedOnVideoEnabledInternal(type);
+          }
+        });
+  }
+
+  @Override
+  public void prepareCallUI(IRtcUser peer, ICallInfo callinfo) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            prepareCallUIIntrenal(peer, callinfo);
+          }
+        });
+  }
+
+  @Override
+  public void updateOutgoingView(String title, String subtitle) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            updateOutgoingViewInternal(title, subtitle);
+          }
+        });
+  }
+
+  @Override
+  public void updateIncomingView(String title, String subtitle) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            updateIncomingViewInternal(title, subtitle);
+          }
+        });
+  }
+
+  @Override
+  public void updateEndView(String title, String subtitle) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            updateEndViewInternal(title, subtitle);
+          }
+        });
+  }
+
+  @Override
+  public void updateOngoingView(String title, String subtitle) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            updateOngoingViewInternal(title, subtitle);
+          }
+        });
+  }
+
+  @Override
+  public void endActivity(int s) {
+    this.runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            endActivityInternal(s);
+          }
+        });
+  }
+
   private void hideAll() {
     mCallLandingPageView.requestFocus();
     mCallLandingPageView.setVisibility(View.GONE);
@@ -409,9 +541,8 @@ public class CallActivity extends Activity implements ICallPage.IView {
     mCallOngoingPageView.setVisibility(View.INVISIBLE);
     mCallEndedPageView.setVisibility(View.INVISIBLE);
   }
-  // all override
-  @Override
-  public void switchToView(ICallPage.PageViewType pageViewType) {
+
+  private void switchToViewInternal(ICallPage.PageViewType pageViewType) {
     DLog.e("Swicth To View: " + pageViewType);
     // Toast.makeText(getApplicationContext(), "Swicth To View: "+pageViewType,
     // Toast.LENGTH_SHORT).show();
@@ -456,7 +587,8 @@ public class CallActivity extends Activity implements ICallPage.IView {
         mCallVideoGridView.setVisibility(View.GONE);
         break;
     }
-    if (pageViewType == ICallPage.PageViewType.OUTGOING || pageViewType == ICallPage.PageViewType.INCOMMING) {
+    if (pageViewType == ICallPage.PageViewType.OUTGOING
+        || pageViewType == ICallPage.PageViewType.INCOMMING) {
       mMediaPlayer.start();
     } else {
       if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
@@ -466,8 +598,7 @@ public class CallActivity extends Activity implements ICallPage.IView {
   }
 
   @SuppressLint("ResourceAsColor")
-  @Override
-  public void showNetworkNotification(String type, String s) {
+  private void showNetworkNotificationInternal(String type, String s) {
     if (type.equals("success")) {
       mNotificationView.setBackgroundResource(R.color.Notification_Success);
       new Handler()
@@ -487,27 +618,23 @@ public class CallActivity extends Activity implements ICallPage.IView {
     mNotificationView.setVisibility(View.VISIBLE);
   }
 
-  @Override
-  public void onCameraOff() {
+  private void onCameraOffInternal() {
     DLog.e("onCameraOff");
     mCallVideoGridView.setVisibility(View.GONE);
     mIsCameraOpen = false;
   }
 
-  @Override
-  public void onCameraOn() {
+  private void onCameraOnInternal() {
     DLog.e("onCameraOn");
     mCallVideoGridView.setVisibility(View.VISIBLE);
     mIsCameraOpen = true;
   }
 
-  @Override
-  public void onRtcStat(Map<String, String> reports) {
+  private void onRtcStatInternal(Map<String, String> reports) {
     // DLog.e(reports.toString());
   }
 
-  @Override
-  public void toggleViewBasedOnVideoEnabled(boolean isVideoEnabled) {
+  private void toggleViewBasedOnVideoEnabledInternal(boolean isVideoEnabled) {
     if (isVideoEnabled) {
       mCallVideoGridView.setVisibility(View.GONE);
     } else {
@@ -532,8 +659,7 @@ public class CallActivity extends Activity implements ICallPage.IView {
         public void onCallListChange(List<ICallInfo> mCallInfo) {}
       };
 
-  @Override
-  public void prepareCallUI(IRtcUser peer, ICallInfo callinfo) {
+  private void prepareCallUIIntrenal(IRtcUser peer, ICallInfo callinfo) {
     if (callinfo.getIsVideo()) {
       mCallVideoGridView.setVisibility(View.VISIBLE);
       mCallIncomingPageView.renderVideoPeerView(peer);
@@ -555,8 +681,7 @@ public class CallActivity extends Activity implements ICallPage.IView {
     }
   }
 
-  @Override
-  public void updateEndView(String title, String subtitle) {
+  private void updateEndViewInternal(String title, String subtitle) {
     if (title != null) {
       mCallEndedPageView.updateTitle(title);
     }
@@ -565,8 +690,7 @@ public class CallActivity extends Activity implements ICallPage.IView {
     }
   }
 
-  @Override
-  public void updateOutgoingView(String title, String subtitle) {
+  private void updateOutgoingViewInternal(String title, String subtitle) {
     if (title != null) {
       mCallOutgoingPageView.updateTitle(title);
     }
@@ -575,8 +699,7 @@ public class CallActivity extends Activity implements ICallPage.IView {
     }
   }
 
-  @Override
-  public void updateIncomingView(String title, String subtitle) {
+  private void updateIncomingViewInternal(String title, String subtitle) {
     if (title != null) {
       mCallIncomingPageView.updateTitle(title);
     }
@@ -585,13 +708,24 @@ public class CallActivity extends Activity implements ICallPage.IView {
     }
   }
 
-  @Override
-  public void updateOngoingView(String title, String subtitle) {
+  private void updateOngoingViewInternal(String title, String subtitle) {
     if (title != null) {
       mCallOngoingPageView.updateTitle(title);
     }
     if (subtitle != null) {
       mCallOngoingPageView.updateSubtitle(subtitle);
     }
+  }
+
+  private void endActivityInternal(int sec) {
+    Handler handler = new Handler();
+
+    handler.postDelayed(
+        new Runnable() {
+          public void run() {
+            finish();
+          }
+        },
+        sec * 1000);
   }
 }

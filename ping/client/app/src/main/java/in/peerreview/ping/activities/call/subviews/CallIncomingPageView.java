@@ -7,14 +7,18 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import in.peerreview.ping.R;
+import in.peerreview.ping.common.utils.CustomButtonSheetView;
+import in.peerreview.ping.common.utils.SheetItem;
 import in.peerreview.ping.contracts.IRtcUser;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CallIncomingPageView extends RelativeLayout {
 
   public interface Callback {
     void onAccept();
 
-    void onReject();
+    void onReject(String msg);
   }
 
   private Callback mCallback;
@@ -24,6 +28,7 @@ public class CallIncomingPageView extends RelativeLayout {
   private View mRootView;
   private ViewletPeerInfoAudio mViewletPeerInfoAudio;
   private ViewletPeerInfoVideo mViewletPeerInfoVideo;
+  private CustomButtonSheetView mCustomButtonSheetView;
 
   public void setCallback(Callback callback) {
     mCallback = callback;
@@ -50,6 +55,7 @@ public class CallIncomingPageView extends RelativeLayout {
     initButtons();
     mViewletPeerInfoAudio = findViewById(R.id.peer_audio_info);
     mViewletPeerInfoVideo = findViewById(R.id.peer_video_info);
+    initButtonSheet();
   }
 
   private void initButtons() {
@@ -66,7 +72,15 @@ public class CallIncomingPageView extends RelativeLayout {
         new OnClickListener() {
           @Override
           public void onClick(View v) {
-            mCallback.onReject();
+            mCallback.onReject(null);
+          }
+        });
+    reject.setOnLongClickListener(
+        new OnLongClickListener() {
+          @Override
+          public boolean onLongClick(View v) {
+            mCustomButtonSheetView.show();
+            return true;
           }
         });
   }
@@ -89,5 +103,61 @@ public class CallIncomingPageView extends RelativeLayout {
 
   public void updateSubtitle(String title) {
     mViewletPeerInfoAudio.updateSubTitle(title);
+  }
+
+  private void initButtonSheet() {
+    mCustomButtonSheetView = findViewById(R.id.custom_endbutton_sheetview);
+    List<CustomButtonSheetView.ISheetItem> mSheetItems = new ArrayList<>();
+    mSheetItems.add(
+        new SheetItem(
+            102,
+            "I am in meeting!",
+            CustomButtonSheetView.Type.BUTTON,
+            new CustomButtonSheetView.Callback() {
+              @Override
+              public void onClick(int v) {
+                mCallback.onReject("I am in meeting!");
+              }
+            },
+            null));
+    mSheetItems.add(
+        new SheetItem(
+            102,
+            "I am busy now and will call you back later",
+            CustomButtonSheetView.Type.BUTTON,
+            new CustomButtonSheetView.Callback() {
+              @Override
+              public void onClick(int v) {
+                mCallback.onReject("I am busy now and will call you back later");
+              }
+            },
+            null));
+    mSheetItems.add(
+        new SheetItem(
+            102,
+            "Can you call me back after 1 hrs",
+            CustomButtonSheetView.Type.BUTTON,
+            new CustomButtonSheetView.Callback() {
+              @Override
+              public void onClick(int v) {
+                mCallback.onReject("Can you call me back after 1 hrs");
+              }
+            },
+            null));
+    mSheetItems.add(
+        new SheetItem(
+            102,
+            "Reject and schedule call",
+            CustomButtonSheetView.Type.BUTTON,
+            new CustomButtonSheetView.Callback() {
+              @Override
+              public void onClick(int v) {
+                mCallback.onReject("Reject and schedule call");
+              }
+            },
+            null));
+
+    mCustomButtonSheetView.addMenu(mSheetItems);
+    mCustomButtonSheetView.hide();
   }
 }

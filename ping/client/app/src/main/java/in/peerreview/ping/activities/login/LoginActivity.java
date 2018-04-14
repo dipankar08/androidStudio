@@ -24,14 +24,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
+import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.ping.R;
 import in.peerreview.ping.Utils;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.home.HomeActivity;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

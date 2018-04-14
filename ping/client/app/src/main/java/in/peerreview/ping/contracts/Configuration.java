@@ -7,4 +7,7 @@ public final class Configuration {
 
   public static String SIGNALING_ENDPOINT = "http://ping.dipankar.co.in:7000";
   public static final String SERVER_ENDPOINT = "http://ping.dipankar.co.in:7001";
+
+  // public static String SIGNALING_ENDPOINT = "http://172.21.157.242:7000";
+  // public static final String SERVER_ENDPOINT = "http://172.21.157.242:7001";
 }

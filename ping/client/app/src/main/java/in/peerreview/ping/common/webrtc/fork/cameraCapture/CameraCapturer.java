@@ -4,7 +4,6 @@ import android.content.Context;
 import android.media.MediaRecorder;
 import android.os.Handler;
 import android.os.Looper;
-
 import java.util.Arrays;
 import javax.annotation.Nullable;
 import org.webrtc.*;

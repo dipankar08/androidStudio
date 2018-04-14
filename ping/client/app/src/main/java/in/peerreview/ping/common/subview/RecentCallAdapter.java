@@ -8,12 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import in.co.dipankar.quickandorid.views.CircleImageView;
 import in.peerreview.ping.R;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.views.CircleImageView;
-
 import java.util.List;
 
 public class RecentCallAdapter extends RecyclerView.Adapter<RecentCallAdapter.MyViewHolder> {

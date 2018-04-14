@@ -52,4 +52,9 @@
         app:disable_background="@drawable/bg_big_circle_green"
         app:is_enable="true" />
     </LinearLayout>
+
+    <in.peerreview.ping.common.utils.CustomButtonSheetView
+        android:id="@+id/custom_endbutton_sheetview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>

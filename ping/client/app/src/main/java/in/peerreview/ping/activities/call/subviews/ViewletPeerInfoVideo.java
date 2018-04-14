@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import in.peerreview.ping.R;
-import in.peerreview.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.CircleImageView;
 import in.co.dipankar.quickandorid.views.CustomFontTextView;
+import in.peerreview.ping.R;
+import in.peerreview.ping.contracts.IRtcUser;
 
 public class ViewletPeerInfoVideo extends RelativeLayout {
 

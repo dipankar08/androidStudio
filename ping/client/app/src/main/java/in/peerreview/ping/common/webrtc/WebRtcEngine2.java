@@ -10,6 +10,7 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.ping.common.webrtc.fork.effect.EffectCamera1Enumerator;
 import in.peerreview.ping.common.webrtc.fork.effect.RTCVideoEffector;
 import in.peerreview.ping.common.webrtc.fork.filecapture.FileVideoCapturer;
@@ -17,8 +18,6 @@ import in.peerreview.ping.common.webrtc.fork.screencapture.ScreenCapturerAndroid
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.ICallSignalingApi;
 import in.peerreview.ping.contracts.IRtcEngine;
-import in.co.dipankar.quickandorid.utils.DLog;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -227,6 +226,9 @@ public class WebRtcEngine2 implements IRtcEngine {
 
   @Override
   public void toggleVideo(final boolean isOn) {
+    if (mLocalVideoTrack == null) {
+      return;
+    }
     executor.execute(
         new Runnable() {
           @Override
@@ -238,6 +240,9 @@ public class WebRtcEngine2 implements IRtcEngine {
 
   @Override
   public void toggleAudio(final boolean isOn) {
+    if (mLocalAudioTrack == null) {
+      return;
+    }
     executor.execute(
         new Runnable() {
           @Override
@@ -249,6 +254,9 @@ public class WebRtcEngine2 implements IRtcEngine {
 
   @Override
   public void toggleCamera(boolean isOn) {
+    if (mVideoCapturer == null) {
+      return;
+    }
     executor.execute(
         new Runnable() {
           @Override

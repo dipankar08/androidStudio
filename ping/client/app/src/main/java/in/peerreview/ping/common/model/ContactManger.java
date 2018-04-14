@@ -3,7 +3,6 @@ package in.peerreview.ping.common.model;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -98,6 +97,9 @@ public class ContactManger implements IContactManager {
 
   @Override
   public void changeOnlineState(IRtcUser user, boolean isOnline) {
+    if (user == null) {
+      return;
+    }
     ((RtcUser) user).mOnline = isOnline;
     // TODO: We need update the state if the user is present
     boolean isPresent = false;

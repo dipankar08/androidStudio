@@ -5,9 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
-
-import in.peerreview.ping.contracts.IRtcUser;
 import in.co.dipankar.quickandorid.views.StateImageButton;
+import in.peerreview.ping.contracts.IRtcUser;
 
 public class CallOutgoingPageView extends RelativeLayout {
   public interface Callback {

@@ -3,6 +3,10 @@ package in.peerreview.ping.activities.application;
 import android.app.Application;
 import android.content.res.Configuration;
 import android.provider.Settings;
+import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.INetwork;
+import in.co.dipankar.quickandorid.utils.Network;
+import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.ping.common.model.ContactManger;
 import in.peerreview.ping.common.signaling.SocketIOSignaling;
 import in.peerreview.ping.common.webrtc.RtcDeviceInfo;
@@ -11,11 +15,6 @@ import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.ICallSignalingApi;
 import in.peerreview.ping.contracts.IRtcDeviceInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.utils.DLog;
-import in.co.dipankar.quickandorid.utils.INetwork;
-import in.co.dipankar.quickandorid.utils.Network;
-import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
-
 import java.io.IOException;
 
 public class PingApplication extends Application {

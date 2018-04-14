@@ -17,12 +17,13 @@ import in.peerreview.ping.contracts.ICallSignalingApi;
 import in.peerreview.ping.contracts.IMultiVideoPane;
 import in.peerreview.ping.contracts.IRtcEngine;
 import in.peerreview.ping.contracts.IRtcUser;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
@@ -44,6 +45,7 @@ public class CallPresenter implements ICallPage.IPresenter {
   SessionDescription mPeerSdp;
 
   DataUsesReporter mDataUsesReporter;
+  private static final ExecutorService mExecutor = Executors.newSingleThreadExecutor();
 
   public CallPresenter(
       ICallPage.IView view,
@@ -54,6 +56,7 @@ public class CallPresenter implements ICallPage.IPresenter {
     mPeerRtcUser = peer;
     mMultiVideoPane = multiVideoPane;
     init();
+
     this.mCallInfo =
         new CallInfo(
             getRandomCallId(),
@@ -66,9 +69,7 @@ public class CallPresenter implements ICallPage.IPresenter {
             "0 Kb");
   }
 
-  // this is a function which allows to have a call when other call ends with same presenter
-  @Override
-  public void reset(IRtcUser peer, ICallInfo.ShareType shareType) {
+  public void resetInternal(IRtcUser peer, ICallInfo.ShareType shareType) {
     mPeerRtcUser = peer;
     this.mCallInfo =
         new CallInfo(
@@ -201,8 +202,140 @@ public class CallPresenter implements ICallPage.IPresenter {
         }
       };
 
+  // All Override functiosn..
   @Override
   public void startOutgoingCall() {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            startOutgoingCallInternal();
+          }
+        });
+  }
+
+  @Override
+  public void startIncomingCall(String callId, SessionDescription sdp) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            startIncomingCallInternal(callId, sdp);
+          }
+        });
+  }
+
+  @Override
+  public void endCall() {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            endCallInternal();
+          }
+        });
+  }
+
+  @Override
+  public void acceptCall() {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            acceptCallInternal();
+          }
+        });
+  }
+
+  @Override
+  public void rejectCall(String msg) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            rejectCallInternal(msg);
+          }
+        });
+  }
+
+  @Override
+  public void toggleVideo(boolean b) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            toggleVideoInternal(b);
+          }
+        });
+  }
+
+  @Override
+  public void toggleCamera(boolean b) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            toggleCameraInternal(b);
+          }
+        });
+  }
+
+  @Override
+  public void toggleAudio(boolean b) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            toggleAudioInternal(b);
+          }
+        });
+  }
+
+  @Override
+  public void toggleSpeaker(boolean b) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            toggleSpeakerInternal(b);
+          }
+        });
+  }
+
+  @Override
+  public void finish() {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            finishInternal();
+          }
+        });
+  }
+
+  @Override
+  public void changeAudioBitrate(int i) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            changeAudioBitrateInternal(i);
+          }
+        });
+  }
+
+  @Override
+  public void reset(IRtcUser peer, ICallInfo.ShareType shareType) {
+    mExecutor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            resetInternal(peer, shareType);
+          }
+        });
+  }
+
+  private void startOutgoingCallInternal() {
     if (mCallInfo == null) {
       return;
     }
@@ -221,8 +354,7 @@ public class CallPresenter implements ICallPage.IPresenter {
     mView.switchToView(ICallPage.PageViewType.OUTGOING);
   }
 
-  @Override
-  public void startIncomingCall(String callId, SessionDescription sdp) {
+  public void startIncomingCallInternal(String callId, SessionDescription sdp) {
     if (mCallInfo == null) {
       return;
     }
@@ -249,13 +381,11 @@ public class CallPresenter implements ICallPage.IPresenter {
     mView.switchToView(ICallPage.PageViewType.INCOMMING);
   }
 
-  @Override
-  public void endCall() {
+  private void endCallInternal() {
     handleEndCallInternal(ICallSignalingApi.EndCallType.NORMAL_END, "You ended the call");
   }
 
-  @Override
-  public void acceptCall() {
+  private void acceptCallInternal() {
     assert (mWebRtcEngine != null);
     mWebRtcEngine.setRemoteDescriptionToPeerConnection(mPeerSdp);
     mWebRtcEngine.acceptCall(mCallId);
@@ -264,44 +394,39 @@ public class CallPresenter implements ICallPage.IPresenter {
     startTimerInternal();
   }
 
-  @Override
-  public void rejectCall() {
+  private void rejectCallInternal(String msg) {
     assert (mWebRtcEngine != null);
-    mSignalingApi.sendEndCall(
-        mCallId, ICallSignalingApi.EndCallType.PEER_REJECT, " You have rejected this call");
+    if (msg == null) {
+      msg = "Your friend has rejected this call";
+    }
+    mSignalingApi.sendEndCall(mCallId, ICallSignalingApi.EndCallType.PEER_REJECT, msg);
     mWebRtcEngine.rejectCall(mCallId);
-    handleEndCallInternal(
-        ICallSignalingApi.EndCallType.PEER_REJECT, " You have rejected this call");
+    handleEndCallInternal(ICallSignalingApi.EndCallType.PEER_REJECT, msg);
   }
 
-  @Override
-  public void toggleVideo(boolean isOn) {
+  private void toggleVideoInternal(boolean isOn) {
     if (mWebRtcEngine != null) {
       mWebRtcEngine.toggleVideo(isOn);
     }
   }
 
-  @Override
-  public void toggleCamera(boolean isOn) {
+  private void toggleCameraInternal(boolean isOn) {
     if (mWebRtcEngine != null) {
       mWebRtcEngine.toggleCamera(isOn);
     }
   }
 
-  @Override
-  public void toggleAudio(boolean isOn) {
+  private void toggleAudioInternal(boolean isOn) {
     if (mWebRtcEngine != null) {
       mWebRtcEngine.toggleAudio(isOn);
     }
   }
 
-  @Override
-  public void toggleSpeaker(boolean isOn) {
+  private void toggleSpeakerInternal(boolean isOn) {
     // Note to do.
   }
 
-  @Override
-  public void finish() {
+  private void finishInternal() {
     // Please cleanup Eveeything.
     mWebRtcEngine.removeCallback(mWebrtcEngineCallback);
     mSignalingApi.removeCallback(mSignalingCallback);
@@ -318,8 +443,7 @@ public class CallPresenter implements ICallPage.IPresenter {
     mWebRtcEngine.onActivityResult(requestCode, requestCode, data);
   }
 
-  @Override
-  public void changeAudioBitrate(int i) {
+  private void changeAudioBitrateInternal(int i) {
     // TODO mWebRtcEngine
     // How to chnage Audio BitRtae at runtime.
   }
@@ -327,18 +451,15 @@ public class CallPresenter implements ICallPage.IPresenter {
   private void handleEndCallInternal(ICallSignalingApi.EndCallType type, String reason) {
     mDataUsesReporter.stop();
     Map<String, Long> info = mDataUsesReporter.getInfo();
-    reason =
+    String moreinfo =
         "This call is ended because of "
             + type.toString()
-            + "("
-            + reason
-            + ")"
-            + ". The Duration of the call is:"
+            + ". The Duration of the call is: "
             + info.get("time")
-            + "sec and the total data uses is:"
+            + " sec and the total data uses is: "
             + info.get("data")
             + " kb";
-    mView.updateEndView(type.toString().toUpperCase(), reason);
+    mView.updateEndView(reason, moreinfo);
     mView.switchToView(ICallPage.PageViewType.ENDED);
     if (mWebRtcEngine != null) {
       mWebRtcEngine.endCall();
@@ -349,6 +470,8 @@ public class CallPresenter implements ICallPage.IPresenter {
     contactManager.addCallInfo(mCallInfo);
     // Notify application that call is now done
     PingApplication.Get().setCurrentCallInfo(null);
+    // let ends this activity after 5 sec
+    mView.endActivity(5);
   }
 
   private String getRandomCallId() {

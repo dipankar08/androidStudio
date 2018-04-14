@@ -3,12 +3,12 @@ package in.peerreview.ping.common.signaling;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.Configuration;
 import in.peerreview.ping.contracts.ICallSignalingApi;
 import in.peerreview.ping.contracts.IRtcDeviceInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.utils.DLog;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -676,5 +676,4 @@ public class SocketIOSignaling implements ICallSignalingApi {
   public void onPause() {
     disconnect();
   }
-
 }

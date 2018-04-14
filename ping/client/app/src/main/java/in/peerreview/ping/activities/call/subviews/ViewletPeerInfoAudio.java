@@ -1,5 +1,6 @@
 package in.peerreview.ping.activities.call.subviews;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
@@ -9,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import in.co.dipankar.quickandorid.views.CircleImageView;
 import in.peerreview.ping.R;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.views.CircleImageView;
 
 public class ViewletPeerInfoAudio extends RelativeLayout {
 
@@ -55,6 +56,7 @@ public class ViewletPeerInfoAudio extends RelativeLayout {
     mContext = context;
   }
 
+  @SuppressLint("SetTextI18n")
   public void updateView(IRtcUser peer) {
     if (peer != null) {
       Glide.with(mContext).load(peer.getProfilePictureUrl()).into(mPeerImage);

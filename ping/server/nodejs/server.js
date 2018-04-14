@@ -552,7 +552,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         switch(type) {
             case ENDCALL_TYPE_PEER_REJECT:
                 // Notify author
-                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_REJECT,"This call is rejceted by your friend")
+                var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_PEER_REJECT,details.reason)
                 sendToSpacific(callinfo.author,TOPIC_OUT_ENDCALL, endCallDetails1)
                 // Notify Other endpoint
                 var endCallDetails1 = _getEndCallPayload(details.call_id,ENDCALL_TYPE_SELF_REJECT,"You have rejceted this call from other mobile")

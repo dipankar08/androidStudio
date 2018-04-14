@@ -1,7 +1,5 @@
 package in.peerreview.ping.common.utils;
 
-
-
 /** Created by dip on 4/1/18. */
 public class SheetItem implements CustomButtonSheetView.ISheetItem {
   int mId;
@@ -11,13 +9,13 @@ public class SheetItem implements CustomButtonSheetView.ISheetItem {
   CharSequence[] mPossibleValue;
 
   public SheetItem(
-      int i,
-      String s,
+      int id,
+      String text,
       CustomButtonSheetView.Type type,
       CustomButtonSheetView.Callback callback,
       CharSequence[] mPossibleValue) {
-    mId = i;
-    mName = s;
+    mId = id;
+    mName = text;
     mCallback = callback;
     this.mPossibleValue = mPossibleValue;
     mType = type;

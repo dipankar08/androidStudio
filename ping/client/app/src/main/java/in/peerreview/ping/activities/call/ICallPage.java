@@ -3,7 +3,6 @@ package in.peerreview.ping.activities.call;
 import android.content.Intent;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-
 import java.util.Map;
 import org.webrtc.SessionDescription;
 
@@ -40,6 +39,8 @@ public interface ICallPage {
     void updateEndView(String title, String subtitle);
 
     void updateOngoingView(String title, String subtitle);
+
+    void endActivity(int sec);
   }
 
   public interface IPresenter {
@@ -52,7 +53,7 @@ public interface ICallPage {
 
     void acceptCall();
 
-    void rejectCall();
+    void rejectCall(String msg);
 
     void toggleVideo(boolean isOn);
 

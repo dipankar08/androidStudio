@@ -3,7 +3,6 @@ package in.peerreview.ping.activities.home;
 import android.annotation.SuppressLint;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-
 import java.util.List;
 import org.webrtc.SessionDescription;
 

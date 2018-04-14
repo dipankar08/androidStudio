@@ -1,7 +1,6 @@
 package in.peerreview.ping.common.model;
 
 import in.peerreview.ping.contracts.ICallInfo;
-
 import java.util.HashMap;
 import java.util.Map;
 

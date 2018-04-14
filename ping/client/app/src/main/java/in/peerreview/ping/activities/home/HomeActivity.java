@@ -11,6 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
+import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
+import in.co.dipankar.quickandorid.views.CustomFontTextView;
 import in.peerreview.ping.R;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.call.CallActivity;
@@ -21,10 +24,6 @@ import in.peerreview.ping.common.utils.CustomButtonSheetView;
 import in.peerreview.ping.common.utils.SheetItem;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.utils.DLog;
-import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
-import in.co.dipankar.quickandorid.views.CustomFontTextView;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.webrtc.SessionDescription;
@@ -241,21 +240,70 @@ public class HomeActivity extends Activity implements IHome.View {
             new RecyclerTouchListener.ClickListener() {
               @Override
               public void onClick(View view, final int position) {
-                mCurrentFocusUser = mQuickUserList.get(position);
-                mCustomButtonSheetView.show();
+                if (position < mQuickUserList.size()) {
+                  mCurrentFocusUser = mQuickUserList.get(position);
+                  mCustomButtonSheetView.show();
+                }
               }
 
               @Override
               public void onLongClick(View view, int position) {
-                mCurrentFocusUser = mQuickUserList.get(position);
-                mCustomButtonSheetView.show();
+                if (position < mQuickUserList.size()) {
+                  mCurrentFocusUser = mQuickUserList.get(position);
+                  mCustomButtonSheetView.show();
+                }
               }
             }));
   }
 
-  @SuppressLint("ResourceAsColor")
+  // All Override
   @Override
   public void showNetworkNotification(String type, String s) {
+    runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            showNetworkNotificationInternal(type, s);
+          }
+        });
+  }
+
+  @Override
+  public void updateQuickUserView(List<IRtcUser> userList) {
+    runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            updateQuickUserViewInternal(userList);
+          }
+        });
+  }
+
+  @Override
+  public void updateRecentCallView(List<ICallInfo> mCallInfo) {
+    runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            updateRecentCallViewInternal(mCallInfo);
+          }
+        });
+  }
+
+  @Override
+  public void navigateToInComingCallView(
+      String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled) {
+    runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            navigateToInComingCallViewInternal(callId, sdp, rtcUser, isVideoEnabled);
+          }
+        });
+  }
+
+  @SuppressLint("ResourceAsColor")
+  private void showNetworkNotificationInternal(String type, String s) {
     if (type.equals("success")) {
       mNotificationView.setBackgroundResource(R.color.Notification_Success);
       new Handler()
@@ -275,24 +323,21 @@ public class HomeActivity extends Activity implements IHome.View {
     mNotificationView.setVisibility(View.VISIBLE);
   }
 
-  @Override
-  public void updateQuickUserView(List<IRtcUser> userList) {
+  private void updateQuickUserViewInternal(List<IRtcUser> userList) {
     if (userList != null) {
       mQuickUserList = userList;
       mQuickContactAdapter.updateList(mQuickUserList);
     }
   }
 
-  @Override
-  public void updateRecentCallView(List<ICallInfo> mCallInfo) {
+  private void updateRecentCallViewInternal(List<ICallInfo> mCallInfo) {
     if (mCallInfo != null) {
       mRecentCallList = mCallInfo;
       mRecentCallAdapter.updateList(mRecentCallList);
     }
   }
 
-  @Override
-  public void navigateToInComingCallView(
+  private void navigateToInComingCallViewInternal(
       String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled) {
     ICallInfo.ShareType shareType =
         isVideoEnabled ? ICallInfo.ShareType.VIDEO_CALL : ICallInfo.ShareType.AUDIO_CALL;

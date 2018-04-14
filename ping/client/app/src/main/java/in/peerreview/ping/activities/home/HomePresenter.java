@@ -4,15 +4,14 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.Network;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.common.model.IContactManager;
 import in.peerreview.ping.contracts.Configuration;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.ICallSignalingApi;
 import in.peerreview.ping.contracts.IRtcUser;
-import in.co.dipankar.quickandorid.utils.DLog;
-import in.co.dipankar.quickandorid.utils.Network;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -168,14 +167,6 @@ public class HomePresenter implements IHome.Presenter {
   @Override
   public void requestSdp(String pending_call_id) {
     mPendingCallId = pending_call_id;
-    /*
-    executor.execute(new Runnable() {
-        @Override
-        public void run() {
-            //requestSdpInternal(pending_call_id);
-        }
-    });
-    */
   }
 
   public void invokePendingCall() {

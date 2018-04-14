@@ -1,6 +1,5 @@
 package in.peerreview.ping.contracts;
 
-
 public interface ICallInfo {
   String getId();
 
