@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:background="#000000"
+    android:background="@null"
     android:layout_height="match_parent">
 
     <in.peerreview.ping.activities.call.subviews.CallVideoGridView
         android:id="@+id/call_video_grid_view"
         android:visibility="gone"
+        android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </in.peerreview.ping.activities.call.subviews.CallVideoGridView>
@@ -17,6 +18,7 @@
     <in.peerreview.ping.activities.call.subviews.CallLandingPageView
         android:id="@+id/call_landing_page_view"
         android:visibility="gone"
+        android:background="@null"
         android:descendantFocusability = "blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,6 +28,7 @@
         android:id="@+id/call_ended_page_view"
         android:layout_width="match_parent"
         android:visibility="gone"
+        android:background="@null"
     android:descendantFocusability = "blocksDescendants"
         android:layout_height="match_parent">
     </in.peerreview.ping.activities.call.subviews.CallEndedPageView>
@@ -34,6 +37,7 @@
         android:id="@+id/call_incoming_page_view"
         android:layout_width="match_parent"
         android:visibility="gone"
+        android:background="@null"
         android:descendantFocusability = "blocksDescendants"
         android:layout_height="match_parent">
     </in.peerreview.ping.activities.call.subviews.CallIncomingPageView>
@@ -41,6 +45,7 @@
     <in.peerreview.ping.activities.call.subviews.CallOngoingPageView
         android:id="@+id/call_ongoing_page_view"
         android:visibility="gone"
+        android:background="@null"
         android:descendantFocusability = "blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -51,6 +56,7 @@
         android:layout_width="match_parent"
     android:descendantFocusability = "blocksDescendants"
     android:visibility="gone"
+        android:background="@null"
         android:layout_height="match_parent">
     </in.peerreview.ping.activities.call.subviews.CallOutgoingPageView>
 
@@ -60,8 +66,10 @@
         android:padding="2dp"
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:textColor="#ffffffff"
-        android:background="@null"
+        android:textColor="?attr/primaryTextColor"
+        android:background="@color/red900"
+        android:text="Not connected"
+        android:visibility="gone"
         android:layout_above="@id/recycler_view"
         app:customfont="Montserrat-Regular.ttf"
         android:textSize="10dp" />
@@ -77,11 +85,13 @@
     <in.peerreview.ping.common.webrtc.RtcStatView
         android:id="@+id/rtc_stat_view"
         android:visibility="gone"
+        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <in.peerreview.ping.common.utils.CustomButtonSheetView
         android:id="@+id/custom_button_sheetview"
+        android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -89,6 +99,7 @@
     <in.peerreview.ping.activities.call.subviews.AcceptRejectNotification
         android:id="@+id/peer_notification"
         android:layout_width="match_parent"
+        android:background="@null"
         android:visibility="gone"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

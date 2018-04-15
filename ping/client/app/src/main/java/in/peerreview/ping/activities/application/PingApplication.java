@@ -1,8 +1,14 @@
 package in.peerreview.ping.activities.application;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
+
+import com.google.gson.Gson;
+
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.INetwork;
 import in.co.dipankar.quickandorid.utils.Network;
@@ -27,6 +33,7 @@ public class PingApplication extends Application {
 
   private ICallSignalingApi mCallSignalingApi;
   private INetwork mNetwork;
+  private boolean isNightModeEnabled = false;
 
   private static PingApplication sPingApplication;
   // Called when the application is starting, before any other application objects have been
@@ -47,17 +54,16 @@ public class PingApplication extends Application {
     mSelfDevice = new RtcDeviceInfo(deviceid, android.os.Build.MODEL, "10");
 
     // Restoring User..
-    String userInfoStr = SharedPrefsUtil.getInstance().getString("self_user_info", null);
-    if (userInfoStr != null) {
-      try {
-        mSelfUser = (RtcUser) SocketIOSignaling.Base64Coder.fromString(userInfoStr);
-        mCallSignalingApi = new SocketIOSignaling(mSelfUser, mSelfDevice);
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-      }
+    Gson gson = new Gson();
+    String json = SharedPrefsUtil.getInstance().getString("self_user_info", null);
+    if (json == null) {
+      mSelfUser = null;
     }
+    mSelfUser = gson.fromJson(json, RtcUser.class);
+
+    SharedPreferences mPrefs =  PreferenceManager.getDefaultSharedPreferences(this);
+    this.isNightModeEnabled = mPrefs.getBoolean("NIGHT_MODE", false);
+
   }
 
   // Called by the system when the device configuration changes while your component is running.
@@ -85,13 +91,9 @@ public class PingApplication extends Application {
 
   public void setMe(IRtcUser user) {
     mSelfUser = user;
-    try {
-      String userStr = SocketIOSignaling.Base64Coder.toString(user);
-      SharedPrefsUtil.getInstance().setString("self_user_info", userStr);
-      DLog.e("Saved user");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    Gson gson = new Gson();
+    String json = gson.toJson(user);
+    SharedPrefsUtil.getInstance().setString("self_user_info", json);
   }
 
   public IRtcUser getMe() {
@@ -143,11 +145,18 @@ public class PingApplication extends Application {
     return mNetwork;
   }
 
+  @Nullable
   public ICallInfo getCurrentCallInfo() {
     return mCallInfo;
   }
 
   public void setCurrentCallInfo(ICallInfo callInfo) {
     mCallInfo = callInfo;
+  }
+  public boolean isNightModeEnabled() {
+    return isNightModeEnabled;
+  }
+  public void setIsNightModeEnabled(boolean isNightModeEnabled) {
+    this.isNightModeEnabled = isNightModeEnabled;
   }
 }

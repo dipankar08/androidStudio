@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <!-- Light color Themes -->
+    <color name="primaryTextColorLight">#33343B</color>
+    <color name="secondaryTextColorLight">#8033343B</color>
+    <color name="primaryBackgroundColorLight">#FFFFFF</color>
+    <color name="secondaryBackgroundColorLight">#F2F2F3</color>
+
+    <color name="inversePrimaryTextColorLight">#FFFFFF</color>
+    <color name="inverseSecondaryTextColorLight">#F2F2F3</color>
+    <color name="inverseBackgroundColorLight">#2979FF</color>
+
+    <!-- Dark color theme -->
+    <color name="primaryTextColorDark">#FFFFFF</color>
+    <color name="secondaryTextColorDark">#8033343B</color>
+    <color name="primaryBackgroundColorDark">#33343B</color>
+    <color name="secondaryBackgroundColorDark">#8033343B</color>
+
+    <color name="inversePrimaryTextColorDark">#FFFFFF</color>
+    <color name="inverseSecondaryTextColorDark">#F2F2F3</color>
+    <color name="inverseBackgroundColorDark">#8033343B</color>
+
+    <!-- other -->
     <color name="Notification_Progress">#57cabf</color>
     <color name="Notification_Success">#9de919</color>
     <color name="Notification_Error">#b91765</color>
 
+    <color name="red">#B71C1C</color>
+    <color name="green">#43A047</color>
 
-    <color name="grayLight">#ccE0E0E0</color>
+    <!-- Other color to be removed -->
+    <color name="colorPrimary">#B71C1C</color>
+    <color name="colorPrimaryDark">#B71C1C</color>
+    <color name="colorAccent">#B71C1C</color>
+    <color name="grayLight">#B71C1C</color>
 
-    <color name="green600">#43A047</color>
-    <color name="green900">#1B5E20</color>
+    <color name="green600">#B71C1C</color>
+    <color name="green900">#B71C1C</color>
 
     <color name="red900">#B71C1C</color>
 
-    <color name="red">#B71C1C</color>
-    <color name="green">#43A047</color>
+
 
 
 </resources>

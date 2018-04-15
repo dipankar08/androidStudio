@@ -136,7 +136,7 @@ public class CallActivity extends Activity implements ICallPage.IView {
           @Override
           public boolean onLongClick(View v) {
             mCustomButtonSheetView.show();
-            return false;
+            return true;
           }
         });
   }

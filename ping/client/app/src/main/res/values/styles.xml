@@ -1,8 +1,39 @@
 <resources>
 
-    <!-- Base application theme. -->
+
+    <!-- Light base activity theme -->
+    <style name="ActivityTheme.Primary.Base.Light" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryTextColor">@color/primaryTextColorLight</item>
+        <item name="secondaryTextColor">@color/secondaryTextColorLight</item>
+        <item name="primaryBackgroundColor">@color/primaryBackgroundColorLight</item>
+        <item name="secondaryBackgroundColor">@color/secondaryBackgroundColorLight</item>
+
+        <item name="inversePrimaryTextColor">@color/inversePrimaryTextColorLight</item>
+        <item name="inverseSecondaryTextColor">@color/inverseSecondaryTextColorLight</item>
+        <item name="inverseBackgroundColor">@color/inverseBackgroundColorLight</item>
+
+        <item name="iconPlaceholder">@drawable/ic_back_white_24</item>
+    </style>
+
+    <!-- Dark base activity theme -->
+    <style name="ActivityTheme.Primary.Base.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryTextColor">@color/primaryTextColorDark</item>
+        <item name="secondaryTextColor">@color/secondaryTextColorDark</item>
+        <item name="primaryBackgroundColor">@color/primaryBackgroundColorDark</item>
+        <item name="secondaryBackgroundColor">@color/secondaryBackgroundColorDark</item>
+
+        <item name="inversePrimaryTextColor">@color/inversePrimaryTextColorDark</item>
+        <item name="inverseSecondaryTextColor">@color/inverseSecondaryTextColorDark</item>
+        <item name="inverseBackgroundColor">@color/inverseBackgroundColorDark</item>
+
+        <item name="iconPlaceholder">@drawable/ic_back_white_24</item>
+    </style>
+
+    <!--
+
+   Base application theme.
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -14,5 +45,15 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-
+-->
+    <style name="ActivityThemeLight" parent="ActivityTheme.Primary.Base.Light">
+        <item name="android:windowBackground">@color/primaryBackgroundColorLight</item>
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:background">@color/primaryBackgroundColorLight</item>
+    </style>
+    <style name="ActivityThemeDark" parent="ActivityTheme.Primary.Base.Dark">
+        <item name="android:windowBackground">@color/primaryBackgroundColorDark</item>
+        <item name="android:textColor">@color/primaryTextColorDark</item>
+        <item name="android:background">@color/primaryBackgroundColorDark</item>
+    </style>
 </resources>

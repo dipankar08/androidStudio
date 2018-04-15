@@ -1,9 +1,13 @@
 package in.peerreview.ping.activities.login;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +38,9 @@ import in.peerreview.ping.contracts.IRtcUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class LoginActivity extends AppCompatActivity {
 
   private GoogleApiClient googleApiClient;
@@ -46,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     Utils.makeFullScreen(this);
     setContentView(R.layout.activity_login);
-    IRtcUser user = getUser();
+    IRtcUser user = PingApplication.Get().getMe();
+    printKeyHash();
     if (user != null) {
       navigateToHomeScreen(user);
     } else {
@@ -180,19 +188,7 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void saveUser(IRtcUser user) {
-    Gson gson = new Gson();
-    String json = gson.toJson(user);
-    SharedPrefsUtil.getInstance().setString("saved_user", json);
-  }
-
-  private IRtcUser getUser() {
-    Gson gson = new Gson();
-    String json = SharedPrefsUtil.getInstance().getString("saved_user", null);
-    if (json == null) {
-      return null;
-    }
-    RtcUser obj = gson.fromJson(json, RtcUser.class);
-    return obj;
+    PingApplication.Get().setMe(user);
   }
 
   private void navigateToHomeScreen(IRtcUser user) {
@@ -209,5 +205,20 @@ public class LoginActivity extends AppCompatActivity {
 
   private void onLoginFailed() {
     Toast.makeText(this, "Not able to Signin. Try again", Toast.LENGTH_SHORT);
+  }
+  private void printKeyHash() {
+    // Add code to print out the key hash
+    try {
+      PackageInfo info = getPackageManager().getPackageInfo("in.peerreview.ping", PackageManager.GET_SIGNATURES);
+      for (Signature signature : info.signatures) {
+        MessageDigest md = MessageDigest.getInstance("SHA");
+        md.update(signature.toByteArray());
+        Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+      }
+    } catch (PackageManager.NameNotFoundException e) {
+      Log.e("KeyHash:", e.toString());
+    } catch (NoSuchAlgorithmException e) {
+      Log.e("KeyHash:", e.toString());
+    }
   }
 }

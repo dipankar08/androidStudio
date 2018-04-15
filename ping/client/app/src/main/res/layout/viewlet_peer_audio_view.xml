@@ -3,13 +3,14 @@
 <RelativeLayout android:id="@+id/peer_info"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@null"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:id="@+id/peer_back"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:background="#000000"
+        android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <LinearLayout
@@ -19,6 +20,7 @@
         android:gravity="center"
         android:padding="50dp"
         android:orientation="vertical"
+        android:background="@null"
         android:layout_height="wrap_content">
         <in.co.dipankar.quickandorid.views.CircleImageView
             android:id="@+id/peer_img"
@@ -26,13 +28,15 @@
             android:layout_height="110dp"
             android:layout_marginBottom="15dp"
             app:civ_border_color="@color/grayLight"
+            android:background="@null"
             app:civ_border_width="3dp" />
         <in.co.dipankar.quickandorid.views.CustomFontTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:textColor="#ffffff"
+            android:textColor="?attr/primaryTextColor"
+            android:background="@null"
             android:maxLines="2"
             android:textAlignment="center"
             app:customfont="Ubuntu-Regular.ttf"
@@ -44,7 +48,8 @@
             android:paddingRight="10dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:textColor="#ffffff"
+            android:textColor="?attr/primaryTextColor"
+            android:background="@null"
             android:maxLines="8"
             android:textAlignment="center"
             app:customfont="Ubuntu-Regular.ttf"

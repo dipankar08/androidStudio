@@ -30,11 +30,13 @@
 
     <!-- Buttons -->
     <LinearLayout
+        android:id="@+id/buttonHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="center"
+        android:background="@null"
         android:layout_marginBottom="40dp">
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/toggle_video"

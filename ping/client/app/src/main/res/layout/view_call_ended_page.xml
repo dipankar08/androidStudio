@@ -19,6 +19,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="center"
+        android:background="@null"
         android:layout_marginBottom="40dp">
         <in.co.dipankar.quickandorid.views.StateImageButton
             android:id="@+id/close"

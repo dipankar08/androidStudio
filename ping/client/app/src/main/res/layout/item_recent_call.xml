@@ -16,6 +16,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/user1"
+        android:background="@null"
         app:civ_border_color="#000000"
         />
     <LinearLayout
@@ -28,15 +29,17 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:textColor="?attr/primaryTextColor"
             android:text="Simpale"
+            android:background="@null"
             app:customfont="Montserrat-Regular.ttf"
             android:textSize="13dp"/>
         <in.co.dipankar.quickandorid.views.CustomFontTextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:textColor="?attr/primaryTextColor"
+            android:background="@null"
             android:text="Simpale"
             app:customfont="Montserrat-Regular.ttf"
             android:textSize="10dp"/>
@@ -47,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#000000"
+        android:textColor="?attr/primaryTextColor"
+        android:background="@null"
         android:text="10:00PM"
         app:customfont="Montserrat-Regular.ttf"
         android:textSize="10dp"/>

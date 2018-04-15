@@ -11,10 +11,12 @@
         android:gravity="center"
         android:layout_height="wrap_content"
         android:textColor="#ffffffff"
-        android:background="@null"
+        android:background="@color/red900"
+        android:text="Not connected"
         android:layout_above="@id/recycler_view"
         app:customfont="Montserrat-Regular.ttf"
         android:textSize="10dp" />
+
     <LinearLayout
         android:id="@+id/top_list_holder"
         android:layout_width="match_parent"
@@ -22,20 +24,38 @@
         android:layout_below="@id/notification"
         android:paddingTop="8dp"
         android:orientation="vertical"
-        android:background="#2979FF">
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#aaffffff"
-            android:paddingLeft="10dp"
-            android:text="Quick Contacts"
-            app:customfont="Montserrat-Bold.ttf"
-            android:textSize="12dp"/>
+        android:background="?attr/inverseBackgroundColor">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:layout_height="wrap_content">
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/inversePrimaryTextColor"
+                android:background="@null"
+                android:paddingLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:text="Quick Contacts"
+                app:customfont="Montserrat-Bold.ttf"
+                android:textSize="12dp"/>
+            <ImageButton
+                android:id="@+id/setting_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:rotation="90"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:src="@drawable/ic_dot_white_24"/>
+        </RelativeLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_quick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:scrollbars="vertical" />
     </LinearLayout>
     <LinearLayout
@@ -44,12 +64,14 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
+        android:background="@null"
         android:layout_height="match_parent">
         <in.co.dipankar.quickandorid.views.CustomFontTextView
             android:id="@+id/tv_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#aa000000"
+            android:textColor="?attr/primaryTextColor"
+            android:background="@null"
             android:text="Recent Calls"
             android:paddingLeft="10dp"
             app:customfont="Montserrat-Bold.ttf"
@@ -58,11 +80,13 @@
             android:id="@+id/recycler_view_recent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@null"
             android:scrollbars="vertical" />
     </LinearLayout>
 
     <in.peerreview.ping.common.utils.CustomButtonSheetView
         android:id="@+id/custom_button_sheetview"
+        android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

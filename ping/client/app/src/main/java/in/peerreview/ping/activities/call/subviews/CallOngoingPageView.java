@@ -1,14 +1,19 @@
 package in.peerreview.ping.activities.call.subviews;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import in.co.dipankar.quickandorid.views.StateImageButton;
+import in.peerreview.ping.R;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.call.addon.BaseAddonView;
+import in.peerreview.ping.common.model.CallInfo;
+import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
 
 public class CallOngoingPageView extends RelativeLayout {
@@ -34,6 +39,7 @@ public class CallOngoingPageView extends RelativeLayout {
   private ViewletPeerInfoAudio mViewletPeerInfoAudio;
   private ViewletPeerInfoVideo mViewletPeerInfoVideo;
   private BaseAddonView mAddonView;
+  private View mButtonHolder;
 
   public void setCallback(Callback callback) {
     mCallback = callback;
@@ -64,6 +70,7 @@ public class CallOngoingPageView extends RelativeLayout {
   }
 
   private void initButtons() {
+    mButtonHolder = mRootView.findViewById(R.id.buttonHolder);
     StateImageButton audio = mRootView.findViewById(in.peerreview.ping.R.id.toggle_audio);
     ImageButton end = mRootView.findViewById(in.peerreview.ping.R.id.end);
     StateImageButton video = mRootView.findViewById(in.peerreview.ping.R.id.toggle_video);
@@ -104,12 +111,21 @@ public class CallOngoingPageView extends RelativeLayout {
             mCallback.onClickToggleSpeaker(!speaker.isViewEnabled());
           }
         });
+    showButtonHolder();
+    mRootView.setOnTouchListener(new OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        showButtonHolder();
+        return false;
+      }
+    });
   }
 
   public void renderAudioPeerView(IRtcUser user) {
     mViewletPeerInfoAudio.setVisibility(VISIBLE);
     mViewletPeerInfoVideo.setVisibility(GONE);
     mViewletPeerInfoAudio.updateView(user);
+    showButtonHolder();
   }
 
   public void renderVideoPeerView(IRtcUser user) {
@@ -117,6 +133,7 @@ public class CallOngoingPageView extends RelativeLayout {
     mViewletPeerInfoVideo.setVisibility(VISIBLE);
     mViewletPeerInfoVideo.updateView(user);
     mViewletPeerInfoVideo.setVisibilityCenterView(View.GONE);
+      showButtonHolder();
   }
 
   public void updateTitle(String title) {
@@ -145,5 +162,19 @@ public class CallOngoingPageView extends RelativeLayout {
         mViewletPeerInfoAudio.setVisibility(GONE);
       }
     }
+  }
+  void showButtonHolder() {
+      mButtonHolder.setVisibility(VISIBLE);
+      //auto hide only for video call.
+      ICallInfo callInfo = PingApplication.Get().getCurrentCallInfo();
+      if (callInfo != null && callInfo.getIsVideo()) {
+          Handler handler = new Handler();
+          handler.postDelayed(new Runnable() {
+              @Override
+              public void run() {
+                  mButtonHolder.setVisibility(GONE);
+              }
+          }, 5 * 1000);
+      }
   }
 }

@@ -6,10 +6,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
@@ -18,6 +21,7 @@ import in.peerreview.ping.R;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.call.CallActivity;
 import in.peerreview.ping.activities.call.subviews.RecyclerTouchListener;
+import in.peerreview.ping.activities.setting.SettingActivity;
 import in.peerreview.ping.common.subview.QuickContactAdapter;
 import in.peerreview.ping.common.subview.RecentCallAdapter;
 import in.peerreview.ping.common.utils.CustomButtonSheetView;
@@ -28,12 +32,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.webrtc.SessionDescription;
 
-public class HomeActivity extends Activity implements IHome.View {
+public class HomeActivity extends AppCompatActivity implements IHome.View {
 
   private IHome.Presenter mPresenter;
   private RecyclerView quickRecyclerView;
   private RecyclerView mRecentRecyclerView;
   private CustomButtonSheetView mCustomButtonSheetView;
+  private ImageButton mSettingButton;
 
   private QuickContactAdapter mQuickContactAdapter;
   private RecentCallAdapter mRecentCallAdapter;
@@ -47,6 +52,13 @@ public class HomeActivity extends Activity implements IHome.View {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     DLog.e("Info - HomeActivity::onCreate called");
+      if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+          setTheme(R.style.ActivityThemeDark);
+          DLog.e("Now Dark theme");
+      } else{
+          setTheme(R.style.ActivityThemeLight);
+          DLog.e("Now Light theme");
+      }
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
     initView();
@@ -100,12 +112,26 @@ public class HomeActivity extends Activity implements IHome.View {
   }
 
   private void initView() {
+      if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+          setTheme(R.style.ActivityThemeDark);
+          DLog.e("Now Dark theme");
+      } else{
+          setTheme(R.style.ActivityThemeLight);
+          DLog.e("Now Light theme");
+      }
     initQuickList();
     initRecentList();
     initOtherViews();
   }
 
   private void initOtherViews() {
+      mSettingButton = findViewById(R.id.setting_btn);
+      mSettingButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              launchSettingActivity();
+          }
+      });
     mNotificationView = findViewById(R.id.notification);
     mCustomButtonSheetView = findViewById(R.id.custom_button_sheetview);
     List<CustomButtonSheetView.ISheetItem> mSheetItems = new ArrayList<>();
@@ -119,7 +145,6 @@ public class HomeActivity extends Activity implements IHome.View {
               public void onClick(int i) {
                 navigateToCallViewInternal(
                     false, mCurrentFocusUser, ICallInfo.ShareType.AUDIO_CALL, null, null);
-                mCustomButtonSheetView.hide();
               }
             },
             null));
@@ -134,7 +159,6 @@ public class HomeActivity extends Activity implements IHome.View {
               public void onClick(int v) {
                 navigateToCallViewInternal(
                     false, mCurrentFocusUser, ICallInfo.ShareType.VIDEO_CALL, null, null);
-                //  mCustomButtonSheetView.hide();
               }
             },
             null));
@@ -148,7 +172,6 @@ public class HomeActivity extends Activity implements IHome.View {
               public void onClick(int v) {
                 navigateToCallViewInternal(
                     false, mCurrentFocusUser, ICallInfo.ShareType.SCREEN_SHARE, null, null);
-                //  mCustomButtonSheetView.hide();
               }
             },
             null));
@@ -162,7 +185,6 @@ public class HomeActivity extends Activity implements IHome.View {
               public void onClick(int v) {
                 navigateToCallViewInternal(
                     false, mCurrentFocusUser, ICallInfo.ShareType.VIDEO_SHARE, null, null);
-                // mCustomButtonSheetView.hide();
               }
             },
             null));
@@ -175,7 +197,6 @@ public class HomeActivity extends Activity implements IHome.View {
               @Override
               public void onClick(int v) {
                 DLog.e("Share music Clicked");
-                // mCustomButtonSheetView.hide();
               }
             },
             null));
@@ -188,7 +209,6 @@ public class HomeActivity extends Activity implements IHome.View {
               @Override
               public void onClick(int v) {
                 DLog.e("Share music Clicked");
-                // mCustomButtonSheetView.hide();
               }
             },
             new CharSequence[] {"Hello", "World"}));
@@ -361,6 +381,12 @@ public class HomeActivity extends Activity implements IHome.View {
     }
     this.startActivity(myIntent);
     overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+  }
+
+  private void launchSettingActivity(){
+      Intent myIntent = new Intent(this, SettingActivity.class);
+      this.startActivity(myIntent);
+      overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
   }
 
   // Logic to  Press ed back
