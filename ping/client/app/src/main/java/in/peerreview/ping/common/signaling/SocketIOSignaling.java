@@ -431,7 +431,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
       final boolean isVideoEnabled = obj.getBoolean("is_video_enabled");
       IRtcUser user = null;
       try {
-        user = (IRtcUser) Base64Coder.fromString(peer_info);
+        user = (RtcUser) Base64Coder.fromString(peer_info);
       } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
       }
@@ -585,7 +585,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
       final String user_info = obj.getString("user_info");
       IRtcUser user = null;
       try {
-        user = (IRtcUser) Base64Coder.fromString(user_info);
+        user = (RtcUser) Base64Coder.fromString(user_info);
       } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
       }

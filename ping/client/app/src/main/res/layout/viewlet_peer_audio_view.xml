@@ -27,7 +27,7 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_marginBottom="15dp"
-            app:civ_border_color="@color/grayLight"
+            app:civ_border_color="?attr/borderColor"
             android:background="@null"
             app:civ_border_width="3dp" />
         <in.co.dipankar.quickandorid.views.CustomFontTextView

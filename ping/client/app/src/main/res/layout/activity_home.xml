@@ -10,8 +10,8 @@
         android:padding="2dp"
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:textColor="#ffffffff"
-        android:background="@color/red900"
+        android:textColor="@color/white"
+        android:background="@color/red"
         android:text="Not connected"
         android:layout_above="@id/recycler_view"
         app:customfont="Montserrat-Regular.ttf"
@@ -43,11 +43,13 @@
                 android:textSize="12dp"/>
             <ImageButton
                 android:id="@+id/setting_btn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
                 android:rotation="90"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="0dp"
                 android:background="@null"
                 android:src="@drawable/ic_dot_white_24"/>
         </RelativeLayout>

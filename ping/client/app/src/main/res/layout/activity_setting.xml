@@ -1,41 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/primaryBackgroundColor"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/info"
-        android:layout_width="match_parent"
-        android:background="?attr/inverseBackgroundColor"
-        android:layout_height="100dp">
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:textColor="?attr/inversePrimaryTextColor"
-            android:text="Whello World"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
     <LinearLayout
-        android:layout_below="@+id/info"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CircleImageView
+            android:id="@+id/self_img"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            app:civ_border_color="?attr/borderColor"
+            android:background="@null"
+            app:civ_border_width="3dp" />
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/self_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="16dp"
+            app:customfont="Montserrat-Medium.ttf"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:padding="15dp"
         android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="User Experience"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="15dp"
+            app:customfont="Montserrat-Medium.ttf"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
             <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="?attr/primaryTextColor"
-                android:text="Enable dark theme" />
+                android:text="Enable dark theme"
+                android:textColor="?attr/secondaryTextColor"
+                android:textSize="13dp"
+                app:customfont="Montserrat-Medium.ttf"/>
             <Switch
                 android:id="@+id/theme_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fix this1"
+                android:textColor="?attr/secondaryTextColor"
+                android:textSize="13dp"
+                app:customfont="Montserrat-Medium.ttf"/>
+            <Switch
+                android:id="@+id/test_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fis this too...."
+                android:textColor="?attr/secondaryTextColor"
+                android:textSize="13dp"
+                app:customfont="Montserrat-Medium.ttf"/>
+            <Switch
+                android:id="@+id/time_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

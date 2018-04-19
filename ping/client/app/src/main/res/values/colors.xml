@@ -10,16 +10,19 @@
     <color name="inversePrimaryTextColorLight">#FFFFFF</color>
     <color name="inverseSecondaryTextColorLight">#F2F2F3</color>
     <color name="inverseBackgroundColorLight">#2979FF</color>
+    <color name="borderColorLight">#55FFFFFF</color>
 
     <!-- Dark color theme -->
     <color name="primaryTextColorDark">#FFFFFF</color>
-    <color name="secondaryTextColorDark">#8033343B</color>
+    <color name="secondaryTextColorDark">#99FFFFFF</color>
     <color name="primaryBackgroundColorDark">#33343B</color>
     <color name="secondaryBackgroundColorDark">#8033343B</color>
 
     <color name="inversePrimaryTextColorDark">#FFFFFF</color>
     <color name="inverseSecondaryTextColorDark">#F2F2F3</color>
     <color name="inverseBackgroundColorDark">#8033343B</color>
+
+    <color name="borderColorDark">#000000</color>
 
     <!-- other -->
     <color name="Notification_Progress">#57cabf</color>
@@ -28,17 +31,9 @@
 
     <color name="red">#B71C1C</color>
     <color name="green">#43A047</color>
+    <color name="white">#ffffff</color>
 
     <!-- Other color to be removed -->
-    <color name="colorPrimary">#B71C1C</color>
-    <color name="colorPrimaryDark">#B71C1C</color>
-    <color name="colorAccent">#B71C1C</color>
-    <color name="grayLight">#B71C1C</color>
-
-    <color name="green600">#B71C1C</color>
-    <color name="green900">#B71C1C</color>
-
-    <color name="red900">#B71C1C</color>
 
 
 

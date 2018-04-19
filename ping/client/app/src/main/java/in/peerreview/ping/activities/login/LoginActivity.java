@@ -174,7 +174,11 @@ public class LoginActivity extends AppCompatActivity {
       if (result.isSuccess()) {
         String name = result.getSignInAccount().getDisplayName();
         String id = result.getSignInAccount().getEmail();
-        String pic = result.getSignInAccount().getPhotoUrl().toString();
+        String pic = "https://signup.trybooking.com/images/user-hero-blue.png";
+        if(result.getSignInAccount().getPhotoUrl()!= null) {
+          pic = result.getSignInAccount().getPhotoUrl().toString();
+        }
+
         IRtcUser user = new RtcUser(name, id, pic, pic);
         saveUser(user);
         navigateToHomeScreen(user);

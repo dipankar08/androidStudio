@@ -3,23 +3,93 @@ package in.peerreview.ping.common.model;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
+import io.paperdb.Paper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ContactManger implements IContactManager {
 
-  private List<IRtcUser> mUserList;
-  private List<ICallInfo> ICallInfoList;
-  private List<Callback> mCallbackList;
+  final String USER_TABLE ="user_table";
+  final String CALLINFO_TABLE ="callinfo_table";
 
+  private List<IRtcUser> mUserList;
+  private List<ICallInfo> mCallInfoList;
+  private List<Callback> mCallbackList;
+  private static final ExecutorService executor = Executors.newSingleThreadExecutor();
   public ContactManger() {
     mUserList = new ArrayList<>();
-    ICallInfoList = new ArrayList<>();
+    mCallInfoList = new ArrayList<>();
     mCallbackList = new ArrayList<>();
-    // createTestUser();
+  }
+
+  public void restore() {
+    executor.execute(new Runnable() {
+      @Override
+      public void run() {
+        restoreInternal();
+      }
+    });
+  }
+
+  private void restoreInternal() {
+    mUserList = Paper.book().read(USER_TABLE);
+    mCallInfoList = Paper.book().read(CALLINFO_TABLE);
+    if(mUserList == null){
+      mUserList = new ArrayList<>();
+    } else{
+      for(IRtcUser user: mUserList){
+        user.setOnline(false);
+      }
+    }
+    if(mCallInfoList ==  null){
+      mCallInfoList = new ArrayList<>();
+    }
+    noifyUserListChanged();
+    notifyCallInfoListChanged();
+  }
+
+  public void save() {
+    executor.execute(new Runnable() {
+      @Override
+      public void run() {
+        saveInternal();
+      }
+    });
+  }
+
+  private void saveInternal() {
+    if(mUserList != null) {
+      if(mUserList.size() >10) {
+        mUserList =  mUserList.subList(0, 9);
+      }
+      Paper.book().write(USER_TABLE, mUserList);
+    }
+    if(mCallInfoList != null) {
+      if(mCallInfoList.size() > 20) {
+        mCallInfoList = mCallInfoList.subList(0, 19);
+      }
+      Paper.book().write(CALLINFO_TABLE, mCallInfoList);
+    }
+  }
+
+
+  private void noifyUserListChanged() {
+    for( Callback callback:mCallbackList){
+      callback.onContactListChange(mUserList);
+    }
+  }
+  private void notifyCallInfoListChanged() {
+    for( Callback callback:mCallbackList){
+      if(callback!=null) {
+        callback.onCallListChange(mCallInfoList);
+      }
+    }
   }
 
   public List<IRtcUser> getUserList() {
@@ -27,29 +97,7 @@ public class ContactManger implements IContactManager {
   }
 
   public List<ICallInfo> getCallList() {
-    return ICallInfoList;
-  }
-
-  private void createTestUser() {
-    // Login user
-    mUserList.add(
-        new RtcUser(
-            "Sharuk Khan",
-            "120",
-            "https://images-na.ssl-images-amazon.com/images/M/MV5BZDk1ZmU0NGYtMzQ2Yi00N2NjLTkyNWEtZWE2NTU4NTJiZGUzXkEyXkFqcGdeQXVyMTExNDQ2MTI@._V1_UY317_CR4,0,214,317_AL_.jpg",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Sharukhan.jpg/1200px-Sharukhan.jpg"));
-    mUserList.add(
-        new RtcUser(
-            "Prasenjit Chakraborty",
-            "121",
-            "http://www.prosenjit.in/yahoo_site_admin/assets/images/contact-us1.81155628_std.jpg",
-            "https://i2.wp.com/short-biography.com/wp-content/uploads/prosenjit-chatterjee/Prosenjit_Chatterjee1.jpg?w=1280&ssl=1"));
-    mUserList.add(
-        new RtcUser(
-            "Katrina",
-            "122",
-            "https://pbs.twimg.com/profile_images/654550917778305024/hcAaURmF_400x400.jpg",
-            "https://www.indiatoday.in/movies/celebrities/story/katrina-kaif-34th-birthday-plans-jagga-jasoos-982859-2017-06-15"));
+    return mCallInfoList;
   }
 
   private boolean isUserExist(IRtcUser user) {
@@ -68,15 +116,17 @@ public class ContactManger implements IContactManager {
       for (Callback cb : mCallbackList) {
         cb.onContactListChange(mUserList);
       }
+      save();
     }
   }
 
   @Override
   public void addCallInfo(ICallInfo callInfo) {
-    ICallInfoList.add(0, callInfo);
+    mCallInfoList.add(0, callInfo);
     for (Callback cb : mCallbackList) {
-      cb.onCallListChange(ICallInfoList);
+      cb.onCallListChange(mCallInfoList);
     }
+    save();
   }
 
   @Override
@@ -92,6 +142,7 @@ public class ContactManger implements IContactManager {
       for (Callback cb : mCallbackList) {
         cb.onContactListChange(mUserList);
       }
+      save();
     }
   }
 
@@ -132,6 +183,7 @@ public class ContactManger implements IContactManager {
 
   @Override
   public void changeOnlineState(List<IRtcUser> userList, boolean isOnline) {
+    if(userList == null) return;
     for (IRtcUser user : userList) {
       ((RtcUser) user).mOnline = isOnline;
       for (Callback cb : mCallbackList) {
@@ -148,6 +200,9 @@ public class ContactManger implements IContactManager {
 
   @Override
   public void removeCallback(Callback callback) {
+    if(mCallbackList == null){
+      return;
+    }
     for (Callback callback1 : mCallbackList) {
       if (callback1 == callback) {
         mCallbackList.remove(callback);

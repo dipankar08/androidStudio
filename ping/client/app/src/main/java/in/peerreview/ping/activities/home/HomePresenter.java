@@ -4,6 +4,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.peerreview.ping.activities.application.PingApplication;
@@ -23,32 +25,39 @@ import org.webrtc.SessionDescription;
 public class HomePresenter implements IHome.Presenter {
 
   private IHome.View mView;
-  private ICallSignalingApi mCallSignalingApi;
-  private IContactManager mContactManager;
+  @Nullable  private ICallSignalingApi mCallSignalingApi;
+  @Nullable  private IContactManager mContactManager;
   private String mPendingCallId = null;
 
   private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
   HomePresenter(IHome.View view) {
     mView = view;
-    init();
+    initOnUIThread();
+    initOnBackgroudThread();
   }
 
-  private void init() {
-    initSignal();
-    initModel();
+  private void initOnUIThread() {
+
   }
 
-  private void initModel() {
-    mContactManager = PingApplication.Get().getUserManager();
-    mContactManager.addCallback(mContactManagerCallback);
-  }
 
-  private void initSignal() {
-    mCallSignalingApi = PingApplication.Get().getCallSignalingApi();
-    mCallSignalingApi.addCallback(mCallSignalingCallback);
-    mCallSignalingApi.connect();
-    updateToken();
+  private void initOnBackgroudThread() {
+    executor.execute(new Runnable() {
+        @Override
+        public void run() {
+            //Init Model and Restore
+            mContactManager = PingApplication.Get().getUserManager();
+            mContactManager.addCallback(mContactManagerCallback);
+            PingApplication.Get().getUserManager().restore();
+
+            //Init Signals
+            mCallSignalingApi = PingApplication.Get().getCallSignalingApi();
+            mCallSignalingApi.addCallback(mCallSignalingCallback);
+            mCallSignalingApi.connect();
+            updateToken();
+        }
+    });
   }
 
   private void updateToken() {

@@ -6,30 +6,32 @@
     <ImageView
         android:background="@drawable/bg_login"
         android:layout_width="match_parent"
-        android:tint="#ff000000"
         android:layout_height="match_parent" />
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:src="#aa000000"
-        android:layout_height="match_parent" />
+        android:background="#aa000000"
+        android:layout_height="match_parent">
+    </LinearLayout>
 
     <!--Brand Info -->
     <LinearLayout
         android:id="@+id/logo"
+        android:background="@null"
         android:layout_width="wrap_content"
-        android:paddingBottom="60dp"
+        android:paddingBottom="90dp"
         android:orientation="vertical"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="wrap_content"
-            android:background="#ee000000"
+            android:background="@null"
             android:layout_marginBottom="4dp"
             android:src="@drawable/ic_handshake_42"
             android:layout_height="wrap_content" />
         <in.co.dipankar.quickandorid.views.CustomFontTextView
             android:layout_width="wrap_content"
-            android:textColor="?attr/primaryTextColor"
+            android:textColor="@android:color/white"
+            android:background="@null"
             app:customfont="IndieFlower.ttf"
             android:text="PING"
             android:textSize="22dp"
@@ -42,7 +44,8 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginBottom="50dp"
+        android:background="@null"
+        android:layout_marginBottom="30dp"
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/anonymous_btn"
@@ -50,15 +53,18 @@
             android:layout_height="40dp"
             android:layout_marginBottom="20dp"
             android:textAllCaps="false"
+            android:textColor="@android:color/black"
             android:background="@drawable/bg_roundcorner_whiet"
             android:text="Anonymous login"/>
         <com.google.android.gms.common.SignInButton
             android:id="@+id/signInButton"
             android:layout_width="200dp"
             android:layout_marginBottom="20dp"
+            android:background="@null"
             android:layout_height="42dp"/>
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebook_login_btn"
+            android:background="@null"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"

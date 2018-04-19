@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 
+import com.activeandroid.ActiveAndroid;
 import com.google.gson.Gson;
 
 import in.co.dipankar.quickandorid.utils.DLog;
@@ -21,6 +22,8 @@ import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.ICallSignalingApi;
 import in.peerreview.ping.contracts.IRtcDeviceInfo;
 import in.peerreview.ping.contracts.IRtcUser;
+import io.paperdb.Paper;
+
 import java.io.IOException;
 
 public class PingApplication extends Application {
@@ -46,6 +49,8 @@ public class PingApplication extends Application {
     mContactManger = new ContactManger();
     SharedPrefsUtil.getInstance().init(this);
     sPingApplication = this;
+    ActiveAndroid.initialize(this);
+    Paper.init(this);
     mNetwork = new Network();
 
     String deviceid =
@@ -59,7 +64,11 @@ public class PingApplication extends Application {
     if (json == null) {
       mSelfUser = null;
     }
-    mSelfUser = gson.fromJson(json, RtcUser.class);
+    try {
+      mSelfUser = gson.fromJson(json, RtcUser.class);
+    } catch(Exception e){
+      //pass TODO
+    }
 
     SharedPreferences mPrefs =  PreferenceManager.getDefaultSharedPreferences(this);
     this.isNightModeEnabled = mPrefs.getBoolean("NIGHT_MODE", false);

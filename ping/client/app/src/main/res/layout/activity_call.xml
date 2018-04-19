@@ -67,7 +67,7 @@
         android:gravity="center"
         android:layout_height="wrap_content"
         android:textColor="?attr/primaryTextColor"
-        android:background="@color/red900"
+        android:background="@color/red"
         android:text="Not connected"
         android:visibility="gone"
         android:layout_above="@id/recycler_view"

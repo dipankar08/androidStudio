@@ -5,15 +5,24 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
+
+import com.bumptech.glide.Glide;
 
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
+import in.co.dipankar.quickandorid.views.CircleImageView;
+import in.co.dipankar.quickandorid.views.CustomFontTextView;
 import in.peerreview.ping.R;
+import in.peerreview.ping.activities.application.PingApplication;
+import in.peerreview.ping.contracts.IRtcUser;
 
 public class SettingActivity extends AppCompatActivity {
 
     private Switch mThemeSwitch;
+    private CircleImageView selfImg;
+    private CustomFontTextView selfName;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
@@ -30,6 +39,12 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void init(){
+        selfImg = findViewById(R.id.self_img);
+        selfName = findViewById(R.id.self_name);
+        IRtcUser user = PingApplication.Get().getMe();
+        selfName.setText(user.getUserName());
+        Glide.with(getApplicationContext()).load(user.getProfilePictureUrl()).into(selfImg);
+
         mThemeSwitch = (Switch) findViewById(R.id.theme_switch);
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
             mThemeSwitch.setChecked(true);

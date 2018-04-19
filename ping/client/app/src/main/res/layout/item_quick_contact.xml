@@ -16,12 +16,12 @@
         android:layout_marginTop="25dp"
         android:layout_marginBottom="3dp"
         android:layout_centerHorizontal="true"
-        app:civ_dot_color="@color/grayLight"
+        app:civ_dot_color="?attr/borderColor"
         app:civ_dot_width="5dp"
         android:background="@null"
         android:id="@+id/picture"
         android:src="@drawable/user1"
-        app:civ_border_color="#55ffffff"/>
+        app:civ_border_color="?attr/borderColor"/>
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/name"
         android:layout_width="wrap_content"

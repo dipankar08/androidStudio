@@ -40,4 +40,8 @@ public class RtcUser implements IRtcUser {
   public boolean isOnline() {
     return mOnline;
   }
+  @Override
+  public void setOnline(boolean b) {
+    mOnline = b;
+  }
 }

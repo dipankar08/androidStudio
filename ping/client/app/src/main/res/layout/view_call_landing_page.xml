@@ -2,17 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="gone"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <in.peerreview.ping.activities.call.subviews.ViewletPeerInfoAudio
         android:id="@+id/peer_info"
         android:visibility="visible"
+        android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:gravity="center"
         android:background="@null"
         android:layout_centerInParent="true"
@@ -42,6 +45,7 @@
             android:src="@drawable/ic_poke_24"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

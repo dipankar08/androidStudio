@@ -12,4 +12,6 @@ public interface IRtcUser extends Serializable {
   String getUserName();
 
   boolean isOnline();
+
+  void setOnline(boolean b);
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
     <!-- Light base activity theme -->
@@ -13,6 +13,7 @@
         <item name="inverseBackgroundColor">@color/inverseBackgroundColorLight</item>
 
         <item name="iconPlaceholder">@drawable/ic_back_white_24</item>
+        <item name="borderColor">@color/borderColorLight</item>
     </style>
 
     <!-- Dark base activity theme -->
@@ -27,33 +28,23 @@
         <item name="inverseBackgroundColor">@color/inverseBackgroundColorDark</item>
 
         <item name="iconPlaceholder">@drawable/ic_back_white_24</item>
+
+        <item name="borderColor">@color/borderColorDark</item>
     </style>
 
-    <!--
 
-   Base application theme.
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
--->
+    <!-- Application theme -->
     <style name="ActivityThemeLight" parent="ActivityTheme.Primary.Base.Light">
         <item name="android:windowBackground">@color/primaryBackgroundColorLight</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:textColor">@color/primaryTextColorLight</item>
-        <item name="android:background">@color/primaryBackgroundColorLight</item>
+        <!--<item name="android:background">@color/primaryBackgroundColorLight</item> -->
     </style>
     <style name="ActivityThemeDark" parent="ActivityTheme.Primary.Base.Dark">
         <item name="android:windowBackground">@color/primaryBackgroundColorDark</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:textColor">@color/primaryTextColorDark</item>
-        <item name="android:background">@color/primaryBackgroundColorDark</item>
+        <!--<item name="android:background">@color/primaryBackgroundColorDark</item> -->
     </style>
 </resources>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/menu_holder"
-        android:background="#ffffff"
+        android:background="?attr/secondaryBackgroundColor"
         android:orientation="vertical"
         android:gravity="center"
         android:paddingTop="10dp"
