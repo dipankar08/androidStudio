@@ -183,6 +183,20 @@ function _getAllEndpointForEndPoint(s){
     return Object.keys(allLiveConn[user_id].endpoints);
 }
 
+// this functiosn take a list of uids and return all active endspoints.
+function _UserIDsToSessionList(ids){
+    var result =[]
+    for(id of ids){
+        if(!allLiveConn[id] || !allLiveConn[id].endpoints){
+            continue;
+        }
+        if(Object.keys(allLiveConn[id].endpoints)){
+            result.push(Object.keys(allLiveConn[id].endpoints))
+        }
+    }
+    return result;
+}
+
 function _getUserInfo(user_id){
     if(user_id && allLiveConn[user_id]){
         return allLiveConn[user_id].user_info
@@ -224,6 +238,7 @@ var TOPIC_IN_ENDCALL = "endcall"
 var TOPIC_IN_TEST = "test"
 var TOPIC_IN_NOTI = "notification"
 var TOPIC_IN_ADDON = "addon"
+var TOPIC_IN_DATA_MESSAGE ="data_message"
 
 var TOPIC_OUT_TEST = "test"
 var TOPIC_OUT_OFFER = "offer"
@@ -236,6 +251,7 @@ var TOPIC_OUT_NOTI = "notification"
 var TOPIC_OUT_ADDON = "addon"
 var TOPIC_OUT_PRESENCE = "presence"
 var TOPIC_OUT_WELCOME = "welcome"
+var TOPIC_OUT_DATA_MESSAGE ="data_message"
 
 
 var ENDCALL_TYPE_NORMAL_END= "normal_end"
@@ -255,6 +271,9 @@ var PRESENCE_TYPE_OFFLINE = "offline"
 
 var TRYCALL_TYPE_CONTACTING = "contacting"
 var TRYCALL_TYPE_RINGING = "ringing"
+
+var DATA_MESSAGE_TYPE_BELL ="bell"
+var DATA_MESSAGE_TYPE_BELL_ACK ="bell_ack"
 
 function _getOfferPayload(call_id, sdp, userinfo,is_video_enabled){
     return {"call_id":call_id,"sdp":sdp,"peer_info":userinfo,"is_video_enabled":is_video_enabled}
@@ -284,9 +303,16 @@ function _getPresencePayload(type, user){
 function _getWelcomePayload(live_users){
     return {"live_users":live_users}
 }
+function _getDataMessagePayload(type, data){
+    return {"type":type, data:data}
+}
 
 function  _getTryCallPayload(call_id,type ,msg){
     return {call_id:call_id, type:type, msg:msg}
+}
+
+function _getPushData(type, data){
+    return {type:type, data:data}
 }
 
 function log(type, ops,  session){
@@ -422,7 +448,7 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
             // Peer offline - First Try to awake up else terminate the call
             // The data sent as push notification as same as SDP Request.
             //var pushData = _getOfferPayload(call_id, sdp,allLiveConn[user_id].user_info, is_video_enabled);
-            var pushData = {type:"call_request", msg:"You are receiving a call from XX, Tap to start the call","call_id":call_id}
+            var pushData = {type:"call_request",msg:"You are receiving a call from XX, Tap to start the call","call_id":call_id}
             if (trySendPushNotification(peer_id, pushData)){
                 tryCallDetails = _getTryCallPayload(call_id,TRYCALL_TYPE_CONTACTING,"We are trying to contact the peer")
                 sendToSelf(TOPIC_OUT_TRYCALL,tryCallDetails)
@@ -590,6 +616,31 @@ io.sockets.on(TOPIC_IN_CONNECTION, function (client) {
         _cleanupCall(details.call_id);
     });
 
+    // In case of addon we just forword to all invite.
+    client.on(TOPIC_IN_DATA_MESSAGE, function (details) {
+        to = convertListToArray(details.to);
+        type = details.type
+        data = details.data;
+        // for each to, first try to get the seeson if not found sent Push Noti.
+        var payload = _getDataMessagePayload(type, data);
+        var pushData ={type:"bell_request", data:data};
+        for(peer_id of to){
+            //For each peer, we wil try to see if it si only, if not we try to send push notification.
+            if(allLiveConn[peer_id] && allLiveConn[peer_id].endpoints && allLiveConn[peer_id].endpoints.length > 0){
+                sendToSpacificListExceptSender( allLiveConn[peer_id].endpoints, TOPIC_OUT_DATA_MESSAGE, payload);
+            } else{
+                //Peer offline - First Try to awake up by sending push notification
+                if (!trySendPushNotification(peer_id, pushData)){
+                    console.log("Not able to send push notfication");
+                }
+            }
+        }
+        // send ACKS
+        var payload = _getDataMessagePayload(DATA_MESSAGE_TYPE_BELL_ACK, data);
+        sendToSelf(TOPIC_OUT_DATA_MESSAGE,payload);
+    });
+
+
     /*******************************************************************
      * 
      *     Write your test and Experiments
@@ -680,4 +731,10 @@ function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
 
+function convertListToArray(str){
+    if(!str || str.length < 2){
+        return []
+    }
+    return str.substr(1,str.length-2).split(',')
+}
 console.log("End of the script")

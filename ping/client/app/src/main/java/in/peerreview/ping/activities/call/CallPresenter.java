@@ -10,6 +10,7 @@ import android.util.Log;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.common.model.CallInfo;
 import in.peerreview.ping.common.model.IContactManager;
+import in.peerreview.ping.common.signaling.IDataMessage;
 import in.peerreview.ping.common.utils.DataUsesReporter;
 import in.peerreview.ping.common.webrtc.WebRtcEngine2;
 import in.peerreview.ping.contracts.ICallInfo;
@@ -136,7 +137,12 @@ public class CallPresenter implements ICallPage.IPresenter {
         @Override
         public void onWelcome(List<IRtcUser> liveUserList) {}
 
-        @Override
+          @Override
+          public void onDataMessage(IDataMessage dataMessage) {
+
+          }
+
+          @Override
         public void onReceivedOffer(
             String callid, SessionDescription sdp, IRtcUser user, boolean isVideoEnabled) {
           // This will taken care bt HomePresenter

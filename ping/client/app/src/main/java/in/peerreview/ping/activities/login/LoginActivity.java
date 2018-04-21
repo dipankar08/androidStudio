@@ -27,19 +27,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.gson.Gson;
-import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.ping.R;
 import in.peerreview.ping.Utils;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.home.HomeActivity;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.IRtcUser;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -175,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
         String name = result.getSignInAccount().getDisplayName();
         String id = result.getSignInAccount().getEmail();
         String pic = "https://signup.trybooking.com/images/user-hero-blue.png";
-        if(result.getSignInAccount().getPhotoUrl()!= null) {
+        if (result.getSignInAccount().getPhotoUrl() != null) {
           pic = result.getSignInAccount().getPhotoUrl().toString();
         }
 
@@ -210,10 +207,12 @@ public class LoginActivity extends AppCompatActivity {
   private void onLoginFailed() {
     Toast.makeText(this, "Not able to Signin. Try again", Toast.LENGTH_SHORT);
   }
+
   private void printKeyHash() {
     // Add code to print out the key hash
     try {
-      PackageInfo info = getPackageManager().getPackageInfo("in.peerreview.ping", PackageManager.GET_SIGNATURES);
+      PackageInfo info =
+          getPackageManager().getPackageInfo("in.peerreview.ping", PackageManager.GET_SIGNATURES);
       for (Signature signature : info.signatures) {
         MessageDigest md = MessageDigest.getInstance("SHA");
         md.update(signature.toByteArray());

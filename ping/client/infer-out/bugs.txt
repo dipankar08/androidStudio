@@ -1,26 +1,26 @@
-Found 39 issues
+Found 49 issues
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:38: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:30: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer$1.onDone` reads without synchronization from `&this.in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer$1.this$0.in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer.mediaRecorderState`. Potentially races with writes in methods `{ void CameraCapturer$1.onDone(CameraSession),
                                             void CameraCapturer$1.onFailure(CameraSession$FailureType,String) }`.
  Reporting because this access may occur on a background thread.
-  36.                     + CameraCapturer.this.switchState
-  37.                     + ". MediaRecorder state: "
-  38. >                   + CameraCapturer.this.mediaRecorderState);
-  39.             CameraCapturer.this.uiThreadHandler.removeCallbacks(
-  40.                 CameraCapturer.this.openCameraTimeoutRunnable);
+  28.                     + CameraCapturer.this.switchState
+  29.                     + ". MediaRecorder state: "
+  30. >                   + CameraCapturer.this.mediaRecorderState);
+  31.             CameraCapturer.this.uiThreadHandler.removeCallbacks(
+  32.                 CameraCapturer.this.openCameraTimeoutRunnable);
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:36: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:28: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer$1.onDone` reads without synchronization from `&this.in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer$1.this$0.in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer.switchState`. Potentially races with writes in methods `{ void CameraCapturer$1.onDone(CameraSession),
                                             void CameraCapturer$1.onFailure(CameraSession$FailureType,String) }`.
  Reporting because this access may occur on a background thread.
-  34.                 "CameraCapturer",
-  35.                 "Create session done. Switch state: "
-  36. >                   + CameraCapturer.this.switchState
-  37.                     + ". MediaRecorder state: "
-  38.                     + CameraCapturer.this.mediaRecorderState);
+  26.                 "CameraCapturer",
+  27.                 "Create session done. Switch state: "
+  28. >                   + CameraCapturer.this.switchState
+  29.                     + ". MediaRecorder state: "
+  30.                     + CameraCapturer.this.mediaRecorderState);
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:51: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:51: error: THREAD_SAFETY_VIOLATION
   Unprotected write. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.reset` writes to field `&this.in.peerreview.ping.common.utils.DataUsesReporter.mPrevRX` outside of synchronization.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   49.       mStartRX = 0;
@@ -29,7 +29,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:51: err
   52.       mPrevTX = 0;
   53.     }
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:52: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:52: error: THREAD_SAFETY_VIOLATION
   Unprotected write. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.reset` writes to field `&this.in.peerreview.ping.common.utils.DataUsesReporter.mPrevTX` outside of synchronization.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   50.       mStartTX = 0;
@@ -38,7 +38,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:52: err
   53.     }
   54.   
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:49: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:49: error: THREAD_SAFETY_VIOLATION
   Unprotected write. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.reset` writes to field `&this.in.peerreview.ping.common.utils.DataUsesReporter.mStartRX` outside of synchronization.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   47.     public void reset() {
@@ -47,7 +47,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:49: err
   50.       mStartTX = 0;
   51.       mPrevRX = 0;
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:50: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:50: error: THREAD_SAFETY_VIOLATION
   Unprotected write. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.reset` writes to field `&this.in.peerreview.ping.common.utils.DataUsesReporter.mStartTX` outside of synchronization.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   48.       mTime = 0;
@@ -56,7 +56,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:50: err
   51.       mPrevRX = 0;
   52.       mPrevTX = 0;
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:48: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:48: error: THREAD_SAFETY_VIOLATION
   Unprotected write. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.reset` writes to field `&this.in.peerreview.ping.common.utils.DataUsesReporter.mTime` outside of synchronization.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   46.   
@@ -65,7 +65,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:48: err
   49.       mStartRX = 0;
   50.       mStartTX = 0;
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:56: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:56: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.stop` reads without synchronization from `&this.in.peerreview.ping.common.utils.DataUsesReporter.mStartRX`. Potentially races with writes in method `void DataUsesReporter.start()`.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   54.   
@@ -74,7 +74,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:56: err
   57.       long txBytes = (TrafficStats.getTotalTxBytes() - mStartTX) / 1024;
   58.   
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:57: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:57: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.stop` reads without synchronization from `&this.in.peerreview.ping.common.utils.DataUsesReporter.mStartTX`. Potentially races with writes in method `void DataUsesReporter.start()`.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   55.     public void stop() {
@@ -83,7 +83,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:57: err
   58.   
   59.       for (Callback cb : mCallbackList) {
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:60: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:60: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.stop` reads without synchronization from `&this.in.peerreview.ping.common.utils.DataUsesReporter.mTime`. Potentially races with writes in method `void DataUsesReporter.start()`.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   58.   
@@ -92,7 +92,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:60: err
   61.       }
   62.       mStart = false;
 
-app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:62: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/utils/DataUsesReporter.java:62: error: THREAD_SAFETY_VIOLATION
   Unprotected write. Non-private method `in.peerreview.ping.common.utils.DataUsesReporter.stop` writes to field `&this.in.peerreview.ping.common.utils.DataUsesReporter.mStart` outside of synchronization.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   60.         cb.onFinish(mTime, rxBytes, txBytes);
@@ -101,7 +101,7 @@ app/src/main/java/in/co/dipankar/ping/common/utils/DataUsesReporter.java:62: err
   63.     }
   64.   
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:74: error: NULL_DEREFERENCE
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:74: error: NULL_DEREFERENCE
   object `ScreenCapturerAndroid.mediaProjectionManager` last accessed on line 74 is annotated with @Nullable and is dereferenced without a null check at line 74.
   72.       this.height = height;
   73.       this.mediaProjection =
@@ -109,23 +109,23 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   75.               -1, this.mediaProjectionPermissionResultData);
   76.       this.mediaProjection.registerCallback(
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:114: error: NULL_DEREFERENCE
-  object `CameraCapturer$1.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 114.
-  112.   
-  113.                 if (failureType == FailureType.DISCONNECTED) {
-  114. >                 CameraCapturer.this.eventsHandler.onCameraDisconnected();
-  115.                 } else {
-  116.                   CameraCapturer.this.eventsHandler.onCameraError(error);
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:106: error: NULL_DEREFERENCE
+  object `CameraCapturer$1.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 106.
+  104.   
+  105.                 if (failureType == CameraSession.FailureType.DISCONNECTED) {
+  106. >                 CameraCapturer.this.eventsHandler.onCameraDisconnected();
+  107.                 } else {
+  108.                   CameraCapturer.this.eventsHandler.onCameraError(error);
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:116: error: NULL_DEREFERENCE
-  object `CameraCapturer$1.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 116.
-  114.                   CameraCapturer.this.eventsHandler.onCameraDisconnected();
-  115.                 } else {
-  116. >                 CameraCapturer.this.eventsHandler.onCameraError(error);
-  117.                 }
-  118.               } else {
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:108: error: NULL_DEREFERENCE
+  object `CameraCapturer$1.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 108.
+  106.                   CameraCapturer.this.eventsHandler.onCameraDisconnected();
+  107.                 } else {
+  108. >                 CameraCapturer.this.eventsHandler.onCameraError(error);
+  109.                 }
+  110.               } else {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:86: error: NULL_DEREFERENCE
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:86: error: NULL_DEREFERENCE
   object `ScreenCapturerAndroid.surfaceTextureHelper` last accessed on line 86 is annotated with @Nullable and is dereferenced without a null check at line 86.
   84.       this.checkNotDisposed();
   85.       ThreadUtils.invokeAtFrontUninterruptibly(
@@ -133,7 +133,7 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   87.           new Runnable() {
   88.             public void run() {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:89: error: NULL_DEREFERENCE
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:89: error: NULL_DEREFERENCE
   object `ScreenCapturerAndroid$1.this$0.surfaceTextureHelper` last accessed on line 89 is indirectly marked @Nullable (source: `ScreenCapturerAndroid.surfaceTextureHelper`) and is dereferenced without a null check at line 89.
   87.           new Runnable() {
   88.             public void run() {
@@ -141,7 +141,16 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   90.               capturerObserver.onCapturerStopped();
   91.               if (virtualDisplay != null) {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:115: error: NULL_DEREFERENCE
+app/src/main/java/in/peerreview/ping/activities/call/addon/map/DirectionFinder.java:107: error: RESOURCE_LEAK
+  resource of type `java.io.InputStreamReader` acquired by call to `new()` at line 99 is not released after line 107.
+**Note**: potential exception at line 102
+  105.           return buffer.toString();
+  106.   
+  107. >       } catch (MalformedURLException e) {
+  108.           e.printStackTrace();
+  109.         } catch (IOException e) {
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:115: error: NULL_DEREFERENCE
   object `ScreenCapturerAndroid.surfaceTextureHelper` last accessed on line 115 is annotated with @Nullable and is dereferenced without a null check at line 115.
   113.       if (this.virtualDisplay != null) {
   114.         ThreadUtils.invokeAtFrontUninterruptibly(
@@ -149,7 +158,15 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   116.             new Runnable() {
   117.               public void run() {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:118: error: NULL_DEREFERENCE
+app/src/main/java/in/peerreview/ping/activities/home/HomePresenter.java:115: error: NULL_DEREFERENCE
+  object `HomePresenter$4.this$0.mContactManager` is indirectly marked @Nullable (source: `HomePresenter.mContactManager`) and is dereferenced without a null check at line 115.
+  113.           public void onPresenceChange(IRtcUser user, ICallSignalingApi.PresenceType type) {
+  114.             boolean isOnline = type == ICallSignalingApi.PresenceType.ONLINE ? true : false;
+  115. >           mContactManager.changeOnlineState(user, isOnline);
+  116.           }
+  117.   
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:118: error: NULL_DEREFERENCE
   object `ScreenCapturerAndroid$2.this$0.virtualDisplay` last accessed on line 118 is indirectly marked @Nullable (source: `ScreenCapturerAndroid.virtualDisplay`) and is dereferenced without a null check at line 118.
   116.             new Runnable() {
   117.               public void run() {
@@ -157,7 +174,23 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   119.                 createVirtualDisplay();
   120.               }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:126: error: NULL_DEREFERENCE
+app/src/main/java/in/peerreview/ping/activities/home/HomePresenter.java:120: error: NULL_DEREFERENCE
+  object `HomePresenter$4.this$0.mContactManager` is indirectly marked @Nullable (source: `HomePresenter.mContactManager`) and is dereferenced without a null check at line 120.
+  118.           @Override
+  119.           public void onWelcome(List<IRtcUser> liveUserList) {
+  120. >           mContactManager.changeOnlineState(liveUserList, true);
+  121.           }
+  122.   
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:127: error: NULL_DEREFERENCE
+  object `CameraCapturer$2.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 127.
+  125.                 Logging.w("CameraCapturer", "onCameraOpening while session was open.");
+  126.               } else {
+  127. >               CameraCapturer.this.eventsHandler.onCameraOpening(CameraCapturer.this.cameraName);
+  128.               }
+  129.             }
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:126: error: NULL_DEREFERENCE
   object `ScreenCapturerAndroid.surfaceTextureHelper` last accessed on line 126 is annotated with @Nullable and is dereferenced without a null check at line 126.
   124.   
   125.     private void createVirtualDisplay() {
@@ -165,15 +198,15 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   127.       this.virtualDisplay =
   128.           this.mediaProjection.createVirtualDisplay(
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:135: error: NULL_DEREFERENCE
-  object `CameraCapturer$2.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 135.
-  133.                 Logging.w("CameraCapturer", "onCameraOpening while session was open.");
-  134.               } else {
-  135. >               CameraCapturer.this.eventsHandler.onCameraOpening(CameraCapturer.this.cameraName);
-  136.               }
-  137.             }
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:138: error: NULL_DEREFERENCE
+  object `CameraCapturer$2.this$0.eventsHandler` last accessed on line 138 is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 138.
+  136.                 Logging.w("CameraCapturer", "onCameraError from another session: " + error);
+  137.               } else {
+  138. >               CameraCapturer.this.eventsHandler.onCameraError(error);
+  139.                 CameraCapturer.this.stopCapture();
+  140.               }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:142: error: NULL_DEREFERENCE
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:142: error: NULL_DEREFERENCE
   object `ScreenCapturerAndroid.surfaceTextureHelper` last accessed on line 145 is annotated with @Nullable and is dereferenced without a null check at line 142.
   140.       ++this.numCapturedFrames;
   141.       Buffer buffer =
@@ -181,7 +214,7 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   143.               this.width,
   144.               this.height,
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:147: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:147: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.webrtc.fork.screencapture.ScreenCapturerAndroid.onTextureFrameAvailable` reads without synchronization from `&this.in.peerreview.ping.common.webrtc.fork.screencapture.ScreenCapturerAndroid.capturerObserver`. Potentially races with writes in method `void ScreenCapturerAndroid.initialize(SurfaceTextureHelper,Context,VideoCapturer$CapturerObserver)`.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   145.               RendererCommon.convertMatrixToAndroidGraphicsMatrix(transformMatrix));
@@ -190,7 +223,7 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   148.       frame.release();
   149.     }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:142: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/screencapture/ScreenCapturerAndroid.java:142: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.webrtc.fork.screencapture.ScreenCapturerAndroid.onTextureFrameAvailable` reads without synchronization from `&this.in.peerreview.ping.common.webrtc.fork.screencapture.ScreenCapturerAndroid.surfaceTextureHelper`. Potentially races with writes in method `void ScreenCapturerAndroid.initialize(SurfaceTextureHelper,Context,VideoCapturer$CapturerObserver)`.
  Reporting because another access to the same memory occurs on a background thread, although this access may not.
   140.       ++this.numCapturedFrames;
@@ -199,137 +232,186 @@ app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/screencapture/ScreenCap
   143.               this.width,
   144.               this.height,
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:146: error: NULL_DEREFERENCE
-  object `CameraCapturer$2.this$0.eventsHandler` last accessed on line 146 is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 146.
-  144.                 Logging.w("CameraCapturer", "onCameraError from another session: " + error);
-  145.               } else {
-  146. >               CameraCapturer.this.eventsHandler.onCameraError(error);
-  147.                 CameraCapturer.this.stopCapture();
-  148.               }
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:150: error: NULL_DEREFERENCE
+  object `CameraCapturer$2.this$0.eventsHandler` last accessed on line 150 is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 150.
+  148.                 Logging.w("CameraCapturer", "onCameraDisconnected from another session.");
+  149.               } else {
+  150. >               CameraCapturer.this.eventsHandler.onCameraDisconnected();
+  151.                 CameraCapturer.this.stopCapture();
+  152.               }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:158: error: NULL_DEREFERENCE
-  object `CameraCapturer$2.this$0.eventsHandler` last accessed on line 158 is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 158.
-  156.                 Logging.w("CameraCapturer", "onCameraDisconnected from another session.");
-  157.               } else {
-  158. >               CameraCapturer.this.eventsHandler.onCameraDisconnected();
-  159.                 CameraCapturer.this.stopCapture();
-  160.               }
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:163: error: NULL_DEREFERENCE
+  object `CameraCapturer$2.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 163.
+  161.                 Logging.d("CameraCapturer", "onCameraClosed from another session.");
+  162.               } else {
+  163. >               CameraCapturer.this.eventsHandler.onCameraClosed();
+  164.               }
+  165.             }
 
-app/src/main/java/in/co/dipankar/ping/activities/login/LoginActivity.java:172: error: QUANDARY_TAINT_ERROR
-  Intent(void LoginActivity.onActivityResult(int,int,Intent) at line 163) -> StartComponent(void Activity.startActivity(Intent) at line 206).
-  170.           IRtcUser user = new RtcUser(name, id, pic, pic);
-  171.           saveUser(user);
-  172. >         navigateToHomeScreen(user);
-  173.         } else {
-  174.           onLoginFailed();
+app/src/main/java/in/peerreview/ping/activities/home/HomePresenter.java:166: error: NULL_DEREFERENCE
+  object `HomePresenter.mCallSignalingApi` last accessed on line 166 is annotated with @Nullable and is dereferenced without a null check at line 166.
+  164.     @Override
+  165.     public void finish() {
+  166. >     mCallSignalingApi.removeCallback(mCallSignalingCallback);
+  167.       mContactManager.removeCallback(mContactManagerCallback);
+  168.       mCallSignalingApi.disconnect();
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:171: error: NULL_DEREFERENCE
-  object `CameraCapturer$2.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 171.
-  169.                 Logging.d("CameraCapturer", "onCameraClosed from another session.");
-  170.               } else {
-  171. >               CameraCapturer.this.eventsHandler.onCameraClosed();
-  172.               }
-  173.             }
+app/src/main/java/in/peerreview/ping/activities/login/LoginActivity.java:181: error: QUANDARY_TAINT_ERROR
+  Intent(void LoginActivity.onActivityResult(int,int,Intent) at line 168) -> StartComponent(void Activity.startActivity(Intent) at line 203).
+  179.           IRtcUser user = new RtcUser(name, id, pic, pic);
+  180.           saveUser(user);
+  181. >         navigateToHomeScreen(user);
+  182.         } else {
+  183.           onLoginFailed();
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:187: error: NULL_DEREFERENCE
-  object `CameraCapturer$2.this$0.cameraStatistics` last accessed on line 187 is indirectly marked @Nullable (source: `CameraCapturer.cameraStatistics`) and is dereferenced without a null check at line 187.
-  185.                 }
-  186.   
-  187. >               CameraCapturer.this.cameraStatistics.addFrame();
-  188.                 CameraCapturer.this.capturerObserver.onFrameCaptured(frame);
-  189.               }
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:179: error: NULL_DEREFERENCE
+  object `CameraCapturer$2.this$0.cameraStatistics` last accessed on line 179 is indirectly marked @Nullable (source: `CameraCapturer.cameraStatistics`) and is dereferenced without a null check at line 179.
+  177.                 }
+  178.   
+  179. >               CameraCapturer.this.cameraStatistics.addFrame();
+  180.                 CameraCapturer.this.capturerObserver.onFrameCaptured(frame);
+  181.               }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:183: error: NULL_DEREFERENCE
-  object `CameraCapturer$2.this$0.eventsHandler` last accessed on line 183 is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 183.
-  181.               } else {
-  182.                 if (!CameraCapturer.this.firstFrameObserved) {
-  183. >                 CameraCapturer.this.eventsHandler.onFirstFrameAvailable();
-  184.                   CameraCapturer.this.firstFrameObserved = true;
-  185.                 }
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:175: error: NULL_DEREFERENCE
+  object `CameraCapturer$2.this$0.eventsHandler` last accessed on line 175 is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 175.
+  173.               } else {
+  174.                 if (!CameraCapturer.this.firstFrameObserved) {
+  175. >                 CameraCapturer.this.eventsHandler.onFirstFrameAvailable();
+  176.                   CameraCapturer.this.firstFrameObserved = true;
+  177.                 }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:197: error: NULL_DEREFERENCE
-  object `CameraCapturer$3.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 197.
-  195.         new Runnable() {
-  196.           public void run() {
-  197. >           CameraCapturer.this.eventsHandler.onCameraError("Camera failed to start within timeout.");
-  198.           }
-  199.         };
+app/src/main/java/in/peerreview/ping/activities/home/HomePresenter.java:180: error: NULL_DEREFERENCE
+  object `HomePresenter.mCallSignalingApi` last accessed on line 180 is annotated with @Nullable and is dereferenced without a null check at line 180.
+  178.     public void invokePendingCall() {
+  179.       if (mPendingCallId != null) {
+  180. >       mCallSignalingApi.resendOffer(PingApplication.Get().getMe().getUserId(), mPendingCallId);
+  181.         mPendingCallId = null;
+  182.       }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:268: error: THREAD_SAFETY_VIOLATION
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:189: error: NULL_DEREFERENCE
+  object `CameraCapturer$3.this$0.eventsHandler` is indirectly marked @Nullable (source: `CameraCapturer.eventsHandler`) and is dereferenced without a null check at line 189.
+  187.         new Runnable() {
+  188.           public void run() {
+  189. >           CameraCapturer.this.eventsHandler.onCameraError("Camera failed to start within timeout.");
+  190.           }
+  191.         };
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:260: error: THREAD_SAFETY_VIOLATION
   Read/Write race. Non-private method `in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer.startCapture` reads without synchronization from `&this.in.peerreview.ping.common.webrtc.fork.cameraCapture.CameraCapturer.applicationContext`. Potentially races with writes in method `void CameraCapturer.initialize(SurfaceTextureHelper,Context,VideoCapturer$CapturerObserver)`.
  Reporting because this access may occur on a background thread.
-  266.     public void startCapture(int width, int height, int framerate) {
-  267.       Logging.d("CameraCapturer", "startCapture: " + width + "x" + height + "@" + framerate);
-  268. >     if (this.applicationContext == null) {
-  269.         throw new RuntimeException("CameraCapturer must be initialized before calling startCapture.");
-  270.       } else {
+  258.     public void startCapture(int width, int height, int framerate) {
+  259.       Logging.d("CameraCapturer", "startCapture: " + width + "x" + height + "@" + framerate);
+  260. >     if (this.applicationContext == null) {
+  261.         throw new RuntimeException("CameraCapturer must be initialized before calling startCapture.");
+  262.       } else {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:289: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 289.
-  287.     private void createSessionInternal(int delayMs, final MediaRecorder mediaRecorder) {
-  288.       this.uiThreadHandler.postDelayed(this.openCameraTimeoutRunnable, (long) (delayMs + 10000));
-  289. >     this.cameraThreadHandler.postDelayed(
-  290.           new Runnable() {
-  291.             public void run() {
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:281: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 281.
+  279.     private void createSessionInternal(int delayMs, final MediaRecorder mediaRecorder) {
+  280.       this.uiThreadHandler.postDelayed(this.openCameraTimeoutRunnable, (long) (delayMs + 10000));
+  281. >     this.cameraThreadHandler.postDelayed(
+  282.           new Runnable() {
+  283.             public void run() {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:326: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraStatistics` last accessed on line 326 is annotated with @Nullable and is dereferenced without a null check at line 326.
-  324.         if (this.currentSession != null) {
-  325.           Logging.d("CameraCapturer", "Stop capture: Nulling session");
-  326. >         this.cameraStatistics.release();
-  327.           this.cameraStatistics = null;
-  328.           final CameraSession oldSession = this.currentSession;
+app/src/main/java/in/peerreview/ping/activities/call/addon/map/MapAddonView.java:293: error: NULL_DEREFERENCE
+  object `MapAddonView.mGoogleMap` last accessed on line 293 is annotated with @Nullable and is dereferenced without a null check at line 293.
+  291.   
+  292.     private void intMap() {
+  293. >     mGoogleMap.setOnMapClickListener(
+  294.           new GoogleMap.OnMapClickListener() {
+  295.             @Override
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:361: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 361.
-  359.     public void switchCamera(final CameraSwitchHandler switchEventsHandler) {
-  360.       Logging.d("CameraCapturer", "switchCamera");
-  361. >     this.cameraThreadHandler.post(
-  362.           new Runnable() {
-  363.             public void run() {
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:318: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraStatistics` last accessed on line 318 is annotated with @Nullable and is dereferenced without a null check at line 318.
+  316.         if (this.currentSession != null) {
+  317.           Logging.d("CameraCapturer", "Stop capture: Nulling session");
+  318. >         this.cameraStatistics.release();
+  319.           this.cameraStatistics = null;
+  320.           final CameraSession oldSession = this.currentSession;
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:372: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 372.
-  370.         final MediaRecorder mediaRecorder, final MediaRecorderHandler mediaRecoderEventsHandler) {
-  371.       Logging.d("CameraCapturer", "addMediaRecorderToCamera");
-  372. >     this.cameraThreadHandler.post(
-  373.           new Runnable() {
-  374.             public void run() {
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:353: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 353.
+  351.     public void switchCamera(final CameraSwitchHandler switchEventsHandler) {
+  352.       Logging.d("CameraCapturer", "switchCamera");
+  353. >     this.cameraThreadHandler.post(
+  354.           new Runnable() {
+  355.             public void run() {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:383: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 383.
-  381.     public void removeMediaRecorderFromCamera(final MediaRecorderHandler mediaRecoderEventsHandler) {
-  382.       Logging.d("CameraCapturer", "removeMediaRecorderFromCamera");
-  383. >     this.cameraThreadHandler.post(
-  384.           new Runnable() {
-  385.             public void run() {
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:364: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 364.
+  362.         final MediaRecorder mediaRecorder, final MediaRecorderHandler mediaRecoderEventsHandler) {
+  363.       Logging.d("CameraCapturer", "addMediaRecorderToCamera");
+  364. >     this.cameraThreadHandler.post(
+  365.           new Runnable() {
+  366.             public void run() {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:460: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraStatistics` last accessed on line 460 is annotated with @Nullable and is dereferenced without a null check at line 460.
-  458.           this.switchState = CameraCapturer.SwitchState.IN_PROGRESS;
-  459.           Logging.d("CameraCapturer", "switchCamera: Stopping session");
-  460. >         this.cameraStatistics.release();
-  461.           this.cameraStatistics = null;
-  462.           final CameraSession oldSession = this.currentSession;
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:375: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraThreadHandler` is annotated with @Nullable and is dereferenced without a null check at line 375.
+  373.     public void removeMediaRecorderFromCamera(final MediaRecorderHandler mediaRecoderEventsHandler) {
+  374.       Logging.d("CameraCapturer", "removeMediaRecorderFromCamera");
+  375. >     this.cameraThreadHandler.post(
+  376.           new Runnable() {
+  377.             public void run() {
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:536: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraStatistics` last accessed on line 536 is annotated with @Nullable and is dereferenced without a null check at line 536.
-  534.                 : CameraCapturer.MediaRecorderState.ACTIVE_TO_IDLE;
-  535.         Logging.d("CameraCapturer", "updateMediaRecoder: Stopping session");
-  536. >       this.cameraStatistics.release();
-  537.         this.cameraStatistics = null;
-  538.         final CameraSession oldSession = this.currentSession;
+app/src/main/java/in/peerreview/ping/activities/call/addon/map/MapAddonView.java:393: error: NULL_DEREFERENCE
+  object `MapAddonView$16.this$0.mGoogleMap` is indirectly marked @Nullable (source: `MapAddonView.mGoogleMap`) and is dereferenced without a null check at line 393.
+  391.                 } else {
+  392.                   updateLocation(mDefaultLocation, "Unknown");
+  393. >                 mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+  394.                 }
+  395.               }
 
-app/src/main/java/in/co/dipankar/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:555: error: NULL_DEREFERENCE
-  object `CameraCapturer.cameraThreadHandler` last accessed on line 555 is annotated with @Nullable and is dereferenced without a null check at line 555.
-  553.   
-  554.     private void checkIsOnCameraThread() {
-  555. >     if (Thread.currentThread() != this.cameraThreadHandler.getLooper().getThread()) {
-  556.         Logging.e("CameraCapturer", "Check is on camera thread failed.");
-  557.         throw new RuntimeException("Not on camera thread.");
+app/src/main/java/in/peerreview/ping/activities/call/addon/map/MapAddonView.java:410: error: NULL_DEREFERENCE
+  object `MapAddonView.mGoogleMap` last accessed on line 410 is annotated with @Nullable and is dereferenced without a null check at line 410.
+  408.       switch (title) {
+  409.         case "you":
+  410. >         mGoogleMap.addMarker(
+  411.               new MarkerOptions()
+  412.                   .position(location)
+
+app/src/main/java/in/peerreview/ping/activities/call/addon/map/MapAddonView.java:417: error: NULL_DEREFERENCE
+  object `MapAddonView.mGoogleMap` last accessed on line 417 is annotated with @Nullable and is dereferenced without a null check at line 417.
+  415.           break;
+  416.         case "me":
+  417. >         mGoogleMap.addMarker(
+  418.               new MarkerOptions()
+  419.                   .position(location)
+
+app/src/main/java/in/peerreview/ping/activities/call/addon/map/MapAddonView.java:424: error: NULL_DEREFERENCE
+  object `MapAddonView.mGoogleMap` last accessed on line 424 is annotated with @Nullable and is dereferenced without a null check at line 424.
+  422.           break;
+  423.         default:
+  424. >         mGoogleMap.addMarker(
+  425.               new MarkerOptions()
+  426.                   .position(location)
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:452: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraStatistics` last accessed on line 452 is annotated with @Nullable and is dereferenced without a null check at line 452.
+  450.           this.switchState = CameraCapturer.SwitchState.IN_PROGRESS;
+  451.           Logging.d("CameraCapturer", "switchCamera: Stopping session");
+  452. >         this.cameraStatistics.release();
+  453.           this.cameraStatistics = null;
+  454.           final CameraSession oldSession = this.currentSession;
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:528: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraStatistics` last accessed on line 528 is annotated with @Nullable and is dereferenced without a null check at line 528.
+  526.                 : CameraCapturer.MediaRecorderState.ACTIVE_TO_IDLE;
+  527.         Logging.d("CameraCapturer", "updateMediaRecoder: Stopping session");
+  528. >       this.cameraStatistics.release();
+  529.         this.cameraStatistics = null;
+  530.         final CameraSession oldSession = this.currentSession;
+
+app/src/main/java/in/peerreview/ping/common/webrtc/fork/cameraCapture/CameraCapturer.java:547: error: NULL_DEREFERENCE
+  object `CameraCapturer.cameraThreadHandler` last accessed on line 547 is annotated with @Nullable and is dereferenced without a null check at line 547.
+  545.   
+  546.     private void checkIsOnCameraThread() {
+  547. >     if (Thread.currentThread() != this.cameraThreadHandler.getLooper().getThread()) {
+  548.         Logging.e("CameraCapturer", "Check is on camera thread failed.");
+  549.         throw new RuntimeException("Not on camera thread.");
 
 Summary of the reports
 
-         NULL_DEREFERENCE: 24
+         NULL_DEREFERENCE: 33
   THREAD_SAFETY_VIOLATION: 14
+            RESOURCE_LEAK: 1
      QUANDARY_TAINT_ERROR: 1

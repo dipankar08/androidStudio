@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@null"
+    android:layout_height="match_parent">
+    <!-- incomming -->
+    <LinearLayout
+        android:id="@+id/bell_incoming"
+        android:layout_centerInParent="true"
+        android:layout_width="250dp"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_round_white_border"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/ic_title"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textSize="22dp"
+            android:layout_centerHorizontal="true"
+            android:text="Ready for Tea ?"
+            android:textColor="?attr/primaryTextColor"
+            android:gravity="center"
+            app:customfont="Montserrat-Medium.ttf"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_bell_blue_50"
+            android:layout_height="wrap_content" />
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/ic_subtitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Dipankar send a bell to you ..."
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="12dp"
+            android:gravity="center"
+            app:customfont="Montserrat-Medium.ttf"/>
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:gravity="center|bottom"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/ic_reject"
+                android:text="Reject"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/ic_accept"
+                android:text="Accept"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Create -->
+    <LinearLayout
+        android:id="@+id/bell_create"
+        android:layout_centerInParent="true"
+        android:layout_width="250dp"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_round_white_border"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textSize="22dp"
+            android:layout_centerHorizontal="true"
+            android:text="Create a Bell."
+            android:textColor="?attr/primaryTextColor"
+            android:gravity="center"
+            app:customfont="Montserrat-Medium.ttf"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_bell_blue_50"
+            android:layout_height="wrap_content" />
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/subtitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Tab on bell icon to select .."
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="12dp"
+            android:gravity="center"
+            app:customfont="Montserrat-Medium.ttf"/>
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:gravity="center|bottom"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/c_create"
+                android:text="Create"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- sent -->
+    <LinearLayout
+        android:id="@+id/bell_sent"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="250dp"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_round_white_border"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/s_title"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textSize="22dp"
+            android:layout_centerHorizontal="true"
+            android:text="Ask for Tea?"
+            android:textColor="?attr/primaryTextColor"
+            android:gravity="center"
+            app:customfont="Montserrat-Medium.ttf"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_bell_blue_50"
+            android:layout_height="wrap_content" />
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/s_subtitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Accept :0 , Reject: 10"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="12dp"
+            android:gravity="center"
+            app:customfont="Montserrat-Medium.ttf"/>
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:gravity="center|bottom"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/s_result"
+                android:enabled="false"
+                android:text="Bell Sent!"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

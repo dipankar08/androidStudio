@@ -1,6 +1,5 @@
 package in.peerreview.ping.activities.call.addon.map;
 
-
 /** Created by dip on 4/14/18. */
 public interface IDirectionFinder {
   public interface Callback {

@@ -2,7 +2,6 @@ package in.peerreview.ping.activities.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +17,9 @@ import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.co.dipankar.quickandorid.views.CustomFontTextView;
 import in.peerreview.ping.R;
+import in.peerreview.ping.activities.Utils.CommonIntent;
 import in.peerreview.ping.activities.application.PingApplication;
+import in.peerreview.ping.activities.bell.BellInfo;
 import in.peerreview.ping.activities.call.CallActivity;
 import in.peerreview.ping.activities.call.subviews.RecyclerTouchListener;
 import in.peerreview.ping.activities.setting.SettingActivity;
@@ -30,6 +31,8 @@ import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PrimitiveIterator;
+
 import org.webrtc.SessionDescription;
 
 public class HomeActivity extends AppCompatActivity implements IHome.View {
@@ -52,13 +55,13 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     DLog.e("Info - HomeActivity::onCreate called");
-      if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
-          setTheme(R.style.ActivityThemeDark);
-          DLog.e("Now Dark theme");
-      } else{
-          setTheme(R.style.ActivityThemeLight);
-          DLog.e("Now Light theme");
-      }
+    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+      setTheme(R.style.ActivityThemeDark);
+      DLog.e("Now Dark theme");
+    } else {
+      setTheme(R.style.ActivityThemeLight);
+      DLog.e("Now Light theme");
+    }
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
     initView();
@@ -95,7 +98,7 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
 
   private void proceedAfterPermission() {
     Intent intent = getIntent();
-
+    String type = getIntent().getStringExtra("type");
     String pending_call_id = getIntent().getStringExtra("call_id");
     DLog.e("Received Pending call" + pending_call_id);
     mPresenter = new HomePresenter(this);
@@ -112,26 +115,27 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
   }
 
   private void initView() {
-      if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
-          setTheme(R.style.ActivityThemeDark);
-          DLog.e("Now Dark theme");
-      } else{
-          setTheme(R.style.ActivityThemeLight);
-          DLog.e("Now Light theme");
-      }
+    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+      setTheme(R.style.ActivityThemeDark);
+      DLog.e("Now Dark theme");
+    } else {
+      setTheme(R.style.ActivityThemeLight);
+      DLog.e("Now Light theme");
+    }
     initQuickList();
     initRecentList();
     initOtherViews();
   }
 
   private void initOtherViews() {
-      mSettingButton = findViewById(R.id.setting_btn);
-      mSettingButton.setOnClickListener(new View.OnClickListener() {
+    mSettingButton = findViewById(R.id.setting_btn);
+    mSettingButton.setOnClickListener(
+        new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              launchSettingActivity();
+            launchSettingActivity();
           }
-      });
+        });
     mNotificationView = findViewById(R.id.notification);
     mCustomButtonSheetView = findViewById(R.id.custom_button_sheetview);
     List<CustomButtonSheetView.ISheetItem> mSheetItems = new ArrayList<>();
@@ -212,6 +216,22 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
               }
             },
             new CharSequence[] {"Hello", "World"}));
+      mSheetItems.add(
+              new SheetItem(
+                      102,
+                      "Send Bell!",
+                      CustomButtonSheetView.Type.BUTTON,
+                      new CustomButtonSheetView.Callback() {
+                          @Override
+                          public void onClick(int v) {
+                              BellInfo bellInfo = PingApplication.Get().getUserManager().getBellInfoList().get(0);
+                              List<String> ids = new ArrayList<>();
+                              ids.add(mCurrentFocusUser.getUserId());
+                              bellInfo.setParticepents(ids);
+                              mPresenter.sendBellInfo(bellInfo);
+                          }
+                      },
+                      null));
     mCustomButtonSheetView.addMenu(mSheetItems);
     mCustomButtonSheetView.hide();
   }
@@ -322,7 +342,22 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
         });
   }
 
-  @SuppressLint("ResourceAsColor")
+    @Override
+    public void startBellActivity(String type, String data) {
+        runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        startBellActivityInternal(type, data);
+                    }
+                });
+    }
+
+    private void startBellActivityInternal(String type, String data) {
+        CommonIntent.startBellActivity(this, type, data);
+    }
+
+    @SuppressLint("ResourceAsColor")
   private void showNetworkNotificationInternal(String type, String s) {
     if (type.equals("success")) {
       mNotificationView.setBackgroundResource(R.color.Notification_Success);
@@ -383,10 +418,10 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
     overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
   }
 
-  private void launchSettingActivity(){
-      Intent myIntent = new Intent(this, SettingActivity.class);
-      this.startActivity(myIntent);
-      overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+  private void launchSettingActivity() {
+    Intent myIntent = new Intent(this, SettingActivity.class);
+    this.startActivity(myIntent);
+    overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
   }
 
   // Logic to  Press ed back

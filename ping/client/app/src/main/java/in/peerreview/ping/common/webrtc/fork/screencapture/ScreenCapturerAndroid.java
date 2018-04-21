@@ -70,11 +70,13 @@ public class ScreenCapturerAndroid implements VideoCapturer, OnTextureFrameAvail
     this.checkNotDisposed();
     this.width = width;
     this.height = height;
-    this.mediaProjection =
-        this.mediaProjectionManager.getMediaProjection(
-            -1, this.mediaProjectionPermissionResultData);
-    this.mediaProjection.registerCallback(
-        this.mediaProjectionCallback, this.surfaceTextureHelper.getHandler());
+    if(mediaProjectionManager != null) {
+      this.mediaProjection =
+              this.mediaProjectionManager.getMediaProjection(
+                      -1, this.mediaProjectionPermissionResultData);
+      this.mediaProjection.registerCallback(
+              this.mediaProjectionCallback, this.surfaceTextureHelper.getHandler());
+    }
     this.createVirtualDisplay();
     this.capturerObserver.onCapturerStarted(true);
     this.surfaceTextureHelper.startListening(this);

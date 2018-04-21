@@ -1,15 +1,22 @@
 package in.peerreview.ping.activities.home;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.facebook.FacebookSdk.setApplicationId;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
+import com.facebook.common.Common;
+import com.google.gson.Gson;
+
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.Network;
+import in.peerreview.ping.activities.Utils.CommonIntent;
 import in.peerreview.ping.activities.application.PingApplication;
+import in.peerreview.ping.activities.bell.BellInfo;
 import in.peerreview.ping.common.model.IContactManager;
+import in.peerreview.ping.common.signaling.IDataMessage;
 import in.peerreview.ping.contracts.Configuration;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.ICallSignalingApi;
@@ -25,8 +32,8 @@ import org.webrtc.SessionDescription;
 public class HomePresenter implements IHome.Presenter {
 
   private IHome.View mView;
-  @Nullable  private ICallSignalingApi mCallSignalingApi;
-  @Nullable  private IContactManager mContactManager;
+  @Nullable private ICallSignalingApi mCallSignalingApi;
+  @Nullable private IContactManager mContactManager;
   private String mPendingCallId = null;
 
   private static final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -37,27 +44,25 @@ public class HomePresenter implements IHome.Presenter {
     initOnBackgroudThread();
   }
 
-  private void initOnUIThread() {
-
-  }
-
+  private void initOnUIThread() {}
 
   private void initOnBackgroudThread() {
-    executor.execute(new Runnable() {
-        @Override
-        public void run() {
-            //Init Model and Restore
+    executor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            // Init Model and Restore
             mContactManager = PingApplication.Get().getUserManager();
             mContactManager.addCallback(mContactManagerCallback);
             PingApplication.Get().getUserManager().restore();
 
-            //Init Signals
+            // Init Signals
             mCallSignalingApi = PingApplication.Get().getCallSignalingApi();
             mCallSignalingApi.addCallback(mCallSignalingCallback);
             mCallSignalingApi.connect();
             updateToken();
-        }
-    });
+          }
+        });
   }
 
   private void updateToken() {
@@ -123,7 +128,22 @@ public class HomePresenter implements IHome.Presenter {
           mContactManager.changeOnlineState(liveUserList, true);
         }
 
-        // RTC - Nothing to do here.
+          @Override
+          public void onDataMessage(IDataMessage dataMessage) {
+              switch (dataMessage.getMessageType()){
+                  case ACK:
+                      break;
+                  case BELL:
+                      mView.startBellActivity("incoming",dataMessage.getRawData());
+                      break;
+                  case BELL_ACK:
+                      mView.startBellActivity("outgoing",dataMessage.getRawData());
+                      break;
+
+              }
+          }
+
+          // RTC - Nothing to do here.
         @Override
         public void onReceivedOffer(
             String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled) {
@@ -178,7 +198,23 @@ public class HomePresenter implements IHome.Presenter {
     mPendingCallId = pending_call_id;
   }
 
-  public void invokePendingCall() {
+    @Override
+    public void sendBellInfo(BellInfo bellInfo) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                sendBellInfoInternal(bellInfo);
+            }
+        });
+    }
+
+    private void sendBellInfoInternal(BellInfo bellInfo) {
+      if(mCallSignalingApi != null){
+          mCallSignalingApi.sendMessage(bellInfo);
+      }
+    }
+
+    public void invokePendingCall() {
     if (mPendingCallId != null) {
       mCallSignalingApi.resendOffer(PingApplication.Get().getMe().getUserId(), mPendingCallId);
       mPendingCallId = null;

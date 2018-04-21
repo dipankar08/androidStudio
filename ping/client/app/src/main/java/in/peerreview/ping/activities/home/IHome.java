@@ -1,6 +1,8 @@
 package in.peerreview.ping.activities.home;
 
 import android.annotation.SuppressLint;
+
+import in.peerreview.ping.activities.bell.BellInfo;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
 import java.util.List;
@@ -18,6 +20,8 @@ public class IHome {
 
     void navigateToInComingCallView(
         String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled);
+
+      void startBellActivity(String incoming, String data);
   }
 
   public interface Presenter {
@@ -25,5 +29,7 @@ public class IHome {
     void finish();
 
     void requestSdp(String pending_call_id);
+
+    void sendBellInfo(BellInfo bellInfo);
   }
 }

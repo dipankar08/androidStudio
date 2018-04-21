@@ -4,6 +4,8 @@ import java.util.List;
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
 
+import in.peerreview.ping.common.signaling.IDataMessage;
+
 /** Created by dip on 3/9/18. */
 public interface ICallSignalingApi {
 
@@ -24,6 +26,7 @@ public interface ICallSignalingApi {
     TOPIC_OUT_ENDCALL("endcall"),
     TOPIC_OUT_TEST("test"),
     TOPIC_OUT_NOTI("notification"),
+    TOPIC_OUT_DATA_MESSAGE("data_message"),
 
     TOPIC_IN_TEST("test"),
     TOPIC_IN_OFFER("offer"),
@@ -34,6 +37,7 @@ public interface ICallSignalingApi {
     TOPIC_IN_NOTI("notification"),
     TOPIC_IN_PRESENCE("presence"),
     TOPIC_IN_WELCOME("welcome"),
+    TOPIC_IN_DATA_MESSAGE("data_message"),
     ;
 
     public final String type;
@@ -43,6 +47,17 @@ public interface ICallSignalingApi {
     }
   };
 
+  public enum MessageType{
+    ACK("ack"),
+    BELL("bell"),
+    BELL_ACK("bell_ack"),
+    ;
+    public final String type;
+
+    MessageType(String type) {
+      this.type = type;
+    }
+  };
   public enum NotificationType {
     CONNECTED("connected");
     public final String type;
@@ -116,6 +131,9 @@ public interface ICallSignalingApi {
 
   void sendEndCall(String callID, EndCallType type, String reason);
 
+  //Other API
+  void sendMessage(IDataMessage dataMessage);
+
   public interface ICallSignalingCallback {
     // connetion
     void onTryConnecting();
@@ -136,6 +154,7 @@ public interface ICallSignalingApi {
     void onPresenceChange(IRtcUser user, PresenceType type);
 
     void onWelcome(List<IRtcUser> liveUserList);
+    void onDataMessage(IDataMessage dataMessage);
   }
 
   void addCallback(ICallSignalingApi.ICallSignalingCallback callback);

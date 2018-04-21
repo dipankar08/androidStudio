@@ -161,7 +161,15 @@ public class SocketIOSignaling implements ICallSignalingApi {
               public void call(Object... args) {
                 onRecvWelcome(args);
               }
-            });
+            })
+            .on(
+            SignalType.TOPIC_IN_DATA_MESSAGE.type,
+            new Emitter.Listener() {
+              @Override
+              public void call(Object... args) {
+                onRecvDataMessage(args);
+              }
+            });;
   }
 
   @Override
@@ -341,6 +349,35 @@ public class SocketIOSignaling implements ICallSignalingApi {
                   }
                 }
               });
+        }
+      }
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void sendMessage(IDataMessage dataMessage) {
+    DLog.e("Send Message");
+    try {
+      JSONObject obj = new JSONObject();
+      obj.put("type", dataMessage.getMessageType().type);
+      obj.put("data", dataMessage.getRawData());
+      obj.put("to", dataMessage.getRecipents());
+
+      if (mSocket.connected()) {
+        mSocket.emit(SignalType.TOPIC_OUT_DATA_MESSAGE.type, obj);
+      } else {
+        if (mCallbackList != null) {
+          runOnUIThread(
+                  new Runnable() {
+                    @Override
+                    public void run() {
+                      for (ICallSignalingCallback callback : mCallbackList) {
+                        callback.onDisconnected();
+                      }
+                    }
+                  });
         }
       }
     } catch (JSONException e) {
@@ -549,6 +586,46 @@ public class SocketIOSignaling implements ICallSignalingApi {
       e.printStackTrace();
     }
   }
+
+
+  private void onRecvDataMessage(Object... args) {
+    DLog.e("Received onRecvDataMessage");
+    try {
+      JSONObject obj = new JSONObject(args[0].toString());
+      final String type = obj.getString("type");
+      final String data = obj.getString("data");
+      if (mCallbackList != null) {
+        runOnUIThread(
+                new Runnable() {
+                  @Override
+                  public void run() {
+                    for (ICallSignalingCallback callback : mCallbackList) {
+
+                      callback.onDataMessage(new IDataMessage() {
+                        @Override
+                        public List<String> getRecipents() {
+                          return null;
+                        }
+
+                        @Override
+                        public MessageType getMessageType() {
+                          return MessageType.valueOf(type.toUpperCase());
+                        }
+
+                        @Override
+                        public String getRawData() {
+                          return data;
+                        }
+                      });
+                    }
+                  }
+                });
+      }
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
 
   private void onRecvNoti(Object... args) {
     DLog.e("Received onRecvInvalidPayload");

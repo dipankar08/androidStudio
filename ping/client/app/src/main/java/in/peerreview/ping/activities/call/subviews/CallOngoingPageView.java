@@ -12,7 +12,6 @@ import in.co.dipankar.quickandorid.views.StateImageButton;
 import in.peerreview.ping.R;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.call.addon.BaseAddonView;
-import in.peerreview.ping.common.model.CallInfo;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
 
@@ -112,13 +111,14 @@ public class CallOngoingPageView extends RelativeLayout {
           }
         });
     showButtonHolder();
-    mRootView.setOnTouchListener(new OnTouchListener() {
-      @Override
-      public boolean onTouch(View v, MotionEvent event) {
-        showButtonHolder();
-        return false;
-      }
-    });
+    mRootView.setOnTouchListener(
+        new OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+            showButtonHolder();
+            return false;
+          }
+        });
   }
 
   public void renderAudioPeerView(IRtcUser user) {
@@ -133,7 +133,7 @@ public class CallOngoingPageView extends RelativeLayout {
     mViewletPeerInfoVideo.setVisibility(VISIBLE);
     mViewletPeerInfoVideo.updateView(user);
     mViewletPeerInfoVideo.setVisibilityCenterView(View.GONE);
-      showButtonHolder();
+    showButtonHolder();
   }
 
   public void updateTitle(String title) {
@@ -163,18 +163,21 @@ public class CallOngoingPageView extends RelativeLayout {
       }
     }
   }
+
   void showButtonHolder() {
-      mButtonHolder.setVisibility(VISIBLE);
-      //auto hide only for video call.
-      ICallInfo callInfo = PingApplication.Get().getCurrentCallInfo();
-      if (callInfo != null && callInfo.getIsVideo()) {
-          Handler handler = new Handler();
-          handler.postDelayed(new Runnable() {
-              @Override
-              public void run() {
-                  mButtonHolder.setVisibility(GONE);
-              }
-          }, 5 * 1000);
-      }
+    mButtonHolder.setVisibility(VISIBLE);
+    // auto hide only for video call.
+    ICallInfo callInfo = PingApplication.Get().getCurrentCallInfo();
+    if (callInfo != null && callInfo.getIsVideo()) {
+      Handler handler = new Handler();
+      handler.postDelayed(
+          new Runnable() {
+            @Override
+            public void run() {
+              mButtonHolder.setVisibility(GONE);
+            }
+          },
+          5 * 1000);
+    }
   }
 }

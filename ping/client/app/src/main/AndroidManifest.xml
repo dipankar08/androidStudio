@@ -45,6 +45,11 @@
         -->
 
         <activity
+            android:name="in.peerreview.ping.activities.bell.BellActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+        </activity>
+        <activity
             android:name="in.peerreview.ping.activities.setting.SettingActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask">

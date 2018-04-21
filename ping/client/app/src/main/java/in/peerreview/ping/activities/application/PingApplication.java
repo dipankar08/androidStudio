@@ -6,16 +6,14 @@ import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-
 import com.activeandroid.ActiveAndroid;
 import com.google.gson.Gson;
-
-import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.INetwork;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.ping.common.model.ContactManger;
 import in.peerreview.ping.common.signaling.SocketIOSignaling;
+import in.peerreview.ping.common.subview.NotificationBuilder;
 import in.peerreview.ping.common.webrtc.RtcDeviceInfo;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.ICallInfo;
@@ -23,8 +21,6 @@ import in.peerreview.ping.contracts.ICallSignalingApi;
 import in.peerreview.ping.contracts.IRtcDeviceInfo;
 import in.peerreview.ping.contracts.IRtcUser;
 import io.paperdb.Paper;
-
-import java.io.IOException;
 
 public class PingApplication extends Application {
 
@@ -39,6 +35,7 @@ public class PingApplication extends Application {
   private boolean isNightModeEnabled = false;
 
   private static PingApplication sPingApplication;
+  private NotificationBuilder mNotificationBuilder;
   // Called when the application is starting, before any other application objects have been
   // created.
   // Overriding this method is totally optional!
@@ -66,13 +63,13 @@ public class PingApplication extends Application {
     }
     try {
       mSelfUser = gson.fromJson(json, RtcUser.class);
-    } catch(Exception e){
-      //pass TODO
+    } catch (Exception e) {
+      // pass TODO
     }
 
-    SharedPreferences mPrefs =  PreferenceManager.getDefaultSharedPreferences(this);
+    SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
     this.isNightModeEnabled = mPrefs.getBoolean("NIGHT_MODE", false);
-
+    mNotificationBuilder = new NotificationBuilder(this);
   }
 
   // Called by the system when the device configuration changes while your component is running.
@@ -162,10 +159,16 @@ public class PingApplication extends Application {
   public void setCurrentCallInfo(ICallInfo callInfo) {
     mCallInfo = callInfo;
   }
+
   public boolean isNightModeEnabled() {
     return isNightModeEnabled;
   }
+
   public void setIsNightModeEnabled(boolean isNightModeEnabled) {
     this.isNightModeEnabled = isNightModeEnabled;
+  }
+
+  public NotificationBuilder getNotificationBuilder(){
+    return mNotificationBuilder;
   }
 }

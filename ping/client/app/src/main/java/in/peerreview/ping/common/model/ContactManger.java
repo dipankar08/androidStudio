@@ -1,10 +1,12 @@
 package in.peerreview.ping.common.model;
 
+import android.widget.LinearLayout;
+
+import in.peerreview.ping.activities.bell.BellInfo;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
 import io.paperdb.Paper;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,39 +17,51 @@ import java.util.concurrent.Executors;
 
 public class ContactManger implements IContactManager {
 
-  final String USER_TABLE ="user_table";
-  final String CALLINFO_TABLE ="callinfo_table";
+  final String USER_TABLE = "user_table";
+  final String CALLINFO_TABLE = "callinfo_table";
 
   private List<IRtcUser> mUserList;
   private List<ICallInfo> mCallInfoList;
+  private List<BellInfo> mBellInfoList;
   private List<Callback> mCallbackList;
   private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+
   public ContactManger() {
     mUserList = new ArrayList<>();
     mCallInfoList = new ArrayList<>();
     mCallbackList = new ArrayList<>();
+    mBellInfoList = new ArrayList<>();
+    test();
+  }
+
+  private void test() {
+    List<String> par = new ArrayList<>();
+    par.add("dutta.dipankar08@gmail.com");
+    BellInfo bellInfo = new BellInfo("Dipankar",par,"Tea?","Let's fo gor a Tea","10:00","100");
+    mBellInfoList.add(bellInfo);
   }
 
   public void restore() {
-    executor.execute(new Runnable() {
-      @Override
-      public void run() {
-        restoreInternal();
-      }
-    });
+    executor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            restoreInternal();
+          }
+        });
   }
 
   private void restoreInternal() {
     mUserList = Paper.book().read(USER_TABLE);
     mCallInfoList = Paper.book().read(CALLINFO_TABLE);
-    if(mUserList == null){
+    if (mUserList == null) {
       mUserList = new ArrayList<>();
-    } else{
-      for(IRtcUser user: mUserList){
+    } else {
+      for (IRtcUser user : mUserList) {
         user.setOnline(false);
       }
     }
-    if(mCallInfoList ==  null){
+    if (mCallInfoList == null) {
       mCallInfoList = new ArrayList<>();
     }
     noifyUserListChanged();
@@ -55,38 +69,39 @@ public class ContactManger implements IContactManager {
   }
 
   public void save() {
-    executor.execute(new Runnable() {
-      @Override
-      public void run() {
-        saveInternal();
-      }
-    });
+    executor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            saveInternal();
+          }
+        });
   }
 
   private void saveInternal() {
-    if(mUserList != null) {
-      if(mUserList.size() >10) {
-        mUserList =  mUserList.subList(0, 9);
+    if (mUserList != null) {
+      if (mUserList.size() > 10) {
+        mUserList = mUserList.subList(0, 9);
       }
       Paper.book().write(USER_TABLE, mUserList);
     }
-    if(mCallInfoList != null) {
-      if(mCallInfoList.size() > 20) {
+    if (mCallInfoList != null) {
+      if (mCallInfoList.size() > 20) {
         mCallInfoList = mCallInfoList.subList(0, 19);
       }
       Paper.book().write(CALLINFO_TABLE, mCallInfoList);
     }
   }
 
-
   private void noifyUserListChanged() {
-    for( Callback callback:mCallbackList){
+    for (Callback callback : mCallbackList) {
       callback.onContactListChange(mUserList);
     }
   }
+
   private void notifyCallInfoListChanged() {
-    for( Callback callback:mCallbackList){
-      if(callback!=null) {
+    for (Callback callback : mCallbackList) {
+      if (callback != null) {
         callback.onCallListChange(mCallInfoList);
       }
     }
@@ -183,7 +198,7 @@ public class ContactManger implements IContactManager {
 
   @Override
   public void changeOnlineState(List<IRtcUser> userList, boolean isOnline) {
-    if(userList == null) return;
+    if (userList == null) return;
     for (IRtcUser user : userList) {
       ((RtcUser) user).mOnline = isOnline;
       for (Callback cb : mCallbackList) {
@@ -200,7 +215,7 @@ public class ContactManger implements IContactManager {
 
   @Override
   public void removeCallback(Callback callback) {
-    if(mCallbackList == null){
+    if (mCallbackList == null) {
       return;
     }
     for (Callback callback1 : mCallbackList) {
@@ -268,5 +283,9 @@ public class ContactManger implements IContactManager {
   private String genRandomId() {
     String uuid = UUID.randomUUID().toString();
     return "uuid = " + uuid;
+  }
+
+  public List<BellInfo> getBellInfoList(){
+    return mBellInfoList;
   }
 }
