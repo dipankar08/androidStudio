@@ -6,9 +6,9 @@ android {
         applicationId "in.peerreview.ping"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 3
+        versionCode 6
         multiDexEnabled true
-        versionName "1.3"
+        versionName "0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

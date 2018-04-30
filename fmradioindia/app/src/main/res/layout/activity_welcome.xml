@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:background="@color/white300"
     android:layout_height="match_parent">
-    <com.cubostecnologia.customfonttextview.CustomFontTextView
+
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:text="V1.0"
+        app:customfont="IndieFlower.ttf"
         android:textColor="@color/gray500"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
@@ -22,11 +24,12 @@
         android:layout_above="@+id/title"
         android:layout_marginBottom="20dp"
         android:layout_height="40dp" />
-    <com.cubostecnologia.customfonttextview.CustomFontTextView
 
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:text="Best FM Radio"
+        app:customfont="IndieFlower.ttf"
         android:layout_marginBottom="30dp"
         android:textColor="@color/gray500"
         android:layout_centerInParent="true"

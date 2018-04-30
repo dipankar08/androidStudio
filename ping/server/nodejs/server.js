@@ -94,14 +94,14 @@ function handleHTTP(req, res, next) {
         case '/add_token':
             if(data.user_id && data.token){
                 insertToken(data.user_id, data.token);
-                res.send("success")
+                res.send('{"status":"success"}')
             } else{
-                res.send('failed');
+                res.send('{"status":"fail"}')
             }
             break;
         case '/remove_token':
             removeToken(data.user_id, data.token);
-            res.send('success');
+            res.send('{"status":"success"}')
             break;
         default:
             res.send('Please send correct command as path');

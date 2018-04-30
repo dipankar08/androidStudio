@@ -2,17 +2,22 @@ package in.peerreview.ping.common.utils;
 
 import android.net.TrafficStats;
 import android.os.Handler;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import in.co.dipankar.quickandorid.utils.DLog;
+
 /** Created by dip on 4/1/18. */
 public class DataUsesReporter {
-  public HashMap<String, Long> getInfo() {
-    return new HashMap<String, Long>() {
+
+  public HashMap<String, String> getInfo() {
+    return new HashMap<String, String>() {
       {
-        put("time", Long.valueOf(mTime));
-        put("data", mPrevRX + mPrevTX - mStartRX - mStartTX);
+        put("time", mTime+"");
+        put("data", getFileSize(mPrevRX + mPrevTX - mStartRX - mStartTX));
       }
     };
   }
@@ -40,24 +45,16 @@ public class DataUsesReporter {
 
   public synchronized void start() {
     mStart = true;
-    reset();
+    mStartRX  =mPrevRX = TrafficStats.getTotalRxBytes();
+    mStartTX  =mPrevTX=  TrafficStats.getTotalTxBytes();
     mHandler.postDelayed(mRunnable, 1000);
   }
 
-  public void reset() {
-    mTime = 0;
-    mStartRX = 0;
-    mStartTX = 0;
-    mPrevRX = 0;
-    mPrevTX = 0;
-  }
-
   public void stop() {
-    long rxBytes = (TrafficStats.getTotalRxBytes() - mStartRX) / 1024;
-    long txBytes = (TrafficStats.getTotalTxBytes() - mStartTX) / 1024;
-
+    long nowrx = TrafficStats.getTotalRxBytes();
+    long nowtx = TrafficStats.getTotalTxBytes();
     for (Callback cb : mCallbackList) {
-      cb.onFinish(mTime, rxBytes, txBytes);
+      cb.onFinish(mTime, (nowrx - mPrevRX)/1024, (nowtx - mPrevTX)/1024);
     }
     mStart = false;
   }
@@ -67,14 +64,14 @@ public class DataUsesReporter {
         public void run() {
           if (mStart) {
             mTime++;
-            long rxBytes = (TrafficStats.getTotalRxBytes() - mStartRX) / 1024;
-            long txBytes = (TrafficStats.getTotalTxBytes() - mStartTX) / 1024;
+            long rxNow = TrafficStats.getTotalRxBytes();
+            long txNow = TrafficStats.getTotalTxBytes();
 
             for (Callback cb : mCallbackList) {
-              cb.onUpdate(mTime, (txBytes - mPrevTX), (rxBytes - mPrevRX));
+              cb.onUpdate(mTime, (txNow - mPrevTX)/1024, (rxNow - mPrevRX)/1024);
             }
-            mPrevRX = rxBytes;
-            mPrevTX = txBytes;
+            mPrevRX = rxNow;
+            mPrevTX = txNow;
             if (mStart) {
               mHandler.postDelayed(mRunnable, 1000);
             }
@@ -92,5 +89,16 @@ public class DataUsesReporter {
         mCallbackList.remove(callback);
       }
     }
+  }
+
+  public static String getFileSize(long size) {
+    if (size <= 0)
+      return "0";
+    final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+    int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+    return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+  }
+  public void finalize() {
+    DLog.d("delete Report");
   }
 }

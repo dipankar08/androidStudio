@@ -29,8 +29,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import in.peerreview.ping.R;
 import in.peerreview.ping.Utils;
+import in.peerreview.ping.activities.Utils.CommonIntent;
 import in.peerreview.ping.activities.application.PingApplication;
-import in.peerreview.ping.activities.home.HomeActivity;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.IRtcUser;
 import java.security.MessageDigest;
@@ -50,10 +50,13 @@ public class LoginActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     Utils.makeFullScreen(this);
     setContentView(R.layout.activity_login);
+    // we must init the application..
+    PingApplication.Get().init();
     IRtcUser user = PingApplication.Get().getMe();
     printKeyHash();
     if (user != null) {
-      navigateToHomeScreen(user);
+      PingApplication.Get().setMe(user);
+      CommonIntent.startHomeActivity(this);
     } else {
       setupAnonymousLogin();
       setupGoogleLogin();
@@ -110,9 +113,13 @@ public class LoginActivity extends AppCompatActivity {
                                       .getJSONObject("data")
                                       .getString("url");
                               IRtcUser user = new RtcUser(name, email, profile_pic, profile_pic);
-                              saveUser(user);
                               navigateToHomeScreen(user);
                             } catch (JSONException e) {
+                              Toast.makeText(
+                                      getApplicationContext(),
+                                      "Not able to logged in",
+                                      Toast.LENGTH_SHORT)
+                                  .show();
                               e.printStackTrace();
                               onLoginFailed();
                             }
@@ -177,7 +184,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         IRtcUser user = new RtcUser(name, id, pic, pic);
-        saveUser(user);
         navigateToHomeScreen(user);
       } else {
         onLoginFailed();
@@ -194,18 +200,11 @@ public class LoginActivity extends AppCompatActivity {
 
   private void navigateToHomeScreen(IRtcUser user) {
     PingApplication.Get().setMe(user);
-    Intent myIntent = new Intent(this, HomeActivity.class);
-    myIntent.putExtra("RtcUser", user);
-    myIntent.addFlags(
-        Intent.FLAG_ACTIVITY_CLEAR_TOP
-            | Intent.FLAG_ACTIVITY_CLEAR_TASK
-            | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-    this.startActivity(myIntent);
-    overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    CommonIntent.startHomeActivity(this);
   }
 
   private void onLoginFailed() {
-    Toast.makeText(this, "Not able to Signin. Try again", Toast.LENGTH_SHORT);
+    Toast.makeText(this, "Not able to Signon. Try again", Toast.LENGTH_SHORT);
   }
 
   private void printKeyHash() {

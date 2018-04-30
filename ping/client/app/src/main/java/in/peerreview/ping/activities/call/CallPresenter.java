@@ -137,12 +137,10 @@ public class CallPresenter implements ICallPage.IPresenter {
         @Override
         public void onWelcome(List<IRtcUser> liveUserList) {}
 
-          @Override
-          public void onDataMessage(IDataMessage dataMessage) {
+        @Override
+        public void onDataMessage(IDataMessage dataMessage) {}
 
-          }
-
-          @Override
+        @Override
         public void onReceivedOffer(
             String callid, SessionDescription sdp, IRtcUser user, boolean isVideoEnabled) {
           // This will taken care bt HomePresenter
@@ -456,7 +454,7 @@ public class CallPresenter implements ICallPage.IPresenter {
 
   private void handleEndCallInternal(ICallSignalingApi.EndCallType type, String reason) {
     mDataUsesReporter.stop();
-    Map<String, Long> info = mDataUsesReporter.getInfo();
+    Map<String, String> info = mDataUsesReporter.getInfo();
     String moreinfo =
         "This call is ended because of "
             + type.toString()

@@ -1,13 +1,13 @@
 package in.peerreview.fmradioindia.activities.player;
 
-import in.peerreview.fmradioindia.common.models.MusicNode;
+import in.peerreview.fmradioindia.common.models.Node;
 import java.util.List;
 
 public interface IPlayerContract {
   interface View {
-    void showPlayUI(MusicNode musicNode);
+    void showPlayUI(Node node);
 
-    void showPauseUI(MusicNode musicNode);
+    void showPauseUI(Node node);
 
     void enableNext();
 
@@ -41,7 +41,7 @@ public interface IPlayerContract {
   }
 
   interface Presenter {
-    void loadAlbum(List<MusicNode> name, int start);
+    void loadAlbum(List<Node> name, int start);
 
     void playNext();
 
@@ -68,6 +68,7 @@ public interface IPlayerContract {
     void playOrResume();
 
     void setMuteState(boolean b);
+
     void setLikeState(boolean b);
   }
 }

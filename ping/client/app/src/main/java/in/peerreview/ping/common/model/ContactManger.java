@@ -1,7 +1,5 @@
 package in.peerreview.ping.common.model;
 
-import android.widget.LinearLayout;
-
 import in.peerreview.ping.activities.bell.BellInfo;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.ICallInfo;
@@ -37,7 +35,7 @@ public class ContactManger implements IContactManager {
   private void test() {
     List<String> par = new ArrayList<>();
     par.add("dutta.dipankar08@gmail.com");
-    BellInfo bellInfo = new BellInfo("Dipankar",par,"Tea?","Let's fo gor a Tea","10:00","100");
+    BellInfo bellInfo = new BellInfo("Dipankar", par, "Tea?", "Let's fo gor a Tea", "10:00", "100");
     mBellInfoList.add(bellInfo);
   }
 
@@ -285,7 +283,7 @@ public class ContactManger implements IContactManager {
     return "uuid = " + uuid;
   }
 
-  public List<BellInfo> getBellInfoList(){
+  public List<BellInfo> getBellInfoList() {
     return mBellInfoList;
   }
 }

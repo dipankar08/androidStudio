@@ -1,0 +1,24 @@
+[INFO] output of locale.getdefaultlocale(): ('en_US', 'UTF-8')
+[INFO] encoding we chose in the end: UTF-8
+[INFO] Running command /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/../lib/python/infer.py --analyzer checkers -j 8 --project-root /Users/dip/dipankar/androidStudio/ping/client/preCommitCheck --out /Users/dip/dipankar/androidStudio/ping/client/preCommitCheck/infer-out -- ../gradlew build
+[INFO] Path to infer script /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/../lib/python/infer.py (/usr/local/Cellar/infer/0.13.0/lib/infer/infer/lib/python/infer.py)
+[INFO] Platform: Darwin-17.4.0-x86_64-i386-64bit
+[INFO] PATH=/Users/dip/.cargo/bin:/opt/facebook/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/facebook/nuclide/latest/nuclide/pkg/fb-biggrep-cli/bin:/usr/local/munki:/opt/facebook/hg/bin:/opt/android_sdk/tools:/opt/android_sdk/platform-tools:/opt/android_sdk/tools:/opt/android_sdk/platform-tools:/opt/android_sdk/tools:/opt/android_sdk/platform-tools
+[INFO] SHELL=/bin/bash
+[INFO] PWD=/Users/dip/dipankar/androidStudio/ping/client/preCommitCheck
+[INFO] Running with:
+
+------------------------------------------------------------
+Gradle 4.1
+------------------------------------------------------------
+
+Build time:   2017-08-07 14:38:48 UTC
+Revision:     941559e020f6c357ebb08d5c67acdb858a3defc2
+
+Groovy:       2.4.11
+Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015
+JVM:          1.8.0_144 (Oracle Corporation 25.144-b01)
+OS:           Mac OS X 10.13.3 x86_64
+
+
+[ERROR] Error during capture phase, exiting

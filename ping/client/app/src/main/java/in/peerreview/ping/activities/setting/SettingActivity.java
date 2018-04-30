@@ -74,7 +74,14 @@ public class SettingActivity extends AppCompatActivity {
   public void restartApp() {
     Intent i = new Intent(getApplicationContext(), SettingActivity.class);
     startActivity(i);
-    overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    // overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     finish();
+  }
+
+  @Override
+  public void finish() {
+    super.finish();
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
   }
 }

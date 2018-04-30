@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
 import in.co.dipankar.quickandorid.utils.DLog;
+import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.common.webrtc.RtcUser;
 import in.peerreview.ping.contracts.Configuration;
 import in.peerreview.ping.contracts.ICallSignalingApi;
@@ -162,14 +163,15 @@ public class SocketIOSignaling implements ICallSignalingApi {
                 onRecvWelcome(args);
               }
             })
-            .on(
+        .on(
             SignalType.TOPIC_IN_DATA_MESSAGE.type,
             new Emitter.Listener() {
               @Override
               public void call(Object... args) {
                 onRecvDataMessage(args);
               }
-            });;
+            });
+    ;
   }
 
   @Override
@@ -190,6 +192,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
       DLog.e("Send Connecting");
     } else {
       DLog.e("Already Connected");
+      sendRegister();
     }
   }
 
@@ -370,14 +373,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
       } else {
         if (mCallbackList != null) {
           runOnUIThread(
-                  new Runnable() {
-                    @Override
-                    public void run() {
-                      for (ICallSignalingCallback callback : mCallbackList) {
-                        callback.onDisconnected();
-                      }
-                    }
-                  });
+              new Runnable() {
+                @Override
+                public void run() {
+                  for (ICallSignalingCallback callback : mCallbackList) {
+                    callback.onDisconnected();
+                  }
+                }
+              });
         }
       }
     } catch (JSONException e) {
@@ -387,6 +390,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
   private void sendRegister() {
     DLog.e("Send Register");
+    mRtcUser = PingApplication.Get().getMe();
     try {
       JSONObject obj = new JSONObject();
       obj.put("user_id", mRtcUser.getUserId());
@@ -587,7 +591,6 @@ public class SocketIOSignaling implements ICallSignalingApi {
     }
   }
 
-
   private void onRecvDataMessage(Object... args) {
     DLog.e("Received onRecvDataMessage");
     try {
@@ -596,12 +599,13 @@ public class SocketIOSignaling implements ICallSignalingApi {
       final String data = obj.getString("data");
       if (mCallbackList != null) {
         runOnUIThread(
-                new Runnable() {
-                  @Override
-                  public void run() {
-                    for (ICallSignalingCallback callback : mCallbackList) {
+            new Runnable() {
+              @Override
+              public void run() {
+                for (ICallSignalingCallback callback : mCallbackList) {
 
-                      callback.onDataMessage(new IDataMessage() {
+                  callback.onDataMessage(
+                      new IDataMessage() {
                         @Override
                         public List<String> getRecipents() {
                           return null;
@@ -617,15 +621,14 @@ public class SocketIOSignaling implements ICallSignalingApi {
                           return data;
                         }
                       });
-                    }
-                  }
-                });
+                }
+              }
+            });
       }
     } catch (JSONException e) {
       e.printStackTrace();
     }
   }
-
 
   private void onRecvNoti(Object... args) {
     DLog.e("Received onRecvInvalidPayload");
@@ -686,6 +689,7 @@ public class SocketIOSignaling implements ICallSignalingApi {
 
   private void onRecvWelcome(Object... args) {
     DLog.e("Received onRecvWelcome");
+    DLog.e("=======  NOW SIGNAL IS CLEAR ===========");
     try {
       JSONObject obj = new JSONObject(args[0].toString());
 
@@ -713,6 +717,17 @@ public class SocketIOSignaling implements ICallSignalingApi {
               }
             });
       }
+
+      runOnUIThread(
+          new Runnable() {
+            @Override
+            public void run() {
+              for (ICallSignalingCallback callback : mCallbackList) {
+                callback.onConnected();
+              }
+            }
+          });
+
     } catch (JSONException e) {
       e.printStackTrace();
     }

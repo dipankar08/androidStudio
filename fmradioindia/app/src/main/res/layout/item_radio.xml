@@ -18,7 +18,7 @@
             android:layout_height="70dp"
             android:padding="4dp"
             android:paddingLeft="0dp">
-            <com.cubostecnologia.customfonttextview.CustomFontTextView
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:id="@+id/liveindicator"
                 android:text="➤"
                 android:layout_marginRight="4dp"
@@ -28,39 +28,45 @@
                 android:visibility="invisible"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
+                app:customfont="SourceSansPro-Regular.ttf"
                 android:layout_alignBaseline="@+id/sl"
                 android:layout_height="wrap_content"
                 />
-            <com.cubostecnologia.customfonttextview.CustomFontTextView
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:id="@+id/sl"
                 android:layout_toRightOf="@+id/liveindicator"
                 android:text="1"
+                app:customfont="SourceSansPro-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textSize="15dp" />
-            <ImageView
+            <in.co.dipankar.quickandorid.views.CircleImageView
                 android:id="@+id/img"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/gray200"
                 android:layout_toRightOf="@+id/sl"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 />
-            <com.cubostecnologia.customfonttextview.CustomFontTextView
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:id="@+id/name"
                 android:text="Radio Mirchi"
-                android:layout_marginTop="2dp"
+                app:customfont="SourceSansPro-Regular.ttf"
+                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray400"
                 android:layout_alignTop="@+id/img"
                 android:layout_toRightOf="@+id/img"
                 android:textSize="14.5dp" />
-            <com.cubostecnologia.customfonttextview.CustomFontTextView
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:id="@+id/count"
                 android:text="10 views"
                 android:textSize="9dp"
+                app:customfont="SourceSansPro-Regular.ttf"
                 android:layout_below="@+id/name"
                 android:textColor="@color/gray200"
                 android:layout_width="wrap_content"

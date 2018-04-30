@@ -1,11 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="DImageView">
-        <attr name="enabled" format="boolean"/>
-        <attr name="enableBackground" format="reference"  />
-        <attr name="disableBackground" format="reference"  />
-    </declare-styleable>
-    <declare-styleable name="DTextView">
-        <attr name="font" format="string" />
-    </declare-styleable>
 </resources>

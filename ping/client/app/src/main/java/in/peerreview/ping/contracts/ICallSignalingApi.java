@@ -1,10 +1,9 @@
 package in.peerreview.ping.contracts;
 
+import in.peerreview.ping.common.signaling.IDataMessage;
 import java.util.List;
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
-
-import in.peerreview.ping.common.signaling.IDataMessage;
 
 /** Created by dip on 3/9/18. */
 public interface ICallSignalingApi {
@@ -47,7 +46,7 @@ public interface ICallSignalingApi {
     }
   };
 
-  public enum MessageType{
+  public enum MessageType {
     ACK("ack"),
     BELL("bell"),
     BELL_ACK("bell_ack"),
@@ -58,6 +57,7 @@ public interface ICallSignalingApi {
       this.type = type;
     }
   };
+
   public enum NotificationType {
     CONNECTED("connected");
     public final String type;
@@ -131,7 +131,7 @@ public interface ICallSignalingApi {
 
   void sendEndCall(String callID, EndCallType type, String reason);
 
-  //Other API
+  // Other API
   void sendMessage(IDataMessage dataMessage);
 
   public interface ICallSignalingCallback {
@@ -154,6 +154,7 @@ public interface ICallSignalingApi {
     void onPresenceChange(IRtcUser user, PresenceType type);
 
     void onWelcome(List<IRtcUser> liveUserList);
+
     void onDataMessage(IDataMessage dataMessage);
   }
 

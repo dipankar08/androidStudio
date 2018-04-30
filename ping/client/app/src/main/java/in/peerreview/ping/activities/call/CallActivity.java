@@ -383,7 +383,8 @@ public class CallActivity extends Activity implements ICallPage.IView {
     if (mPresenter != null) {
       mPresenter.finish();
     }
-    overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    // overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     mCallEndedPageView = null;
     mPresenter = null;
   }

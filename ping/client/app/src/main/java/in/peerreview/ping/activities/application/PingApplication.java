@@ -8,6 +8,7 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import com.activeandroid.ActiveAndroid;
 import com.google.gson.Gson;
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.INetwork;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
@@ -42,34 +43,25 @@ public class PingApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    // Required initialization logic here!
-    mContactManger = new ContactManger();
-    SharedPrefsUtil.getInstance().init(this);
     sPingApplication = this;
+  }
+
+  private boolean isInit = false;
+
+  public void init() {
+    if (isInit) {
+      return;
+    }
+
+    SharedPrefsUtil.getInstance().init(this);
     ActiveAndroid.initialize(this);
     Paper.init(this);
-    mNetwork = new Network();
-
-    String deviceid =
-        Settings.Secure.getString(
-            getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-    mSelfDevice = new RtcDeviceInfo(deviceid, android.os.Build.MODEL, "10");
-
-    // Restoring User..
-    Gson gson = new Gson();
-    String json = SharedPrefsUtil.getInstance().getString("self_user_info", null);
-    if (json == null) {
-      mSelfUser = null;
-    }
-    try {
-      mSelfUser = gson.fromJson(json, RtcUser.class);
-    } catch (Exception e) {
-      // pass TODO
-    }
 
     SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
     this.isNightModeEnabled = mPrefs.getBoolean("NIGHT_MODE", false);
-    mNotificationBuilder = new NotificationBuilder(this);
+
+    isInit = true;
+    DLog.e("App Initilization successfully ");
   }
 
   // Called by the system when the device configuration changes while your component is running.
@@ -88,6 +80,9 @@ public class PingApplication extends Application {
   }
 
   public ContactManger getUserManager() {
+    if (mContactManger == null) {
+      mContactManger = new ContactManger();
+    }
     return mContactManger;
   }
 
@@ -103,14 +98,27 @@ public class PingApplication extends Application {
   }
 
   public IRtcUser getMe() {
+    if (mSelfUser == null) {
+      Gson gson = new Gson();
+      String json = SharedPrefsUtil.getInstance().getString("self_user_info", null);
+      if (json == null) {
+        return null;
+      }
+      try {
+        mSelfUser = gson.fromJson(json, RtcUser.class);
+      } catch (Exception e) {
+      }
+    }
     return mSelfUser;
   }
 
-  public void setDevice(IRtcDeviceInfo device) {
-    this.mSelfDevice = device;
-  }
-
   public IRtcDeviceInfo getDevice() {
+    if (mSelfDevice == null) {
+      String deviceid =
+          Settings.Secure.getString(
+              getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+      mSelfDevice = new RtcDeviceInfo(deviceid, android.os.Build.MODEL, "10");
+    }
     return mSelfDevice;
   }
 
@@ -132,13 +140,9 @@ public class PingApplication extends Application {
     mNetworkConnection = networkConn;
   }
 
-  public void setCallSignalingApi(ICallSignalingApi api) {
-    mCallSignalingApi = api;
-  }
-
   public ICallSignalingApi getCallSignalingApi() {
     if (mCallSignalingApi == null) {
-      mCallSignalingApi = new SocketIOSignaling(mSelfUser, mSelfDevice);
+      mCallSignalingApi = new SocketIOSignaling(getMe(), getDevice());
     }
     return mCallSignalingApi;
   }
@@ -148,6 +152,9 @@ public class PingApplication extends Application {
   }
 
   public INetwork getNetwork() {
+    if (mNetwork == null) {
+      mNetwork = new Network();
+    }
     return mNetwork;
   }
 
@@ -168,7 +175,10 @@ public class PingApplication extends Application {
     this.isNightModeEnabled = isNightModeEnabled;
   }
 
-  public NotificationBuilder getNotificationBuilder(){
+  public NotificationBuilder getNotificationBuilder() {
+    if (mNotificationBuilder == null) {
+      mNotificationBuilder = new NotificationBuilder(this);
+    }
     return mNotificationBuilder;
   }
 }

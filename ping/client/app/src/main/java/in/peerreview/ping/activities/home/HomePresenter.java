@@ -1,18 +1,12 @@
 package in.peerreview.ping.activities.home;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static com.facebook.FacebookSdk.setApplicationId;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-
-import com.facebook.common.Common;
-import com.google.gson.Gson;
-
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.Network;
-import in.peerreview.ping.activities.Utils.CommonIntent;
 import in.peerreview.ping.activities.application.PingApplication;
 import in.peerreview.ping.activities.bell.BellInfo;
 import in.peerreview.ping.common.model.IContactManager;
@@ -91,7 +85,7 @@ public class HomePresenter implements IHome.Presenter {
 
                 @Override
                 public void onError(String s) {
-                  DLog.e("Token fail to sent to server");
+                  DLog.e("[IGNORE] Server error:" + s);
                 }
               });
     }
@@ -128,22 +122,21 @@ public class HomePresenter implements IHome.Presenter {
           mContactManager.changeOnlineState(liveUserList, true);
         }
 
-          @Override
-          public void onDataMessage(IDataMessage dataMessage) {
-              switch (dataMessage.getMessageType()){
-                  case ACK:
-                      break;
-                  case BELL:
-                      mView.startBellActivity("incoming",dataMessage.getRawData());
-                      break;
-                  case BELL_ACK:
-                      mView.startBellActivity("outgoing",dataMessage.getRawData());
-                      break;
-
-              }
+        @Override
+        public void onDataMessage(IDataMessage dataMessage) {
+          switch (dataMessage.getMessageType()) {
+            case ACK:
+              break;
+            case BELL:
+              mView.startBellActivity("incoming", dataMessage.getRawData());
+              break;
+            case BELL_ACK:
+              mView.startBellActivity("outgoing", dataMessage.getRawData());
+              break;
           }
+        }
 
-          // RTC - Nothing to do here.
+        // RTC - Nothing to do here.
         @Override
         public void onReceivedOffer(
             String callId, SessionDescription sdp, IRtcUser rtcUser, boolean isVideoEnabled) {
@@ -198,23 +191,24 @@ public class HomePresenter implements IHome.Presenter {
     mPendingCallId = pending_call_id;
   }
 
-    @Override
-    public void sendBellInfo(BellInfo bellInfo) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                sendBellInfoInternal(bellInfo);
-            }
+  @Override
+  public void sendBellInfo(BellInfo bellInfo) {
+    executor.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            sendBellInfoInternal(bellInfo);
+          }
         });
-    }
+  }
 
-    private void sendBellInfoInternal(BellInfo bellInfo) {
-      if(mCallSignalingApi != null){
-          mCallSignalingApi.sendMessage(bellInfo);
-      }
+  private void sendBellInfoInternal(BellInfo bellInfo) {
+    if (mCallSignalingApi != null) {
+      mCallSignalingApi.sendMessage(bellInfo);
     }
+  }
 
-    public void invokePendingCall() {
+  public void invokePendingCall() {
     if (mPendingCallId != null) {
       mCallSignalingApi.resendOffer(PingApplication.Get().getMe().getUserId(), mPendingCallId);
       mPendingCallId = null;

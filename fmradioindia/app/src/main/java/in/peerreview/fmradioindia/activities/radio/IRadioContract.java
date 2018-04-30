@@ -1,20 +1,20 @@
 package in.peerreview.fmradioindia.activities.radio;
 
-import in.peerreview.fmradioindia.activities.radio.model.RadioNode;
+import in.peerreview.fmradioindia.common.models.Node;
 import java.util.List;
 
-/** Created by dip on 2/14/18. */
 public interface IRadioContract {
 
   public interface View {
-
-    void updateList(List<RadioNode> mNodes);
+    void updateList(List<Node> mNodes);
 
     void renderTryPlayUI(String msg);
 
     void renderPauseUI(String msg);
 
     void renderPlayUI(String msg);
+
+    void showToast(String s);
   }
 
   public interface Presenter {
@@ -32,10 +32,14 @@ public interface IRadioContract {
 
     void playNext();
 
-    void makeCurrentFev();
+    void makeCurrentFev(boolean a);
 
     void play(int pos);
 
     void loadData();
+
+    void showRecent();
+
+    void showFeb();
   }
 }

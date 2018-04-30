@@ -31,8 +31,6 @@ import in.peerreview.ping.contracts.ICallInfo;
 import in.peerreview.ping.contracts.IRtcUser;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PrimitiveIterator;
-
 import org.webrtc.SessionDescription;
 
 public class HomeActivity extends AppCompatActivity implements IHome.View {
@@ -216,22 +214,22 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
               }
             },
             new CharSequence[] {"Hello", "World"}));
-      mSheetItems.add(
-              new SheetItem(
-                      102,
-                      "Send Bell!",
-                      CustomButtonSheetView.Type.BUTTON,
-                      new CustomButtonSheetView.Callback() {
-                          @Override
-                          public void onClick(int v) {
-                              BellInfo bellInfo = PingApplication.Get().getUserManager().getBellInfoList().get(0);
-                              List<String> ids = new ArrayList<>();
-                              ids.add(mCurrentFocusUser.getUserId());
-                              bellInfo.setParticepents(ids);
-                              mPresenter.sendBellInfo(bellInfo);
-                          }
-                      },
-                      null));
+    mSheetItems.add(
+        new SheetItem(
+            102,
+            "Send Bell!",
+            CustomButtonSheetView.Type.BUTTON,
+            new CustomButtonSheetView.Callback() {
+              @Override
+              public void onClick(int v) {
+                BellInfo bellInfo = PingApplication.Get().getUserManager().getBellInfoList().get(0);
+                List<String> ids = new ArrayList<>();
+                ids.add(mCurrentFocusUser.getUserId());
+                bellInfo.setParticepents(ids);
+                mPresenter.sendBellInfo(bellInfo);
+              }
+            },
+            null));
     mCustomButtonSheetView.addMenu(mSheetItems);
     mCustomButtonSheetView.hide();
   }
@@ -342,22 +340,22 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
         });
   }
 
-    @Override
-    public void startBellActivity(String type, String data) {
-        runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        startBellActivityInternal(type, data);
-                    }
-                });
-    }
+  @Override
+  public void startBellActivity(String type, String data) {
+    runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            startBellActivityInternal(type, data);
+          }
+        });
+  }
 
-    private void startBellActivityInternal(String type, String data) {
-        CommonIntent.startBellActivity(this, type, data);
-    }
+  private void startBellActivityInternal(String type, String data) {
+    CommonIntent.startBellActivity(this, type, data);
+  }
 
-    @SuppressLint("ResourceAsColor")
+  @SuppressLint("ResourceAsColor")
   private void showNetworkNotificationInternal(String type, String s) {
     if (type.equals("success")) {
       mNotificationView.setBackgroundResource(R.color.Notification_Success);
@@ -415,13 +413,15 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
       myIntent.putExtra("callId", callId); // for incomming ..
     }
     this.startActivity(myIntent);
-    overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    // overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
   }
 
   private void launchSettingActivity() {
     Intent myIntent = new Intent(this, SettingActivity.class);
     this.startActivity(myIntent);
-    overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    // overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
   }
 
   // Logic to  Press ed back
