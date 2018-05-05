@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RadioPresenter implements IRadioContract.Presenter {
+public  class RadioPresenter implements IRadioContract.Presenter {
 
   static final String TAG = "RadioPresenter";
   private IRadioContract.View mView;
@@ -110,7 +110,30 @@ public class RadioPresenter implements IRadioContract.Presenter {
     populateSets(FMRadioIndiaApplication.Get().getNodeManager().getFavorite());
   }
 
-  @Override
+    @Override
+    public void scheduleAutoSleep(int i) {
+
+    }
+
+    @Override
+    public void scheduleAutoStart(int i, int mCurrentSelection) {
+
+    }
+
+    @Override
+    public void playById(String id) {
+      if(id == null){
+          return;
+      }
+        for(int i =0; i<mNodes.size();i++){
+            if(mNodes.get(i).getId().equals(id)){
+                mCurNodeIdx = i;
+                playCurrent();
+            }
+        }
+    }
+
+    @Override
   public void playCurrent() {
     if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
       Node cur = mNodes.get(mCurNodeIdx);

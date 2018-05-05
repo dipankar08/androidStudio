@@ -73,6 +73,7 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeContra
   @Override
   public void gotoHome() {
     Intent intent = new Intent(WelcomeActivity.this, RadioActivity.class);
+    intent.putExtra("START_WITH", getIntent().getStringExtra("START_WITH"));
     startActivity(intent);
     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     finish();

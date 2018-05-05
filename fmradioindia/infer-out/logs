@@ -1,0 +1,11 @@
+[90423][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia
+[90423][environment] No .inferconfig file found
+[90423][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[90423][environment] INFER_ARGS = 
+[90423][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/libexec/bin/infer^--^./gradlew^build
+[90423][environment] Analyzer: checkers
+[90423][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[90423][   progress] Capturing in gradle mode...
+[90423][environment] Infer version v0.13.0
+[90423][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[90423][environment] 

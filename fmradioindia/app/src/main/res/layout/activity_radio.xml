@@ -13,18 +13,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <!-- Main View -->
+    <RelativeLayout
+        android:id="@+id/container_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- PLAYER SCREEN -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
+            android:layout_below="@id/noti"
             android:layout_height="match_parent"
             android:background="@color/white200"
-            android:fitsSystemWindows="true"
-            tools:context="in.peerreview.myapplication.MainActivity">
+            android:fitsSystemWindows="true">
+            <!-- Tool Bar and Serach Bar-->
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppToolbar">
+                <!-- tool bar -->
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -60,6 +68,8 @@
                             android:queryHint="" />
                     </RelativeLayout>
                 </android.support.v7.widget.Toolbar>
+
+                <!-- Serach bar -->
                 <LinearLayout
                     android:id="@+id/qab"
                     android:layout_width="match_parent"
@@ -101,7 +111,9 @@
                 </LinearLayout>
             </android.support.design.widget.AppBarLayout>
 
+            <!-- End of Top Bar -->
 
+            <!-- Start of Playlist and Player View -->
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
@@ -110,12 +122,16 @@
                 android:id="@+id/topcontainer"
                 android:background="@color/white200"
                 android:orientation="vertical">
+
+                <!-- Radio List -->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
                     android:background="@color/white200"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
+
+                <!-- Player -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:background="@color/white300"
@@ -219,44 +235,55 @@
                             android:src="@drawable/next" />
                     </RelativeLayout>
                 </LinearLayout>
+
             </LinearLayout>
+
+        </RelativeLayout> <!-- end of Player View -->
+
+        <!-- L O C K    S C R E E N -->
+        <RelativeLayout
+            android:visibility="gone"
+            android:background="#ddffffff"
+            android:id="@+id/lock_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/unlock"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/lock"
+                android:layout_marginTop="150dp"
+                android:layout_centerHorizontal="true" />
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/unlock"
+                android:layout_centerHorizontal="true"
+                android:textSize="35dp"
+                android:layout_marginTop="10dp"
+                android:text="Locked"
+                android:id="@+id/lockmessage"
+                android:textColor="@color/gray900" />
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lockmessage"
+                android:layout_centerHorizontal="true"
+                android:textSize="15dp"
+                android:text="Long tap on Lock icon to unlock"
+                android:textColor="@color/gray500" />
         </RelativeLayout>
 
-    <!-- L O C K    S C R E E N -->
-    <RelativeLayout
-        android:visibility="gone"
-        android:background="#ddffffff"
-        android:id="@+id/lock_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/unlock"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/lock"
-            android:layout_marginTop="150dp"
-            android:layout_centerHorizontal="true" />
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/unlock"
-            android:layout_centerHorizontal="true"
-            android:textSize="35dp"
-            android:layout_marginTop="10dp"
-            android:text="Locked"
-            android:id="@+id/lockmessage"
-            android:textColor="@color/gray900" />
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:layout_width="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lockmessage"
-            android:layout_centerHorizontal="true"
-            android:textSize="15dp"
-            android:text="Long tap on Lock icon to unlock"
-            android:textColor="@color/gray500" />
+        <!-- N O T I F I C A T I O N -->
+        <in.co.dipankar.quickandorid.views.NotificationView
+            android:id="@+id/noti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 
+    <!-- OTHER VIEW -->
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -266,4 +293,10 @@
         android:visibility="gone"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
+
+    <in.co.dipankar.quickandorid.buttonsheet.CustomButtonSheetView
+        android:id="@+id/custom_endbutton_sheetview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </android.support.v4.widget.DrawerLayout>

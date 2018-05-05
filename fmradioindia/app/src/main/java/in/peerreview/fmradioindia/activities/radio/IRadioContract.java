@@ -41,5 +41,11 @@ public interface IRadioContract {
     void showRecent();
 
     void showFeb();
+
+    void scheduleAutoSleep(int i);
+
+    void scheduleAutoStart(int i, int mCurrentSelection);
+
+      void playById(String startID);
   }
 }

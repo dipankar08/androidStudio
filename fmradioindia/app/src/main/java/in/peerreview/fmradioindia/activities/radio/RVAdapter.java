@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.common.models.Node;
@@ -31,7 +33,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RadioItemViewHolde
     mPresenter = presenter;
   }
 
-  public class RadioItemViewHolder extends RecyclerView.ViewHolder {
+    public Node getItem(int idx) {
+    if(nodes != null && idx >= 0 && idx <nodes.size()){
+      return nodes.get(idx);
+    } else
+  {
+    return null;
+  }
+  }
+
+    public class RadioItemViewHolder extends RecyclerView.ViewHolder {
     CardView cv;
     TextView sl, liveindicator;
     TextView name;
@@ -55,10 +66,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RadioItemViewHolde
               final int pos = getAdapterPosition();
               // Toast.makeText(MainActivity.Get(), nodes.get(pos).getName(),
               // Toast.LENGTH_SHORT).show();
-              mPresenter.play(pos);
-              FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onClick");
+
             }
           });
+
     }
   }
 
