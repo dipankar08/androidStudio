@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.INetwork;
 import in.co.dipankar.quickandorid.utils.Network;
+import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.co.dipankar.quickandorid.utils.TelemetryUtils;
 import in.peerreview.fmradioindia.common.models.NodeManager;
 
@@ -22,6 +23,7 @@ public class FMRadioIndiaApplication extends Application {
     super.onCreate();
     DLog.d("Application created");
     mApplication = this;
+    SharedPrefsUtil.getInstance().init(this);
   }
 
   public static FMRadioIndiaApplication Get() {

@@ -12,9 +12,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
+import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.activities.radio.RadioActivity;
+import in.peerreview.fmradioindia.common.CommonIntent;
 
 public class WelcomeActivity extends AppCompatActivity implements IWelcomeContract.View {
 
@@ -72,10 +74,11 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeContra
 
   @Override
   public void gotoHome() {
-    Intent intent = new Intent(WelcomeActivity.this, RadioActivity.class);
-    intent.putExtra("START_WITH", getIntent().getStringExtra("START_WITH"));
-    startActivity(intent);
-    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    if(SharedPrefsUtil.getInstance().getBoolean("FIRST_BOOT", true)) {
+      CommonIntent.startTutorialActivity(this, getIntent().getStringExtra("START_WITH"));
+    } else{
+      CommonIntent.startRadioActivity(this, getIntent().getStringExtra("START_WITH"));
+    }
     finish();
   }
 

@@ -47,5 +47,7 @@ public interface IRadioContract {
     void scheduleAutoStart(int i, int mCurrentSelection);
 
       void playById(String startID);
+
+      boolean isFev();
   }
 }

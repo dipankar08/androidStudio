@@ -26,37 +26,37 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
         new Player(
             new Player.IPlayerCallback() {
               @Override
-              public void onTryPlaying(String id) {
+              public void onTryPlaying(String id, String msg) {
                 Node m = getMusicNodeForID(id);
                 mView.showPauseUI(m);
               }
 
               @Override
-              public void onSuccess(String id) {
+              public void onSuccess(String id, String msg) {
                 Node m = getMusicNodeForID(id);
                 mView.showPauseUI(m);
               }
 
               @Override
-              public void onResume(String id) {
+              public void onResume(String id , String msg) {
                 Node m = getMusicNodeForID(id);
                 mView.showPauseUI(m);
               }
 
               @Override
-              public void onPause(String id) {
+              public void onPause(String id, String msg) {
                 Node m = getMusicNodeForID(id);
                 mView.showPlayUI(m);
               }
 
               @Override
-              public void onMusicInfo(HashMap<String, Object> info) {
+              public void onMusicInfo( String id, HashMap<String, Object> info) {
                 mView.updateSeekBarInfo(
                     (int) info.get("Duration"), (int) info.get("CurrentPosition"));
               }
 
               @Override
-              public void onSeekBarPossionUpdate(int total, int cur) {
+              public void onSeekBarPossionUpdate( String msg, int total, int cur) {
                 mView.updateSeekBarInfo(total, cur);
                 // tricks to restrat without buffering again.
                 if ((total - cur < 5) && mIsRepeat) {
@@ -65,10 +65,10 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
               }
 
               @Override
-              public void onError(String id) {}
+              public void onError(String id, String msg) {}
 
               @Override
-              public void onComplete(String id) {
+              public void onComplete(String id, String msg) {
                 if (mIsRepeat) {
                   restart();
                 } else {
@@ -103,7 +103,7 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
   @Override
   public void play() {
     if (curIndex >= 0) {
-      mPlayer.play(mNodeList.get(curIndex).getId(), mNodeList.get(curIndex).getMedia_url());
+      mPlayer.play(mNodeList.get(curIndex).getId(), mNodeList.get(curIndex).getId(),mNodeList.get(curIndex).getMedia_url());
     }
   }
 

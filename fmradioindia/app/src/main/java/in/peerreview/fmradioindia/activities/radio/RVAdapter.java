@@ -3,6 +3,7 @@ package in.peerreview.fmradioindia.activities.radio;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,26 +94,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RadioItemViewHolde
     } else {
       personViewHolder.sl.setText((i + 1) + "");
       personViewHolder.name.setText(nodes.get(i).getTitle());
-      String msg = nodes.get(i).getCount() + " plays  ";
-      int per = 0;
-      if (nodes.get(i).getCount() == 0) {
-        msg += ".  Play first";
-      } else if ((nodes.get(i).getSuccess() == 0 && nodes.get(i).getError() > 0)) {
-        msg += ".  Streaming Issue";
-      } else if ((nodes.get(i).getSuccess() + nodes.get(i).getError()) > 0) {
-        per =
-            (int)
-                ((float) nodes.get(i).getSuccess()
-                    / (nodes.get(i).getSuccess() + nodes.get(i).getError())
-                    * 100);
-        msg += ".  " + per + "% working";
-      } else {
-        msg += ".  100+% working";
-      }
-      personViewHolder.count.setText(msg);
+      String msg = "<span color='black'>"+nodes.get(i).getCount() + "</span> plays  ."+nodes.get(i).getRankMessage();
+      personViewHolder.count.setText(Html.fromHtml(msg), TextView.BufferType.SPANNABLE);
       Glide.with(mContext)
           .load(nodes.get(i).getImageUrl())
-          .override(70, 70)
           .into(personViewHolder.img);
     }
   }

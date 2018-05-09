@@ -11,9 +11,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,17 +30,19 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import in.co.dipankar.quickandorid.buttonsheet.CustomButtonSheetView;
 import in.co.dipankar.quickandorid.buttonsheet.SheetItem;
+import in.co.dipankar.quickandorid.utils.AndroidUtils;
 import in.co.dipankar.quickandorid.utils.AudioRecorderUtil;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.co.dipankar.quickandorid.views.NotificationView;
+import in.co.dipankar.quickandorid.views.QuickListView;
 import in.co.dipankar.quickandorid.views.StateImageButton;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
+import in.peerreview.fmradioindia.common.CommonIntent;
 import in.peerreview.fmradioindia.common.models.Node;
 
 import java.util.ArrayList;
@@ -54,13 +58,14 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   private RecyclerView mRecyclerView;
   private RVAdapter adapter;
   private ImageView play, next, prev;
-  private StateImageButton fev, lock;
+  private ImageButton fev, lock, record;
   private ImageView unlock;
   private GifImageView tryplayin;
   private TextView message, isplaying;
   private ViewGroup lock_screen;
   private int mCurrentSelection;
   private NotificationView mNotificationView;
+  private QuickListView mQuickListView;
   ImageButton btnNav;
   LinearLayout qab;
 
@@ -77,7 +82,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     setContentView(R.layout.activity_radio);
     mPresenter = new RadioPresenter(this);
     initViews();
-    initNavigation();
+    //initNavigation();
     processIntent();
   }
 
@@ -90,13 +95,108 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     }
 
     private void initViews() {
+      initQuickListView();
       initPlayer();
       initList();
       initSerachView();
       InitCustomButtonSheetView();
+      initToolBar();
       initNotification();
       initAudioRecoder();
   }
+
+    private void initQuickListView() {
+        mQuickListView = (QuickListView) findViewById(R.id.quicklistview);
+        List<QuickListView.Item> items1 = new ArrayList<>();
+        for( Node node : FMRadioIndiaApplication.Get().getNodeManager().getSuggested()){
+            items1.add((QuickListView.Item)node);
+        }
+        mQuickListView.init(items1, new QuickListView.Callback() {
+            @Override
+            public void onClick(String id) {
+
+            }
+
+            @Override
+            public void onLongClick(String id) {
+
+            }
+        });
+    }
+
+    private void initToolBar(){
+          Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+          setSupportActionBar(toolbar);
+          getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+          DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+          ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                  this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+          drawer.addDrawerListener(toggle);
+          toggle.syncState();
+
+          NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+          navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+              @Override
+              public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                  handleNavigationClicked(item);
+                  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                  drawer.closeDrawer(GravityCompat.START);
+                  return true;
+              }
+          });
+
+  }
+
+    private void handleNavigationClicked(MenuItem item) {
+        int id = item.getItemId();
+        String tag = "clear";
+        if (id == R.id.s_live) {
+            tag = "clear";
+        } else if (id == R.id.s_kolkata) {
+            tag = "kolkata";
+        } else if (id == R.id.s_delhi) {
+            tag = "delhi";
+        } else if (id == R.id.s_mumbai) {
+            tag = "mumbai";
+        } else if (id == R.id.s_hyderabad) {
+            tag = "hyderabad";
+        } else if (id == R.id.s_pune) {
+            tag = "pune";
+        } else if (id == R.id.s_bangalore) {
+            tag = "bangalore";
+        } else if (id == R.id.s_chennai) {
+            tag = "chennai";
+        } else if (id == R.id.s_bangladesh) {
+            tag = "bangladesh";
+        } else if (id == R.id.s_hindi) {
+            tag = "hindi";
+        } else if (id == R.id.s_bangla) {
+            tag = "bengali";
+        } else if (id == R.id.s_tamil) {
+            tag = "tamil";
+        } else if (id == R.id.s_telegu) {
+            tag = "telegu";
+        } else if (id == R.id.s_marathi) {
+            tag = "marathi";
+        } else if (id == R.id.s_malayalam) {
+            tag = "malayalam";
+        } else if (id == R.id.s_kannada) {
+            tag = "kannada";
+        }
+        mPresenter.filterByTag(tag);
+        final String tag1 = tag;
+
+        FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .sendTelemetry(
+                        "click_navigation",
+                        new HashMap<String, String>() {
+                            {
+                                put("tag", tag1);
+                            }
+                        });
+    }
 
     private void initAudioRecoder() {
         RuntimePermissionUtils.getInstance().init(this);
@@ -116,18 +216,11 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
       play = (ImageView) findViewById(R.id.play);
       prev = (ImageView) findViewById(R.id.prev);
       next = (ImageView) findViewById(R.id.next);
-      fev = (StateImageButton) findViewById(R.id.fev);
-      lock = (StateImageButton) findViewById(R.id.lock);
+      fev = (ImageButton) findViewById(R.id.fev);
+      lock = (ImageButton) findViewById(R.id.lock);
       unlock = (ImageView) findViewById(R.id.unlock);
+      record = (ImageButton) findViewById(R.id.record);
       lock_screen = (ViewGroup) findViewById(R.id.lock_screen);
-      btnNav = (ImageButton) findViewById(R.id.btn_nav);
-      btnNav.setOnClickListener(
-              new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                      mDrawerLayout.openDrawer(Gravity.LEFT);
-                  }
-              });
 
       play.setOnClickListener(
               new View.OnClickListener() {
@@ -156,27 +249,28 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                   }
               });
 
-      fev.setCallBack(
-              new StateImageButton.Callback() {
-                  @Override
-                  public void click(boolean b) {
-                      if (b) {
-                          FMRadioIndiaApplication.Get().getTelemetry().markHit("click_fev");
-                          mPresenter.makeCurrentFev(true);
-                      } else {
-                          mPresenter.makeCurrentFev(false);
-                      }
-                  }
-              });
+      fev.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              if(mPresenter.isFev()){
+                  mPresenter.makeCurrentFev(true);
+                  FMRadioIndiaApplication.Get().getTelemetry().markHit("click_fev");
+                  setImageSrcWithAnimation(fev, R.drawable.ic_love_on);
+              } else {
+                  mPresenter.makeCurrentFev(false);
+                  setImageSrcWithAnimation(fev, R.drawable.ic_love_off);
+              }
+          }
+      });
 
-      lock.setCallBack(
-              new StateImageButton.Callback() {
-                  @Override
-                  public void click(boolean b) {
-                      showLockUI();
-                      FMRadioIndiaApplication.Get().getTelemetry().markHit("click_lock");
-                  }
-              });
+      lock.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              showLockUI();
+              setImageSrcWithAnimation(lock, R.drawable.ic_lock_off);
+              FMRadioIndiaApplication.Get().getTelemetry().markHit("click_lock");
+          }
+      });
 
       unlock.setOnLongClickListener(
               new View.OnLongClickListener() {
@@ -187,6 +281,16 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                       return true;
                   }
               });
+      record.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              if(!mAudioRecorderUtil.isRecording()){
+                  startRecoding();
+              } else{
+                  mAudioRecorderUtil.stopRecord();
+              }
+          }
+      });
   }
   private void initList(){
       mRecyclerView = (RecyclerView) findViewById(R.id.rv);
@@ -248,68 +352,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                   }
               });
   }
-  private void initNavigation() {
-    mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-    mDrawerHolder = (FrameLayout) findViewById(R.id.drawer_holder);
-    // assigning the listener to the NavigationView
-    mNavigationView.setNavigationItemSelectedListener(
-        new NavigationView.OnNavigationItemSelectedListener() {
-          @Override
-          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            int id = item.getItemId();
-            String tag = "clear";
-            if (id == R.id.s_live) {
-              tag = "clear";
-            } else if (id == R.id.s_kolkata) {
-              tag = "kolkata";
-            } else if (id == R.id.s_delhi) {
-              tag = "delhi";
-            } else if (id == R.id.s_mumbai) {
-              tag = "mumbai";
-            } else if (id == R.id.s_hyderabad) {
-              tag = "hyderabad";
-            } else if (id == R.id.s_pune) {
-              tag = "pune";
-            } else if (id == R.id.s_bangalore) {
-              tag = "bangalore";
-            } else if (id == R.id.s_chennai) {
-              tag = "chennai";
-            } else if (id == R.id.s_bangladesh) {
-              tag = "bangladesh";
-            } else if (id == R.id.s_hindi) {
-              tag = "hindi";
-            } else if (id == R.id.s_bangla) {
-              tag = "bengali";
-            } else if (id == R.id.s_tamil) {
-              tag = "tamil";
-            } else if (id == R.id.s_telegu) {
-              tag = "telegu";
-            } else if (id == R.id.s_marathi) {
-              tag = "marathi";
-            } else if (id == R.id.s_malayalam) {
-              tag = "malayalam";
-            } else if (id == R.id.s_kannada) {
-              tag = "kannada";
-            }
-            mPresenter.filterByTag(tag);
-            final String tag1 = tag;
-
-            FMRadioIndiaApplication.Get()
-                .getTelemetry()
-                .sendTelemetry(
-                    "click_navigation",
-                    new HashMap<String, String>() {
-                      {
-                        put("tag", tag1);
-                      }
-                    });
-
-            mDrawerLayout.closeDrawers();
-            return true;
-          }
-        });
-  }
 
     private CustomButtonSheetView mCustomButtonSheetView;
     private void InitCustomButtonSheetView(){
@@ -336,6 +378,18 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                             @Override
                             public void onClick(int v) {
                                 mPresenter.makeCurrentFev(false);
+                            }
+                        },
+                        null));
+        mSheetItems.add(
+                new SheetItem(
+                        103,
+                        "Open Tutorial",
+                        CustomButtonSheetView.Type.BUTTON,
+                        new CustomButtonSheetView.Callback() {
+                            @Override
+                            public void onClick(int v) {
+                                CommonIntent.startTutorialActivity(RadioActivity.this, null);
                             }
                         },
                         null));
@@ -409,18 +463,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                         },
                         null));
 
-        mSheetItems.add(
-                new SheetItem(
-                        107,
-                        "Stop Recoding",
-                        CustomButtonSheetView.Type.BUTTON,
-                        new CustomButtonSheetView.Callback() {
-                            @Override
-                            public void onClick(int v) {
-                                mAudioRecorderUtil.stopRecord();
-                            }
-                        },
-                        null));
         mCustomButtonSheetView.addMenu(mSheetItems);
         mCustomButtonSheetView.hide();
     }
@@ -449,7 +491,17 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         mAudioRecorderUtil.startRecord(new AudioRecorderUtil.Callback() {
             @Override
             public void onStart() {
-                mNotificationView.showInfo("Recoding started");
+                mNotificationView.ask("Recoding started. Please keep quite", new NotificationView.AnswerCallback() {
+                    @Override
+                    public void onAccept() {
+                        mAudioRecorderUtil.cancelRecord();
+                    }
+
+                    @Override
+                    public void onReject() {
+                        mAudioRecorderUtil.stopRecord();
+                    }
+                },"Cancel","Stop Record");
             }
 
             @Override
@@ -464,7 +516,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         });
     }
 
-    private void setSupportActionBar(Toolbar toolbar) {}
 
   void refreshList() {
     adapter.notifyDataSetChanged();
@@ -566,6 +617,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     switch (menuItem.getItemId()) {
       case R.id.rate:
         FMRadioIndiaApplication.Get().getTelemetry().markHit("click_rate_app");
+        AndroidUtils.RateIt(this);
         return true;
       default:
         return super.onOptionsItemSelected(menuItem);
@@ -677,5 +729,12 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             int requestCode, String permissions[], int[] grantResults) {
         RuntimePermissionUtils.getInstance()
                 .onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void setImageSrcWithAnimation(ImageButton btn, int id){
+        if(btn != null) {
+            btn.setImageResource(id);
+            btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
+        }
     }
 }

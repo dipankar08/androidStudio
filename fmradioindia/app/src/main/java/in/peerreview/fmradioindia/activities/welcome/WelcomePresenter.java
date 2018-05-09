@@ -67,6 +67,7 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
                   for (int i = 0; i < Jarray.length(); i++) {
                     JSONObject object = Jarray.getJSONObject(i);
                     if (object.has("name") && object.has("url")) {
+
                       nodes.add(
                           new Node(
                               object.optString("uid", null),
@@ -77,6 +78,7 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
                               object.optInt("count_error", 0),
                               object.optInt("count_success", 0),
                               object.optInt("count_click", 0),
+                                  object.optInt("rank", 5),
                               Node.Type.RADIO));
                     }
                   }

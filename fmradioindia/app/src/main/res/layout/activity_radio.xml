@@ -32,7 +32,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppToolbar">
-                <!-- tool bar -->
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -44,20 +43,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp">
-                        <ImageButton
-                            android:id="@+id/btn_nav"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/ic_nav"
-                            android:background="@null"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
                         <SearchView
                             android:id="@+id/searchView"
-                            android:layout_toRightOf="@+id/btn_nav"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -76,7 +63,6 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:visibility="gone"
-                    android:paddingBottom="10dp"
                     android:layout_height="wrap_content">
                     <in.co.dipankar.quickandorid.views.CustomFontTextView
                         android:id="@+id/qsb_recent"
@@ -110,7 +96,6 @@
                         android:text="clear"/>
                 </LinearLayout>
             </android.support.design.widget.AppBarLayout>
-
             <!-- End of Top Bar -->
 
             <!-- Start of Playlist and Player View -->
@@ -118,15 +103,20 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="90dp"
+                android:layout_marginTop="55dp"
                 android:id="@+id/topcontainer"
                 android:background="@color/white200"
                 android:orientation="vertical">
+                <in.co.dipankar.quickandorid.views.QuickListView
+                    android:id="@+id/quicklistview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <!-- Radio List -->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
+                    android:layout_below="@+id/quicklistview"
                     android:background="@color/white200"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
@@ -140,68 +130,74 @@
                     android:padding="0dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:layout_marginBottom="5dp">
-                        <in.co.dipankar.quickandorid.views.CustomFontTextView
+                        android:layout_height="wrap_content">
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/isplaying"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:textSize="10dp"
-                            app:customfont="SourceSansPro-Regular.ttf"
-                            android:text="Tap on channel to play."
-                            android:id="@+id/message"
-                            android:textColor="@color/gray200" />
-                        <in.co.dipankar.quickandorid.views.CustomFontTextView
+                            android:layout_height="wrap_content">
+                            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                                android:layout_width="wrap_content"
+                                android:id="@+id/isplaying"
+                                android:text="Live"
+                                app:customfont="Ubuntu.ttf"
+                                android:textColor="@android:color/holo_red_dark"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="3dp"
+                                android:paddingTop="3dp"
+                                android:textSize="10sp"
+                                android:visibility="visible"
+                                android:background="@drawable/backgroud_red_round"
+                                android:layout_height="wrap_content"/>
+                            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="13sp"
+                                app:customfont="SourceSansPro-Regular.ttf"
+                                android:text="Tap on channel to play."
+                                android:id="@+id/message"
+                                android:textColor="@color/gray200" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
-                            android:id="@+id/isplaying"
-                            android:text="Live"
-                            android:layout_marginTop="10dp"
-                            app:customfont="Ubuntu.ttf"
-                            android:textColor="@android:color/holo_red_dark"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="3dp"
-                            android:paddingTop="3dp"
-                            android:textSize="10dp"
-                            android:layout_marginRight="5dp"
-                            android:visibility="gone"
-                            android:background="@drawable/backgroud_red_round"
-                            android:layout_alignBaseline="@+id/message"
-                            android:layout_alignParentLeft="true"
-                            android:layout_height="wrap_content"
-                            />
-                        <in.co.dipankar.quickandorid.views.StateImageButton
-                            android:id="@+id/lock"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
-                            android:background="@null"
                             android:layout_alignParentRight="true"
-                            app:enable_src="@drawable/ic_lock_opne"
-                            app:disable_src="@drawable/ic_lock_close"
-                            app:is_enable="false"
-                            android:padding="5dp" />
-                        <in.co.dipankar.quickandorid.views.StateImageButton
-                            android:id="@+id/fev"
-                            android:layout_width="wrap_content"
-                            app:enable_src="@drawable/ic_heart"
-                            app:disable_src="@drawable/ic_heart_empty"
-                            android:background="@null"
-                            app:is_enable="false"
-                            android:layout_alignWithParentIfMissing="true"
-                            android:padding="5dp"
-                            android:layout_toLeftOf="@+id/lock"
-                            android:layout_marginRight="5dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content">
+                            <ImageButton
+                                android:id="@+id/lock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/ic_lock_off"
+                                android:padding="5dp" />
+                            <ImageButton
+                                android:id="@+id/fev"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:background="@null"
+                                android:src="@drawable/ic_love_off"
+                                android:padding="5dp" />
+                            <ImageButton
+                                android:id="@+id/record"
+                                android:layout_width="wrap_content"
+                                android:src="@drawable/ic_record_off"
+                                android:background="@null"
+                                android:padding="5dp"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="30dp"
+                        android:layout_marginBottom="10dp"
                         android:gravity="bottom"
                         android:orientation="horizontal">
                         <ImageView
@@ -219,7 +215,7 @@
                             android:src="@drawable/play" />
                         <pl.droidsonroids.gif.GifImageView
                             android:layout_width="60dp"
-                            android:layout_height="70dp"
+                            android:layout_height="60dp"
                             android:layout_centerHorizontal="true"
                             android:visibility="gone"
                             android:id="@+id/tryplaying"

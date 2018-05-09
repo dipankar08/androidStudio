@@ -3,7 +3,9 @@ package in.peerreview.fmradioindia.common.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Node implements Parcelable {
+import in.co.dipankar.quickandorid.views.QuickListView;
+
+public class Node implements Parcelable, QuickListView.Item {
 
   public boolean isSongType() {
     return this.type == Type.RADIO;
@@ -36,6 +38,7 @@ public class Node implements Parcelable {
       int count_error,
       int count_success,
       int count_click,
+      int rank,
       Type type) {
     this.id = uid;
     this.title = name;
@@ -45,6 +48,7 @@ public class Node implements Parcelable {
     this.count_error = count_error;
     this.count_success = count_success;
     this.count_click = count_click;
+    this.rank = rank;
     this.type = type;
   }
 
@@ -96,6 +100,19 @@ public class Node implements Parcelable {
     return this.count_click;
   }
 
+  public String getRankMessage(){
+    if(this.rank == 0){
+      return " <font color='red'>Be the first player</font>";
+    } else if (this.rank <=2){
+      return " <font color='red'>Not working</font>";
+    } else if (this.rank <=6){
+      return " <font color='#470A51'>Working</font>";
+    }
+    else{
+      return " <font color='#1a512e'>Always working</font>";
+    }
+  }
+
   public Node(String id, String title, String subtitle, String media_url, String image_url) {
     this.id = id;
     this.title = title;
@@ -113,6 +130,7 @@ public class Node implements Parcelable {
   int count_error;
   int count_success;
   int count_click;
+  int rank;
   Type type;
 
   // Parsel..

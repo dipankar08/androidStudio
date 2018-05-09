@@ -13,6 +13,7 @@ public class NodeManager {
   private LinkedList<Node> rectlist;
   private List<Callback> mCallbackList;
 
+
   public interface Callback {
     void onItemAddToFeb();
 
@@ -112,4 +113,9 @@ public class NodeManager {
     }
     Paper.book().write("RecentList", rectlist);
   }
+
+  public List<Node> getSuggested() {
+    return nodeList;
+  }
+
 }

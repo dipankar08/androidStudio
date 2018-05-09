@@ -1,5 +1,6 @@
 package in.peerreview.fmradioindia.activities.radio;
 
+import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.Player;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.common.models.Node;
@@ -7,6 +8,9 @@ import in.peerreview.fmradioindia.common.models.NodeManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static in.peerreview.fmradioindia.common.Configuration.RANK_DOWN_URL;
+import static in.peerreview.fmradioindia.common.Configuration.RANK_UP_URL;
 
 public  class RadioPresenter implements IRadioContract.Presenter {
 
@@ -27,34 +31,36 @@ public  class RadioPresenter implements IRadioContract.Presenter {
         new Player(
             new Player.IPlayerCallback() {
               @Override
-              public void onTryPlaying(String msg) {
+              public void onTryPlaying(String id, String msg) {
                 mView.renderTryPlayUI("Try playing " + msg);
               }
 
               @Override
-              public void onSuccess(String msg) {
+              public void onSuccess(String id, String msg) {
                 mView.renderPauseUI("Now Playing " + msg);
                 FMRadioIndiaApplication.Get().getNodeManager().addToRecent(mNodes.get(mCurNodeIdx));
+                  FMRadioIndiaApplication.Get().getNetwork().retrive(RANK_UP_URL+id, Network.CacheControl.GET_LIVE_ONLY  , null);
               }
 
               @Override
-              public void onResume(String msg) {
+              public void onResume(String id, String msg) {
                 mView.renderPauseUI(msg + " stopped");
               }
 
               @Override
-              public void onPause(String msg) {
+              public void onPause(String id, String msg) {
                 mView.renderPlayUI("Now Playing " + msg);
               }
 
               @Override
-              public void onMusicInfo(HashMap<String, Object> info) {}
+              public void onMusicInfo(String id, HashMap<String, Object> info) {}
 
               @Override
-              public void onSeekBarPossionUpdate(int total, int cur) {}
+              public void onSeekBarPossionUpdate(String id, int total, int cur) {}
 
               @Override
-              public void onError(String msg) {
+              public void onError(String id, String msg) {
+                  FMRadioIndiaApplication.Get().getNetwork().retrive(RANK_DOWN_URL+id, Network.CacheControl.GET_LIVE_ONLY , null);
                 mView.renderPlayUI(msg);
                 FMRadioIndiaApplication.Get()
                     .getTelemetry()
@@ -62,7 +68,7 @@ public  class RadioPresenter implements IRadioContract.Presenter {
               }
 
               @Override
-              public void onComplete(String msg) {
+              public void onComplete(String id, String msg) {
                 mView.renderPlayUI(msg);
               }
             });
@@ -134,14 +140,22 @@ public  class RadioPresenter implements IRadioContract.Presenter {
     }
 
     @Override
+    public boolean isFev() {
+        if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
+            return FMRadioIndiaApplication.Get().getNodeManager().isFev(mNodes.get(mCurNodeIdx));
+        }
+        return true;
+    }
+
+    @Override
   public void playCurrent() {
     if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
       Node cur = mNodes.get(mCurNodeIdx);
+
       if (mPlayer.isPlaying()) {
-        mPlayer.pause();
-      } else {
-        mPlayer.play(cur.getTitle(), cur.getMedia_url());
+        mPlayer.stop();
       }
+        mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
     }
   }
 
@@ -152,7 +166,7 @@ public  class RadioPresenter implements IRadioContract.Presenter {
     } while (!mNodes.get(mCurNodeIdx).isSongType());
 
     Node cur = mNodes.get(mCurNodeIdx);
-    mPlayer.play(cur.getTitle(), cur.getMedia_url());
+    mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
   }
 
   @Override
@@ -162,7 +176,7 @@ public  class RadioPresenter implements IRadioContract.Presenter {
     } while (!mNodes.get(mCurNodeIdx).isSongType());
 
     Node cur = mNodes.get(mCurNodeIdx);
-    mPlayer.play(cur.getTitle(), cur.getMedia_url());
+    mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
   }
 
   @Override
