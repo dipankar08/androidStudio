@@ -2,13 +2,11 @@ package in.peerreview.ping.common.utils;
 
 import android.net.TrafficStats;
 import android.os.Handler;
-
+import in.co.dipankar.quickandorid.utils.DLog;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import in.co.dipankar.quickandorid.utils.DLog;
 
 /** Created by dip on 4/1/18. */
 public class DataUsesReporter {
@@ -16,7 +14,7 @@ public class DataUsesReporter {
   public HashMap<String, String> getInfo() {
     return new HashMap<String, String>() {
       {
-        put("time", mTime+"");
+        put("time", mTime + "");
         put("data", getFileSize(mPrevRX + mPrevTX - mStartRX - mStartTX));
       }
     };
@@ -45,8 +43,8 @@ public class DataUsesReporter {
 
   public synchronized void start() {
     mStart = true;
-    mStartRX  =mPrevRX = TrafficStats.getTotalRxBytes();
-    mStartTX  =mPrevTX=  TrafficStats.getTotalTxBytes();
+    mStartRX = mPrevRX = TrafficStats.getTotalRxBytes();
+    mStartTX = mPrevTX = TrafficStats.getTotalTxBytes();
     mHandler.postDelayed(mRunnable, 1000);
   }
 
@@ -54,7 +52,7 @@ public class DataUsesReporter {
     long nowrx = TrafficStats.getTotalRxBytes();
     long nowtx = TrafficStats.getTotalTxBytes();
     for (Callback cb : mCallbackList) {
-      cb.onFinish(mTime, (nowrx - mPrevRX)/1024, (nowtx - mPrevTX)/1024);
+      cb.onFinish(mTime, (nowrx - mPrevRX) / 1024, (nowtx - mPrevTX) / 1024);
     }
     mStart = false;
   }
@@ -68,7 +66,7 @@ public class DataUsesReporter {
             long txNow = TrafficStats.getTotalTxBytes();
 
             for (Callback cb : mCallbackList) {
-              cb.onUpdate(mTime, (txNow - mPrevTX)/1024, (rxNow - mPrevRX)/1024);
+              cb.onUpdate(mTime, (txNow - mPrevTX) / 1024, (rxNow - mPrevRX) / 1024);
             }
             mPrevRX = rxNow;
             mPrevTX = txNow;
@@ -92,12 +90,14 @@ public class DataUsesReporter {
   }
 
   public static String getFileSize(long size) {
-    if (size <= 0)
-      return "0";
-    final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+    if (size <= 0) return "0";
+    final String[] units = new String[] {"B", "KB", "MB", "GB", "TB"};
     int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-    return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups))
+        + " "
+        + units[digitGroups];
   }
+
   public void finalize() {
     DLog.d("delete Report");
   }

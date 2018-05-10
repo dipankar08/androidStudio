@@ -10,10 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-
-import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.common.models.Node;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +31,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RadioItemViewHolde
     mPresenter = presenter;
   }
 
-    public Node getItem(int idx) {
-    if(nodes != null && idx >= 0 && idx <nodes.size()){
+  public Node getItem(int idx) {
+    if (nodes != null && idx >= 0 && idx < nodes.size()) {
       return nodes.get(idx);
-    } else
-  {
-    return null;
-  }
+    } else {
+      return null;
+    }
   }
 
-    public class RadioItemViewHolder extends RecyclerView.ViewHolder {
+  public class RadioItemViewHolder extends RecyclerView.ViewHolder {
     CardView cv;
     TextView sl, liveindicator;
     TextView name;
@@ -70,7 +66,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RadioItemViewHolde
 
             }
           });
-
     }
   }
 
@@ -94,11 +89,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RadioItemViewHolde
     } else {
       personViewHolder.sl.setText((i + 1) + "");
       personViewHolder.name.setText(nodes.get(i).getTitle());
-      String msg = "<span color='black'>"+nodes.get(i).getCount() + "</span> plays  ."+nodes.get(i).getRankMessage();
+      String msg =
+          "<span color='black'>"
+              + nodes.get(i).getCount()
+              + "</span> plays  ."
+              + nodes.get(i).getRankMessage();
       personViewHolder.count.setText(Html.fromHtml(msg), TextView.BufferType.SPANNABLE);
-      Glide.with(mContext)
-          .load(nodes.get(i).getImageUrl())
-          .into(personViewHolder.img);
+      Glide.with(mContext).load(nodes.get(i).getImageUrl()).into(personViewHolder.img);
     }
   }
 

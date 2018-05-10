@@ -2,7 +2,6 @@ package in.peerreview.fmradioindia.activities.welcome;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
-import in.peerreview.fmradioindia.activities.radio.RadioActivity;
 import in.peerreview.fmradioindia.common.CommonIntent;
 
 public class WelcomeActivity extends AppCompatActivity implements IWelcomeContract.View {
@@ -74,9 +72,9 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeContra
 
   @Override
   public void gotoHome() {
-    if(SharedPrefsUtil.getInstance().getBoolean("FIRST_BOOT", true)) {
+    if (SharedPrefsUtil.getInstance().getBoolean("FIRST_BOOT", true)) {
       CommonIntent.startTutorialActivity(this, getIntent().getStringExtra("START_WITH"));
-    } else{
+    } else {
       CommonIntent.startRadioActivity(this, getIntent().getStringExtra("START_WITH"));
     }
     finish();

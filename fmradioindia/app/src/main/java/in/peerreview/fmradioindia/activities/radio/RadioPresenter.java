@@ -1,5 +1,8 @@
 package in.peerreview.fmradioindia.activities.radio;
 
+import static in.peerreview.fmradioindia.common.Configuration.RANK_DOWN_URL;
+import static in.peerreview.fmradioindia.common.Configuration.RANK_UP_URL;
+
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.Player;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
@@ -9,10 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static in.peerreview.fmradioindia.common.Configuration.RANK_DOWN_URL;
-import static in.peerreview.fmradioindia.common.Configuration.RANK_UP_URL;
-
-public  class RadioPresenter implements IRadioContract.Presenter {
+public class RadioPresenter implements IRadioContract.Presenter {
 
   static final String TAG = "RadioPresenter";
   private IRadioContract.View mView;
@@ -39,7 +39,9 @@ public  class RadioPresenter implements IRadioContract.Presenter {
               public void onSuccess(String id, String msg) {
                 mView.renderPauseUI("Now Playing " + msg);
                 FMRadioIndiaApplication.Get().getNodeManager().addToRecent(mNodes.get(mCurNodeIdx));
-                  FMRadioIndiaApplication.Get().getNetwork().retrive(RANK_UP_URL+id, Network.CacheControl.GET_LIVE_ONLY  , null);
+                FMRadioIndiaApplication.Get()
+                    .getNetwork()
+                    .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
               }
 
               @Override
@@ -60,7 +62,9 @@ public  class RadioPresenter implements IRadioContract.Presenter {
 
               @Override
               public void onError(String id, String msg) {
-                  FMRadioIndiaApplication.Get().getNetwork().retrive(RANK_DOWN_URL+id, Network.CacheControl.GET_LIVE_ONLY , null);
+                FMRadioIndiaApplication.Get()
+                    .getNetwork()
+                    .retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
                 mView.renderPlayUI(msg);
                 FMRadioIndiaApplication.Get()
                     .getTelemetry()
@@ -116,38 +120,34 @@ public  class RadioPresenter implements IRadioContract.Presenter {
     populateSets(FMRadioIndiaApplication.Get().getNodeManager().getFavorite());
   }
 
-    @Override
-    public void scheduleAutoSleep(int i) {
+  @Override
+  public void scheduleAutoSleep(int i) {}
 
+  @Override
+  public void scheduleAutoStart(int i, int mCurrentSelection) {}
+
+  @Override
+  public void playById(String id) {
+    if (id == null) {
+      return;
     }
-
-    @Override
-    public void scheduleAutoStart(int i, int mCurrentSelection) {
-
-    }
-
-    @Override
-    public void playById(String id) {
-      if(id == null){
-          return;
+    for (int i = 0; i < mNodes.size(); i++) {
+      if (mNodes.get(i).getId().equals(id)) {
+        mCurNodeIdx = i;
+        playCurrent();
       }
-        for(int i =0; i<mNodes.size();i++){
-            if(mNodes.get(i).getId().equals(id)){
-                mCurNodeIdx = i;
-                playCurrent();
-            }
-        }
     }
+  }
 
-    @Override
-    public boolean isFev() {
-        if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
-            return FMRadioIndiaApplication.Get().getNodeManager().isFev(mNodes.get(mCurNodeIdx));
-        }
-        return true;
+  @Override
+  public boolean isFev() {
+    if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
+      return FMRadioIndiaApplication.Get().getNodeManager().isFev(mNodes.get(mCurNodeIdx));
     }
+    return true;
+  }
 
-    @Override
+  @Override
   public void playCurrent() {
     if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
       Node cur = mNodes.get(mCurNodeIdx);
@@ -155,7 +155,7 @@ public  class RadioPresenter implements IRadioContract.Presenter {
       if (mPlayer.isPlaying()) {
         mPlayer.stop();
       }
-        mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
+      mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
     }
   }
 

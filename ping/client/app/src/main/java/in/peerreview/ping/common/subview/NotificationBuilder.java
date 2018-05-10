@@ -46,9 +46,8 @@ public class NotificationBuilder {
             "android.resource://"
                 + mContext.getPackageName()
                 + "/"
-                + R.raw
-                    .whatsapp_whistle); // Here is FILE_NAME is the name of file that you want to
-                                        // play
+                + R.raw.whatsapp_whistle); // Here is FILE_NAME is the name of file that you want to
+    // play
     long[] vibrate = {0, 100, 200, 300};
     NotificationCompat.Builder notificationBuilder =
         new NotificationCompat.Builder(mContext, ADMIN_CHANNEL_ID)

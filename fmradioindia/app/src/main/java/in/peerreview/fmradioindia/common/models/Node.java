@@ -2,7 +2,6 @@ package in.peerreview.fmradioindia.common.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import in.co.dipankar.quickandorid.views.QuickListView;
 
 public class Node implements Parcelable, QuickListView.Item {
@@ -100,15 +99,14 @@ public class Node implements Parcelable, QuickListView.Item {
     return this.count_click;
   }
 
-  public String getRankMessage(){
-    if(this.rank == 0){
+  public String getRankMessage() {
+    if (this.rank == 0) {
       return " <font color='red'>Be the first player</font>";
-    } else if (this.rank <=2){
+    } else if (this.rank <= 2) {
       return " <font color='red'>Not working</font>";
-    } else if (this.rank <=6){
+    } else if (this.rank <= 6) {
       return " <font color='#470A51'>Working</font>";
-    }
-    else{
+    } else {
       return " <font color='#1a512e'>Always working</font>";
     }
   }

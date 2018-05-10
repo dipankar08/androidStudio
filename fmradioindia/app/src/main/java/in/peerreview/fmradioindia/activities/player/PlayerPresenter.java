@@ -38,7 +38,7 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
               }
 
               @Override
-              public void onResume(String id , String msg) {
+              public void onResume(String id, String msg) {
                 Node m = getMusicNodeForID(id);
                 mView.showPauseUI(m);
               }
@@ -50,13 +50,13 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
               }
 
               @Override
-              public void onMusicInfo( String id, HashMap<String, Object> info) {
+              public void onMusicInfo(String id, HashMap<String, Object> info) {
                 mView.updateSeekBarInfo(
                     (int) info.get("Duration"), (int) info.get("CurrentPosition"));
               }
 
               @Override
-              public void onSeekBarPossionUpdate( String msg, int total, int cur) {
+              public void onSeekBarPossionUpdate(String msg, int total, int cur) {
                 mView.updateSeekBarInfo(total, cur);
                 // tricks to restrat without buffering again.
                 if ((total - cur < 5) && mIsRepeat) {
@@ -103,7 +103,10 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
   @Override
   public void play() {
     if (curIndex >= 0) {
-      mPlayer.play(mNodeList.get(curIndex).getId(), mNodeList.get(curIndex).getId(),mNodeList.get(curIndex).getMedia_url());
+      mPlayer.play(
+          mNodeList.get(curIndex).getId(),
+          mNodeList.get(curIndex).getId(),
+          mNodeList.get(curIndex).getMedia_url());
     }
   }
 

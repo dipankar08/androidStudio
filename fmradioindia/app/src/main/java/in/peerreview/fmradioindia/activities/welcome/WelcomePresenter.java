@@ -78,7 +78,7 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
                               object.optInt("count_error", 0),
                               object.optInt("count_success", 0),
                               object.optInt("count_click", 0),
-                                  object.optInt("rank", 5),
+                              object.optInt("rank", 5),
                               Node.Type.RADIO));
                     }
                   }
