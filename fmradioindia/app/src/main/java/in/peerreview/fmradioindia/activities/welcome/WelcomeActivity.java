@@ -39,7 +39,7 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeContra
       versionTextView.setText("V" + version + " (Release - " + verCode + ")");
     } catch (PackageManager.NameNotFoundException e) {
       e.printStackTrace();
-      versionTextView.setText("V-0.0");
+      versionTextView.setText("V-e.0");
     }
     radio = (ImageView) findViewById(R.id.logo);
     Animation rotation = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.bounce);

@@ -1,6 +1,7 @@
 package in.peerreview.fmradioindia.common.models;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import io.paperdb.Paper;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,10 +16,22 @@ public class NodeManager {
   private LinkedList<Node> rectlist;
   private List<Callback> mCallbackList;
 
-  public interface Callback {
-    void onItemAddToFeb();
+  public @Nullable Node getNodeById(String id) {
+    if (nodeList == null) {
+      return null;
+    }
+    for (Node d : nodeList) {
+      if (d.getId().equals(id)) {
+        return d;
+      }
+    }
+    return null;
+  }
 
-    void onItemRemFromFeb();
+  public interface Callback {
+    void onItemAddToFeb(List<Node> list);
+
+    void onItemRemFromFeb(List<Node> list);
   }
 
   public NodeManager(Context context) {
@@ -63,7 +76,7 @@ public class NodeManager {
     if (found != null) {
       feblist.remove(found);
       for (Callback callback : mCallbackList) {
-        callback.onItemRemFromFeb();
+        callback.onItemRemFromFeb(feblist);
       }
     } else {
       feblist.add(0, temp);
@@ -71,7 +84,7 @@ public class NodeManager {
         feblist.remove(feblist.size() - 1);
       }
       for (Callback callback : mCallbackList) {
-        callback.onItemAddToFeb();
+        callback.onItemAddToFeb(feblist);
       }
     }
     Paper.book().write("FevList", feblist);
@@ -118,25 +131,45 @@ public class NodeManager {
   private List<Node> merge(List<Node> first, List<Node> second, List<Node> third) {
     List<Node> ans = new LinkedList<>();
     Set<Node> set = new HashSet<>();
+    int count = 0;
     if (first != null) {
       for (Node n : first) {
         ans.add(n);
         set.add(n);
+        count++;
+        if (count > 10) {
+          return ans;
+        }
       }
     }
+    if (count > 9) {
+      return ans;
+    }
+
     if (second != null) {
       for (Node n : second) {
         if (!set.contains(n)) {
           ans.add(n);
           set.add(n);
+          count++;
+          if (count > 10) {
+            return ans;
+          }
         }
       }
+    }
+    if (count > 9) {
+      return ans;
     }
     if (third != null) {
       for (Node n : third) {
         if (!set.contains(n)) {
           ans.add(n);
           set.add(n);
+          count++;
+          if (count > 10) {
+            return ans;
+          }
         }
       }
     }
@@ -144,6 +177,6 @@ public class NodeManager {
   }
 
   public List<Node> getSuggested() {
-    return merge(rectlist, feblist, nodeList.subList(0, 10));
+    return merge(feblist, rectlist, nodeList);
   }
 }

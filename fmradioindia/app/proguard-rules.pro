@@ -19,3 +19,20 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn android.support.design.**
+-keep class android.support.design.** { *; }
+-dontnote com.google.android.gms.**
+-keep class com.google.android.gms.** { *; }
+-dontwarn org.apache.commons.**
+-dontwarn org.apache.http.**
+-keep class org.apache.http.** { *; }
+-dontwarn jcifs.http.NetworkExplorer
+-keep class android.support.v4.** { *; }
+-dontnote android.support.v4.**
+-keep class android.support.v7.** { *; }
+-dontnote android.support.v7.**
+
+-dontwarn sun.misc.Unsafe
+-dontwarn okio.Okio
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
+-dontwarn okio.DeflaterSink

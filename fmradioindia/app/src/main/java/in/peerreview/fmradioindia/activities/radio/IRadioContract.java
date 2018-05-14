@@ -15,6 +15,10 @@ public interface IRadioContract {
     void renderPlayUI(String msg);
 
     void showToast(String s);
+
+    void updateQuickList(List<Node> mNodes);
+
+    void onUpdateFevButtonState(boolean isFev);
   }
 
   public interface Presenter {
@@ -26,7 +30,7 @@ public interface IRadioContract {
     void clearFilter();
 
     // plays
-    void playCurrent();
+    void playPause();
 
     void playPrevious();
 
@@ -48,6 +52,10 @@ public interface IRadioContract {
 
     void playById(String startID);
 
-    boolean isFev();
+    void onFevClicked();
+
+    void setCurNodeID(String id);
+
+    Node getItembyID(String channel_id);
   }
 }

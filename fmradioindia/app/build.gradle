@@ -6,15 +6,20 @@ android {
         applicationId "in.peerreview.fmradioindia"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 1
-        versionName "3.7"
+        versionCode 16
+        versionName "4.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            shrinkResources true
+            debuggable false
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
         }
     }
     aaptOptions {
@@ -32,22 +37,19 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
 
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
-
-    compile 'com.google.code.gson:gson:2.6.2'
-
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
+    implementation 'com.google.code.gson:gson:2.6.2'
 
     implementation 'com.github.bumptech.glide:glide:4.7.1'
-    compile 'com.github.arimorty:floatingsearchview:2.1.1'
-    compile 'jp.wasabeef:recyclerview-animators:2.2.7'
-    compile 'io.paperdb:paperdb:2.1'
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    implementation 'jp.wasabeef:recyclerview-animators:2.2.7'
+    implementation 'io.paperdb:paperdb:2.1'
 
-    compile 'com.google.android.gms:play-services-ads:10.2.1'
-    compile 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.google.android.gms:play-services-ads:10.2.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    testCompile 'junit:junit:4.12'
-    implementation 'com.github.dipankar08:quick-android:0.29'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.github.dipankar08:quick-android:0.36'
     implementation 'com.squareup.okhttp:okhttp:2.5.0'
 }
 

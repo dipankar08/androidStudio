@@ -19,6 +19,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
   private static List<Node> mAllNodes;
   private static List<Node> mNodes;
   private int mCurNodeIdx = 0;
+  private String mCurNodeID = null; /* This is the curent node that is playing */
 
   private Player mPlayer;
 
@@ -37,7 +38,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
               @Override
               public void onSuccess(String id, String msg) {
-                mView.renderPauseUI("Now Playing " + msg);
+                mView.renderPlayUI("Now Playing " + msg);
                 FMRadioIndiaApplication.Get().getNodeManager().addToRecent(mNodes.get(mCurNodeIdx));
                 FMRadioIndiaApplication.Get()
                     .getNetwork()
@@ -46,12 +47,12 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
               @Override
               public void onResume(String id, String msg) {
-                mView.renderPauseUI(msg + " stopped");
+                mView.renderPlayUI("Resume playing: " + msg);
               }
 
               @Override
               public void onPause(String id, String msg) {
-                mView.renderPlayUI("Now Playing " + msg);
+                mView.renderPauseUI("Stop Playing: " + msg);
               }
 
               @Override
@@ -62,10 +63,11 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
               @Override
               public void onError(String id, String msg) {
+                mView.renderPauseUI("Error occured while playing: " + msg);
                 FMRadioIndiaApplication.Get()
                     .getNetwork()
                     .retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
-                mView.renderPlayUI(msg);
+
                 FMRadioIndiaApplication.Get()
                     .getTelemetry()
                     .markHit("RadioPresenter_player_onError");
@@ -82,13 +84,13 @@ public class RadioPresenter implements IRadioContract.Presenter {
         .addCallback(
             new NodeManager.Callback() {
               @Override
-              public void onItemAddToFeb() {
-                mView.showToast("Successfully added to fev");
+              public void onItemAddToFeb(List<Node> list) {
+                mView.updateQuickList(list);
               }
 
               @Override
-              public void onItemRemFromFeb() {
-                mView.showToast("Successfully removed from fev");
+              public void onItemRemFromFeb(List<Node> list) {
+                mView.updateQuickList(list);
               }
             });
   }
@@ -96,7 +98,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
   @Override
   public void play(int pos) {
     mCurNodeIdx = pos;
-    playCurrent();
+    play();
   }
 
   @Override
@@ -131,52 +133,76 @@ public class RadioPresenter implements IRadioContract.Presenter {
     if (id == null) {
       return;
     }
+    boolean ffound = false;
     for (int i = 0; i < mNodes.size(); i++) {
       if (mNodes.get(i).getId().equals(id)) {
         mCurNodeIdx = i;
-        playCurrent();
+        break;
+      }
+    }
+
+    mCurNodeID = FMRadioIndiaApplication.Get().getNodeManager().getNodeById(id).getId();
+    play();
+  }
+
+  @Override
+  public void onFevClicked() {
+    Node cur = getCurrentNode();
+    if (cur != null) {
+      if (FMRadioIndiaApplication.Get().getNodeManager().isFev(cur)) {
+        FMRadioIndiaApplication.Get().getNodeManager().handleFavorite(cur, false);
+        mView.onUpdateFevButtonState(false);
+      } else {
+        FMRadioIndiaApplication.Get().getNodeManager().handleFavorite(cur, true);
+        mView.onUpdateFevButtonState(true);
       }
     }
   }
 
   @Override
-  public boolean isFev() {
-    if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
-      return FMRadioIndiaApplication.Get().getNodeManager().isFev(mNodes.get(mCurNodeIdx));
-    }
-    return true;
-  }
-
-  @Override
-  public void playCurrent() {
-    if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
-      Node cur = mNodes.get(mCurNodeIdx);
-
-      if (mPlayer.isPlaying()) {
-        mPlayer.stop();
-      }
-      mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
+  public void playPause() {
+    if (mPlayer.isPlaying()) {
+      mPlayer.pause();
+    } else {
+      play();
     }
   }
 
   @Override
   public void playPrevious() {
+    mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == 0) ? mNodes.size() - 1 : mCurNodeIdx - 1;
     } while (!mNodes.get(mCurNodeIdx).isSongType());
-
-    Node cur = mNodes.get(mCurNodeIdx);
-    mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
+    play();
   }
 
   @Override
   public void playNext() {
+    mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == mNodes.size() - 1) ? 0 : mCurNodeIdx + 1;
     } while (!mNodes.get(mCurNodeIdx).isSongType());
+    play();
+  }
 
-    Node cur = mNodes.get(mCurNodeIdx);
-    mPlayer.play(cur.getId(), cur.getTitle(), cur.getMedia_url());
+  private void play() {
+    Node temp = getCurrentNode();
+    if (temp != null) {
+      mPlayer.play(temp.getId(), temp.getTitle(), temp.getMedia_url());
+    }
+  }
+
+  private Node getCurrentNode() {
+    Node temp = null;
+    if (mCurNodeID != null) {
+      temp = FMRadioIndiaApplication.Get().getNodeManager().getNodeById(mCurNodeID);
+    } else {
+      if (mCurNodeIdx >= 0 && mCurNodeIdx < mNodes.size()) {
+        temp = mNodes.get(mCurNodeIdx);
+      }
+    }
+    return temp;
   }
 
   @Override
@@ -184,7 +210,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
     if (mCurNodeIdx < 0) {
       return;
     }
-    FMRadioIndiaApplication.Get().getNodeManager().handleFavorite(mNodes.get(mCurNodeIdx), a);
+    FMRadioIndiaApplication.Get().getNodeManager().handleFavorite(getCurrentNode(), a);
   }
 
   @Override
@@ -219,5 +245,15 @@ public class RadioPresenter implements IRadioContract.Presenter {
   public void clearFilter() {
     mNodes = mAllNodes;
     mView.updateList(mNodes);
+  }
+
+  @Override
+  public void setCurNodeID(String id) {
+    mCurNodeID = id;
+  }
+
+  @Override
+  public Node getItembyID(String channel_id) {
+    return FMRadioIndiaApplication.Get().getNodeManager().getNodeById(channel_id);
   }
 }

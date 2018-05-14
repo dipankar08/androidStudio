@@ -58,9 +58,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   private GifImageView tryplayin;
   private TextView message, isplaying;
   private ViewGroup lock_screen;
-  private int mCurrentSelection;
   private NotificationView mNotificationView;
   private QuickListView mQuickListView;
+  private String mCurSelectId;
   ImageButton btnNav;
   LinearLayout qab;
 
@@ -108,12 +108,19 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     }
     mQuickListView.init(
         items1,
+        R.layout.item,
         new QuickListView.Callback() {
           @Override
-          public void onClick(String id) {}
+          public void onClick(String id) {
+            mPresenter.setCurNodeID(id);
+            mPresenter.playById(id);
+          }
 
           @Override
-          public void onLongClick(String id) {}
+          public void onLongClick(String id) {
+            mPresenter.setCurNodeID(id);
+            mCustomButtonSheetView.show();
+          }
         });
   }
 
@@ -224,7 +231,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mPresenter.playCurrent();
+            mPresenter.playPause();
             FMRadioIndiaApplication.Get().getTelemetry().markHit("click_play");
           }
         });
@@ -251,14 +258,8 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            if (mPresenter.isFev()) {
-              mPresenter.makeCurrentFev(true);
-              FMRadioIndiaApplication.Get().getTelemetry().markHit("click_fev");
-              setImageSrcWithAnimation(fev, R.drawable.ic_love_on);
-            } else {
-              mPresenter.makeCurrentFev(false);
-              setImageSrcWithAnimation(fev, R.drawable.ic_love_off);
-            }
+            FMRadioIndiaApplication.Get().getTelemetry().markHit("click_fev");
+            mPresenter.onFevClicked();
           }
         });
 
@@ -294,6 +295,17 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         });
   }
 
+  @Override
+  public void onUpdateFevButtonState(boolean isFev) {
+    if (isFev) {
+      setImageSrcWithAnimation(fev, R.drawable.ic_love_on);
+      mNotificationView.showSuccess("Added this channel to Feb");
+    } else {
+      setImageSrcWithAnimation(fev, R.drawable.ic_love_off);
+      mNotificationView.showSuccess("Removed this channel to Feb");
+    }
+  }
+
   private void initList() {
     mRecyclerView = (RecyclerView) findViewById(R.id.rv);
     mRecyclerView.setHasFixedSize(true);
@@ -310,15 +322,15 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             new RecyclerItemClickListener.OnItemClickListener() {
               @Override
               public void onItemClick(View view, int position) {
-                mPresenter.play(position);
-                mCurrentSelection = position;
+                mCurSelectId = adapter.getItem(position).getId();
+                mPresenter.playById(mCurSelectId);
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onClick");
               }
 
               @Override
               public void onLongItemClick(View view, int position) {
                 mCustomButtonSheetView.show();
-                mCurrentSelection = position;
+                mCurSelectId = adapter.getItem(position).getId();
                 FMRadioIndiaApplication.Get()
                     .getTelemetry()
                     .markHit("RadioItemViewHolder_onLongClick");
@@ -367,34 +379,11 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   private void InitCustomButtonSheetView() {
     mCustomButtonSheetView = (CustomButtonSheetView) findViewById(R.id.custom_endbutton_sheetview);
     List<CustomButtonSheetView.ISheetItem> mSheetItems = new ArrayList<>();
-    mSheetItems.add(
-        new SheetItem(
-            102,
-            "Add to Fev",
-            CustomButtonSheetView.Type.BUTTON,
-            new CustomButtonSheetView.Callback() {
-              @Override
-              public void onClick(int v) {
-                mPresenter.makeCurrentFev(true);
-              }
-            },
-            null));
+
     mSheetItems.add(
         new SheetItem(
             103,
-            "Remove from Fev",
-            CustomButtonSheetView.Type.BUTTON,
-            new CustomButtonSheetView.Callback() {
-              @Override
-              public void onClick(int v) {
-                mPresenter.makeCurrentFev(false);
-              }
-            },
-            null));
-    mSheetItems.add(
-        new SheetItem(
-            103,
-            "Open Tutorial",
+            "Open tutorial",
             CustomButtonSheetView.Type.BUTTON,
             new CustomButtonSheetView.Callback() {
               @Override
@@ -403,10 +392,24 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
               }
             },
             null));
+
+    mSheetItems.add(
+        new SheetItem(
+            102,
+            "add/remove feb",
+            CustomButtonSheetView.Type.BUTTON,
+            new CustomButtonSheetView.Callback() {
+              @Override
+              public void onClick(int v) {
+                mPresenter.makeCurrentFev(true);
+              }
+            },
+            null));
+
     mSheetItems.add(
         new SheetItem(
             104,
-            "Schedule auto stop",
+            "Select auto-stop duration",
             CustomButtonSheetView.Type.OPTIONS,
             new CustomButtonSheetView.Callback() {
               @Override
@@ -434,23 +437,23 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     mSheetItems.add(
         new SheetItem(
             105,
-            "Schedule auto start",
+            "Select auto-start time",
             CustomButtonSheetView.Type.OPTIONS,
             new CustomButtonSheetView.Callback() {
               @Override
               public void onClick(int v) {
                 switch (v) {
                   case 0:
-                    setUpAlerm(5, mCurrentSelection);
+                    setUpAlerm(5, mCurSelectId);
                     break;
                   case 1:
-                    setUpAlerm(6, mCurrentSelection);
+                    setUpAlerm(6, mCurSelectId);
                     break;
                   case 2:
-                    setUpAlerm(7, mCurrentSelection);
+                    setUpAlerm(7, mCurSelectId);
                     break;
                   case 3:
-                    setUpAlerm(8, mCurrentSelection);
+                    setUpAlerm(8, mCurSelectId);
                     break;
                   case 4:
                     cancelAlerm();
@@ -459,19 +462,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
               }
             },
             new CharSequence[] {"5:00 AM", "6:00AM", "7:00 AM", "8 AM", "Cancel"}));
-
-    mSheetItems.add(
-        new SheetItem(
-            106,
-            "Start Recoder",
-            CustomButtonSheetView.Type.BUTTON,
-            new CustomButtonSheetView.Callback() {
-              @Override
-              public void onClick(int v) {
-                startRecoding();
-              }
-            },
-            null));
 
     mCustomButtonSheetView.addMenu(mSheetItems);
     mCustomButtonSheetView.hide();
@@ -546,9 +536,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   @Override
   public void renderPlayUI(String msg) {
     message.setText(msg);
-    play.setImageResource(R.drawable.play);
+    play.setImageResource(R.drawable.pause);
     play.setVisibility(View.VISIBLE);
-    isplaying.setVisibility(View.GONE);
+    isplaying.setVisibility(View.VISIBLE);
     tryplayin.setVisibility(View.GONE);
   }
 
@@ -558,9 +548,22 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   }
 
   @Override
+  public void updateQuickList(List<Node> mNodes) {
+    if (mNodes == null) {
+      return;
+    }
+    List<QuickListView.Item> items1 = new ArrayList<>();
+    for (Node node : FMRadioIndiaApplication.Get().getNodeManager().getSuggested()) {
+      items1.add((QuickListView.Item) node);
+    }
+    if (mQuickListView != null) {
+      mQuickListView.updateList(items1);
+    }
+  }
+
+  @Override
   public void renderTryPlayUI(final String msg) {
     message.setText(msg);
-    play.setImageResource(R.drawable.play);
     play.setVisibility(View.GONE);
     isplaying.setVisibility(View.GONE);
     tryplayin.setVisibility(View.VISIBLE);
@@ -577,9 +580,10 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
 
   @Override
   public void renderPauseUI(String msg) {
-    play.setImageResource(R.drawable.pause);
+    message.setText(msg);
+    play.setImageResource(R.drawable.play);
     play.setVisibility(View.VISIBLE);
-    isplaying.setVisibility(View.VISIBLE);
+    isplaying.setVisibility(View.GONE);
     tryplayin.setVisibility(View.GONE);
   }
 
@@ -681,7 +685,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           @Override
           public void onTick(long millisUntilFinished) {
             long sec = millisUntilFinished / 1000;
-            mNotificationView.showInfo(
+            mNotificationView.showError(
                 "The app will close in " + sec / 60 + " min and " + sec % 60 + " sec.", null, -1);
           }
 
@@ -711,9 +715,8 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     }
   }
 
-  private void setUpAlerm(final int timeInHrs, int idx) {
-    final String channel_id = adapter.getItem(idx).getId();
-    final String name = adapter.getItem(idx).getTitle();
+  private void setUpAlerm(final int timeInHrs, String channel_id) {
+    final String name = mPresenter.getItembyID(channel_id).getTitle();
     Intent intent = new Intent(this, AlermReceiver.class); // CORRECT
     intent.putExtra("START_WITH", channel_id);
     PendingIntent pendingIntent =
