@@ -1,41 +1,83 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/white300</item>
-        <item name="colorPrimaryDark">@color/white300</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowLightStatusBar">true</item>
+
+    <!-- Light base activity theme -->
+    <style name="ActivityTheme.Primary.Base.Light" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primaryTextColorLight</item>
+        <item name="primaryTextColor">@color/primaryTextColorLight</item>
+        <item name="secondaryTextColor">@color/secondaryTextColorLight</item>
+        <item name="primaryBackgroundColor">@color/primaryBackgroundColorLight</item>
+        <item name="secondaryBackgroundColor">@color/secondaryBackgroundColorLight</item>
+
+        <item name="inversePrimaryTextColor">@color/inversePrimaryTextColorLight</item>
+        <item name="inverseSecondaryTextColor">@color/inverseSecondaryTextColorLight</item>
+        <item name="inverseBackgroundColor">@color/inverseBackgroundColorLight</item>
+
+        <item name="borderColor">@color/borderColorLight</item>
+
+        <item name="iconClose">@drawable/ic_close_white_20</item>
     </style>
 
-    <style name="AppToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/gray400</item>
-        <item name="android:textColorSecondary">@color/gray400</item>
+    <!-- Dark base activity theme -->
+    <style name="ActivityTheme.Primary.Base.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryTextColor">@color/primaryTextColorDark</item>
+        <item name="secondaryTextColor">@color/secondaryTextColorDark</item>
+        <item name="primaryBackgroundColor">@color/primaryBackgroundColorDark</item>
+        <item name="secondaryBackgroundColor">@color/secondaryBackgroundColorDark</item>
+
+        <item name="inversePrimaryTextColor">@color/inversePrimaryTextColorDark</item>
+        <item name="inverseSecondaryTextColor">@color/inverseSecondaryTextColorDark</item>
+        <item name="inverseBackgroundColor">@color/inverseBackgroundColorDark</item>
+
+        <item name="iconClose">@drawable/ic_close_white_20</item>
+
+        <item name="borderColor">@color/borderColorDark</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <!-- Application theme -->
+    <style name="ActivityThemeLight" parent="ActivityTheme.Primary.Base.Light">
+        <!-- DIPANKAR: USed to show the icon color -->
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textColorSecondary">@color/primaryTextColorLight</item>
+        <!-- User for the text in the serach bar -->
+        <item name="android:textColorPrimary">@color/primaryTextColorLight</item>
+
+        <!-- This is resposbile for backgoud color of battery icon -->
+        <item name="android:colorPrimaryDark">@color/primaryBackgroundColorLight</item>
+
+        <item name="android:windowBackground">@color/primaryBackgroundColorLight</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <item name="android:colorBackground">@color/primaryBackgroundColorLight</item>
+    <!--
+
+        <item name="android:actionMenuTextColor">@color/primaryBackgroundColorLight</item>
+
+        <item name="android:colorPrimary">@color/primaryBackgroundColorLight</item>
+        <item name="android:colorAccent">#FF4081</item>
+        -->
+
+
+
+
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="ActivityThemeDark" parent="ActivityTheme.Primary.Base.Dark">
+        <!-- DIPANKAR: USed to show the icon color -->
+        <item name="android:textColor">@color/primaryTextColorDark</item>
+        <item name="android:textColorSecondary">@color/primaryTextColorDark</item>
+        <!-- User for the text in the serach bar -->
+        <item name="android:textColorPrimary">@color/primaryTextColorDark</item>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+        <!-- This is resposbile for backgoud color of battery icon -->
+        <item name="android:colorPrimaryDark">@color/primaryBackgroundColorDark</item>
 
-    <style name="QSB_BTN">
+        <item name="android:windowBackground">@color/primaryBackgroundColorDark</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:textSize">10dp</item>
-        <item name="android:textColor">@color/gray300</item>
-        <item name="android:paddingBottom">3dp</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:clickable">true</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:background">@drawable/button_states</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:colorBackground">@color/primaryBackgroundColorDark</item>
+
     </style>
 
 </resources>

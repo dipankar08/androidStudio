@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#FF4081</color>
-    <color name="black">#000</color>
 
+    <!-- Light color Themes -->
+    <color name="primaryTextColorLight">#33343B</color>
+    <color name="secondaryTextColorLight">#8033343B</color>
+    <color name="primaryBackgroundColorLight">#FFFFFF</color>
+    <color name="secondaryBackgroundColorLight">#F2F2F3</color>
 
-    <!-- Color Pallet -->
-    <color name="gray200">#a7adba</color>
-    <color name="gray300">#65737e</color>
-    <color name="gray400">#4f5b66</color>
-    <color name="gray500">#343d46</color>
-    <color name="gray900">#000000</color>
+    <color name="inversePrimaryTextColorLight">#FFFFFF</color>
+    <color name="inverseSecondaryTextColorLight">#F2F2F3</color>
+    <color name="inverseBackgroundColorLight">#2979FF</color>
+    <color name="borderColorLight">#55FFFFFF</color>
 
+    <!-- Dark color theme -->
+    <color name="primaryTextColorDark">#FFFFFF</color>
+    <color name="secondaryTextColorDark">#99FFFFFF</color>
+    <color name="primaryBackgroundColorDark">#33343B</color>
+    <color name="secondaryBackgroundColorDark">#8033343B</color>
 
-    <color name="white200">#f5f5f5</color>
-    <color name="white300">#efefef</color>
+    <color name="inversePrimaryTextColorDark">#FFFFFF</color>
+    <color name="inverseSecondaryTextColorDark">#F2F2F3</color>
+    <color name="inverseBackgroundColorDark">#8033343B</color>
 
+    <color name="borderColorDark">#000000</color>
+
+    <!-- other -->
+    <color name="Notification_Progress">#57cabf</color>
+    <color name="Notification_Success">#9de919</color>
+    <color name="Notification_Error">#b91765</color>
+
+    <color name="red">#B71C1C</color>
+    <color name="green">#43A047</color>
+    <color name="white">#ffffff</color>
+
+    <!-- Other color to be removed -->
 
 </resources>

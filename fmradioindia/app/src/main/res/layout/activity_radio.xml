@@ -25,76 +25,73 @@
             android:layout_width="match_parent"
             android:layout_below="@id/noti"
             android:layout_height="match_parent"
-            android:background="@color/white200"
+            android:background="?attr/primaryBackgroundColor"
+            android:textColor="?attr/primaryTextColor"
             android:fitsSystemWindows="true">
             <!-- Tool Bar and Serach Bar-->
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/AppToolbar">
+                android:background="?attr/primaryBackgroundColor"
+                android:textColor="?attr/primaryTextColor"
+                android:layout_height="wrap_content">
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    android:theme="@style/AppToolbar"
-                    app:popupTheme="@style/AppTheme.PopupOverlay">
-                    <RelativeLayout
+                    android:padding="0dp"
+                    android:layout_margin="0dp"
+                    android:layout_height="?attr/actionBarSize">
+                    <SearchView
+                        android:id="@+id/searchView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp">
-                        <SearchView
-                            android:id="@+id/searchView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="right"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:iconifiedByDefault="true"
-                            android:queryHint="" />
-                    </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryTextColor"
+                        android:focusable="true"
+                        android:layout_margin="0dp"
+                        android:padding="0dp"
+                        android:queryBackground="@null"
+                        android:focusableInTouchMode="true"
+                        android:iconifiedByDefault="true"
+                        android:queryHint="Type here" />
                 </android.support.v7.widget.Toolbar>
-
                 <!-- Serach bar -->
-                <LinearLayout
+                <in.co.dipankar.quickandorid.views.SegmentedControl
                     android:id="@+id/qab"
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
                     android:gravity="center"
+                    android:background="?attr/primaryBackgroundColor"
                     android:visibility="gone"
-                    android:layout_height="wrap_content">
-                    <in.co.dipankar.quickandorid.views.CustomFontTextView
-                        android:id="@+id/qsb_recent"
-                        android:onClick="handleFilter"
-                        style="@style/QSB_BTN"
-                        android:text="Recent"/>
-                    <in.co.dipankar.quickandorid.views.CustomFontTextView
-                        android:id="@+id/qsb_fev"
-                        android:onClick="handleFilter"
-                        style="@style/QSB_BTN"
-                        android:text="Favorites"/>
-                    <in.co.dipankar.quickandorid.views.CustomFontTextView
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    app:segmentCount="2">
+                    <in.co.dipankar.quickandorid.views.SegmentedButton
+                        android:id="@+id/qsb_bengali"
+                        android:textAllCaps="false"
+                        android:padding="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Bengali"/>
+                    <in.co.dipankar.quickandorid.views.SegmentedButton
                         android:id="@+id/qsb_hindi"
-                        android:onClick="handleFilter"
-                        style="@style/QSB_BTN"
+                        android:textAllCaps="false"
+                        android:padding="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
                         android:text="Hindi"/>
-                    <in.co.dipankar.quickandorid.views.CustomFontTextView
+                    <in.co.dipankar.quickandorid.views.SegmentedButton
                         android:id="@+id/qsb_kolkata"
-                        android:onClick="handleFilter"
-                        style="@style/QSB_BTN"
+                        android:textAllCaps="false"
+                        android:padding="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
                         android:text="Kolkata"/>
-                    <in.co.dipankar.quickandorid.views.CustomFontTextView
+                    <in.co.dipankar.quickandorid.views.SegmentedButton
                         android:id="@+id/qsb_bangaladesh"
-                        android:onClick="handleFilter"
-                        style="@style/QSB_BTN"
-                        android:text="Bangaladesh"/>
-                    <in.co.dipankar.quickandorid.views.CustomFontTextView
-                        android:id="@+id/qsb_clear"
-                        android:onClick="handleFilter"
-                        style="@style/QSB_BTN"
-                        android:text="clear"/>
-                </LinearLayout>
+                        android:textAllCaps="false"
+                        android:padding="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Bangladesh"/>
+                </in.co.dipankar.quickandorid.views.SegmentedControl>
             </android.support.design.widget.AppBarLayout>
             <!-- End of Top Bar -->
 
@@ -105,26 +102,27 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="55dp"
                 android:id="@+id/topcontainer"
-                android:background="@color/white200"
+                android:background="?attr/primaryBackgroundColor"
                 android:orientation="vertical">
                 <in.co.dipankar.quickandorid.views.QuickListView
                     android:id="@+id/quicklistview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+
                 <!-- Radio List -->
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv"
+                <in.co.dipankar.quickandorid.views.QuickListView
+                    android:id="@+id/radiolistview"
                     android:layout_width="match_parent"
                     android:layout_below="@+id/quicklistview"
-                    android:background="@color/white200"
+                    android:background="?attr/primaryBackgroundColor"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
                 <!-- Player -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:background="@color/white300"
+                    android:background="?attr/secondaryBackgroundColor"
                     android:layout_height="120dp"
                     android:orientation="vertical"
                     android:padding="0dp">
@@ -156,10 +154,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
                                 android:textSize="13sp"
-                                app:customfont="SourceSansPro-Regular.ttf"
+                                app:customfont="Ubuntu.ttf"
                                 android:text="Tap on channel to play."
                                 android:id="@+id/message"
-                                android:textColor="@color/gray200" />
+                                android:textColor="?attr/primaryTextColor" />
 
                         </LinearLayout>
                         <LinearLayout
@@ -259,7 +257,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Locked"
                 android:id="@+id/lockmessage"
-                android:textColor="@color/gray900" />
+                android:textColor="?attr/primaryTextColor"/>
             <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:layout_width="wrap_content"
                 android:layout_marginTop="15dp"
@@ -268,7 +266,7 @@
                 android:layout_centerHorizontal="true"
                 android:textSize="15dp"
                 android:text="Long tap on Lock icon to unlock"
-                android:textColor="@color/gray500" />
+                android:textColor="?attr/primaryTextColor"/>
         </RelativeLayout>
 
         <!-- N O T I F I C A T I O N -->
@@ -294,5 +292,26 @@
         android:id="@+id/custom_endbutton_sheetview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:id="@+id/record_view_holder"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="#ddffffff"
+        android:layout_height="match_parent">
+        <ImageButton
+            android:id="@+id/record_view_close"
+            android:src="@drawable/ic_close_white_20"
+            android:padding="10dp"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <in.co.dipankar.quickandorid.views.MusicPlayerView
+            android:id="@+id/record_player_view"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+    </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>

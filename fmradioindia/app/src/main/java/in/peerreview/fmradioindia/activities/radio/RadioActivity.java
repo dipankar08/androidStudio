@@ -13,16 +13,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,8 +34,11 @@ import in.co.dipankar.quickandorid.utils.AndroidUtils;
 import in.co.dipankar.quickandorid.utils.AudioRecorderUtil;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
+import in.co.dipankar.quickandorid.views.MusicPlayerView;
 import in.co.dipankar.quickandorid.views.NotificationView;
 import in.co.dipankar.quickandorid.views.QuickListView;
+import in.co.dipankar.quickandorid.views.SegmentedButton;
+import in.co.dipankar.quickandorid.views.SegmentedControl;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.common.CommonIntent;
@@ -50,29 +52,51 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import pl.droidsonroids.gif.GifImageView;
 
 public class RadioActivity extends AppCompatActivity implements IRadioContract.View {
-  private RecyclerView mRecyclerView;
-  private RVAdapter adapter;
-  private ImageView play, next, prev;
+    private ImageView play, next, prev;
   private ImageButton fev, lock, record;
   private ImageView unlock;
   private GifImageView tryplayin;
   private TextView message, isplaying;
   private ViewGroup lock_screen;
+
   private NotificationView mNotificationView;
+
   private QuickListView mQuickListView;
+  private QuickListView mRadioListView;
+
+
+  private View mRecordView;
+  private ImageButton mRecordViewCloseBtn;
+  private MusicPlayerView mMusicPlayerView;
+
   private String mCurSelectId;
-  ImageButton btnNav;
   LinearLayout qab;
 
   private IRadioContract.Presenter mPresenter;
-
-  NavigationView mNavigationView;;
-  private DrawerLayout mDrawerLayout;
-  private FrameLayout mDrawerHolder;
   private AudioRecorderUtil mAudioRecorderUtil;
 
-  @Override
+   private CountDownTimer mRecordTimer =
+            new CountUpTimer( 1000) {
+                @Override
+                public void onTick(String time) {
+                    mNotificationView.updateText("Recording "+time);
+                }
+                @Override
+                public void onFinish(int sec){
+
+                }
+            };
+
+
+    @Override
   protected void onCreate(Bundle savedInstanceState) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.ActivityThemeDark);
+            DLog.e("Now Dark theme");
+        } else {
+            setTheme(R.style.ActivityThemeLight);
+            DLog.e("Now Light theme");
+        }
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_radio);
     mPresenter = new RadioPresenter(this);
@@ -98,9 +122,28 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     initToolBar();
     initNotification();
     initAudioRecoder();
+    intRecordView();
   }
 
-  private void initQuickListView() {
+    private void intRecordView() {
+        mRecordView = findViewById(R.id.record_view_holder);
+        mRecordViewCloseBtn =  (ImageButton) findViewById(R.id.record_view_close);
+        mMusicPlayerView = (MusicPlayerView) findViewById(R.id.record_player_view);
+        mRecordViewCloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideRecordView();
+            }
+        });
+        mRecordView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+    }
+
+    private void initQuickListView() {
     mQuickListView = (QuickListView) findViewById(R.id.quicklistview);
     List<QuickListView.Item> items1 = new ArrayList<>();
     for (Node node : FMRadioIndiaApplication.Get().getNodeManager().getSuggested()) {
@@ -108,7 +151,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     }
     mQuickListView.init(
         items1,
-        R.layout.item,
         new QuickListView.Callback() {
           @Override
           public void onClick(String id) {
@@ -121,7 +163,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             mPresenter.setCurNodeID(id);
             mCustomButtonSheetView.show();
           }
-        });
+        },
+            R.layout.item,
+            QuickListView.Type.HORIZONTAL);
   }
 
   private void initToolBar() {
@@ -273,6 +317,13 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           }
         });
 
+    lock_screen.setOnTouchListener(new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return true;
+        }
+    });
+
     unlock.setOnLongClickListener(
         new View.OnLongClickListener() {
           @Override
@@ -307,35 +358,31 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   }
 
   private void initList() {
-    mRecyclerView = (RecyclerView) findViewById(R.id.rv);
-    mRecyclerView.setHasFixedSize(true);
-    LinearLayoutManager llm = new LinearLayoutManager(this);
-    adapter = new RVAdapter(null, this, mPresenter);
-    mRecyclerView.setLayoutManager(llm);
-    mRecyclerView.setAdapter(adapter);
-    mPresenter.loadData();
-    mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
-    mRecyclerView.addOnItemTouchListener(
-        new RecyclerItemClickListener(
-            this,
-            mRecyclerView,
-            new RecyclerItemClickListener.OnItemClickListener() {
-              @Override
-              public void onItemClick(View view, int position) {
-                mCurSelectId = adapter.getItem(position).getId();
-                mPresenter.playById(mCurSelectId);
-                FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onClick");
-              }
+      mRadioListView = (QuickListView) findViewById(R.id.radiolistview);
+      List<QuickListView.Item> items1 = new ArrayList<>();
+      mRadioListView.init(
+              items1,
+              new QuickListView.Callback() {
+                  @Override
+                  public void onClick(String id) {
+                      mPresenter.playById(id);
+                      FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onClick");
+                  }
+                  @Override
+                  public void onLongClick(String id) {
+                      mCustomButtonSheetView.show();
+                      mCurSelectId = id;
+                      FMRadioIndiaApplication.Get()
+                              .getTelemetry()
+                              .markHit("RadioItemViewHolder_onLongClick");
+                  }
+              },
+              R.layout.item_radio,
+              QuickListView.Type.VERTICAL);
 
-              @Override
-              public void onLongItemClick(View view, int position) {
-                mCustomButtonSheetView.show();
-                mCurSelectId = adapter.getItem(position).getId();
-                FMRadioIndiaApplication.Get()
-                    .getTelemetry()
-                    .markHit("RadioItemViewHolder_onLongClick");
-              }
-            }));
+    mPresenter.loadData();
+    //mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
+
   }
 
   private void initSerachView() {
@@ -372,6 +419,33 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             return false;
           }
         });
+
+      SegmentedControl segmentedControl = (SegmentedControl)findViewById(R.id.qab);
+      segmentedControl.setCallback(new SegmentedControl.Callback() {
+
+          @Override
+          public void onClicked(int id) {
+              switch (id){
+                  case 0:
+                      mPresenter.filterByTag("bengali");
+                      FMRadioIndiaApplication.Get().getTelemetry().markHit("qab_bengali");
+                      break;
+                  case 1:
+                      mPresenter.filterByTag("hindi");
+                      FMRadioIndiaApplication.Get().getTelemetry().markHit("qab_hindi");
+                      break;
+                  case 2:
+                      mPresenter.filterByTag("kolkata");
+                      FMRadioIndiaApplication.Get().getTelemetry().markHit("qab_kolkata");
+                      break;
+                  case 3:
+                      mPresenter.filterByTag("bangladesh");
+                      FMRadioIndiaApplication.Get().getTelemetry().markHit("qab_bangladesh");
+                      break;
+              }
+
+          }
+      });
   }
 
   private CustomButtonSheetView mCustomButtonSheetView;
@@ -463,6 +537,19 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             },
             new CharSequence[] {"5:00 AM", "6:00AM", "7:00 AM", "8 AM", "Cancel"}));
 
+      mSheetItems.add(
+              new SheetItem(
+                      103,
+                      "Change theme",
+                      CustomButtonSheetView.Type.BUTTON,
+                      new CustomButtonSheetView.Callback() {
+                          @Override
+                          public void onClick(int v) {
+                              changeTheme();
+                          }
+                      },
+                      null));
+
     mCustomButtonSheetView.addMenu(mSheetItems);
     mCustomButtonSheetView.hide();
   }
@@ -494,6 +581,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         new AudioRecorderUtil.Callback() {
           @Override
           public void onStart() {
+              setImageSrcWithAnimation(record, R.drawable.ic_record_on);
             mNotificationView.ask(
                 "Recoding started. Please keep quite",
                 new NotificationView.AnswerCallback() {
@@ -509,27 +597,35 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                 },
                 "Cancel",
                 "Stop Record");
+            mRecordTimer.start();
           }
 
           @Override
           public void onError(String error) {
+              setImageSrcWithAnimation(record, R.drawable.ic_record_off);
             mNotificationView.showError(error);
+              mRecordTimer.cancel();
           }
 
           @Override
           public void onStop(String path) {
-            mNotificationView.showError("Recoding Complete");
+              setImageSrcWithAnimation(record, R.drawable.ic_record_off);
+                mNotificationView.showSuccess("Recoding Complete!");
+                showRecordView();
+                mMusicPlayerView.play("0",path,path);
+              mRecordTimer.cancel();
           }
         });
   }
 
-  void refreshList() {
-    adapter.notifyDataSetChanged();
-  }
 
   @Override
   public void updateList(List<Node> nodes) {
-    adapter.update(nodes);
+      List<QuickListView.Item> items1 = new ArrayList<>();
+      for (Node node : nodes) {
+          items1.add((QuickListView.Item) node);
+      }
+    mRadioListView.updateList(items1);
   }
 
   // private UI Methods
@@ -588,12 +684,14 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   }
 
   void ShowQAB() {
+      mQuickListView.setVisibility(View.GONE);
     qab.setVisibility(View.VISIBLE);
     FMRadioIndiaApplication.Get().getTelemetry().markHit("ShowQAB");
   }
 
   void HideQAB() {
     qab.setVisibility(View.GONE);
+      mQuickListView.setVisibility(View.VISIBLE);
     HideKeyboard();
   }
 
@@ -644,40 +742,8 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     }
   }
 
-  void handleFilter(final View v) {
-    switch (v.getId()) {
-      case R.id.qsb_recent:
-        mPresenter.showRecent();
-        break;
-      case R.id.qsb_fev:
-        mPresenter.showFeb();
-        break;
-      case R.id.qsb_hindi:
-        mPresenter.filterByTag("hindi");
-        break;
-      case R.id.qsb_kolkata:
-        mPresenter.filterByTag("kolkata");
-        break;
-      case R.id.qsb_bangaladesh:
-        mPresenter.filterByTag("bangladesh");
-        break;
-      case R.id.qsb_clear:
-        mPresenter.clearFilter();
-        break;
-    }
-    FMRadioIndiaApplication.Get()
-        .getTelemetry()
-        .sendTelemetry(
-            "QSB_handleFilter",
-            new HashMap<String, String>() {
-              {
-                put("msg", "" + v.getId());
-              }
-            });
-  }
 
   private CountDownTimer mAppFinishTimer;
-
   private void handleStop(final int rem) {
     cancelStop();
     mAppFinishTimer =
@@ -772,4 +838,52 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
       btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
     }
   }
+    private abstract class CountUpTimer extends CountDownTimer {
+        private static final long INTERVAL_MS = 1000;
+        private final long duration;
+
+        protected CountUpTimer(long durationMs) {
+            super(durationMs, INTERVAL_MS);
+            this.duration = durationMs;
+        }
+
+        public abstract void onTick(String time);
+        public abstract void onFinish(int sec);
+
+        @Override
+        public void onTick(long msUntilFinished) {
+            int second = (int) ((duration - msUntilFinished) / 1000);
+
+        }
+
+        @Override
+        public void onFinish() {
+           onFinish((int)duration/1000);
+        }
+    }
+
+    private void showRecordView(){
+        mRecordView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideRecordView(){
+        mRecordView.setVisibility(View.GONE);
+    }
+
+    private void changeTheme(){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            DLog.e("Now Dark theme");
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            DLog.e("Now Light theme");
+        }
+        Intent i = new Intent(getApplicationContext(), RadioActivity.class);
+        startActivity(i);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
+    }
+
 }
+
+

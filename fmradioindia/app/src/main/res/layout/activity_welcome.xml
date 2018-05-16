@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/white300"
+    android:background="?attr/primaryBackgroundColor"
     android:layout_height="match_parent">
 
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:text="V1.0"
-        app:customfont="IndieFlower.ttf"
-        android:textColor="@color/gray500"
+        app:customfont="Ubuntu.ttf"
+        android:textColor="?attr/primaryTextColor"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
@@ -29,9 +29,9 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:text="Best FM Radio"
-        app:customfont="IndieFlower.ttf"
+        app:customfont="Ubuntu.ttf"
         android:layout_marginBottom="30dp"
-        android:textColor="@color/gray500"
+        android:textColor="?attr/primaryTextColor"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content" />
 </RelativeLayout>

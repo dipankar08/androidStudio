@@ -6,10 +6,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.fmradioindia.R;
@@ -23,6 +26,13 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeContra
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+      if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+          setTheme(R.style.ActivityThemeDark);
+          DLog.e("Now Dark theme");
+      } else {
+          setTheme(R.style.ActivityThemeLight);
+          DLog.e("Now Light theme");
+      }
     super.onCreate(savedInstanceState);
     presenter = new WelcomePresenter(this);
     setContentView(R.layout.activity_welcome);
