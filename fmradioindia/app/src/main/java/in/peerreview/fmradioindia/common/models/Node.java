@@ -63,17 +63,13 @@ public class Node implements Parcelable, QuickListView.Item {
     return title;
   }
 
-    @Override
-    public String getSubTitle() {
-        String msg =
-                "<span color='black'>"
-                        + getCount()
-                        + "</span> plays  ."
-                        + getRankMessage();
-        return msg;
-    }
+  @Override
+  public String getSubTitle() {
+    String msg = "<span color='black'>" + getCount() + "</span> plays  ." + getRankMessage();
+    return msg;
+  }
 
-    public String getImageUrl() {
+  public String getImageUrl() {
     return image_url;
   }
 

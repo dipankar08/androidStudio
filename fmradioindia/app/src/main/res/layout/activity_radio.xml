@@ -234,6 +234,12 @@
 
         </RelativeLayout> <!-- end of Player View -->
 
+        <!-- N O T I F I C A T I O N -->
+        <in.co.dipankar.quickandorid.views.NotificationView
+            android:id="@+id/noti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <!-- L O C K    S C R E E N -->
         <RelativeLayout
             android:visibility="gone"
@@ -269,12 +275,6 @@
                 android:textColor="?attr/primaryTextColor"/>
         </RelativeLayout>
 
-        <!-- N O T I F I C A T I O N -->
-        <in.co.dipankar.quickandorid.views.NotificationView
-            android:id="@+id/noti"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
     </RelativeLayout>
 
     <!-- OTHER VIEW -->
@@ -292,7 +292,6 @@
         android:id="@+id/custom_endbutton_sheetview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
     <RelativeLayout
         android:id="@+id/record_view_holder"
         android:layout_width="match_parent"
