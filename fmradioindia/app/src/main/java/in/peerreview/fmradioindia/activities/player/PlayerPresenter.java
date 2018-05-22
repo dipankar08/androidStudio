@@ -51,6 +51,15 @@ public class PlayerPresenter implements IPlayerContract.Presenter {
 
               @Override
               public void onMusicInfo(String id, HashMap<String, Object> info) {
+                if (info == null) {
+                  return;
+                }
+                if (info.get("Duration") == null) {
+                  return;
+                }
+                if (info.get("CurrentPosition") == null) {
+                  return;
+                }
                 mView.updateSeekBarInfo(
                     (int) info.get("Duration"), (int) info.get("CurrentPosition"));
               }

@@ -1,11 +1,962 @@
-[90423][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia
-[90423][environment] No .inferconfig file found
-[90423][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
-[90423][environment] INFER_ARGS = 
-[90423][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/libexec/bin/infer^--^./gradlew^build
-[90423][environment] Analyzer: checkers
-[90423][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
-[90423][   progress] Capturing in gradle mode...
-[90423][environment] Infer version v0.13.0
-[90423][environment] Copyright 2009 - present Facebook. All Rights Reserved.
-[90423][environment] 
+[49659][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia
+[49659][environment] No .inferconfig file found
+[49659][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49659][environment] INFER_ARGS = 
+[49659][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/libexec/bin/infer^--^./gradlew^build
+[49659][environment] Analyzer: checkers
+[49659][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49659][   progress] Capturing in gradle mode...
+
+[49793][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia
+[49793][environment] No .inferconfig file found
+[49793][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49793][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d854a0
+[49793][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d854a0'
+[49793][environment]   capture
+[49793][environment]   --continue
+[49793][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d854a0'
+[49793][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/lib/python/inferlib/../../../bin/infer^capture^--continue^--^javac^-source^1.7^-target^1.7^-d^/Users/dip/dipankar/androidStudio/fmradioindia/app/build/intermediates/classes/debug^-encoding^UTF-8^-bootclasspath^/Users/dip/Library/Android/sdk/platforms/android-26/android.jar^-g^-sourcepath^-proc:none^-XDuseUnsharedTable=true^-classpath^/Users/dip/.gradle/caches/transforms-1/files-1.1/android-gif-drawable-1.1.7.aar/131ced1ae7e4aceddbc0b15311f38e2c/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.2/f1bc476cc167b18e66c297df599b2377131a8947/gson-2.6.2.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/glide-4.7.1.aar/58e5e744525113e5ab5e336fe06f9b52/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/floatingsearchview-2.1.1.aar/381b8a93431c0746f8f2393d8a74fc65/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/recyclerview-animators-2.2.7.aar/20f1c5e4c35e8b96da3de98bab1a8c2c/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/paperdb-2.1.aar/004e5a8faa250bdf556de65d1ff8b591/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-ads-10.2.1.aar/8c445b24ca78e4e3a649199172c4a601/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/quick-android-0.44.aar/9e4d2a62a5f2ba4af9696da4ecdcc3a5/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/gifdecoder-4.7.1.aar/c2d2b14ee0043b069aee34f1a02f843a/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/disklrucache/4.7.1/21e6054c134c7f5c435ab7635984f39c5375083e/disklrucache-4.7.1.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/annotations/4.7.1/796c0bf0a61141278c4bc32de2b92e6eb7fa8b1a/annotations-4.7.1.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/design-25.3.0.aar/9115f119e5c6e829752f11d8d9bb46f0/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.3.0.aar/e01b25a857e2b135c5df735c76c55787/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/viewpropertyobjectanimator-1.2.0.aar/6109d1dd6cc548d5070ea359856cb8c5/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-ads-lite-10.2.1.aar/9ba7dd7f69a08e04bf7604b6e2e5b16a/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-clearcut-10.2.1.aar/2a26eb7b0f5ff233480e99b12b704d03/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-base-10.2.1.aar/b4d671e3c7de4c9f8693e406f37180c6/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-gass-10.2.1.aar/f54dfebaf55851204ea9a3e5aa5e8175/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-tasks-10.2.1.aar/b0e867aa9217f8d64fba7016eb319406/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-basement-10.2.1.aar/3f405589bda239b3fd5f309e7ddc8f11/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/transition-25.3.0.aar/a9f1085d589170e0ffc5f0a1835a3661/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-v4-25.3.0.aar/27601d358a90aec6ba1571b76761bdf7/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-fragment-25.3.0.aar/85b016b69ab170b9722a895c98baefb7/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-25.3.0.aar/a5356745addea9ddbada9bcdad31b91b/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/cardview-v7-25.3.0.aar/ef3665434099b437d5c074f4fe87c508/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.3.0.aar/b611cf34999788d4758ce038b79f03cd/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.3.0.aar/88fba4dcd789014aad293c0a3e0023dd/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.3.0.aar/1b924984352348365ad162e32ed02a43/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.3.0.aar/196cdf0342c6e6616fbd8cdee84e5e8c/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.3.0.aar/df0bc16bb2b568ec51329454d00bffe6/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-compat-25.3.0.aar/9a0c77b6288842c3abbd37222440d31c/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/de.javakaffee/kryo-serializers/0.40/562cb61898302da4e8d3fd141c821edb1bc6b36d/kryo-serializers-0.40.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.esotericsoftware/kryo/4.0.0/9f5c64c1315ec79bee0f56bb88e4ae94b65048ce/kryo-4.0.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.3/980992bd422b477b140240304416a755dd56a844/objenesis-2.3.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar:/Users/dip/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.esotericsoftware/reflectasm/1.11.3/8b102eed2f12412b254946811111ea48bc03a266/reflectasm-1.11.3.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.esotericsoftware/minlog/1.3.0/ff07b5f1b01d2f92bb00a337f9a94873712f0827/minlog-1.3.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.4/da08b8cce7bbf903602a25a3a163ae252435795/asm-5.0.4.jar^-s^/Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/apt/debug^@/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_p8beEr.txt
+[49793][environment]   Contents of '/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_p8beEr.txt'
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/buildConfig/debug/in/peerreview/fmradioindia/BuildConfig.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/bumptech/glide/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/bumptech/glide/gifdecoder/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/arlib/floatingsearchview/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/google/android/gms/clearcut/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/google/android/gms/base/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/google/android/gms/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/google/android/gms/gass/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/google/android/gms/tasks/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/google/android/gms/ads/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/google/android/gms/ads/impl/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/com/bartoszlipinski/viewpropertyobjectanimator/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/jp/wasabeef/recyclerview/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/mediacompat/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/graphics/drawable/animated/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/graphics/drawable/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/fragment/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/v4/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/coreui/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/compat/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/v7/cardview/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/v7/recyclerview/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/transition/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/design/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/android/support/coreutils/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/io/paperdb/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/in/co/dipankar/quickandorid/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/in/peerreview/fmradioindia/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/in/peerreview/fmradioindia/Manifest.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/r/debug/pl/droidsonroids/gif/R.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/services/BackgroundMusicPlayService.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/services/CloudMessagingService.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/player/PlayerPresenter.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/player/PlayerActivity.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/player/IPlayerContract.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/FMRadioIndiaApplication.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/welcome/IWelcomeContract.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/welcome/WelcomeActivity.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/welcome/WelcomePresenter.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/radio/IRadioContract.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/radio/RadioActivity.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/radio/RadioPresenter.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/activities/tutorial/TutorialActivity.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/common/Constants.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/common/CommonIntent.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/common/models/NodeManager.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/common/models/Node.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/common/Configuration.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/receivers/AlermReceiver.java
+[49793][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/main/java/in/peerreview/fmradioindia/receivers/NetworkChangeReceiver.java
+[49793][environment]   /Contents of '/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_p8beEr.txt'
+[49793][environment] Analyzer: capture
+[49793][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49793][      debug] Current working directory: '/Users/dip/dipankar/androidStudio/fmradioindia'
+[49793][      debug] Trying to execute: 'javac' '-J-Duser.language=en' '@/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_p8beEr.txt' '@/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7fa837' 2>'/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/javac_b287f4.out'
+[49793][      debug] *** Success. Logs:
+[49793][      debug] Translating 23 source files (204 classes)
+[49793][      debug] done capturing all files
+
+[49800][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia
+[49800][environment] No .inferconfig file found
+[49800][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49800][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_496cf9
+[49800][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_496cf9'
+[49800][environment]   capture
+[49800][environment]   --continue
+[49800][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_496cf9'
+[49800][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/lib/python/inferlib/../../../bin/infer^capture^--continue^--^javac^-source^1.7^-target^1.7^-d^/Users/dip/dipankar/androidStudio/fmradioindia/app/build/intermediates/classes/test/debug^-encoding^UTF-8^-bootclasspath^/Users/dip/Library/Android/sdk/platforms/android-26/android.jar^-g^-sourcepath^-proc:none^-XDuseUnsharedTable=true^-classpath^/Users/dip/.gradle/caches/transforms-1/files-1.1/android-gif-drawable-1.1.7.aar/131ced1ae7e4aceddbc0b15311f38e2c/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.2/f1bc476cc167b18e66c297df599b2377131a8947/gson-2.6.2.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/glide-4.7.1.aar/58e5e744525113e5ab5e336fe06f9b52/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/floatingsearchview-2.1.1.aar/381b8a93431c0746f8f2393d8a74fc65/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/recyclerview-animators-2.2.7.aar/20f1c5e4c35e8b96da3de98bab1a8c2c/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/paperdb-2.1.aar/004e5a8faa250bdf556de65d1ff8b591/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-ads-10.2.1.aar/8c445b24ca78e4e3a649199172c4a601/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/quick-android-0.44.aar/9e4d2a62a5f2ba4af9696da4ecdcc3a5/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/gifdecoder-4.7.1.aar/c2d2b14ee0043b069aee34f1a02f843a/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/disklrucache/4.7.1/21e6054c134c7f5c435ab7635984f39c5375083e/disklrucache-4.7.1.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/annotations/4.7.1/796c0bf0a61141278c4bc32de2b92e6eb7fa8b1a/annotations-4.7.1.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/design-25.3.0.aar/9115f119e5c6e829752f11d8d9bb46f0/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.3.0.aar/e01b25a857e2b135c5df735c76c55787/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/viewpropertyobjectanimator-1.2.0.aar/6109d1dd6cc548d5070ea359856cb8c5/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-ads-lite-10.2.1.aar/9ba7dd7f69a08e04bf7604b6e2e5b16a/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-clearcut-10.2.1.aar/2a26eb7b0f5ff233480e99b12b704d03/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-base-10.2.1.aar/b4d671e3c7de4c9f8693e406f37180c6/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-gass-10.2.1.aar/f54dfebaf55851204ea9a3e5aa5e8175/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-tasks-10.2.1.aar/b0e867aa9217f8d64fba7016eb319406/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/play-services-basement-10.2.1.aar/3f405589bda239b3fd5f309e7ddc8f11/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/transition-25.3.0.aar/a9f1085d589170e0ffc5f0a1835a3661/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-v4-25.3.0.aar/27601d358a90aec6ba1571b76761bdf7/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-fragment-25.3.0.aar/85b016b69ab170b9722a895c98baefb7/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-25.3.0.aar/a5356745addea9ddbada9bcdad31b91b/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/cardview-v7-25.3.0.aar/ef3665434099b437d5c074f4fe87c508/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.3.0.aar/b611cf34999788d4758ce038b79f03cd/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.3.0.aar/88fba4dcd789014aad293c0a3e0023dd/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.3.0.aar/1b924984352348365ad162e32ed02a43/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.3.0.aar/196cdf0342c6e6616fbd8cdee84e5e8c/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.3.0.aar/df0bc16bb2b568ec51329454d00bffe6/jars/classes.jar:/Users/dip/.gradle/caches/transforms-1/files-1.1/support-compat-25.3.0.aar/9a0c77b6288842c3abbd37222440d31c/jars/classes.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/de.javakaffee/kryo-serializers/0.40/562cb61898302da4e8d3fd141c821edb1bc6b36d/kryo-serializers-0.40.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.esotericsoftware/kryo/4.0.0/9f5c64c1315ec79bee0f56bb88e4ae94b65048ce/kryo-4.0.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.3/980992bd422b477b140240304416a755dd56a844/objenesis-2.3.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar:/Users/dip/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.esotericsoftware/reflectasm/1.11.3/8b102eed2f12412b254946811111ea48bc03a266/reflectasm-1.11.3.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/com.esotericsoftware/minlog/1.3.0/ff07b5f1b01d2f92bb00a337f9a94873712f0827/minlog-1.3.0.jar:/Users/dip/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.4/da08b8cce7bbf903602a25a3a163ae252435795/asm-5.0.4.jar:/Users/dip/dipankar/androidStudio/fmradioindia/app/build/intermediates/classes/debug^-s^/Users/dip/dipankar/androidStudio/fmradioindia/app/build/generated/source/apt/test/debug^@/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_RP3nwn.txt
+[49800][environment]   Contents of '/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_RP3nwn.txt'
+[49800][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/app/src/test/java/in/peerreview/fmradioindia/ExampleUnitTest.java
+[49800][environment]   /Contents of '/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_RP3nwn.txt'
+[49800][environment] Analyzer: capture
+[49800][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49800][      debug] Current working directory: '/Users/dip/dipankar/androidStudio/fmradioindia'
+[49800][      debug] Trying to execute: 'javac' '-J-Duser.language=en' '@/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/filelists/gradle_RP3nwn.txt' '@/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_850f4b' 2>'/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/javac_b30df0.out'
+[49800][      debug] *** Success. Logs:
+[49800][      debug] Translating 1 source files (1 classes)
+[49800][      debug] done capturing all files
+[49659][   progress] Found 52 source files to analyze in /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49659][      debug] Dynamic dispatch mode: lazy
+[49659][   progress] Starting analysis...
+[49659][   progress] 
+[49659][   progress] legend:
+[49659][   progress]   "F" analyzing a file
+[49659][   progress]   "." analyzing a procedure
+[49659][   progress] 
+[49659][   progress] 
+
+[49808][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49808][environment] No .inferconfig file found
+[49808][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49808][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_752ecf
+[49808][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_752ecf'
+[49808][environment]   --no-report
+[49808][environment]   --results-dir
+[49808][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49808][environment]   --cluster
+[49808][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl1.cluster
+[49808][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_752ecf'
+[49808][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl1.cluster
+[49808][environment] Analyzer: checkers
+[49808][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49811][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49811][environment] No .inferconfig file found
+[49811][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49811][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4fd713
+[49811][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4fd713'
+[49811][environment]   --no-report
+[49811][environment]   --results-dir
+[49811][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49811][environment]   --cluster
+[49811][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl4.cluster
+[49811][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4fd713'
+[49811][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl4.cluster
+[49811][environment] Analyzer: checkers
+[49811][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49811][   progress] F[49808][   progress] F
+
+[49813][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49813][environment] No .inferconfig file found
+[49813][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49813][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_929078
+[49813][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_929078'
+[49813][environment]   --no-report
+[49813][environment]   --results-dir
+[49813][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49813][environment]   --cluster
+[49813][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl6.cluster
+[49813][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_929078'
+[49813][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl6.cluster
+[49813][environment] Analyzer: checkers
+[49813][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49812][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49812][environment] No .inferconfig file found
+[49812][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49812][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_446edb
+[49812][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_446edb'
+[49812][environment]   --no-report
+[49812][environment]   --results-dir
+[49812][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49812][environment]   --cluster
+[49812][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl5.cluster
+[49812][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_446edb'
+[49812][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl5.cluster
+[49812][environment] Analyzer: checkers
+[49812][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+
+[49813][   progress] F[49812][   progress] F
+[49814][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49814][environment] No .inferconfig file found
+[49814][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49814][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_95f5fc
+[49814][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_95f5fc'
+[49814][environment]   --no-report
+[49814][environment]   --results-dir
+[49814][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49814][environment]   --cluster
+[49814][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl7.cluster
+[49814][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_95f5fc'
+[49814][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl7.cluster
+[49814][environment] Analyzer: checkers
+
+[49814][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49814][   progress] F[49809][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49809][environment] No .inferconfig file found
+[49809][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49809][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_30e2e7
+[49809][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_30e2e7'
+[49809][environment]   --no-report
+[49809][environment]   --results-dir
+[49809][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49809][environment]   --cluster
+[49809][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl2.cluster
+[49809][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_30e2e7'
+[49809][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl2.cluster
+[49809][environment] Analyzer: checkers
+[49809][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49809][   progress] F[49810][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49810][environment] No .inferconfig file found
+[49810][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49810][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ea5bc1
+[49810][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ea5bc1'
+[49810][environment]   --no-report
+[49810][environment]   --results-dir
+[49810][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49810][environment]   --cluster
+[49810][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl3.cluster
+[49810][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ea5bc1'
+[49810][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl3.cluster
+[49810][environment] Analyzer: checkers
+[49810][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49810][   progress] F.
+[49815][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49815][environment] No .inferconfig file found
+[49815][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49815][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6b7413
+[49815][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6b7413'
+[49815][environment]   --no-report
+[49815][environment]   --results-dir
+[49815][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49815][environment]   --cluster
+[49815][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl8.cluster
+[49815][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6b7413'
+[49815][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl8.cluster
+[49815][environment] Analyzer: checkers
+[49815][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49815][   progress] F....
+[49811][environment] Starting analysis of cluster xcl4.cluster..........................
+[49815][environment] Starting analysis of cluster xcl8.cluster....................
+[49814][environment] Starting analysis of cluster xcl7.cluster.....
+[49813][environment] Starting analysis of cluster xcl6.cluster............
+[49810][environment] Starting analysis of cluster xcl3.cluster
+[49836][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49836][environment] No .inferconfig file found
+[49836][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49836][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_74de0b
+[49836][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_74de0b'
+[49836][environment]   --no-report
+[49836][environment]   --results-dir
+[49836][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49836][environment]   --cluster
+[49836][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl9.cluster
+[49836][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_74de0b'
+[49836][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl9.cluster
+[49836][environment] Analyzer: checkers
+[49836][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49836][   progress] F.
+[49809][environment] Starting analysis of cluster xcl2.cluster...
+[49841][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49841][environment] No .inferconfig file found
+[49841][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49841][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_55ccc0
+[49841][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_55ccc0'
+[49841][environment]   --no-report
+[49841][environment]   --results-dir
+[49841][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49841][environment]   --cluster
+[49841][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl10.cluster
+[49841][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_55ccc0'
+[49841][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl10.cluster
+[49841][environment] Analyzer: checkers
+[49841][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49841][   progress] F..
+[49836][environment] Starting analysis of cluster xcl9.cluster
+.[49848][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49848][environment] No .inferconfig file found
+[49848][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49848][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fc38a6
+[49848][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fc38a6'
+[49848][environment]   --no-report
+[49848][environment]   --results-dir
+[49848][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49848][environment]   --cluster
+[49848][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl11.cluster
+[49848][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_fc38a6'
+[49848][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl11.cluster
+[49848][environment] Analyzer: checkers
+[49848][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49848][   progress] F
+
+[49841][environment] Starting analysis of cluster xcl10.cluster[49853][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49853][environment] No .inferconfig file found
+[49853][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49853][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4c0ed2
+[49853][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4c0ed2'
+[49853][environment]   --no-report
+[49853][environment]   --results-dir
+[49853][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49853][environment]   --cluster
+[49853][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl12.cluster
+[49853][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4c0ed2'
+[49853][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl12.cluster
+[49853][environment] Analyzer: checkers
+[49853][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+...[49853][   progress] F...
+[49848][environment] Starting analysis of cluster xcl11.cluster
+
+.[49864][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49864][environment] No .inferconfig file found
+[49864][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49864][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_44dab0
+[49864][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_44dab0'
+[49864][environment]   --no-report
+[49864][environment]   --results-dir
+[49864][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49864][environment]   --cluster
+[49864][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl13.cluster
+[49864][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_44dab0'
+[49864][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl13.cluster
+[49864][environment] Analyzer: checkers
+[49864][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49866][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49866][environment] No .inferconfig file found
+[49866][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49866][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_225de1
+[49866][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_225de1'
+[49866][environment]   --no-report
+[49866][environment]   --results-dir
+[49866][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49866][environment]   --cluster
+[49866][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl14.cluster
+[49866][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_225de1'
+[49866][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl14.cluster
+[49866][environment] Analyzer: checkers
+[49866][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49864][   progress] F[49866][   progress] F.....
+
+[49864][environment] Starting analysis of cluster xcl13.cluster[49874][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49874][environment] No .inferconfig file found
+[49874][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49874][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d5b8aa
+[49874][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d5b8aa'
+[49874][environment]   --no-report
+[49874][environment]   --results-dir
+[49874][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49874][environment]   --cluster
+[49874][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl15.cluster
+[49874][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_d5b8aa'
+[49874][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl15.cluster
+[49874][environment] Analyzer: checkers
+[49874][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49874][   progress] F.
+[49883][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49883][environment] No .inferconfig file found
+[49883][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49883][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_660966
+[49883][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_660966'
+[49883][environment]   --no-report
+[49883][environment]   --results-dir
+[49883][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49883][environment]   --cluster
+[49883][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl16.cluster
+[49883][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_660966'
+[49883][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl16.cluster
+[49883][environment] Analyzer: checkers
+[49883][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49883][   progress] F..........
+..[49888][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49888][environment] No .inferconfig file found
+[49888][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49888][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_da8daa
+[49888][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_da8daa'
+[49888][environment]   --no-report
+[49888][environment]   --results-dir
+[49888][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49888][environment]   --cluster
+[49888][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl17.cluster
+[49888][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_da8daa'
+[49888][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl17.cluster
+[49888][environment] Analyzer: checkers
+[49888][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[49888][   progress] F..
+[49883][environment] Starting analysis of cluster xcl16.cluster................
+.[49899][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49899][environment] No .inferconfig file found
+[49899][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49899][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7cc08a
+[49899][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7cc08a'
+[49899][environment]   --no-report
+[49899][environment]   --results-dir
+[49899][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49899][environment]   --cluster
+[49899][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl18.cluster
+[49899][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_7cc08a'
+[49899][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl18.cluster
+[49899][environment] Analyzer: checkers
+[49899][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+
+[49874][environment] Starting analysis of cluster xcl15.cluster[49899][   progress] F.....
+[49899][environment] Starting analysis of cluster xcl18.cluster..
+[49904][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49904][environment] No .inferconfig file found
+[49904][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49904][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_303732
+[49904][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_303732'
+[49904][environment]   --no-report
+[49904][environment]   --results-dir
+[49904][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49904][environment]   --cluster
+[49904][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl19.cluster
+[49904][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_303732'
+[49904][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl19.cluster
+[49904][environment] Analyzer: checkers
+[49904][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49904][   progress] F.....
+[49912][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49912][environment] No .inferconfig file found
+[49912][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49912][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e1641e
+[49912][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e1641e'
+[49912][environment]   --no-report
+[49912][environment]   --results-dir
+[49912][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49912][environment]   --cluster
+[49912][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl20.cluster
+[49912][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e1641e'
+[49912][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl20.cluster
+[49912][environment] Analyzer: checkers
+[49912][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49912][   progress] F.
+[49918][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49918][environment] No .inferconfig file found
+[49918][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49918][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ae31ac
+[49918][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ae31ac'
+[49918][environment]   --no-report
+[49918][environment]   --results-dir
+[49918][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49918][environment]   --cluster
+[49918][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl21.cluster
+[49918][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ae31ac'
+[49918][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl21.cluster
+[49918][environment] Analyzer: checkers
+[49918][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+.[49918][   progress] F.
+[49918][environment] Starting analysis of cluster xcl21.cluster..........
+[49927][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49927][environment] No .inferconfig file found
+[49927][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49927][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c1fee9
+[49927][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c1fee9'
+[49927][environment]   --no-report
+[49927][environment]   --results-dir
+[49927][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49927][environment]   --cluster
+[49927][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl22.cluster
+[49927][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c1fee9'
+[49927][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl22.cluster
+[49927][environment] Analyzer: checkers
+[49927][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49927][   progress] F.................................
+[49927][environment] Starting analysis of cluster xcl22.cluster....
+[49938][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49938][environment] No .inferconfig file found
+[49938][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49938][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c208f1
+[49938][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c208f1'
+[49938][environment]   --no-report
+[49938][environment]   --results-dir
+[49938][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49938][environment]   --cluster
+[49938][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl23.cluster
+[49938][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c208f1'
+[49938][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl23.cluster
+[49938][environment] Analyzer: checkers
+[49938][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49938][   progress] F....
+[49938][environment] Starting analysis of cluster xcl23.cluster.....
+[49945][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49945][environment] No .inferconfig file found
+[49945][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49945][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_75a95a
+[49945][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_75a95a'
+[49945][environment]   --no-report
+[49945][environment]   --results-dir
+[49945][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49945][environment]   --cluster
+[49945][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl24.cluster
+[49945][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_75a95a'
+[49945][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl24.cluster
+[49945][environment] Analyzer: checkers
+[49945][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49945][   progress] F.........
+[49945][environment] Starting analysis of cluster xcl24.cluster
+[49952][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49952][environment] No .inferconfig file found
+[49952][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49952][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8df653
+[49952][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8df653'
+[49952][environment]   --no-report
+[49952][environment]   --results-dir
+[49952][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49952][environment]   --cluster
+[49952][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl25.cluster
+[49952][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_8df653'
+[49952][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl25.cluster
+[49952][environment] Analyzer: checkers
+[49952][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49952][   progress] F......
+[49952][environment] Starting analysis of cluster xcl25.cluster......
+[49904][environment] Starting analysis of cluster xcl19.cluster
+[49959][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49959][environment] No .inferconfig file found
+[49959][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49959][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c181a2
+[49959][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c181a2'
+[49959][environment]   --no-report
+[49959][environment]   --results-dir
+[49959][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49959][environment]   --cluster
+[49959][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl26.cluster
+[49959][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_c181a2'
+[49959][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl26.cluster
+[49959][environment] Analyzer: checkers
+[49959][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49959][   progress] F..
+[49964][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49964][environment] No .inferconfig file found
+[49964][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49964][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_267740
+[49964][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_267740'
+[49964][environment]   --no-report
+[49964][environment]   --results-dir
+[49964][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49964][environment]   --cluster
+[49964][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl27.cluster
+[49964][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_267740'
+[49964][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl27.cluster
+[49964][environment] Analyzer: checkers
+[49964][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49964][   progress] F.........................................
+[49812][environment] Starting analysis of cluster xcl5.cluster.....
+[49964][environment] Starting analysis of cluster xcl27.cluster.
+.[49975][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49975][environment] No .inferconfig file found
+[49975][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49975][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3af0bf
+[49975][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3af0bf'
+[49975][environment]   --no-report
+[49975][environment]   --results-dir
+[49975][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49975][environment]   --cluster
+[49975][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl28.cluster
+[49975][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3af0bf'
+[49975][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl28.cluster
+[49975][environment] Analyzer: checkers
+[49975][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49975][   progress] F
+[49959][environment] Starting analysis of cluster xcl26.cluster.
+[49975][environment] Starting analysis of cluster xcl28.cluster
+[49980][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49980][environment] No .inferconfig file found
+[49980][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49980][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4d7c2e
+[49980][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4d7c2e'
+[49980][environment]   --no-report
+[49980][environment]   --results-dir
+[49980][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49980][environment]   --cluster
+[49980][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl29.cluster
+[49980][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_4d7c2e'
+[49980][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl29.cluster
+[49980][environment] Analyzer: checkers
+[49980][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49980][   progress] F...
+[49980][environment] Starting analysis of cluster xcl29.cluster
+[49989][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49989][environment] No .inferconfig file found
+[49989][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49989][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_46dd6f
+[49989][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_46dd6f'
+[49989][environment]   --no-report
+[49989][environment]   --results-dir
+[49989][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49989][environment]   --cluster
+[49989][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl30.cluster
+[49989][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_46dd6f'
+[49989][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl30.cluster
+[49989][environment] Analyzer: checkers
+[49989][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49989][   progress] F...
+.[49994][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[49994][environment] No .inferconfig file found
+[49994][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[49994][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e0eb88
+[49994][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e0eb88'
+[49994][environment]   --no-report
+[49994][environment]   --results-dir
+[49994][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[49994][environment]   --cluster
+[49994][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl31.cluster
+[49994][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e0eb88'
+[49994][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl31.cluster
+[49994][environment] Analyzer: checkers
+[49994][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+..[49994][   progress] F..................
+[50001][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50001][environment] No .inferconfig file found
+[50001][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50001][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_86cfb0
+[50001][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_86cfb0'
+[50001][environment]   --no-report
+[50001][environment]   --results-dir
+[50001][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50001][environment]   --cluster
+[50001][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl32.cluster
+[50001][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_86cfb0'
+[50001][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl32.cluster
+[50001][environment] Analyzer: checkers
+[50001][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50001][   progress] F......
+[50001][environment] Starting analysis of cluster xcl32.cluster...
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[50010][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50010][environment] No .inferconfig file found
+[50010][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50010][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_508362
+[50010][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_508362'
+[50010][environment]   --no-report
+[50010][environment]   --results-dir
+[50010][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50010][environment]   --cluster
+[50010][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl33.cluster
+[50010][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_508362'
+[50010][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl33.cluster
+[50010][environment] Analyzer: checkers
+[50010][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[50010][   progress] F[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+.[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+[49853][      debug] 
+[49853][      debug] typ_get_recursive_flds: unexpected sizeof(t=) unknown struct type: class java.io.Closeable
+.
+[50010][environment] Starting analysis of cluster xcl33.cluster......
+[49994][environment] Starting analysis of cluster xcl31.cluster
+[50017][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50017][environment] No .inferconfig file found
+[50017][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50017][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3fd67d
+[50017][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3fd67d'
+[50017][environment]   --no-report
+[50017][environment]   --results-dir
+[50017][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50017][environment]   --cluster
+[50017][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl34.cluster
+[50017][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_3fd67d'
+[50017][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl34.cluster
+[50017][environment] Analyzer: checkers
+[50017][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50017][   progress] F.
+
+[50017][environment] Starting analysis of cluster xcl34.cluster[50022][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50022][environment] No .inferconfig file found
+[50022][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50022][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6d88f7
+[50022][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6d88f7'
+[50022][environment]   --no-report
+[50022][environment]   --results-dir
+[50022][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50022][environment]   --cluster
+[50022][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl35.cluster
+[50022][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6d88f7'
+[50022][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl35.cluster
+[50022][environment] Analyzer: checkers
+[50022][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50022][   progress] F.
+[50022][environment] Starting analysis of cluster xcl35.cluster
+[50031][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50031][environment] No .inferconfig file found
+[50031][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50031][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e3a2c3
+[50031][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e3a2c3'
+[50031][environment]   --no-report
+[50031][environment]   --results-dir
+[50031][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50031][environment]   --cluster
+[50031][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl36.cluster
+[50031][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_e3a2c3'
+[50031][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl36.cluster
+[50031][environment] Analyzer: checkers
+[50031][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50031][   progress] F.[49853][   progress] .
+[50036][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50036][environment] No .inferconfig file found
+[50036][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50036][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6803e2
+[50036][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6803e2'
+[50036][environment]   --no-report
+[50036][environment]   --results-dir
+[50036][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50036][environment]   --cluster
+[50036][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl37.cluster
+[50036][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_6803e2'
+[50036][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl37.cluster
+[50036][environment] Analyzer: checkers
+[50036][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50036][   progress] F......
+[50036][environment] Starting analysis of cluster xcl37.cluster......
+[50045][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50045][environment] No .inferconfig file found
+[50045][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50045][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_77122b
+[50045][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_77122b'
+[50045][environment]   --no-report
+[50045][environment]   --results-dir
+[50045][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50045][environment]   --cluster
+[50045][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl38.cluster
+[50045][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_77122b'
+[50045][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl38.cluster
+[50045][environment] Analyzer: checkers
+[50045][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50045][   progress] F..
+[49888][environment] Starting analysis of cluster xcl17.cluster...........................
+[50052][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50052][environment] No .inferconfig file found
+[50052][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50052][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_738e76
+[50052][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_738e76'
+[50052][environment]   --no-report
+[50052][environment]   --results-dir
+[50052][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50052][environment]   --cluster
+[50052][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl39.cluster
+[50052][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_738e76'
+[50052][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl39.cluster
+[50052][environment] Analyzer: checkers
+[50052][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50052][   progress] F.
+[50052][environment] Starting analysis of cluster xcl39.cluster........
+[49808][environment] Starting analysis of cluster xcl1.cluster.
+[50059][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50059][environment] No .inferconfig file found
+[50059][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50059][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_84caa9
+[50059][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_84caa9'
+[50059][environment]   --no-report
+[50059][environment]   --results-dir
+[50059][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50059][environment]   --cluster
+[50059][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl40.cluster
+[50059][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_84caa9'
+[50059][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl40.cluster
+[50059][environment] Analyzer: checkers
+[50059][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50059][   progress] F.........
+[50059][environment] Starting analysis of cluster xcl40.cluster
+[50066][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50066][environment] No .inferconfig file found
+[50066][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50066][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dabce9
+[50066][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dabce9'
+[50066][environment]   --no-report
+[50066][environment]   --results-dir
+[50066][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50066][environment]   --cluster
+[50066][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl41.cluster
+[50066][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_dabce9'
+[50066][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl41.cluster
+[50066][environment] Analyzer: checkers
+[50066][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50066][   progress] F.
+[49866][environment] Starting analysis of cluster xcl14.cluster......
+[50066][environment] Starting analysis of cluster xcl41.cluster..
+[50073][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50073][environment] No .inferconfig file found
+[50073][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50073][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_251d1e
+[50073][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_251d1e'
+[50073][environment]   --no-report
+[50073][environment]   --results-dir
+[50073][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50073][environment]   --cluster
+[50073][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl42.cluster
+[50073][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_251d1e'
+[50073][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl42.cluster
+[50073][environment] Analyzer: checkers
+[50073][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50073][   progress] F......
+[50078][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50078][environment] No .inferconfig file found
+[50078][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50078][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ff45ab
+[50078][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ff45ab'
+[50078][environment]   --no-report
+[50078][environment]   --results-dir
+[50078][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50078][environment]   --cluster
+[50078][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl43.cluster
+[50078][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_ff45ab'
+[50078][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl43.cluster
+[50078][environment] Analyzer: checkers
+[50078][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50078][   progress] F
+[50084][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50084][environment] No .inferconfig file found
+[50084][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50084][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_27dd63
+[50084][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_27dd63'
+[50084][environment]   --no-report
+[50084][environment]   --results-dir
+[50084][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50084][environment]   --cluster
+[50084][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl44.cluster
+[50084][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_27dd63'
+[50084][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl44.cluster
+[50084][environment] Analyzer: checkers
+[50084][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50084][   progress] F.....
+[49912][environment] Starting analysis of cluster xcl20.cluster.
+[50078][environment] Starting analysis of cluster xcl43.cluster.......
+[50084][environment] Starting analysis of cluster xcl44.cluster
+
+50098][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50098][environment] No .inferconfig file found
+[50098][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50098][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f8edba
+[50098][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f8edba'
+[50098][environment]   --no-report
+[50098][environment]   --results-dir
+[50098][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50098][environment]   --cluster
+[50098][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl45.cluster
+[50098][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_f8edba'
+[50098][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl45.cluster
+[50098][environment] Analyzer: checkers
+[50098][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50098][   progress] F[50099][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50099][environment] No .inferconfig file found
+[50099][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50099][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5a6599
+[50099][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5a6599'
+[50099][environment]   --no-report
+[50099][environment]   --results-dir
+[50099][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50099][environment]   --cluster
+[50099][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl46.cluster
+[50099][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_5a6599'
+[50099][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl46.cluster
+[50099][environment] Analyzer: checkers
+[50099][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50099][   progress] F...
+[50099][environment] Starting analysis of cluster xcl46.cluster
+[50098][environment] Starting analysis of cluster xcl45.cluster
+[50104][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50104][environment] No .inferconfig file found
+[50104][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50104][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9befb7
+[50104][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9befb7'
+[50104][environment]   --no-report
+[50104][environment]   --results-dir
+[50104][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50104][environment]   --cluster
+[50104][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl47.cluster
+[50104][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_9befb7'
+[50104][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl47.cluster
+[50104][environment] Analyzer: checkers
+[50104][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50104][   progress] F.
+[50104][environment] Starting analysis of cluster xcl47.cluster
+
+[50120][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50120][environment] No .inferconfig file found
+[50120][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50120][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0805f6
+[50120][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0805f6'
+[50120][environment]   --no-report
+[50120][environment]   --results-dir
+[50120][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50120][environment]   --cluster
+[50120][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl49.cluster
+[50120][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0805f6'
+[50120][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl49.cluster
+[50120][environment] Analyzer: checkers
+[50119][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50120][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50120][   progress] F[50119][   progress] F...
+
+[50120][environment] Starting analysis of cluster xcl49.cluster[50125][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50125][environment] No .inferconfig file found
+[50125][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50125][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b927f6
+[50125][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b927f6'
+[50125][environment]   --no-report
+[50125][environment]   --results-dir
+[50125][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50125][environment]   --cluster
+[50125][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl50.cluster
+[50125][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_b927f6'
+[50125][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl50.cluster
+[50125][environment] Analyzer: checkers
+[50125][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50125][   progress] F..
+[50119][environment] Starting analysis of cluster xcl48.cluster.........
+[50125][environment] Starting analysis of cluster xcl50.cluster
+[50136][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50136][environment] No .inferconfig file found
+[50136][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50136][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_85fe4e
+[50136][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_85fe4e'
+[50136][environment]   --no-report
+[50136][environment]   --results-dir
+[50136][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50136][environment]   --cluster
+[50136][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl51.cluster
+[50136][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_85fe4e'
+[50136][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl51.cluster
+[50136][environment] Analyzer: checkers
+[50136][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50136][   progress] F.
+[50141][environment] CWD = /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore
+[50141][environment] No .inferconfig file found
+[50141][environment] Project root = /Users/dip/dipankar/androidStudio/fmradioindia
+[50141][environment] INFER_ARGS = @/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0264d2
+[50141][environment]   Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0264d2'
+[50141][environment]   --no-report
+[50141][environment]   --results-dir
+[50141][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out
+[50141][environment]   --cluster
+[50141][environment]   /Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl52.cluster
+[50141][environment]   /Contents of '/var/folders/dv/jqkncf0j1mq1l7w1y8z9hq3jqf6y_n/T/args_0264d2'
+[50141][environment] command line arguments: /usr/local/Cellar/infer/0.13.0/lib/infer/infer/bin/infer-analyze^--no-report^--results-dir^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out^--cluster^/Users/dip/dipankar/androidStudio/fmradioindia/infer-out/multicore/xcl52.cluster
+[50141][environment] Analyzer: checkers
+[50141][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), quandary (C/C++/ObjC, Java), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC)
+[50141][   progress] F...
+[50141][environment] Starting analysis of cluster xcl52.cluster
+[50136][environment] Starting analysis of cluster xcl51.cluster...
+[49989][environment] Starting analysis of cluster xcl30.cluster.......................................
+[50045][environment] Starting analysis of cluster xcl38.cluster................
+[50073][environment] Starting analysis of cluster xcl42.cluster................................................................
+[49853][environment] Starting analysis of cluster xcl12.cluster.............
+[50031][environment] Starting analysis of cluster xcl36.cluster
+[49659][environment] Infer version v0.13.0
+[49659][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[49659][environment] 

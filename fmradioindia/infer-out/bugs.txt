@@ -1,0 +1,13 @@
+Found 1 issue
+
+app/src/main/java/in/peerreview/fmradioindia/activities/player/PlayerPresenter.java:64: error: NULL_DEREFERENCE
+  object returned by `info.get("Duration")` could be null and is dereferenced at line 64.
+  62.                     }
+  63.                         mView.updateSeekBarInfo(
+  64. >                               (int) info.get("Duration"), (int) info.get("CurrentPosition"));
+  65.                 }
+  66.   
+
+Summary of the reports
+
+  NULL_DEREFERENCE: 1

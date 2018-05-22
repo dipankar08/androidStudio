@@ -441,6 +441,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("qab_bangladesh");
                 break;
             }
+            HideKeyboard();
           }
         });
   }

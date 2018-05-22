@@ -35,8 +35,10 @@ public class NodeManager {
   }
 
   public NodeManager(Context context) {
-    nodeList = new ArrayList<>();
-    mCallbackList = new ArrayList<>();
+    nodeList = new ArrayList<Node>();
+    feblist = new LinkedList<Node>();
+    rectlist = new LinkedList<Node>();
+    mCallbackList = new ArrayList<Callback>();
     Paper.init(context);
   }
 

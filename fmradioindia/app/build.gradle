@@ -6,8 +6,8 @@ android {
         applicationId "in.peerreview.fmradioindia"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 16
-        versionName "4.1"
+        versionCode 18
+        versionName "4.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

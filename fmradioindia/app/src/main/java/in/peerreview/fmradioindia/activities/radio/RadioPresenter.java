@@ -15,9 +15,9 @@ import java.util.List;
 public class RadioPresenter implements IRadioContract.Presenter {
 
   static final String TAG = "RadioPresenter";
-  private IRadioContract.View mView;
-  private static List<Node> mAllNodes;
-  private static List<Node> mNodes;
+  private IRadioContract.View mView = null;
+  private static List<Node> mAllNodes = null;
+  private static List<Node> mNodes = null;
   private int mCurNodeIdx = 0;
   private String mCurNodeID = null; /* This is the curent node that is playing */
 
@@ -140,9 +140,10 @@ public class RadioPresenter implements IRadioContract.Presenter {
         break;
       }
     }
-
-    mCurNodeID = FMRadioIndiaApplication.Get().getNodeManager().getNodeById(id).getId();
-    play();
+    if (FMRadioIndiaApplication.Get().getNodeManager().getNodeById(id) != null) {
+      mCurNodeID = FMRadioIndiaApplication.Get().getNodeManager().getNodeById(id).getId();
+      play();
+    }
   }
 
   @Override
@@ -173,6 +174,9 @@ public class RadioPresenter implements IRadioContract.Presenter {
     mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == 0) ? mNodes.size() - 1 : mCurNodeIdx - 1;
+        if(mNodes == null || mCurNodeIdx >= mNodes.size() || mCurNodeIdx < 0 ){
+            return;
+        }
     } while (!mNodes.get(mCurNodeIdx).isSongType());
     play();
   }
@@ -182,6 +186,9 @@ public class RadioPresenter implements IRadioContract.Presenter {
     mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == mNodes.size() - 1) ? 0 : mCurNodeIdx + 1;
+      if(mNodes == null || mCurNodeIdx >= mNodes.size()|| mCurNodeIdx < 0){
+          return;
+      }
     } while (!mNodes.get(mCurNodeIdx).isSongType());
     play();
   }
