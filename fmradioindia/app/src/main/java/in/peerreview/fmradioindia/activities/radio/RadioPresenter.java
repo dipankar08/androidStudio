@@ -1,8 +1,11 @@
 package in.peerreview.fmradioindia.activities.radio;
 
+import android.support.annotation.Nullable;
+
 import static in.peerreview.fmradioindia.common.Configuration.RANK_DOWN_URL;
 import static in.peerreview.fmradioindia.common.Configuration.RANK_UP_URL;
 
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.Player;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
@@ -15,9 +18,9 @@ import java.util.List;
 public class RadioPresenter implements IRadioContract.Presenter {
 
   static final String TAG = "RadioPresenter";
-  private IRadioContract.View mView = null;
+  private IRadioContract.View mView;
   private static List<Node> mAllNodes = null;
-  private static List<Node> mNodes = null;
+  @Nullable  private static List<Node> mNodes = null;
   private int mCurNodeIdx = 0;
   private String mCurNodeID = null; /* This is the curent node that is playing */
 
@@ -34,15 +37,21 @@ public class RadioPresenter implements IRadioContract.Presenter {
               @Override
               public void onTryPlaying(String id, String msg) {
                 mView.renderTryPlayUI("Try playing " + msg);
+                FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_try_playing");
               }
 
               @Override
               public void onSuccess(String id, String msg) {
                 mView.renderPlayUI("Now Playing " + msg);
-                FMRadioIndiaApplication.Get().getNodeManager().addToRecent(mNodes.get(mCurNodeIdx));
+                if(mNodes != null && mCurNodeIdx< mNodes.size()) {
+                  FMRadioIndiaApplication.Get().getNodeManager().addToRecent(mNodes.get(mCurNodeIdx));
+                }
                 FMRadioIndiaApplication.Get()
-                    .getNetwork()
-                    .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
+                        .getNetwork()
+                        .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
+
+                FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_success");
+
               }
 
               @Override
@@ -63,14 +72,13 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
               @Override
               public void onError(String id, String msg) {
-                mView.renderPauseUI("Error occured while playing: " + msg);
+                mView.renderPauseUI(msg);
+                mView.notifyError("Looks like this FM is not working anymore :(");
                 FMRadioIndiaApplication.Get()
                     .getNetwork()
                     .retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
 
-                FMRadioIndiaApplication.Get()
-                    .getTelemetry()
-                    .markHit("RadioPresenter_player_onError");
+                FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_error");
               }
 
               @Override
@@ -130,7 +138,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
   @Override
   public void playById(String id) {
-    if (id == null) {
+    if (id == null || mNodes == null) {
       return;
     }
     boolean ffound = false;
@@ -171,6 +179,10 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
   @Override
   public void playPrevious() {
+    if(mNodes == null || mNodes.size() < 2){
+      mView.notifyError("Re-Search and tab on the channel");
+      return;
+    }
     mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == 0) ? mNodes.size() - 1 : mCurNodeIdx - 1;
@@ -178,11 +190,17 @@ public class RadioPresenter implements IRadioContract.Presenter {
             return;
         }
     } while (!mNodes.get(mCurNodeIdx).isSongType());
+    DLog.d("playPrevious called : Index:"+mCurNodeIdx);
     play();
   }
 
   @Override
   public void playNext() {
+    if(mNodes == null || mNodes.size() < 2){
+      mView.notifyError("Re-Search and tab on the channel");
+      return;
+    }
+
     mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == mNodes.size() - 1) ? 0 : mCurNodeIdx + 1;
@@ -190,6 +208,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
           return;
       }
     } while (!mNodes.get(mCurNodeIdx).isSongType());
+    DLog.d("PlayNext called : Index:"+mCurNodeIdx);
     play();
   }
 
@@ -197,6 +216,8 @@ public class RadioPresenter implements IRadioContract.Presenter {
     Node temp = getCurrentNode();
     if (temp != null) {
       mPlayer.play(temp.getId(), temp.getTitle(), temp.getMedia_url());
+    } else{
+      mView.notifyError("Re-Search and tab on the channel");
     }
   }
 

@@ -6,8 +6,8 @@ android {
         applicationId "in.peerreview.fmradioindia"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 18
-        versionName "4.2"
+        versionCode 19
+        versionName "4.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -49,8 +49,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
     testImplementation 'junit:junit:4.12'
-    implementation 'com.github.dipankar08:quick-android:0.44'
-    implementation 'com.squareup.okhttp:okhttp:2.5.0'
+    implementation 'com.github.dipankar08:quick-android:0.47'
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
 }
 
 configurations.all {

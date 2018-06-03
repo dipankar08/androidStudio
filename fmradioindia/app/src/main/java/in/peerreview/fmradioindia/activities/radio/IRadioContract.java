@@ -6,6 +6,8 @@ import java.util.List;
 public interface IRadioContract {
 
   public interface View {
+    void notifyInfo(String s);
+
     void updateList(List<Node> mNodes);
 
     void renderTryPlayUI(String msg);
@@ -19,6 +21,8 @@ public interface IRadioContract {
     void updateQuickList(List<Node> mNodes);
 
     void onUpdateFevButtonState(boolean isFev);
+
+    void notifyError(String s);
   }
 
   public interface Presenter {
