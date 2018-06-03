@@ -2,6 +2,8 @@ package in.peerreview.fmradioindia.activities.radio;
 
 import android.support.annotation.Nullable;
 
+import org.json.JSONObject;
+
 import static in.peerreview.fmradioindia.common.Configuration.RANK_DOWN_URL;
 import static in.peerreview.fmradioindia.common.Configuration.RANK_UP_URL;
 
@@ -9,6 +11,7 @@ import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.Player;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
+import in.peerreview.fmradioindia.common.Configuration;
 import in.peerreview.fmradioindia.common.models.Node;
 import in.peerreview.fmradioindia.common.models.NodeManager;
 import java.util.ArrayList;
@@ -35,9 +38,10 @@ public class RadioPresenter implements IRadioContract.Presenter {
         new Player(
             new Player.IPlayerCallback() {
               @Override
-              public void onTryPlaying(String id, String msg) {
+              public void onTryPlaying(final String id, String msg) {
                 mView.renderTryPlayUI("Try playing " + msg);
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_try_playing");
+                updateStatOnDBNodes(id,"count_click");
               }
 
               @Override
@@ -49,9 +53,9 @@ public class RadioPresenter implements IRadioContract.Presenter {
                 FMRadioIndiaApplication.Get()
                         .getNetwork()
                         .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
+                updateStatOnDBNodes(id,"count_success");
 
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_success");
-
               }
 
               @Override
@@ -78,6 +82,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
                     .getNetwork()
                     .retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
 
+                updateStatOnDBNodes(id,"count_error");
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_error");
               }
 
@@ -283,5 +288,23 @@ public class RadioPresenter implements IRadioContract.Presenter {
   @Override
   public Node getItembyID(String channel_id) {
     return FMRadioIndiaApplication.Get().getNodeManager().getNodeById(channel_id);
+  }
+
+  private void updateStatOnDBNodes(final String id, final String type){
+    FMRadioIndiaApplication.Get().getNetwork().send(
+        Configuration.DB_ENDPOINT,
+        new HashMap<String, String>() {{
+          put("_cmd", "increment");
+          put("id", id);
+          put("_payload", type);
+        }},
+        new Network.Callback() {
+          @Override
+          public void onSuccess(JSONObject jsonObject) {}
+
+          @Override
+          public void onError(String msg) {}
+            }
+    );
   }
 }

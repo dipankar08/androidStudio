@@ -36,3 +36,5 @@
 -dontwarn okio.Okio
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 -dontwarn okio.DeflaterSink
+-dontwarn javax.annotation.**
+-dontwarn okhttp3.internal.platform.*
