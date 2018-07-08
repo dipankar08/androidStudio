@@ -355,36 +355,37 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     }
   }
 
-    @Override
-    public void notifyError(String s) {
-        notifyErrorInternal(s);
-    }
+  @Override
+  public void notifyError(String s) {
+    notifyErrorInternal(s);
+  }
 
-    private void notifyErrorInternal(final String s) {
-      runOnUiThread(new Runnable() {
+  private void notifyErrorInternal(final String s) {
+    runOnUiThread(
+        new Runnable() {
           @Override
           public void run() {
-              mNotificationView.showError(s);
+            mNotificationView.showError(s);
           }
-      });
-    }
-
-
-    @Override
-    public void notifyInfo(String s) {
-        notifyErrorInternal(s);
-    }
-
-    private void notifyInfoInternal(final String s) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mNotificationView.showInfo(s);
-            }
         });
-    }
+  }
 
-    private void initList() {
+  @Override
+  public void notifyInfo(String s) {
+    notifyErrorInternal(s);
+  }
+
+  private void notifyInfoInternal(final String s) {
+    runOnUiThread(
+        new Runnable() {
+          @Override
+          public void run() {
+            mNotificationView.showInfo(s);
+          }
+        });
+  }
+
+  private void initList() {
     mRadioListView = (QuickListView) findViewById(R.id.radiolistview);
     List<QuickListView.Item> items1 = new ArrayList<>();
     mRadioListView.init(

@@ -1,12 +1,9 @@
 package in.peerreview.fmradioindia.activities.radio;
 
-import android.support.annotation.Nullable;
-
-import org.json.JSONObject;
-
 import static in.peerreview.fmradioindia.common.Configuration.RANK_DOWN_URL;
 import static in.peerreview.fmradioindia.common.Configuration.RANK_UP_URL;
 
+import android.support.annotation.Nullable;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.Player;
@@ -17,13 +14,14 @@ import in.peerreview.fmradioindia.common.models.NodeManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.json.JSONObject;
 
 public class RadioPresenter implements IRadioContract.Presenter {
 
   static final String TAG = "RadioPresenter";
   private IRadioContract.View mView;
   private static List<Node> mAllNodes = null;
-  @Nullable  private static List<Node> mNodes = null;
+  @Nullable private static List<Node> mNodes = null;
   private int mCurNodeIdx = 0;
   private String mCurNodeID = null; /* This is the curent node that is playing */
 
@@ -41,19 +39,21 @@ public class RadioPresenter implements IRadioContract.Presenter {
               public void onTryPlaying(final String id, String msg) {
                 mView.renderTryPlayUI("Try playing " + msg);
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_try_playing");
-                updateStatOnDBNodes(id,"count_click");
+                updateStatOnDBNodes(id, "count_click");
               }
 
               @Override
               public void onSuccess(String id, String msg) {
                 mView.renderPlayUI("Now Playing " + msg);
-                if(mNodes != null && mCurNodeIdx< mNodes.size()) {
-                  FMRadioIndiaApplication.Get().getNodeManager().addToRecent(mNodes.get(mCurNodeIdx));
+                if (mNodes != null && mCurNodeIdx < mNodes.size()) {
+                  FMRadioIndiaApplication.Get()
+                      .getNodeManager()
+                      .addToRecent(mNodes.get(mCurNodeIdx));
                 }
                 FMRadioIndiaApplication.Get()
-                        .getNetwork()
-                        .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
-                updateStatOnDBNodes(id,"count_success");
+                    .getNetwork()
+                    .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
+                updateStatOnDBNodes(id, "count_success");
 
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_success");
               }
@@ -82,7 +82,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
                     .getNetwork()
                     .retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
 
-                updateStatOnDBNodes(id,"count_error");
+                updateStatOnDBNodes(id, "count_error");
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_error");
               }
 
@@ -184,24 +184,24 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
   @Override
   public void playPrevious() {
-    if(mNodes == null || mNodes.size() < 2){
+    if (mNodes == null || mNodes.size() < 2) {
       mView.notifyError("Re-Search and tab on the channel");
       return;
     }
     mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == 0) ? mNodes.size() - 1 : mCurNodeIdx - 1;
-        if(mNodes == null || mCurNodeIdx >= mNodes.size() || mCurNodeIdx < 0 ){
-            return;
-        }
+      if (mNodes == null || mCurNodeIdx >= mNodes.size() || mCurNodeIdx < 0) {
+        return;
+      }
     } while (!mNodes.get(mCurNodeIdx).isSongType());
-    DLog.d("playPrevious called : Index:"+mCurNodeIdx);
+    DLog.d("playPrevious called : Index:" + mCurNodeIdx);
     play();
   }
 
   @Override
   public void playNext() {
-    if(mNodes == null || mNodes.size() < 2){
+    if (mNodes == null || mNodes.size() < 2) {
       mView.notifyError("Re-Search and tab on the channel");
       return;
     }
@@ -209,11 +209,11 @@ public class RadioPresenter implements IRadioContract.Presenter {
     mCurNodeID = null;
     do {
       mCurNodeIdx = (mCurNodeIdx == mNodes.size() - 1) ? 0 : mCurNodeIdx + 1;
-      if(mNodes == null || mCurNodeIdx >= mNodes.size()|| mCurNodeIdx < 0){
-          return;
+      if (mNodes == null || mCurNodeIdx >= mNodes.size() || mCurNodeIdx < 0) {
+        return;
       }
     } while (!mNodes.get(mCurNodeIdx).isSongType());
-    DLog.d("PlayNext called : Index:"+mCurNodeIdx);
+    DLog.d("PlayNext called : Index:" + mCurNodeIdx);
     play();
   }
 
@@ -221,7 +221,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
     Node temp = getCurrentNode();
     if (temp != null) {
       mPlayer.play(temp.getId(), temp.getTitle(), temp.getMedia_url());
-    } else{
+    } else {
       mView.notifyError("Re-Search and tab on the channel");
     }
   }
@@ -290,21 +290,24 @@ public class RadioPresenter implements IRadioContract.Presenter {
     return FMRadioIndiaApplication.Get().getNodeManager().getNodeById(channel_id);
   }
 
-  private void updateStatOnDBNodes(final String id, final String type){
-    FMRadioIndiaApplication.Get().getNetwork().send(
-        Configuration.DB_ENDPOINT,
-        new HashMap<String, String>() {{
-          put("_cmd", "increment");
-          put("id", id);
-          put("_payload", type);
-        }},
-        new Network.Callback() {
-          @Override
-          public void onSuccess(JSONObject jsonObject) {}
+  private void updateStatOnDBNodes(final String id, final String type) {
+    FMRadioIndiaApplication.Get()
+        .getNetwork()
+        .send(
+            Configuration.DB_ENDPOINT,
+            new HashMap<String, String>() {
+              {
+                put("_cmd", "increment");
+                put("id", id);
+                put("_payload", type);
+              }
+            },
+            new Network.Callback() {
+              @Override
+              public void onSuccess(JSONObject jsonObject) {}
 
-          @Override
-          public void onError(String msg) {}
-            }
-    );
+              @Override
+              public void onError(String msg) {}
+            });
   }
 }
