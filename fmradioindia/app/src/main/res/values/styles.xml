@@ -50,16 +50,6 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
 
         <item name="android:colorBackground">@color/primaryBackgroundColorLight</item>
-    <!--
-
-        <item name="android:actionMenuTextColor">@color/primaryBackgroundColorLight</item>
-
-        <item name="android:colorPrimary">@color/primaryBackgroundColorLight</item>
-        <item name="android:colorAccent">#FF4081</item>
-        -->
-
-
-
 
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>

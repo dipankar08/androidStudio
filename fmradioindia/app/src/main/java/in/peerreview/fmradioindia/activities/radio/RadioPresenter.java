@@ -24,6 +24,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
   @Nullable private static List<Node> mNodes = null;
   private int mCurNodeIdx = 0;
   private String mCurNodeID = null; /* This is the curent node that is playing */
+    private String mCurPlayingID = null;
 
   private Player mPlayer;
 
@@ -44,6 +45,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
               @Override
               public void onSuccess(String id, String msg) {
+                  mCurPlayingID = id;
                 mView.renderPlayUI("Now Playing " + msg);
                 if (mNodes != null && mCurNodeIdx < mNodes.size()) {
                   FMRadioIndiaApplication.Get()
@@ -56,16 +58,19 @@ public class RadioPresenter implements IRadioContract.Presenter {
                 updateStatOnDBNodes(id, "count_success");
 
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_success");
+
               }
 
               @Override
               public void onResume(String id, String msg) {
                 mView.renderPlayUI("Resume playing: " + msg);
+                  mCurPlayingID = id;
               }
 
               @Override
               public void onPause(String id, String msg) {
                 mView.renderPauseUI("Stop Playing: " + msg);
+                  mCurPlayingID = null;
               }
 
               @Override
@@ -84,10 +89,12 @@ public class RadioPresenter implements IRadioContract.Presenter {
 
                 updateStatOnDBNodes(id, "count_error");
                 FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_error");
+                  mCurPlayingID = null;
               }
 
               @Override
               public void onComplete(String id, String msg) {
+                  mCurPlayingID = null;
                 mView.renderPlayUI(msg);
               }
             });
@@ -290,7 +297,12 @@ public class RadioPresenter implements IRadioContract.Presenter {
     return FMRadioIndiaApplication.Get().getNodeManager().getNodeById(channel_id);
   }
 
-  private void updateStatOnDBNodes(final String id, final String type) {
+    @Override
+    public void stopPlay() {
+        mPlayer.stop();
+    }
+
+    private void updateStatOnDBNodes(final String id, final String type) {
     FMRadioIndiaApplication.Get()
         .getNetwork()
         .send(
@@ -310,4 +322,16 @@ public class RadioPresenter implements IRadioContract.Presenter {
               public void onError(String msg) {}
             });
   }
+
+  public String getCurrentPlayingID(){
+     return mCurPlayingID;
+  }
+
+    @Override
+    public boolean isPlaying() {
+      if(mPlayer == null){
+          return false;
+      }
+      return mPlayer.isPlaying();
+    }
 }

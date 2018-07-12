@@ -1,10 +1,12 @@
 package in.peerreview.fmradioindia.activities;
 
+import static in.peerreview.fmradioindia.common.Configuration.GATEKEEP_ENDPOINT;
 import static in.peerreview.fmradioindia.common.Configuration.TELEMETRY_ENDPOINT;
 
 import android.app.Application;
 import android.content.res.Configuration;
 import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.GateKeeperUtils;
 import in.co.dipankar.quickandorid.utils.INetwork;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
@@ -17,7 +19,7 @@ public class FMRadioIndiaApplication extends Application {
   private static FMRadioIndiaApplication mApplication;
   private NodeManager mNodeManager;
   private TelemetryUtils mTelemetryUtils;
-
+  private GateKeeperUtils mGateKeeperUtils;
   @Override
   public void onCreate() {
     super.onCreate();
@@ -45,7 +47,15 @@ public class FMRadioIndiaApplication extends Application {
     return mNodeManager;
   }
 
-  public TelemetryUtils getTelemetry() {
+    public GateKeeperUtils getGateKeeperUtils() {
+        if (mGateKeeperUtils == null) {
+            mGateKeeperUtils = new GateKeeperUtils(getApplicationContext(),GATEKEEP_ENDPOINT);
+        }
+        return mGateKeeperUtils;
+    }
+
+
+    public TelemetryUtils getTelemetry() {
     if (mTelemetryUtils == null) {
       mTelemetryUtils =
           new TelemetryUtils(

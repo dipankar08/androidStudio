@@ -3,6 +3,7 @@ package in.peerreview.fmradioindia.activities.welcome;
 import android.Manifest;
 import android.content.Context;
 import in.co.dipankar.quickandorid.utils.DLog;
+import in.co.dipankar.quickandorid.utils.GateKeeperUtils;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
@@ -47,6 +48,18 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
                 mView.exit();
               }
             });
+
+      FMRadioIndiaApplication.Get().getGateKeeperUtils().init(new GateKeeperUtils.Callback() {
+          @Override
+          public void onSuccess() {
+              DLog.d("GK updated");
+          }
+
+          @Override
+          public void onError() {
+              DLog.d("GK not updated");
+          }
+      });
   }
 
   private void loadDataInternal() {

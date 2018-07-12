@@ -21,7 +21,8 @@
             android:name=".activities.tutorial.TutorialActivity"
             android:label="@string/app_name">
         </activity>
-        <activity android:name=".activities.radio.RadioActivity"/>
+        <activity android:name=".activities.radio.RadioActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"/>
 
         <receiver android:name=".receivers.NetworkChangeReceiver">
             <intent-filter>

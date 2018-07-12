@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -56,21 +57,19 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
   private GifImageView tryplayin;
   private TextView message, isplaying;
   private ViewGroup lock_screen;
-
   private NotificationView mNotificationView;
-
   private QuickListView mQuickListView;
   private QuickListView mRadioListView;
-
   private View mRecordView;
   private ImageButton mRecordViewCloseBtn;
   private MusicPlayerView mMusicPlayerView;
-
   private String mCurSelectId;
+  private String mCurPlayingId;
   LinearLayout qab;
-
   private IRadioContract.Presenter mPresenter;
   private AudioRecorderUtil mAudioRecorderUtil;
+  private CustomButtonSheetView mCustomButtonSheetView;
+  private RadioHelper mRadioHelper;
 
   private CountDownTimer mRecordTimer =
       new CountUpTimer(1000) {
@@ -78,7 +77,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         public void onTick(String time) {
           mNotificationView.updateText("Recording " + time);
         }
-
         @Override
         public void onFinish(int sec) {}
       };
@@ -95,8 +93,8 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_radio);
     mPresenter = new RadioPresenter(this);
+    mRadioHelper = new RadioHelper(this);
     initViews();
-    // initNavigation();
     processIntent();
   }
 
@@ -149,20 +147,25 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     mQuickListView.init(
         items1,
         new QuickListView.Callback() {
-          @Override
-          public void onClick(String id) {
-            mPresenter.setCurNodeID(id);
-            mPresenter.playById(id);
-          }
+            @Override
+            public void onClick(QuickListView.Item id) {
+                mPresenter.setCurNodeID(id.getId());
+                mPresenter.playById(id.getId());
+                FMRadioIndiaApplication.Get().getTelemetry().markHit("quick_list_onclick");
+            }
 
-          @Override
-          public void onLongClick(String id) {
-            mPresenter.setCurNodeID(id);
-            mCustomButtonSheetView.show();
-          }
+            @Override
+            public void onLongClick(QuickListView.Item id) {
+                mPresenter.setCurNodeID(id.getId());
+                mCustomButtonSheetView.show();
+                FMRadioIndiaApplication.Get().getTelemetry().markHit("quick_list_onlongclick");
+            }
         },
         R.layout.item,
         QuickListView.Type.HORIZONTAL);
+    if (!mRadioHelper.isQuickListEnabled()) {
+      mQuickListView.setVisibility(View.GONE);
+    }
   }
 
   private void initToolBar() {
@@ -258,7 +261,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     tryplayin = (GifImageView) findViewById(R.id.tryplaying);
     isplaying = (TextView) findViewById(R.id.isplaying);
     qab = (LinearLayout) findViewById(R.id.qab);
-
     play = (ImageView) findViewById(R.id.play);
     prev = (ImageView) findViewById(R.id.prev);
     next = (ImageView) findViewById(R.id.next);
@@ -391,25 +393,23 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     mRadioListView.init(
         items1,
         new QuickListView.Callback() {
-          @Override
-          public void onClick(String id) {
-            mPresenter.playById(id);
-            FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onClick");
-          }
+            @Override
+            public void onClick(QuickListView.Item id) {
+                mPresenter.playById(id.getId());
+                FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onClick");
+            }
 
-          @Override
-          public void onLongClick(String id) {
-            mCustomButtonSheetView.show();
-            mCurSelectId = id;
-            FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onLongClick");
-          }
+            @Override
+            public void onLongClick(QuickListView.Item id) {
+                mCustomButtonSheetView.show();
+                mCurSelectId = id.getId();
+                FMRadioIndiaApplication.Get().getTelemetry().markHit("RadioItemViewHolder_onLongClick");
+            }
         },
         R.layout.item_radio,
         QuickListView.Type.VERTICAL);
 
     mPresenter.loadData();
-    // mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
-
   }
 
   private void initSerachView() {
@@ -475,8 +475,6 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           }
         });
   }
-
-  private CustomButtonSheetView mCustomButtonSheetView;
 
   private void InitCustomButtonSheetView() {
     mCustomButtonSheetView = (CustomButtonSheetView) findViewById(R.id.custom_endbutton_sheetview);
@@ -699,6 +697,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                 put("msg", msg);
               }
             });
+    mRadioHelper.incrementPlayCount();
   }
 
   @Override
@@ -769,7 +768,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     }
   }
 
-  private CountDownTimer mAppFinishTimer;
+
+
+    private CountDownTimer mAppFinishTimer;
 
   private void handleStop(final int rem) {
     cancelStop();
@@ -911,4 +912,36 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     finish();
   }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.stopPlay();
+        super.onDestroy();
+        DLog.e("onDestroy Called");
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+            DLog.d("On Config Change : LANDSCAPE");
+        }else{
+            DLog.d("On Config Change: PORTRAIT");
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("saved_id", mPresenter.getCurrentPlayingID());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String prevPlaying = savedInstanceState.getString("saved_id");
+        if (prevPlaying != null && ! mPresenter.isPlaying()) {
+            mPresenter.playById(prevPlaying);
+        }
+    }
 }
