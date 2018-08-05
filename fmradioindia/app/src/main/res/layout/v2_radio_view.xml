@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/menu"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:background="@null"
+                android:src="@drawable/ic_radio_black"
+                android:scaleType="fitCenter"
+                android:padding="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:id="@+id/title"
+                android:text="Radio"
+                android:paddingTop="16dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="28dp"
+                android:textColor="#000000"
+                app:customfont="Roboto-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/search"
+            android:background="@drawable/backgroud_rounded_corner_solid"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/menu"
+            android:layout_width="match_parent"
+            android:textColor="#666666"
+            android:textAllCaps="false"
+            android:text="Tap to search"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_height="40dp">
+        </Button>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_below="@id/search"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_border_top"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:paddingRight="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="8dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_pause_black" />
+            <in.peerreview.fmradioindia.v2.views.DotView
+                android:id="@+id/dot_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                app:dot_radius="3dp"
+                app:dot_selected_color="0xFF377BEE"
+                app:dot_span="18dp"
+                app:dot_unselected_color="0xFFC5CEDB" >
+
+            </in.peerreview.fmradioindia.v2.views.DotView>
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:paddingTop="12dp"
+                android:text="Playing radio Mirchi"
+                android:layout_marginLeft="8dp"
+                app:customfont="Roboto-Regular.ttf"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_border_top"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <ImageButton
+            android:background="@null"
+            android:src="@drawable/ic_love_gray"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginRight="24dp"
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:background="@null"
+            android:src="@drawable/ic_radio_black"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:background="@null"
+            android:src="@drawable/ic_music_gray"
+            android:paddingTop="18dp"
+            android:paddingBottom="12dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -11,6 +11,7 @@
         android:theme="@style/ActivityThemeDark">
         <activity
             android:name=".activities.welcome.WelcomeActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,6 +31,9 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".receivers.AlermReceiver" />
+
+        <activity android:name=".v2.views.RadioActivity"/>
+
     </application>
 
     <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />

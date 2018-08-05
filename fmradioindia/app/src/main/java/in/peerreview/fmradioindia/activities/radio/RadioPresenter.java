@@ -9,6 +9,7 @@ import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.Player;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.common.Configuration;
+import in.peerreview.fmradioindia.common.Constants;
 import in.peerreview.fmradioindia.common.models.Node;
 import in.peerreview.fmradioindia.common.models.NodeManager;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
               @Override
               public void onTryPlaying(final String id, String msg) {
                 mView.renderTryPlayUI("Try playing " + msg);
-                FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_try_playing");
+                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_PLAYER_TRY_PLAYING);
                 updateStatOnDBNodes(id, "count_click");
               }
 
@@ -57,7 +58,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
                     .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
                 updateStatOnDBNodes(id, "count_success");
 
-                FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_success");
+                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_PLAYER_SUCCESS);
 
               }
 
@@ -88,7 +89,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
                     .retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
 
                 updateStatOnDBNodes(id, "count_error");
-                FMRadioIndiaApplication.Get().getTelemetry().markHit("play_on_error");
+                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_PLAYER_ERROR);
                   mCurPlayingID = null;
               }
 

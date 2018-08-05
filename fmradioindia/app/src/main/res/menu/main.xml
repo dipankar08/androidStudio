@@ -6,4 +6,19 @@
         android:orderInCategory="100"
         android:title="Rate this app"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/upgrade"
+        android:orderInCategory="100"
+        android:title="Upgrade this app"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/report"
+        android:orderInCategory="100"
+        android:title="Report Bugs or issues"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="100"
+        android:title="About this app"
+        app:showAsAction="never" />
 </menu>

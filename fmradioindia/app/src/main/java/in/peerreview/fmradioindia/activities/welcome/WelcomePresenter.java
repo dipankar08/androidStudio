@@ -8,6 +8,7 @@ import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.common.Configuration;
+import in.peerreview.fmradioindia.common.Constants;
 import in.peerreview.fmradioindia.common.models.Node;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +45,7 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
                 mView.showPermissionDialog();
                 FMRadioIndiaApplication.Get()
                     .getTelemetry()
-                    .markHit("exit_for_RuntimePermissionUtils_deny");
+                    .markHit(Constants.TELEMETRY_PERMISSION_DENY_WRITE_STOARGE);
                 mView.exit();
               }
             });
@@ -107,18 +108,12 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
                   mView.gotoHome();
                 } catch (JSONException e) {
                   e.printStackTrace();
-                  FMRadioIndiaApplication.Get()
-                      .getTelemetry()
-                      .markHit("exit_for_loadDataInternal_catch");
                   mView.exit();
                 }
               }
 
               @Override
               public void onError(String msg) {
-                FMRadioIndiaApplication.Get()
-                    .getTelemetry()
-                    .markHit("exit_for_loadDataInternal_onError");
                 mView.exit();
               }
             });

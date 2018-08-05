@@ -34,14 +34,22 @@
         <item name="borderColor">@color/borderColorDark</item>
     </style>
 
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:colorAccent">#FFCC00</item>
+        <item name="android:textColorPrimary">#555555</item>
+        <item name="android:background">#ffffff</item>
+    </style>
 
     <!-- Application theme -->
     <style name="ActivityThemeLight" parent="ActivityTheme.Primary.Base.Light">
+
         <!-- DIPANKAR: USed to show the icon color -->
         <item name="android:textColor">@color/primaryTextColorLight</item>
         <item name="android:textColorSecondary">@color/primaryTextColorLight</item>
         <!-- User for the text in the serach bar -->
         <item name="android:textColorPrimary">@color/primaryTextColorLight</item>
+        <item name="android:colorAccent">#0000FF</item>
 
         <!-- This is resposbile for backgoud color of battery icon -->
         <item name="android:colorPrimaryDark">@color/primaryBackgroundColorLight</item>
@@ -52,6 +60,7 @@
         <item name="android:colorBackground">@color/primaryBackgroundColorLight</item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
     </style>
     <style name="ActivityThemeDark" parent="ActivityTheme.Primary.Base.Dark">
         <!-- DIPANKAR: USed to show the icon color -->
@@ -59,6 +68,7 @@
         <item name="android:textColorSecondary">@color/primaryTextColorDark</item>
         <!-- User for the text in the serach bar -->
         <item name="android:textColorPrimary">@color/primaryTextColorDark</item>
+        <item name="android:colorAccent">#0000FF</item>
 
         <!-- This is resposbile for backgoud color of battery icon -->
         <item name="android:colorPrimaryDark">@color/primaryBackgroundColorDark</item>
@@ -67,6 +77,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
 
         <item name="android:colorBackground">@color/primaryBackgroundColorDark</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
 
     </style>
 

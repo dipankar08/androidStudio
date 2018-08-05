@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:layout_height="wrap_content">
+    <in.co.dipankar.quickandorid.views.CircleImageView
+        android:id="@+id/image"
+        android:src="@drawable/ic_mirchi_logo"
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
+    <ImageView
+        android:id="@+id/dot"
+        android:layout_alignBottom="@+id/image"
+        android:layout_alignBaseline="@+id/image"
+        android:layout_marginLeft="47dp"
+        android:src="@drawable/background_circle_fill_gray"
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/title"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:text="Radio Mirchi"
+        android:layout_marginTop="16dp"
+        app:customfont="Ubuntu.ttf"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/subtitle"
+        android:textColor="#aaaaaa"
+        android:layout_marginTop="2dp"
+        android:textSize="10dp"
+        android:text="2.1K plays"
+        app:customfont="Roboto-Regular.ttf"
+        android:layout_below="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -58,7 +58,6 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeContra
 
   @Override
   public void exit() {
-    FMRadioIndiaApplication.Get().getTelemetry().markHit("exit_from_welcome");
     this.finish();
   }
 
