@@ -10,12 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import in.co.dipankar.fmradio.R;
 
 public abstract class BaseNavigationActivity extends AppCompatActivity implements Navigation {
 
-    public abstract Fragment getFragmentForScreen(Screen screen);
+    public abstract Fragment getFragmentForScreen(Screen screen, Bundle args);
 
     public Navigation getNavigation(){
         return this;
@@ -61,7 +62,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
             return;
         }
 
-        fragment = getFragmentIfNotExist(screen);
+        fragment = getFragmentIfNotExist(screen, bundle);
         if(fragment != null) {
             FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
             fts.replace(R.id.fragment_container, fragment, tag );
@@ -79,8 +80,8 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
         navigate(screen,bundle);
     }
 
-    private Fragment getFragmentIfNotExist(Screen screen){
-        return getFragmentForScreen(screen);
+    private Fragment getFragmentIfNotExist(Screen screen, Bundle bundle){
+        return getFragmentForScreen(screen, bundle);
     }
 
     @Override

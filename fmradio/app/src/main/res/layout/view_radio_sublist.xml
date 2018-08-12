@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    android:layout_margin="5dp"
+    app:cardElevation="10dp">
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/title"
+            android:text="Kolkata Live"
+            android:textSize="15dp"
+            android:layout_marginBottom="10dp"
+            app:customfont="OpenSans-Bold.ttf"
+            android:textColor="#111111"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title">
+        </android.support.v7.widget.RecyclerView>
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/all"
+            android:text="More ..."
+            android:textSize="10dp"
+            android:layout_marginBottom="10dp"
+            app:customfont="OpenSans-Light.ttf"
+            android:textColor="#111111"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -7,4 +7,5 @@ public enum Screen {
     PLAYER_SCREEN,
     SETTING_SCREEN,
     SEARCH_SCREEN,
+    FTUX_SCREEN,
 }

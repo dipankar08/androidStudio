@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.ui.base.BaseFragment;
+import in.co.dipankar.fmradio.ui.base.BaseView;
+import in.co.dipankar.fmradio.ui.viewpresenter.player.FullScreenPlayerView;
 
 public class PlayerFragment extends BaseFragment {
     public static PlayerFragment getNewFragment(Bundle args) {
@@ -19,12 +21,14 @@ public class PlayerFragment extends BaseFragment {
     // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_player, parent, false);
+        //return inflater.inflate(R.layout.fragment_player, parent, false);
+         FullScreenPlayerView view = new FullScreenPlayerView(getContext());
+         view.setArgs(getArguments());
+         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Setup any handles to view objects here
-        // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+        //((BaseView)view).setArgs(getArguments());
     }
 }

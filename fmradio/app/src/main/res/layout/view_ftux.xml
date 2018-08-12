@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:src="@drawable/image_background_fullscreen_ftux"
+        android:layout_width="match_parent"
+        android:tint="#90000000"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="45dp">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/title"
+            android:layout_marginTop="40dp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textSize="25dp"
+            app:customfont="Chalkduster.ttf"
+            android:text="FM Radio India"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <android.support.v4.view.ViewPager
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/title"
+            android:layout_centerInParent="true"
+            android:id="@+id/viewpager"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <LinearLayout
+            android:id="@+id/dot_holder"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/primary"/>
+        <Button
+            android:id="@+id/primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Getting Started"
+            android:background="@drawable/background_round_fill_white"
+            android:textColor="#000"
+            android:layout_above="@+id/secondary"
+            android:layout_marginBottom="15dp"
+            />
+        <Button
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/background_round_empty_white"
+            android:textColor="#fff"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/secondary"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Privacy"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

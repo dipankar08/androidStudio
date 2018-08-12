@@ -2,11 +2,18 @@ package in.co.dipankar.fmradio.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
+import java.util.List;
+
+import in.co.dipankar.fmradio.entity.radio.Radio;
+
 public abstract class BaseView extends RelativeLayout {
-    private BasePresenter mPresenter;
+
+    @Nullable private Bundle args;
+    @Nullable private BasePresenter mPresenter;
     public BaseView(Context context) {
         super(context);
     }
@@ -26,13 +33,17 @@ public abstract class BaseView extends RelativeLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mPresenter.detachView();
+        if(mPresenter!= null) {
+            mPresenter.detachView();
+        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mPresenter.attachView(this);
+        if(mPresenter!=null) {
+            mPresenter.attachView(this);
+        }
     }
 
     // this function to be called by subclass.
@@ -40,4 +51,11 @@ public abstract class BaseView extends RelativeLayout {
         mPresenter = presenter;
     }
 
+    public Bundle getArgs() {
+        return args;
+    }
+
+    public void setArgs(Bundle args) {
+        this.args = args;
+    }
 }
