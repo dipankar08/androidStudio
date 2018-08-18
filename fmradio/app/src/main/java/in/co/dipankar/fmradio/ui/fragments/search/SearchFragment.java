@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.ui.base.BaseFragment;
+import in.co.dipankar.fmradio.ui.viewpresenter.player.FullScreenPlayerView;
+import in.co.dipankar.fmradio.ui.viewpresenter.search.SearchView;
 
 public class SearchFragment extends BaseFragment {
     public static SearchFragment getNewFragment(Bundle args) {
@@ -19,7 +21,9 @@ public class SearchFragment extends BaseFragment {
     // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, parent, false);
+        SearchView view = new SearchView(getContext());
+        view.setArgs(getArguments());
+        return view;
     }
 
     @Override

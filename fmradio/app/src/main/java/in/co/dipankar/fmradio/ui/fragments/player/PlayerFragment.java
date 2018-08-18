@@ -17,11 +17,8 @@ public class PlayerFragment extends BaseFragment {
         return myFragment;
     }
 
-    // The onCreateView method is called when Fragment should create its View object hierarchy,
-    // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        //return inflater.inflate(R.layout.fragment_player, parent, false);
          FullScreenPlayerView view = new FullScreenPlayerView(getContext());
          view.setArgs(getArguments());
          return view;

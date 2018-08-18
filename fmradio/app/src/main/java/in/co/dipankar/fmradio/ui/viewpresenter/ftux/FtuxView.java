@@ -6,6 +6,8 @@ import android.graphics.Typeface;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,11 +16,13 @@ import java.util.List;
 
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.ui.base.BaseView;
+import in.co.dipankar.fmradio.ui.base.Screen;
 
 public class FtuxView extends BaseView {
 
     private TextView dotsTextView[];
     private int dotsCount;
+    private Button mPrimary;
     public FtuxView(Context context) {
         super(context);
         init(context);
@@ -40,6 +44,17 @@ public class FtuxView extends BaseView {
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
         viewPager.setCurrentItem(0);
         loadDots();
+        mPrimary = findViewById(R.id.primary);
+        mPrimary.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movetoSplashScreen();
+            }
+        });
+    }
+
+    private void movetoSplashScreen() {
+        getNavigation().navigate(Screen.SPLASH_SCREEN, null);
     }
 
     protected void loadDots() {

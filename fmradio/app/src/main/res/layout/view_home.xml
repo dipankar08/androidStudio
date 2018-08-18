@@ -3,7 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Radio"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        style="@style/TextHugeTitle"
+        />
+    <ImageView
+        android:id="@+id/setting"
+        android:src="@drawable/ic_setting_black_24"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/title"
+        android:layout_marginRight="10dp"
+        style="@style/ButtonMenu"
+        />
+
+    <ImageView
+        android:id="@+id/search"
+        android:src="@drawable/ic_search_black_24"
+        android:layout_toLeftOf="@+id/setting"
+        android:layout_alignTop="@+id/title"
+        android:layout_marginRight="10dp"
+        style="@style/ButtonMenu"
+        />
     <in.co.dipankar.fmradio.ui.viewpresenter.mainlist.RadioMainListView
+        android:layout_below="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </RelativeLayout>

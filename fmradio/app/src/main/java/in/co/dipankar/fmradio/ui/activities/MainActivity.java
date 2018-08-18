@@ -24,6 +24,7 @@ public class MainActivity extends BaseNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        navigate(Screen.SEARCH_SCREEN, null);
         if(Configuration.shouldShowFTUX()){
             navigate(Screen.FTUX_SCREEN, null);
         } else {

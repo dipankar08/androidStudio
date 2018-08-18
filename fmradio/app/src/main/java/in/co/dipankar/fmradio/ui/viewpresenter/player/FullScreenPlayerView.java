@@ -9,10 +9,14 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
@@ -20,8 +24,11 @@ import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.entity.radio.Radio;
 import in.co.dipankar.fmradio.service.MusicService;
 import in.co.dipankar.fmradio.ui.base.BaseView;
+import in.co.dipankar.quickandorid.services.Item;
 import in.co.dipankar.quickandorid.services.MusicForegroundService;
 import in.co.dipankar.quickandorid.utils.DLog;
+
+import static android.content.Context.BIND_AUTO_CREATE;
 
 public class FullScreenPlayerView extends BaseView implements FullScreenPlayerViewPresenter.ViewContract {
     FullScreenPlayerViewPresenter mPresenter;
@@ -31,6 +38,7 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
     private ImageView mPrev;
     private ImageView mNext;
     private ImageView mPausePlay;
+    private ProgressBar mProgressBar;
     private ImageView mImage;
     private TextView mTitle;
     MusicService mMusicService = null;
@@ -65,7 +73,7 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
         mPrev.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playPrev();
+                prev();
             }
         });
 
@@ -87,14 +95,7 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
 
         mImage = findViewById(R.id.image);
         mTitle = findViewById(R.id.title);
-    }
-
-    private void playNext() {
-        mCurIndex ++;
-        if(mCurIndex >= mCurList.size()){
-            mCurIndex = 0;
-        }
-        play();
+        mProgressBar = findViewById(R.id.loading);
     }
 
     private void playPause() {
@@ -103,14 +104,79 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
         getContext().startService(mService);
     }
 
-
-    private void playPrev() {
-        mCurIndex --;
-        if(mCurIndex < 0){
-            mCurIndex = mCurList.size() -1;
-        }
-        play();
+    private void playNext() {
+        Intent mService = new Intent(getContext(), MusicService.class);
+        mService.setAction(MusicForegroundService.Contracts.NEXT);
+        getContext().startService(mService);
     }
+
+    private void prev() {
+        Intent mService = new Intent(getContext(), MusicService.class);
+        mService.setAction(MusicForegroundService.Contracts.PREV);
+        getContext().startService(mService);
+    }
+
+    private ServiceConnection mConnection =
+            new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder iBinder) {
+                    MusicForegroundService.LocalBinder myLocalBinder = (MusicForegroundService.LocalBinder) iBinder;
+                    MusicForegroundService musicService = myLocalBinder.getService();
+                    DLog.d("Connected to bounded service");
+                    musicService.setCallback(new MusicForegroundService.Callback() {
+                        @Override
+                        public void onTryPlaying(String id, String msg) {
+                            DLog.d("Binder::onTryPlaying called");
+                            showLoading();
+                        }
+
+                        @Override
+                        public void onSuccess(String id, String ms) {
+                            DLog.d("Binder::onSuccess called");
+                            showPause();
+                        }
+
+                        @Override
+                        public void onResume(String id, String ms) {
+                            DLog.d("Binder::onResume called");
+                            showPause();
+                        }
+
+                        @Override
+                        public void onPause(String id, String msg) {
+                            DLog.d("Binder::onPause called");
+                            showPlay();
+                        }
+
+                        @Override
+                        public void onError(String id, String msg) {
+                            DLog.d("Binder::onError called");
+                            showPlay();
+                        }
+
+                        @Override
+                        public void onSeekBarPossionUpdate(String id, int total, int cur) {
+                            DLog.d("Binder::onSeekBarPossionUpdate called");
+                        }
+
+                        @Override
+                        public void onMusicInfo(String id, HashMap<String, Object> info) {
+                            DLog.d("Binder::onMusicInfo called");
+                        }
+
+                        @Override
+                        public void onComplete(String id, String msg) {
+                            DLog.d("Binder::onComplete called");
+                            showPlay();
+                        }
+                    });
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    DLog.d("Disconnected to bounded service");
+                }
+            };
 
     private void goback() {
         getNavigation().goBack();
@@ -119,16 +185,45 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mCurList = FmRadioApplication.Get().getRadioManager().getRadioByCategories(getArgs().getString("cat"));
-        mCurIndex = getArgs().getInt("index");
-       play();
-       bindService();
+        String id = getArgs().getString("ID");
+        if(id!= null){
+            mCurList = FmRadioApplication.Get().getRadioManager().getAllRadioForId(id);
+            for(int i =0;i<mCurList.size();i++){
+                if(mCurList.get(i).getId().equals(id)){
+                    mCurIndex = i;
+                    break;
+                }
+            }
+        } else {
+            mCurList = FmRadioApplication.Get().getRadioManager().getRadioByCategories(getArgs().getString("cat"));
+            mCurIndex = getArgs().getInt("index");
+        }
+        Intent intent = new Intent(getContext(), MusicService.class);
+        getContext().bindService(intent, mConnection, BIND_AUTO_CREATE);
+        play();
+    }
+
+    private void showLoading(){
+        mPausePlay.setVisibility(GONE);
+        mProgressBar.setVisibility(VISIBLE);
+    }
+
+    private void showPlay(){
+        mPausePlay.setVisibility(VISIBLE);
+        mProgressBar.setVisibility(GONE);
+    }
+    private void showPause(){
+        mPausePlay.setVisibility(VISIBLE);
+        mProgressBar.setVisibility(GONE);
     }
 
 
 
-
     public void play() {
+        if(mCurList == null){
+            DLog.d("mCurList is empty");
+            return;
+        }
         Radio mRadio = mCurList.get(mCurIndex);
 
         mTitle.setText(mRadio.getName());
@@ -137,37 +232,18 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
                 .into(mImage);
 
         Intent mService = new Intent(getContext(), MusicService.class);
-        mService.putExtra("ID",mRadio.getName());
-        mService.putExtra("NAME",mRadio.getName());
-        mService.putExtra("URL",mRadio.getMediaUrl());
+
+        List<Item> item = new ArrayList<>();
+        for (Radio r: mCurList){
+            item.add(new Item(r.getName(), r.getName(), r.getMediaUrl()));
+        }
+        mService.putExtra("ID",mCurIndex);
+        mService.putExtra("LIST", (Serializable) item);
+
         mService.setAction(MusicForegroundService.Contracts.START);
         getContext().startService(mService);
 
 
     }
 
-    private final ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            mMusicService = ((MusicService.LocalBinder) iBinder).getInstance();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            mMusicService = null;
-        }
-    };
-
-    private void bindService() {
-        DLog("Bind Service called");
-        getContext().bindService(new Intent(getContext(),
-                MusicService.class), mConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    private void unbind() {
-        DLog("UnBind Service called");
-        if (mMusicService != null) {
-            mMusicService.unbindService(mConnection);
-        }
-    }
 }

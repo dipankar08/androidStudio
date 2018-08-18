@@ -58,11 +58,9 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
     public void navigate(Screen screen, Bundle bundle){
         String tag = screen.name();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if(fragment != null) {
-            return;
+        if(fragment == null) {
+            fragment = getFragmentIfNotExist(screen, bundle);
         }
-
-        fragment = getFragmentIfNotExist(screen, bundle);
         if(fragment != null) {
             FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
             fts.replace(R.id.fragment_container, fragment, tag );

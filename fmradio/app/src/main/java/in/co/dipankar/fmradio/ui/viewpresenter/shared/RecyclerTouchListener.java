@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio.ui.viewpresenter.sublist;
+package in.co.dipankar.fmradio.ui.viewpresenter.shared;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

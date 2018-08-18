@@ -8,21 +8,22 @@ import android.util.Log;
 
 public class SharedViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<User> selected = new MutableLiveData<User>();
+  private final MutableLiveData<User> selected = new MutableLiveData<User>();
 
-    public SharedViewModel(Application application) {
-        super(application);
-    }
+  public SharedViewModel(Application application) {
+    super(application);
+  }
 
-    public void select(User item) {
-        selected.setValue(item);
-    }
+  public void select(User item) {
+    selected.setValue(item);
+  }
 
-    public LiveData<User> getSelected() {
-        return selected;
-    }
-    @Override
-    public void onCleared(){
-        Log.d("DIPANKAR","SharedViewModel::onCleared called ");
-    }
+  public LiveData<User> getSelected() {
+    return selected;
+  }
+
+  @Override
+  public void onCleared() {
+    Log.d("DIPANKAR", "SharedViewModel::onCleared called ");
+  }
 }

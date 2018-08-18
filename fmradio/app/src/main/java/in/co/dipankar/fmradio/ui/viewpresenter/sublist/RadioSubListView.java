@@ -9,9 +9,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
@@ -19,6 +17,7 @@ import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.entity.radio.Radio;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
+import in.co.dipankar.fmradio.ui.viewpresenter.shared.RecyclerTouchListener;
 import in.co.dipankar.quickandorid.utils.DLog;
 
 public class RadioSubListView extends BaseView implements RadioSubListViewPresenter.ViewContract {

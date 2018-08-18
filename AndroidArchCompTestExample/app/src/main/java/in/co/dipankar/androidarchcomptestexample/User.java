@@ -1,9 +1,9 @@
 package in.co.dipankar.androidarchcomptestexample;
 
+public class User {
+  public String name;
 
-public class User{
-    public String name;
-    public User(String name){
-        this.name = name;
-    }
+  public User(String name) {
+    this.name = name;
+  }
 }

@@ -9,7 +9,9 @@ import java.io.Serializable;
 public class Radio implements Serializable {
     private static final long serialVersionUID = 1L;
 
+
     public class Builder{
+        private String id;
         private String name;
         private String mediaUrl;
         private String imageUrl;
@@ -53,8 +55,11 @@ public class Radio implements Serializable {
         imageUrl= builder.imageUrl;
         categories= builder.categories;
         tags=builder.tags;
+        id = builder.id;
     }
 
+    @JsonProperty("uid")
+    private  String id;
     @JsonProperty("name")
     private  String name;
     @JsonProperty("url")
@@ -104,6 +109,13 @@ public class Radio implements Serializable {
         this.tags = tags;
         this.status = status;
         this.rank = rank;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public String getSubTitle() {
+        return categories;
     }
     public Radio() {}
 

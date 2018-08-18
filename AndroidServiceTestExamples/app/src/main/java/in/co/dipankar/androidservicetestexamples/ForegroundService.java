@@ -1,5 +1,7 @@
 package in.co.dipankar.androidservicetestexamples;
 
+import static in.co.dipankar.androidservicetestexamples.TestApplication.CHANNEL_ID;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -8,45 +10,43 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
-import static in.co.dipankar.androidservicetestexamples.TestApplication.CHANNEL_ID;
-
 public class ForegroundService extends Service {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
+  @Override
+  public void onCreate() {
+    super.onCreate();
+  }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        String input = intent.getStringExtra("inputExtra");
+  @Override
+  public int onStartCommand(Intent intent, int flags, int startId) {
+    String input = intent.getStringExtra("inputExtra");
 
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, 0);
+    Intent notificationIntent = new Intent(this, MainActivity.class);
+    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Foreground Service")
-                .setContentText("Hello Dipankar 123")
-                .setSmallIcon(R.drawable.ic_download)
-                .setContentIntent(pendingIntent)
-                .build();
+    Notification notification =
+        new NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("Foreground Service")
+            .setContentText("Hello Dipankar 123")
+            .setSmallIcon(R.drawable.ic_download)
+            .setContentIntent(pendingIntent)
+            .build();
 
-        startForeground(1, notification);
+    startForeground(1, notification);
 
-        //do heavy work on a background thread
-        //stopSelf();
+    // do heavy work on a background thread
+    // stopSelf();
 
-        return START_NOT_STICKY;
-    }
+    return START_NOT_STICKY;
+  }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+  }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+  @Nullable
+  @Override
+  public IBinder onBind(Intent intent) {
+    return null;
+  }
 }

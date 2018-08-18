@@ -116,6 +116,15 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_height="wrap_content" />
+        <ProgressBar
+            android:id="@+id/loading"
+            android:visibility="gone"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
         <ImageButton
             android:id="@+id/next"
             android:src="@drawable/ic_next_white_48"
