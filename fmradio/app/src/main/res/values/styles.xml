@@ -24,7 +24,7 @@
         <item name="android:text">Radio Mirchi</item>
         <item name="android:textColor">@color/textPrimary3</item>
         <item name="customfont">OpenSans-Bold.ttf</item>
-        <item name="android:textSize">13dp</item>
+        <item name="android:textSize">12dp</item>
     </style>
 
     <style name="TextSubTitle">
@@ -59,5 +59,17 @@
         <item name="android:scaleType">center</item>
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="TextTipStyle">
+        <item name="android:text">Live</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/backgound_round_fill_red</item>
     </style>
 </resources>

@@ -2,6 +2,7 @@ package in.co.dipankar.fmradio.ui.viewpresenter.search;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +10,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,6 +38,7 @@ public class SearchView extends BaseView{
     private EditText mSearch;
     private RecyclerView mRV;
     private SearchAdapter mAdapter;
+    private ImageView mBack;
     public SearchView(Context context) {
         super(context);
         init();
@@ -82,7 +88,27 @@ public class SearchView extends BaseView{
                 performSearch(mSearch.getText().toString());
             }
         });
+        mRV.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                hideKeyboard();
+                return false;
+            }
+        });
 
+        mBack = findViewById(R.id.back);
+        mBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getNavigation().gotoHome();
+            }
+        });
+
+    }
+
+    public void hideKeyboard() {
+        final InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
     }
 
     private void playThis(String id) {

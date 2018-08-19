@@ -4,51 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:src="@drawable/background_splash_back"
+        android:src="@drawable/image_background_fullscreen_ftux"
         android:layout_width="match_parent"
+        android:tint="#90000000"
         android:scaleType="fitXY"
-        android:layout_height="match_parent" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="#90000000"
-        android:layout_height="match_parent">
-    </RelativeLayout>
-    <LinearLayout
-        android:paddingTop="10dp"
-        android:paddingBottom="20dp"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ProgressBar
-            android:layout_height="30dp"
-            android:layout_width="30dp"
-            android:layout_marginBottom="10dp"
-            android:indeterminate="true"/>
-        <in.co.dipankar.quickandorid.views.VersionView
-            android:layout_marginTop="10dp"
-            android:layout_alignParentBottom="true"
-            android:text="V0.1"
-            android:textSize="10dp"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        />
 
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Please wait, Loading..."
+        style="@style/TextSubTitle"
+        android:textColor="#fff"
+        />
 
-    <!--
-    <Button
-        android:id="@+id/getting_started"
-        android:background="@drawable/background_border_white"
+    <in.co.dipankar.quickandorid.views.VersionView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:textColor="#ffffff"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="30dp"
-        android:text="Getting Started"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-       -->
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="V0.1"
+        style="@style/TextTitle"
+        android:textColor="#fff"
+        />
 </RelativeLayout>

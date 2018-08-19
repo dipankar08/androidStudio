@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -40,6 +41,7 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
     private ImageView mPausePlay;
     private ProgressBar mProgressBar;
     private ImageView mImage;
+    private String mID;
     private TextView mTitle;
     MusicService mMusicService = null;
     public FullScreenPlayerView(Context context) {
@@ -128,6 +130,8 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
                         public void onTryPlaying(String id, String msg) {
                             DLog.d("Binder::onTryPlaying called");
                             showLoading();
+                            mID = id;
+                            refershUI();
                         }
 
                         @Override
@@ -150,6 +154,7 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
 
                         @Override
                         public void onError(String id, String msg) {
+                            Toast.makeText(getContext(), "Not able to play, Please retry.", Toast.LENGTH_SHORT);
                             DLog.d("Binder::onError called");
                             showPlay();
                         }
@@ -179,7 +184,7 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
             };
 
     private void goback() {
-        getNavigation().goBack();
+        getNavigation().gotoHome();
     }
 
     @Override
@@ -219,30 +224,35 @@ public class FullScreenPlayerView extends BaseView implements FullScreenPlayerVi
 
 
 
-    public void play() {
+    private void play() {
         if(mCurList == null){
             DLog.d("mCurList is empty");
             return;
         }
-        Radio mRadio = mCurList.get(mCurIndex);
 
-        mTitle.setText(mRadio.getName());
-        Glide.with(getContext())
-                .load(mRadio.getImageUrl())
-                .into(mImage);
+        Radio mRadio = mCurList.get(mCurIndex);
+        mID = mRadio.getId();
 
         Intent mService = new Intent(getContext(), MusicService.class);
-
         List<Item> item = new ArrayList<>();
         for (Radio r: mCurList){
             item.add(new Item(r.getName(), r.getName(), r.getMediaUrl()));
         }
         mService.putExtra("ID",mCurIndex);
         mService.putExtra("LIST", (Serializable) item);
-
         mService.setAction(MusicForegroundService.Contracts.START);
         getContext().startService(mService);
+    }
 
+    private void refershUI(){
+        if(mID == null){
+            return;
+        }
+        Radio mRadio = FmRadioApplication.Get().getRadioManager().getRadioForId(mID);
+        mTitle.setText(mRadio.getName());
+        Glide.with(getContext())
+                .load(mRadio.getImageUrl())
+                .into(mImage);
 
     }
 

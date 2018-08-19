@@ -47,6 +47,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
 
     @Override
     public void goBack(){
+
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
@@ -66,7 +67,8 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
             fts.replace(R.id.fragment_container, fragment, tag );
             fts.setCustomAnimations(R.anim.fade_in, R.anim.fade_out,
                     R.anim.fade_out, R.anim.fade_in);
-            fts.addToBackStack(tag);
+            // We have issue with backtrace so
+            //fts.addToBackStack(tag);
             Log.d("DIPANKAR", "adding to backtrack");
             fts.commit();
         }
@@ -102,4 +104,12 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
             getFragmentManager().popBackStack(bottomTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
+
+    @Override
+    public void gotoHome(){
+        navigate(getHomeScreen(), null);
+    }
+
+    abstract public Screen getHomeScreen();
+    abstract public Screen getSplashScreen();
 }

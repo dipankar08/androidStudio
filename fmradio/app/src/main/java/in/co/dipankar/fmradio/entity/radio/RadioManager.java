@@ -17,6 +17,10 @@ import in.co.dipankar.fmradio.ui.viewpresenter.search.SearchItem;
 public class RadioManager {
 
 
+    public Radio getRadioForId(String mID) {
+        return mIdToRadioMap.get(mID);
+    }
+
     public interface RadioManagerCallback{
         void onSuccess(List<Radio> radio);
         void onFail(String msg);

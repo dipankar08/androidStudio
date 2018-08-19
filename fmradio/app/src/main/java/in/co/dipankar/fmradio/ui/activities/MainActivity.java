@@ -24,12 +24,21 @@ public class MainActivity extends BaseNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        navigate(Screen.SEARCH_SCREEN, null);
         if(Configuration.shouldShowFTUX()){
             navigate(Screen.FTUX_SCREEN, null);
         } else {
             navigate(Screen.SPLASH_SCREEN, null);
         }
+    }
+
+    @Override
+    public Screen getHomeScreen() {
+        return Screen.HOME_SCREEN;
+    }
+
+    @Override
+    public Screen getSplashScreen() {
+        return Screen.SPLASH_SCREEN;
     }
 
     private void init() {
@@ -63,4 +72,5 @@ public class MainActivity extends BaseNavigationActivity {
         DataManager.Get().destroy();
         super.onDestroy();
     }
+
 }
