@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.data.DataManager;
@@ -39,11 +40,12 @@ public class SplashView extends BaseView implements SplashViewPresenter.ViewCont
     @Override
     public void onFetchSuccess() {
         DLog.d("SplashView::onFetchSuccess called");
-        getNavigation().navigate(Screen.HOME_SCREEN, null);
+        getNavigation().gotoHome();
     }
 
     @Override
     public void onFetchFailed() {
         DLog.d("SplashView::onFetchFailed called");
+        Toast.makeText(getContext(),"Internal Error, Not able to Fetch Live data", Toast.LENGTH_SHORT).show();
     }
 }

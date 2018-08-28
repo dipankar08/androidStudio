@@ -13,24 +13,6 @@
         android:layout_marginLeft="@dimen/windowLeftMargin"
         android:layout_marginBottom="15dp"
         />
-<!--
-    <Button
-        android:id="@+id/see_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MORE"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_alignParentRight="true"
-        style="?android:attr/borderlessButtonStyle"
-        android:textColor="@color/textPrimary4"
-        android:textSize="12dp"
-        />
--->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"

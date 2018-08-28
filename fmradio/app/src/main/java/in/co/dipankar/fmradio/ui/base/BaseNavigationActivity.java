@@ -1,18 +1,22 @@
 package in.co.dipankar.fmradio.ui.base;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Switch;
 
 import in.co.dipankar.fmradio.R;
+import in.co.dipankar.quickandorid.utils.DLog;
 
 public abstract class BaseNavigationActivity extends AppCompatActivity implements Navigation {
 
@@ -20,6 +24,14 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
 
     public Navigation getNavigation(){
         return this;
+    }
+
+
+
+    public enum FragmentAnimation{
+        DEFAULT,
+        SLIDE_LEFT_RIGHT,
+        SLIDE_UP_DOWN
     }
 
     @Override
@@ -38,60 +50,76 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
     }
 
     @Override
-    public void goToStart(Bundle savedInstanceState, Bundle args){
-        if (!isConfigChange(savedInstanceState)) {
-            popAllFragments();
-        }
-        navigate(Screen.HOME_SCREEN, args);
-    }
-
-    @Override
     public void goBack(){
-
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
             finish();
         }
     }
 
     @Override
-    public void navigate(Screen screen, Bundle bundle){
+    public void navigate(Screen screen, Bundle bundle, boolean isReplace/*is replace or add */, boolean shouldBackStack){
         String tag = screen.name();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if(fragment == null) {
             fragment = getFragmentIfNotExist(screen, bundle);
         }
-        if(fragment != null) {
-            FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
-            fts.replace(R.id.fragment_container, fragment, tag );
-            fts.setCustomAnimations(R.anim.fade_in, R.anim.fade_out,
-                    R.anim.fade_out, R.anim.fade_in);
-            // We have issue with backtrace so
-            //fts.addToBackStack(tag);
-            Log.d("DIPANKAR", "adding to backtrack");
-            fts.commit();
+        FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
+        setAnimation(screen, fts);
+        if(isReplace) {
+            fts.replace(R.id.fragment_container, fragment, tag);
+        } else{
+            fts.add(R.id.fragment_container, fragment, tag);
         }
+        // only add to backtrca
+        if(shouldBackStack) {
+            fts.addToBackStack(tag);
+        }
+        fts.commit();
+        DLog.e("Count::::=>"+getSupportFragmentManager().getBackStackEntryCount());
     }
 
     @Override
-    public void navigateWithReplace(Screen screen, Bundle bundle){
-        getFragmentManager().popBackStack();
-        navigate(screen,bundle);
+    public void navigate(Screen screen, Bundle bundle){
+        navigate(screen, bundle, true, true);
     }
 
+    private void setAnimation(Screen screen, FragmentTransaction fts) {
+        switch (getFragmentAnimation(screen)){
+            case SLIDE_UP_DOWN:
+                fts.setCustomAnimations(R.anim.slide_in_up, R.anim.fade_out, R.anim.fade_in , R.anim.slide_out_down);
+                break;
+            case SLIDE_LEFT_RIGHT:
+                 fts.setCustomAnimations(R.anim.slide_left_in_fast, R.anim.fade_out, R.anim.fade_in, R.anim.slide_right_out_fast);
+                break;
+            case DEFAULT:
+                fts.setCustomAnimations(R.anim.fade_in, R.anim.fade_out,
+                        R.anim.fade_out, R.anim.fade_in);
+        }
+
+    }
     private Fragment getFragmentIfNotExist(Screen screen, Bundle bundle){
         return getFragmentForScreen(screen, bundle);
     }
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             Log.d("DIPANKAR", "OnBackPressed");
-            super.onBackPressed();
+            new AlertDialog.Builder(this)
+                    .setMessage("Are you sure you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            BaseNavigationActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         } else {
             Log.d("DIPANKAR", "popBackStack");
-            getFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
         }
     }
     private static boolean isConfigChange(Bundle savedInstanceState) {
@@ -99,17 +127,19 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
     }
 
     private void popAllFragments() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            String bottomTag = getFragmentManager().getBackStackEntryAt(0).getName();
-            getFragmentManager().popBackStack(bottomTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            String bottomTag = getSupportFragmentManager().getBackStackEntryAt(0).getName();
+            getSupportFragmentManager().popBackStack(bottomTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 
     @Override
     public void gotoHome(){
-        navigate(getHomeScreen(), null);
+        popAllFragments();
+        navigate(getHomeScreen(), null, true, false);
     }
 
     abstract public Screen getHomeScreen();
     abstract public Screen getSplashScreen();
+    public abstract FragmentAnimation getFragmentAnimation(Screen screen);
 }

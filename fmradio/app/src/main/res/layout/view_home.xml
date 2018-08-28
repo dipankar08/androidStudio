@@ -4,35 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <in.co.dipankar.quickandorid.views.CustomFontTextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Radio"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="@dimen/windowLeftMargin"
-        style="@style/TextHugeTitle"
-        />
-    <ImageView
-        android:id="@+id/setting"
-        android:src="@drawable/ic_setting_black_24"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/title"
-        android:layout_marginRight="@dimen/windowLeftMargin"
-        style="@style/ButtonMenu"
-        />
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/title"
+            android:text="Radio"
+            style="@style/TextHugeTitle"
+            />
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_alignParentRight="true"
+            style="@style/ImageIcon.Setting"
+            />
 
-    <ImageView
-        android:id="@+id/search"
-        android:src="@drawable/ic_search_black_24"
-        android:layout_toLeftOf="@+id/setting"
-        android:layout_alignTop="@+id/title"
-        android:layout_marginRight="10dp"
-        style="@style/ButtonMenu"
-        />
+        <ImageView
+            android:id="@+id/search"
+            android:layout_toLeftOf="@+id/setting"
+            style="@style/ImageIcon.Search"
+            />
+    </RelativeLayout>
+
     <in.co.dipankar.fmradio.ui.viewpresenter.mainlist.RadioMainListView
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/tool_bar"
+        android:layout_above="@+id/mini_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <in.co.dipankar.fmradio.ui.viewpresenter.miniplayer.MiniPlayerView
+        android:id="@+id/mini_player"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

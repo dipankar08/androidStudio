@@ -1,13 +1,11 @@
-package in.co.dipankar.fmradio.ui.fragments.player;
+package in.co.dipankar.fmradio.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.ui.base.BaseFragment;
-import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.viewpresenter.player.FullScreenPlayerView;
 
 public class PlayerFragment extends BaseFragment {

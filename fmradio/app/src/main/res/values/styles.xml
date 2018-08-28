@@ -14,20 +14,29 @@
 
 
     <style name="TextHugeTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Radio Mirchi</item>
         <item name="android:textColor">@color/textPrimary1</item>
         <item name="customfont">OpenSans-Bold.ttf</item>
         <item name="android:textSize">27dp</item>
     </style>
+    <style name="TextHugeTitle.White">
+        <item name="android:textColor">@color/tw__solid_white</item>
+    </style>
 
     <style name="TextTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Radio Mirchi</item>
         <item name="android:textColor">@color/textPrimary3</item>
-        <item name="customfont">OpenSans-Bold.ttf</item>
-        <item name="android:textSize">12dp</item>
+        <item name="customfont">OpenSans-Regular.ttf</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
     <style name="TextSubTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Radio Mirchi</item>
         <item name="android:textColor">@color/textPrimary4</item>
         <item name="customfont">OpenSans-Regular.ttf</item>
@@ -35,6 +44,8 @@
     </style>
 
     <style name="TextListSubTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Radio Mirchi</item>
         <item name="android:textColor">@color/textPrimary2</item>
         <item name="customfont">OpenSans-Bold.ttf</item>
@@ -61,8 +72,8 @@
         <item name="android:layout_height">40dp</item>
     </style>
 
+
     <style name="TextTipStyle">
-        <item name="android:text">Live</item>
         <item name="android:textSize">10dp</item>
         <item name="android:paddingRight">4dp</item>
         <item name="android:paddingLeft">4dp</item>
@@ -72,4 +83,71 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:background">@drawable/backgound_round_fill_red</item>
     </style>
+    <style name="TextTipStyle.Live">
+        <item name="android:text">Live</item>
+        <item name="android:background">@drawable/backgound_round_fill_red</item>
+    </style>
+    <style name="TextTipStyle.LiveTv">
+        <item name="android:text">Live TV</item>
+        <item name="android:background">@drawable/backgound_round_fill_red</item>
+    </style>
+    <style name="TextTipStyle.LiveRadio">
+        <item name="android:text">Live TV</item>
+        <item name="android:background">@drawable/backgound_round_fill_red</item>
+    </style>
+    <style name="TextTipStyle.Offline">
+        <item name="android:text">Offline</item>
+        <item name="android:background">@drawable/backgound_round_fill_red</item>
+    </style>
+    <style name="TextTipStyle.Slow">
+        <item name="android:text">Slow</item>
+        <item name="android:background">@drawable/backgound_round_fill_red</item>
+    </style>
+    <style name="TextTipStyle.MostlyWorking">
+        <item name="android:text">Mostly Working</item>
+        <item name="android:background">@drawable/backgound_round_fill_red</item>
+    </style>
+
+    <style name="ImageIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/button_background_style1</item>
+        <item name="android:src">@drawable/ic_back_black_32</item>
+    </style>
+    <style name="ImageIcon.Back">
+        <item name="android:src">@drawable/ic_back_black_32</item>
+    </style>
+    <style name="ImageIcon.Back.White">
+        <item name="android:src">@drawable/ic_back_white_32</item>
+    </style>
+
+    <style name="ImageIcon.Timer">
+        <item name="android:src">@drawable/ic_timer_white_32</item>
+    </style>
+    <style name="ImageIcon.Timer.White">
+        <item name="android:src">@drawable/ic_timer_white_32</item>
+    </style>
+
+    <style name="ImageIcon.Fev">
+        <item name="android:src">@drawable/ic_love_white_32</item>
+    </style>
+    <style name="ImageIcon.Fev.White">
+        <item name="android:src">@drawable/ic_love_white_32</item>
+    </style>
+
+    <style name="ImageIcon.Search">
+        <item name="android:src">@drawable/ic_search_black_24</item>
+    </style>
+    <style name="ImageIcon.Search.White">
+        <item name="android:src">@drawable/ic_search_black_24</item>
+    </style>
+
+    <style name="ImageIcon.Setting">
+        <item name="android:src">@drawable/ic_setting_black_24</item>
+    </style>
+    <style name="ImageIcon.Setting.White">
+        <item name="android:src">@drawable/ic_setting_black_24</item>
+    </style>
+
 </resources>

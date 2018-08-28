@@ -41,6 +41,12 @@ public class HomeView extends BaseView implements HomeViewPresenter.ViewContract
                 showSearch();
             }
         });
+        mSetting.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getNavigation().navigate(Screen.SETTING_SCREEN, null);
+            }
+        });
     }
 
     private void showSearch() {

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Best FM Radio India</string>
+
+    <string name="state_default"></string>
+    <string name="state_offline">This stream is offline now. Please try again later</string>
+    <string name="state_slow">Please wait, this stream takes time to load.</string>
+    <string name="state_removed">This stream is removed. We will update soon.</string>
+    <string name="state_mostlyworking">This streams mostly working. Keep trying.</string>
+    <string name="state_limitedtime">This channel works only for limited time in a day.</string>
 </resources>

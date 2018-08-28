@@ -8,4 +8,5 @@ public enum Screen {
     SETTING_SCREEN,
     SEARCH_SCREEN,
     FTUX_SCREEN,
+    VIDEO_PLAER_SCREEN,
 }

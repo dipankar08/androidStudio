@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio.ui.fragments.ftux;
+package in.co.dipankar.fmradio.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,22 +7,18 @@ import android.view.ViewGroup;
 
 import in.co.dipankar.fmradio.ui.base.BaseFragment;
 import in.co.dipankar.fmradio.ui.base.BaseView;
-import in.co.dipankar.fmradio.ui.viewpresenter.ftux.FtuxView;
 import in.co.dipankar.fmradio.ui.viewpresenter.home.HomeView;
 
-public class FtuxFragment extends BaseFragment {
-    public static FtuxFragment getNewFragment(Bundle args) {
-        FtuxFragment myFragment = new FtuxFragment();
+public class HomeFragment extends BaseFragment {
+    public static HomeFragment getNewFragment(Bundle args) {
+        HomeFragment myFragment = new HomeFragment();
         myFragment.setArguments(args);
         return myFragment;
     }
-
-    // The onCreateView method is called when Fragment should create its View object hierarchy,
-    // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.fragment_home, parent, false);
-        return new FtuxView(getContext());
+        return new HomeView(getContext());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio.ui.fragments.splash;
+package in.co.dipankar.fmradio.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.ui.base.BaseFragment;
+import in.co.dipankar.fmradio.ui.viewpresenter.home.HomeView;
+import in.co.dipankar.fmradio.ui.viewpresenter.splash.SplashView;
 
 public class SplashFragment extends BaseFragment {
     public static SplashFragment getNewFragment(Bundle args) {
@@ -17,7 +19,7 @@ public class SplashFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_splash, parent, false);
+        return new SplashView(getContext());
     }
 
     @Override

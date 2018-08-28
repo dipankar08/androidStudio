@@ -14,8 +14,7 @@ import in.co.dipankar.fmradio.entity.radio.Radio;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.Network;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-import static in.co.dipankar.fmradio.utils.Constants.REMOTE_URL;
+import static in.co.dipankar.fmradio.utils.Constants.REMOTE_DB_ENDPOINT;
 
 public class RemoteDataSource extends BaseDataSource {
     Network mNetWork;
@@ -40,7 +39,7 @@ public class RemoteDataSource extends BaseDataSource {
 
     @Override
     public void fetch(Callback callback) {
-        mNetWork.retrive(REMOTE_URL, Network.CacheControl.GET_LIVE_ONLY, new Network.Callback() {
+        mNetWork.retrive(REMOTE_DB_ENDPOINT, Network.CacheControl.GET_LIVE_ONLY, new Network.Callback() {
             @Override
             public void onSuccess(JSONObject jsonObject) {
                 List<Radio> list = buildListFromJson(jsonObject);

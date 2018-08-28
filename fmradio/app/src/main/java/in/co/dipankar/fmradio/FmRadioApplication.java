@@ -7,6 +7,7 @@ import android.os.Build;
 
 import in.co.dipankar.fmradio.data.DataManager;
 import in.co.dipankar.fmradio.entity.radio.RadioManager;
+import in.co.dipankar.fmradio.service.MusicControllerUtils;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 
@@ -15,6 +16,7 @@ public class FmRadioApplication extends Application {
     public static final String CHANNEL_ID = "MUSIC_NOTIFICATION_CHANNEL";
     private static FmRadioApplication  sApplication;
     private RadioManager radioManager;
+    private MusicControllerUtils musicControllerUtils;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,5 +49,12 @@ public class FmRadioApplication extends Application {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
         }
+    }
+
+    public MusicControllerUtils getMusicController() {
+        if(musicControllerUtils == null){
+            musicControllerUtils = new MusicControllerUtils(this);
+        }
+        return musicControllerUtils;
     }
 }

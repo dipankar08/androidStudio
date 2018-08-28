@@ -100,7 +100,7 @@ public class SearchView extends BaseView{
         mBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                getNavigation().gotoHome();
+                getNavigation().goBack();
             }
         });
 
@@ -114,7 +114,15 @@ public class SearchView extends BaseView{
     private void playThis(String id) {
         Bundle bundle= new Bundle();
         bundle.putString("ID", id);
-        getNavigation().navigate(Screen.PLAYER_SCREEN, bundle);
+        Radio r = FmRadioApplication.Get().getRadioManager().getRadioForId(id);
+        if (r == null){
+            return;
+        }
+        if(r.isVideo()){
+            getNavigation().navigate(Screen.VIDEO_PLAER_SCREEN, bundle);
+        } else {
+            getNavigation().navigate(Screen.PLAYER_SCREEN, bundle);
+        }
     }
 
     private void performSearch(String str){

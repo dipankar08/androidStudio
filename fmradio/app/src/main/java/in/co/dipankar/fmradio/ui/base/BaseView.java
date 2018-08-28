@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import java.util.List;
@@ -58,4 +59,10 @@ public abstract class BaseView extends RelativeLayout {
     public void setArgs(Bundle args) {
         this.args = args;
     }
+
+    // provides an eny
+    public void onBack(View v){
+        getNavigation().goBack();
+    }
+
 }

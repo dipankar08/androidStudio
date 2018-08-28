@@ -4,33 +4,35 @@
     android:layout_width="match_parent"
     android:layout_margin="10dp"
     android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/back"
-        android:src="@drawable/ic_back_black_24"
-        style="@style/ButtonMenu"
-        android:layout_marginRight="10dp"
-        />
-    <in.co.dipankar.quickandorid.views.CustomFontTextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextHugeTitle"
-        android:layout_toRightOf="@+id/back"
-        android:text="Search Radio"
-        />
-    <EditText
-        android:id="@+id/search_btn"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="5dp"
-        style="@style/SearchBar"
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/back"
+            style="@style/ImageIcon.Back"
+            />
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/title"
+            style="@style/TextHugeTitle"
+            android:layout_toRightOf="@+id/back"
+            android:layout_marginTop="6dp"
+            android:text="Search Radio"
+            />
+        <EditText
+            android:id="@+id/search_btn"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="5dp"
+            style="@style/SearchBar"
+            />
+    </RelativeLayout>
 
-        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/search_btn"
+        android:layout_below="@+id/tool_bar"
         />
 </RelativeLayout>

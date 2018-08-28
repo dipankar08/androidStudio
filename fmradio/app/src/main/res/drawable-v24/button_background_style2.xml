@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Diabled -->
+    <item android:state_enabled="false">
+        <shape android:shape="oval">
+            <solid android:color="#ccddff" />
+        </shape>
+    </item>
+
+    <!-- pressed -->
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="#30eeeeee" />
+        </shape>
+    </item>
+
+    <!-- focused -->
+    <item android:state_focused="true">
+        <shape android:shape="oval">
+            <solid android:color="#20eeeeee" />
+        </shape>
+    </item>
+
+    <!-- idle state -->
+    <item android:state_enabled="true">
+        <shape android:shape="oval">
+            <solid android:color="#10eeeeee" />
+        </shape>
+    </item>
+
+</selector>

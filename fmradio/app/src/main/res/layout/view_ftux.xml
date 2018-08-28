@@ -50,13 +50,13 @@
             android:textAlignment="center"
             android:text="Getting Started"
             android:background="@drawable/background_round_fill_white"
-            android:textColor="#000"
+            android:textColor="#000000"
             android:layout_above="@+id/secondary"
             android:layout_marginBottom="15dp"
             />
         <Button
             android:layout_alignParentBottom="true"
-            android:background="@drawable/background_round_empty_white"
+            android:background="@drawable/background_round_border_white"
             android:textColor="#fff"
             android:layout_marginBottom="5dp"
             android:id="@+id/secondary"
@@ -66,5 +66,4 @@
             android:text="View Privacy"
             />
     </RelativeLayout>
-
 </RelativeLayout>

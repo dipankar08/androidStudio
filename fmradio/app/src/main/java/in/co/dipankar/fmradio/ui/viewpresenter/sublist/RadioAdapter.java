@@ -1,6 +1,7 @@
 package in.co.dipankar.fmradio.ui.viewpresenter.sublist;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.entity.radio.Radio;
 
@@ -35,8 +38,8 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.MyViewHolder
         }
     }
 
-    public RadioAdapter(Context context, List<Radio> radioList) {
-        this.radioList = radioList;
+    public RadioAdapter(Context context) {
+        this.radioList = new ArrayList<>();
         mContext = context;
     }
 
@@ -54,20 +57,34 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.MyViewHolder
                 .load(radio.getImageUrl())
                 .into(holder.image);
         setAnimation(holder.itemView, position);
-
+       switch (radio.getRank()){
+           case OFFLINE:
+               holder.status.setTextAppearance(mContext, R.style.TextTipStyle_Offline);
+               break;
+           case ONLINE:
+               if(radio.getState() == Radio.STATE.LIVE_TV){
+                   holder.status.setTextAppearance(mContext, R.style.TextTipStyle_LiveTv);
+               } else{
+                   holder.status.setTextAppearance(mContext, R.style.TextTipStyle_LiveRadio);
+               }
+               break;
+           case MOSTLY_WORKING:
+               holder.status.setTextAppearance(mContext, R.style.TextTipStyle_MostlyWorking);
+               break;
+       }
     }
     @Override
     public int getItemCount() {
         return radioList.size();
     }
+
     public void setItems(List<Radio> list) {
         this.radioList = list;
         notifyDataSetChanged();
     }
 
     private void setAnimation(View viewToAnimate, int position) {
-        if (position > lastPosition)
-        {
+        if (position > lastPosition){
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.fade_in);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;

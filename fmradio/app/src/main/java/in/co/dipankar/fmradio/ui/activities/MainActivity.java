@@ -6,15 +6,18 @@ import android.os.Bundle;
 import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.data.DataManager;
+import in.co.dipankar.fmradio.entity.radio.Radio;
+import in.co.dipankar.fmradio.entity.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseNavigationActivity;
 import in.co.dipankar.fmradio.ui.base.Screen;
-import in.co.dipankar.fmradio.ui.fragments.ftux.FtuxFragment;
-import in.co.dipankar.fmradio.ui.fragments.home.HomeFragment;
-import in.co.dipankar.fmradio.ui.fragments.login.LoginFragment;
-import in.co.dipankar.fmradio.ui.fragments.player.PlayerFragment;
-import in.co.dipankar.fmradio.ui.fragments.search.SearchFragment;
-import in.co.dipankar.fmradio.ui.fragments.setting.SettingFragment;
-import in.co.dipankar.fmradio.ui.fragments.splash.SplashFragment;
+import in.co.dipankar.fmradio.ui.fragments.VideoPlayerFragment;
+import in.co.dipankar.fmradio.ui.fragments.FtuxFragment;
+import in.co.dipankar.fmradio.ui.fragments.HomeFragment;
+import in.co.dipankar.fmradio.ui.fragments.LoginFragment;
+import in.co.dipankar.fmradio.ui.fragments.PlayerFragment;
+import in.co.dipankar.fmradio.ui.fragments.SearchFragment;
+import in.co.dipankar.fmradio.ui.fragments.SettingFragment;
+import in.co.dipankar.fmradio.ui.fragments.SplashFragment;
 import in.co.dipankar.fmradio.utils.Configuration;
 
 public class MainActivity extends BaseNavigationActivity {
@@ -24,11 +27,29 @@ public class MainActivity extends BaseNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        if(Configuration.shouldShowFTUX()){
-            navigate(Screen.FTUX_SCREEN, null);
+        /*
+        // test if it comes from Notification or Icon tap
+        RadioManager.STATE state = FmRadioApplication.Get().getRadioManager().getState();
+        if(state == RadioManager.STATE.RESUME || state == RadioManager.STATE.SUCCESS){
+            Bundle bundle = new Bundle();
+            String id=  FmRadioApplication.Get().getRadioManager().getCurrentID();
+            Radio r = FmRadioApplication.Get().getRadioManager().getRadioForId(id);
+            if(r != null){
+                bundle.putString("ID",id);
+                if(r.isVideo()){
+                    navigate(Screen.VIDEO_PLAER_SCREEN, bundle);
+                } else{
+                    navigate(Screen.PLAYER_SCREEN, bundle);
+                }
+            }
+
         } else {
-            navigate(Screen.SPLASH_SCREEN, null);
-        }
+        /*/
+            if (Configuration.shouldShowFTUX()) {
+                navigate(Screen.FTUX_SCREEN, null, true, false);
+            } else {
+                navigate(Screen.SPLASH_SCREEN, null, true, false);
+            }
     }
 
     @Override
@@ -62,8 +83,21 @@ public class MainActivity extends BaseNavigationActivity {
                 return LoginFragment.getNewFragment(args);
             case PLAYER_SCREEN:
                 return PlayerFragment.getNewFragment(args);
+            case VIDEO_PLAER_SCREEN:
+                return VideoPlayerFragment.getNewFragment(args);
             default:
                 return null;
+        }
+    }
+
+    @Override
+    public FragmentAnimation getFragmentAnimation(Screen screen){
+        switch (screen){
+            case PLAYER_SCREEN:
+            case VIDEO_PLAER_SCREEN:
+                return FragmentAnimation.SLIDE_UP_DOWN;
+            default:
+                return FragmentAnimation.SLIDE_LEFT_RIGHT;
         }
     }
 
