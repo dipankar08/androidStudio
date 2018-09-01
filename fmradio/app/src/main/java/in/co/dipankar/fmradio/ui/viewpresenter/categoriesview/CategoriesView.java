@@ -17,14 +17,14 @@ import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.data.radio.Radio;
 import in.co.dipankar.fmradio.ui.base.BaseView;
+import in.co.dipankar.fmradio.ui.viewpresenter.radiolist.RadioListAdapter;
 import in.co.dipankar.fmradio.ui.viewpresenter.shared.RecyclerTouchListener;
 import in.co.dipankar.fmradio.ui.viewpresenter.toolbar.ToolbarView;
-import in.co.dipankar.fmradio.ui.viewpresenter.videoplayer.TVAdapter;
 
 public class CategoriesView extends BaseView {
     private ToolbarView mToolbar;
     private RecyclerView mRecyclerView;
-    private CategoriesAdapter mAdapter;
+    private RadioListAdapter mAdapter;
     private List<Radio> mCurList;
     private int mCurIndex;
     public CategoriesView(Context context) {
@@ -62,7 +62,7 @@ public class CategoriesView extends BaseView {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), calculateNoOfColumns()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new CategoriesAdapter(getContext());
+        mAdapter = new RadioListAdapter(getContext(), RadioListAdapter.ItemStyle.CATEGORIES);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override

@@ -5,14 +5,15 @@
     android:layout_marginBottom="20dp"
     android:layout_marginLeft="@dimen/windowLeftMargin"
     android:layout_height="135dp"
-    android:layout_width="80dp">
+    android:layout_width="90dp">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="8dp"
         android:layout_margin="5dp"
         android:elevation="10dp">
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/root"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
@@ -25,7 +26,7 @@
                 />
             <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:id="@+id/text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextSubTitle"
                 android:textColor="@color/textPrimary1"
@@ -33,16 +34,20 @@
                 android:maxLines="2"
                 android:padding="3dp"
                 android:textAlignment="center"
-                android:layout_centerHorizontal="true"
+                app:layout_constraintLeft_toLeftOf="@+id/root"
+                app:layout_constraintRight_toRightOf="@+id/root"
+                app:layout_constraintBottom_toBottomOf="@+id/root"
+                app:layout_constraintTop_toBottomOf="@+id/image"
                 />
             <in.co.dipankar.quickandorid.views.CustomFontTextView
                 android:id="@+id/status"
                 android:text="Live"
-                android:layout_below="@+id/image"
-                android:layout_marginTop="-10dp"
-                android:layout_centerHorizontal="true"
                 style="@style/TextTipStyle"
+                app:layout_constraintLeft_toLeftOf="@+id/root"
+                app:layout_constraintRight_toRightOf="@+id/root"
+                app:layout_constraintTop_toBottomOf="@+id/image"
+                app:layout_constraintBottom_toBottomOf="@+id/image"
                 />
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -25,6 +25,7 @@ import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.data.radio.Radio;
 import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
+import in.co.dipankar.fmradio.ui.viewpresenter.radiolist.RadioListAdapter;
 import in.co.dipankar.fmradio.ui.viewpresenter.shared.RecyclerTouchListener;
 import in.co.dipankar.quickandorid.utils.DLog;
 
@@ -39,7 +40,7 @@ public class VideoPlayerView extends BaseView {
     private List<Radio> mCurList;
     private int mCurIndex;
     private RecyclerView mRecyclerView;
-    private TVAdapter mTVAdapter;
+    private RadioListAdapter mTVAdapter;
     private ViewGroup mMenu;
     private ViewGroup mButtonHolder;
 
@@ -165,7 +166,7 @@ public class VideoPlayerView extends BaseView {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mTVAdapter = new TVAdapter(getContext());
+        mTVAdapter = new RadioListAdapter(getContext(), RadioListAdapter.ItemStyle.VIDEO_PLAYER);
         mRecyclerView.setAdapter(mTVAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override

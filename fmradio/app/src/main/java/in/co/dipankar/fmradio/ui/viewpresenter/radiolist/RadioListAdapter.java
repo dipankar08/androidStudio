@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio.ui.viewpresenter.videoplayer;
+package in.co.dipankar.fmradio.ui.viewpresenter.radiolist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -18,10 +18,18 @@ import java.util.List;
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.data.radio.Radio;
 
-public class TVAdapter extends RecyclerView.Adapter<TVAdapter.MyViewHolder> {
+public class RadioListAdapter extends RecyclerView.Adapter<RadioListAdapter.MyViewHolder> {
     private List<Radio> radioList;
     private Context mContext;
     private int lastPosition = -1;
+    private ItemStyle mItemStyle;
+
+    public enum ItemStyle{
+        ROUND_STYLE,
+        SQUARE_STYLE,
+        CATEGORIES,
+        VIDEO_PLAYER
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
@@ -36,14 +44,30 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.MyViewHolder> {
         }
     }
 
-    public TVAdapter(Context context) {
+    public RadioListAdapter(Context context, ItemStyle itemStyle) {
         this.radioList = new ArrayList<>();
         mContext = context;
+        mItemStyle = itemStyle;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_tv_item, parent, false);
+        int layoutId = R.layout.item_radiolistadapter_default;
+        switch (mItemStyle){
+            case SQUARE_STYLE:
+                layoutId = R.layout.item_radiolistadapter_square;
+                break;
+            case ROUND_STYLE:
+                layoutId = R.layout.item_radiolistadapter_round;
+                break;
+            case CATEGORIES:
+                layoutId = R.layout.item_radiolistadapter_categories;
+                break;
+            case VIDEO_PLAYER:
+                layoutId = R.layout.item_radiolistadapter_video_player;
+                break;
+        }
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
         return new MyViewHolder(itemView);
     }
     @Override
@@ -88,4 +112,5 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.MyViewHolder> {
             lastPosition = position;
         }
     }
+
 }

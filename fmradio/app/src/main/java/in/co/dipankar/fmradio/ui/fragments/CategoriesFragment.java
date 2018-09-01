@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import in.co.dipankar.fmradio.ui.base.BaseFragment;
-import in.co.dipankar.fmradio.ui.viewpresenter.categoriesview.CategoriesAdapter;
 import in.co.dipankar.fmradio.ui.viewpresenter.categoriesview.CategoriesView;
-import in.co.dipankar.fmradio.ui.viewpresenter.player.FullScreenPlayerView;
 
 public class CategoriesFragment extends BaseFragment {
     public static CategoriesFragment getNewFragment(Bundle args) {

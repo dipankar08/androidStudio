@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginRight="12dp"
+    android:layout_marginBottom="20dp"
+    android:layout_marginLeft="@dimen/windowLeftMargin"
+    android:layout_height="135dp"
+    android:layout_width="80dp">
+    <in.co.dipankar.quickandorid.views.CircleImageView
+        android:id="@+id/image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_radio_mirchi"
+        android:layout_centerHorizontal="true"
+        app:civ_border_color="@color/textPrimary5"
+        app:civ_border_width="1dp"
+        />
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:maxLines="2"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        style="@style/TextTitle"
+        android:layout_centerHorizontal="true"
+        />
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/status"
+        android:text="Live"
+        android:layout_below="@+id/image"
+        android:layout_marginTop="-10dp"
+        android:layout_centerHorizontal="true"
+        style="@style/TextTipStyle"
+        />
+</RelativeLayout>

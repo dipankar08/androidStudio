@@ -18,6 +18,7 @@ import in.co.dipankar.fmradio.data.radio.Radio;
 import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
+import in.co.dipankar.fmradio.ui.viewpresenter.radiolist.RadioListAdapter;
 import in.co.dipankar.fmradio.ui.viewpresenter.shared.RecyclerTouchListener;
 import in.co.dipankar.quickandorid.utils.DLog;
 
@@ -25,7 +26,7 @@ public class RadioSubListView extends BaseView implements RadioSubListViewPresen
     RadioSubListViewPresenter mPresenter;
     private RecyclerView mRecyclerView;
     private List<Radio> mRadioList;
-    private RadioAdapter mRadioAdapter;
+    private RadioListAdapter mRadioListAdapter;
     private TextView mTitle;
     private String mCategories;
 
@@ -58,8 +59,8 @@ public class RadioSubListView extends BaseView implements RadioSubListViewPresen
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRadioAdapter = new RadioAdapter(getContext());
-        mRecyclerView.setAdapter(mRadioAdapter);
+        mRadioListAdapter = new RadioListAdapter(getContext(), RadioListAdapter.ItemStyle.ROUND_STYLE);
+        mRecyclerView.setAdapter(mRadioListAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -117,7 +118,7 @@ public class RadioSubListView extends BaseView implements RadioSubListViewPresen
 
     private void update() {
         mRadioList = FmRadioApplication.Get().getRadioManager().getRadioByCategories(mCategories);
-        mRadioAdapter.setItems(mRadioList);
+        mRadioListAdapter.setItems(mRadioList);
     }
 }
 
