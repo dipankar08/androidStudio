@@ -52,6 +52,16 @@
         <item name="android:textSize">18dp</item>
     </style>
 
+    <style name="TextSubHeading">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">TextSubHeading</item>
+        <item name="android:textColor">@color/textPrimary2</item>
+        <item name="customfont">OpenSans-Bold.ttf</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
     <style name="SearchBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
@@ -149,5 +159,7 @@
     <style name="ImageIcon.Setting.White">
         <item name="android:src">@drawable/ic_setting_black_24</item>
     </style>
+
+
 
 </resources>

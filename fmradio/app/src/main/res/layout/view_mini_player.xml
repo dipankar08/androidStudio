@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#111111"
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/play_pause"
@@ -14,6 +15,7 @@
         android:id="@+id/text"
         style="@style/TextTitle"
         android:text="Now playing...."
+        android:textColor="#fff"
         android:layout_toRightOf="@id/play_pause"
         android:layout_centerVertical="true" />
 </RelativeLayout>

@@ -3,13 +3,10 @@ package in.co.dipankar.fmradio.ui.activities;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
-import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.data.DataManager;
-import in.co.dipankar.fmradio.entity.radio.Radio;
-import in.co.dipankar.fmradio.entity.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseNavigationActivity;
 import in.co.dipankar.fmradio.ui.base.Screen;
+import in.co.dipankar.fmradio.ui.fragments.CategoriesFragment;
 import in.co.dipankar.fmradio.ui.fragments.VideoPlayerFragment;
 import in.co.dipankar.fmradio.ui.fragments.FtuxFragment;
 import in.co.dipankar.fmradio.ui.fragments.HomeFragment;
@@ -63,7 +60,6 @@ public class MainActivity extends BaseNavigationActivity {
     }
 
     private void init() {
-        DataManager.Get().init(this);
     }
 
     @Override
@@ -85,6 +81,8 @@ public class MainActivity extends BaseNavigationActivity {
                 return PlayerFragment.getNewFragment(args);
             case VIDEO_PLAER_SCREEN:
                 return VideoPlayerFragment.getNewFragment(args);
+            case CATEGORIES_SCREEN:
+                return CategoriesFragment.getNewFragment(args);
             default:
                 return null;
         }
@@ -103,7 +101,6 @@ public class MainActivity extends BaseNavigationActivity {
 
     @Override
     protected void onDestroy() {
-        DataManager.Get().destroy();
         super.onDestroy();
     }
 

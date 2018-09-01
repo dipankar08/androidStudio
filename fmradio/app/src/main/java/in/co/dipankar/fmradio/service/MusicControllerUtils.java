@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
-import in.co.dipankar.fmradio.entity.radio.Radio;
-import in.co.dipankar.fmradio.entity.radio.RadioManager;
+import in.co.dipankar.fmradio.data.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.quickandorid.services.Item;
 import in.co.dipankar.quickandorid.services.MusicForegroundService;
 import in.co.dipankar.quickandorid.utils.DLog;

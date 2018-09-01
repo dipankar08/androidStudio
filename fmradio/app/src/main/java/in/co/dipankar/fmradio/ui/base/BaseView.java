@@ -7,10 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import java.util.List;
-
-import in.co.dipankar.fmradio.entity.radio.Radio;
-
 public abstract class BaseView extends RelativeLayout {
 
     @Nullable private Bundle args;

@@ -1,9 +1,7 @@
 package in.co.dipankar.fmradio.ui.viewpresenter.videoplayer;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,23 +18,15 @@ import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
 import com.devbrackets.android.exomedia.ui.widget.VideoView;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.entity.radio.Radio;
-import in.co.dipankar.fmradio.entity.radio.RadioManager;
-import in.co.dipankar.fmradio.service.MusicService;
+import in.co.dipankar.fmradio.data.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.viewpresenter.shared.RecyclerTouchListener;
-import in.co.dipankar.fmradio.ui.viewpresenter.sublist.RadioAdapter;
-import in.co.dipankar.quickandorid.services.Item;
-import in.co.dipankar.quickandorid.services.MusicForegroundService;
 import in.co.dipankar.quickandorid.utils.DLog;
-
-import static android.content.Context.BIND_AUTO_CREATE;
 
 public class VideoPlayerView extends BaseView {
 

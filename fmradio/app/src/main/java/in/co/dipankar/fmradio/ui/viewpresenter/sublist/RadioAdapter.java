@@ -1,7 +1,6 @@
 package in.co.dipankar.fmradio.ui.viewpresenter.sublist;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +15,8 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.entity.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.Radio;
 
 public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.MyViewHolder> {
     private List<Radio> radioList;

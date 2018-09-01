@@ -2,7 +2,6 @@ package in.co.dipankar.fmradio.ui.viewpresenter.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +21,9 @@ import java.util.Map;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.entity.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.Radio;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
-import in.co.dipankar.fmradio.ui.viewpresenter.shared.RecyclerTouchListener;
-import in.co.dipankar.quickandorid.utils.DLog;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SearchView extends BaseView{
     private SearchViewPresenter mPresenter;

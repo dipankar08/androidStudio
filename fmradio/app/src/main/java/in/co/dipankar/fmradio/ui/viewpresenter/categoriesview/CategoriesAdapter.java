@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio.ui.viewpresenter.videoplayer;
+package in.co.dipankar.fmradio.ui.viewpresenter.categoriesview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +18,7 @@ import java.util.List;
 import in.co.dipankar.fmradio.R;
 import in.co.dipankar.fmradio.data.radio.Radio;
 
-public class TVAdapter extends RecyclerView.Adapter<TVAdapter.MyViewHolder> {
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.MyViewHolder> {
     private List<Radio> radioList;
     private Context mContext;
     private int lastPosition = -1;
@@ -36,14 +36,14 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.MyViewHolder> {
         }
     }
 
-    public TVAdapter(Context context) {
+    public CategoriesAdapter(Context context) {
         this.radioList = new ArrayList<>();
         mContext = context;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_tv_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_categories, parent, false);
         return new MyViewHolder(itemView);
     }
     @Override

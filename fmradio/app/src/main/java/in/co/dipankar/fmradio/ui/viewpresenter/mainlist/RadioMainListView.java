@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.entity.radio.RadioManager;
+import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 
 public class RadioMainListView extends BaseView {

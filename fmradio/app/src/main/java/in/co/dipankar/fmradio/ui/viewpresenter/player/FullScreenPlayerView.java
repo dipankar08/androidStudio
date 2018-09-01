@@ -1,11 +1,6 @@
 package in.co.dipankar.fmradio.ui.viewpresenter.player;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.os.TestLooperManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +11,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.entity.radio.Radio;
-import in.co.dipankar.fmradio.entity.radio.RadioManager;
-import in.co.dipankar.fmradio.service.MusicService;
+import in.co.dipankar.fmradio.data.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
-import in.co.dipankar.quickandorid.services.Item;
-import in.co.dipankar.quickandorid.services.MusicForegroundService;
-import in.co.dipankar.quickandorid.utils.DLog;
-
-import static android.content.Context.BIND_AUTO_CREATE;
 
 public class FullScreenPlayerView extends BaseView implements FullScreenPlayerViewPresenter.ViewContract {
     FullScreenPlayerViewPresenter mPresenter;

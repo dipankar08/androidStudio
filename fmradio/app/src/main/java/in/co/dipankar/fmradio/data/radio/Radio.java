@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio.entity.radio;
+package in.co.dipankar.fmradio.data.radio;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Radio implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public enum STATE{
+    public enum STATE {
         LIVE_RADIO,
         LIVE_TV,
         ONLINE,
@@ -20,7 +20,7 @@ public class Radio implements Serializable {
         LIMITED_TIME_BROADCAST
     }
 
-    public class Builder{
+    public class Builder {
         private String id;
         private String name;
         private String mediaUrl;
@@ -28,56 +28,56 @@ public class Radio implements Serializable {
         private String categories;
         private String tags;
 
-        public Builder setName(String name){
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder setImageUrl(String name){
+        public Builder setImageUrl(String name) {
             this.imageUrl = name;
             return this;
         }
 
-        public Builder setMediaUrl(String name){
+        public Builder setMediaUrl(String name) {
             this.mediaUrl = name;
             return this;
         }
 
-        public Builder setCategories(String name){
+        public Builder setCategories(String name) {
             this.categories = name;
             return this;
         }
 
-        public Builder setTags(String name){
+        public Builder setTags(String name) {
             this.tags = name;
             return this;
         }
 
-        public Radio build(){
-            return  new Radio(this);
+        public Radio build() {
+            return new Radio(this);
         }
 
     }
 
     private Radio(Builder builder) {
-        name= builder.name;
-        mediaUrl=builder.mediaUrl;
-        imageUrl= builder.imageUrl;
-        categories= builder.categories;
-        tags=builder.tags;
+        name = builder.name;
+        mediaUrl = builder.mediaUrl;
+        imageUrl = builder.imageUrl;
+        categories = builder.categories;
+        tags = builder.tags;
         id = builder.id;
     }
 
     @JsonProperty("uid")
-    private  String id;
+    private String id;
     @JsonProperty("name")
-    private  String name;
+    private String name;
     @JsonProperty("url")
-    private  String mediaUrl;
+    private String mediaUrl;
     @JsonProperty("img")
-    private  String imageUrl;
+    private String imageUrl;
     @JsonProperty("category")
-    private  String categories;
+    private String categories;
     @JsonProperty("tags")
     private String tags;
     @JsonProperty("status")
@@ -91,11 +91,11 @@ public class Radio implements Serializable {
     private STATE state;
 
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public STATE getState(){
+    public STATE getState() {
         return state;
     }
 
@@ -120,11 +120,11 @@ public class Radio implements Serializable {
     }
 
     public STATE getRank() {
-        if(rank < 2){
+        if (rank < 2) {
             return STATE.OFFLINE;
-        } else if(rank < 6){
+        } else if (rank < 6) {
             return STATE.MOSTLY_WORKING;
-        } else{
+        } else {
             return STATE.OFFLINE;
         }
     }
@@ -138,11 +138,11 @@ public class Radio implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return super.toString();
     }
+
     // used my mapper
     public Radio(String name, String mediaUrl, String imageUrl, String categories, String tags, String status, int rank, int count, String help) {
         this.name = name;
@@ -157,12 +157,13 @@ public class Radio implements Serializable {
 
 
     }
-    public void process(){
+
+    public void process() {
         buildState();
     }
 
     private void buildState() {
-        if(tags != null) {
+        if (tags != null) {
             tags = tags.toLowerCase();
             if (tags.contains("live_tv")) {
                 state = STATE.LIVE_TV;
@@ -174,14 +175,14 @@ public class Radio implements Serializable {
                 state = STATE.ONLINE;
             }
         } else {
-            state=STATE.LIVE_RADIO;
+            state = STATE.LIVE_RADIO;
         }
     }
 
-    public boolean isVideo(){
-        if(state == STATE.LIVE_TV){
+    public boolean isVideo() {
+        if (state == STATE.LIVE_TV) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
@@ -193,6 +194,8 @@ public class Radio implements Serializable {
     public String getSubTitle() {
         return categories;
     }
-    public Radio() {}
+
+    public Radio() {
+    }
 
 }

@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio.entity.radio.remote;
+package in.co.dipankar.fmradio.data.radio.remote;
 
 
 import android.content.Context;
@@ -14,15 +14,16 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;// in play 2.3
 
-import in.co.dipankar.fmradio.entity.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.Radio;
 import in.co.dipankar.quickandorid.utils.Network;
 
 import static in.co.dipankar.fmradio.utils.Constants.REMOTE_DB_ENDPOINT;
 
 public class RadioRemoteFetcher {
 
-    public interface Callback{
+    public interface Callback {
         void onSuccess(List<Radio> list);
+
         void onFail(String msg);
     }
 
@@ -32,13 +33,14 @@ public class RadioRemoteFetcher {
     public static String FETCH_URL = REMOTE_DB_ENDPOINT + "?_limit=1000";
 
     ObjectMapper mMapper;
-    public RadioRemoteFetcher(Context context){
+
+    public RadioRemoteFetcher(Context context) {
         //TODO: Use DI to get the Context
-        mNetwork = new Network(context,true);
-        mMapper= new ObjectMapper();
+        mNetwork = new Network(context, true);
+        mMapper = new ObjectMapper();
     }
 
-    public void fetch(@NonNull  final Callback callback){
+    public void fetch(@NonNull final Callback callback) {
         mNetwork.retrive(FETCH_URL, Network.CacheControl.GET_LIVE_ONLY, new Network.Callback() {
             @Override
             public void onSuccess(JSONObject jsonObject) {
@@ -55,26 +57,27 @@ public class RadioRemoteFetcher {
     private void parseObject(JSONObject jsonObject, Callback callback) {
         List<Radio> myList = null;
         try {
-            if(jsonObject.getString("status").equals("success")){
-                String jsonList =  jsonObject.getString("out");
+            if (jsonObject.getString("status").equals("success")) {
+                String jsonList = jsonObject.getString("out");
                 String stringVal = jsonList;
-                myList = mMapper.readValue(stringVal, new TypeReference<List<Radio>>(){});
+                myList = mMapper.readValue(stringVal, new TypeReference<List<Radio>>() {
+                });
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }catch(JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        for (Radio r: myList){
+        for (Radio r : myList) {
             r.process();
         }
         callback.onSuccess(myList);
     }
 
-    public void updateRank(final String id, final boolean up){
-        if(up){
+    public void updateRank(final String id, final boolean up) {
+        if (up) {
             mNetwork.retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
-        } else{
+        } else {
             mNetwork.retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
         }
     }
@@ -82,19 +85,21 @@ public class RadioRemoteFetcher {
     public void updateStatOnDBNodes(final String id, final String type) {
         mNetwork.send(
                 REMOTE_DB_ENDPOINT,
-            new HashMap<String, String>() {
-                {
-                    put("_cmd", "increment");
-                    put("id", id);
-                    put("_payload", type);
-                }
-            },
-            new Network.Callback() {
-                @Override
-                public void onSuccess(JSONObject jsonObject) {}
+                new HashMap<String, String>() {
+                    {
+                        put("_cmd", "increment");
+                        put("id", id);
+                        put("_payload", type);
+                    }
+                },
+                new Network.Callback() {
+                    @Override
+                    public void onSuccess(JSONObject jsonObject) {
+                    }
 
-                @Override
-                public void onError(String msg) {}
-            });
+                    @Override
+                    public void onError(String msg) {
+                    }
+                });
     }
 }

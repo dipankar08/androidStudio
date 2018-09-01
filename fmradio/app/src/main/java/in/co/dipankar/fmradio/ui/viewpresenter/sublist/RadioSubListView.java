@@ -14,8 +14,8 @@ import java.util.List;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.entity.radio.Radio;
-import in.co.dipankar.fmradio.entity.radio.RadioManager;
+import in.co.dipankar.fmradio.data.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
 import in.co.dipankar.fmradio.ui.viewpresenter.shared.RecyclerTouchListener;
@@ -72,6 +72,14 @@ public class RadioSubListView extends BaseView implements RadioSubListViewPresen
             }
         }));
         mTitle = findViewById(R.id.title);
+        mTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("CAT",mCategories);
+                getNavigation().navigate(Screen.CATEGORIES_SCREEN, bundle);
+            }
+        });
     }
 
     private void startPlay(Radio radio) {

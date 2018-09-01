@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.data.DataManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
 import in.co.dipankar.quickandorid.utils.DLog;

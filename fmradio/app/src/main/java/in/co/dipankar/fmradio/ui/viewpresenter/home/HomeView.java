@@ -6,9 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
+import in.co.dipankar.fmradio.data.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
+import in.co.dipankar.fmradio.ui.viewpresenter.miniplayer.MiniPlayerView;
 
 public class HomeView extends BaseView implements HomeViewPresenter.ViewContract{
     HomeViewPresenter mPresenter;
@@ -33,14 +37,16 @@ public class HomeView extends BaseView implements HomeViewPresenter.ViewContract
         LayoutInflater.from(getContext()).inflate(R.layout.view_home,this);
         mPresenter = new HomeViewPresenter();
         setPresenter(mPresenter);
+
         mSerach = findViewById(R.id.search);
-        mSetting = findViewById(R.id.setting);
         mSerach.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSearch();
+                getNavigation().navigate(Screen.SEARCH_SCREEN, null);
             }
         });
+
+        mSetting = findViewById(R.id.setting);
         mSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +55,4 @@ public class HomeView extends BaseView implements HomeViewPresenter.ViewContract
         });
     }
 
-    private void showSearch() {
-        getNavigation().navigate(Screen.SEARCH_SCREEN, null);
-    }
 }

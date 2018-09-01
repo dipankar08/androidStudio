@@ -9,11 +9,10 @@ import android.widget.TextView;
 
 import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.entity.radio.Radio;
-import in.co.dipankar.fmradio.entity.radio.RadioManager;
+import in.co.dipankar.fmradio.data.radio.Radio;
+import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
-import in.co.dipankar.fmradio.ui.viewpresenter.player.FullScreenPlayerView;
 
 public class MiniPlayerView extends BaseView {
     ImageView mPlayPause;
@@ -43,7 +42,8 @@ public class MiniPlayerView extends BaseView {
             }
         });
         mText = findViewById(R.id.text);
-        mText.setOnClickListener(new OnClickListener() {
+
+        this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 getNavigation().navigate(Screen.PLAYER_SCREEN, null);
@@ -68,8 +68,11 @@ public class MiniPlayerView extends BaseView {
             mText.setText("Trying to Play "+r.getName());
             mPlayPause.setImageResource(R.drawable.ic_pause_gray_32);
         }
-        else {
 
+        if( state == RadioManager.STATE.COMPLETE|| state == RadioManager.STATE.ERROR || state == RadioManager.STATE.NOT_PLAYING){
+            setVisibility(GONE);
+        } else{
+            setVisibility(VISIBLE);
         }
     }
 
@@ -94,4 +97,11 @@ public class MiniPlayerView extends BaseView {
             refreshUI(r, state);
         }
     };
+
+    private boolean isPlaying(RadioManager.STATE state){
+        return state == RadioManager.STATE.SUCCESS
+                || state == RadioManager.STATE.TRY_PLAYING
+                || state == RadioManager.STATE.RESUME
+                || state == RadioManager.STATE.PAUSED;
+    }
 }
