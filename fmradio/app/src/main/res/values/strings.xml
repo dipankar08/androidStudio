@@ -2,6 +2,9 @@
     <string name="app_name">Best FM Radio India</string>
 
     <string name="state_default"></string>
+    <string name="facebook_app_id">1343643482425305</string>
+
+
     <string name="state_offline">This stream is offline now. Please try again later</string>
     <string name="state_slow">Please wait, this stream takes time to load.</string>
     <string name="state_removed">This stream is removed. We will update soon.</string>

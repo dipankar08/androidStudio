@@ -62,10 +62,10 @@ public interface IRadioContract {
 
     Node getItembyID(String channel_id);
 
-      void stopPlay();
+    void stopPlay();
 
-      String getCurrentPlayingID();
+    String getCurrentPlayingID();
 
-      boolean isPlaying();
+    boolean isPlaying();
   }
 }

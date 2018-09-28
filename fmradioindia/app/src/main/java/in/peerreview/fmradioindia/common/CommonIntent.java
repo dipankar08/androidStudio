@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import in.peerreview.fmradioindia.activities.radio.RadioActivity;
 import in.peerreview.fmradioindia.activities.tutorial.TutorialActivity;
-import in.peerreview.fmradioindia.activities.welcome.WelcomeActivity;
 
 /** Created by dip on 5/8/18. */
 public class CommonIntent {
@@ -21,5 +20,4 @@ public class CommonIntent {
     sender.startActivity(intent);
     sender.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
   }
-
 }

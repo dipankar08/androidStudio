@@ -15,7 +15,7 @@
         android:id="@+id/text"
         style="@style/TextTitle"
         android:text="Now playing...."
-        android:textColor="#fff"
         android:layout_toRightOf="@id/play_pause"
+        android:textColor="#fff"
         android:layout_centerVertical="true" />
 </RelativeLayout>

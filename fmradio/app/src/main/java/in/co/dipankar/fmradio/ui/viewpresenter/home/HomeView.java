@@ -5,54 +5,51 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-
-import in.co.dipankar.fmradio.FmRadioApplication;
 import in.co.dipankar.fmradio.R;
-import in.co.dipankar.fmradio.data.radio.Radio;
-import in.co.dipankar.fmradio.data.radio.RadioManager;
 import in.co.dipankar.fmradio.ui.base.BaseView;
 import in.co.dipankar.fmradio.ui.base.Screen;
-import in.co.dipankar.fmradio.ui.viewpresenter.miniplayer.MiniPlayerView;
 
-public class HomeView extends BaseView implements HomeViewPresenter.ViewContract{
-    HomeViewPresenter mPresenter;
-    ImageView mSetting;
-    ImageView mSerach;
-    public HomeView(Context context) {
-        super(context);
-        init(context);
-    }
+public class HomeView extends BaseView implements HomeViewPresenter.ViewContract {
+  HomeViewPresenter mPresenter;
+  ImageView mSetting;
+  ImageView mSerach;
 
-    public HomeView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
+  public HomeView(Context context) {
+    super(context);
+    init(context);
+  }
 
-    public HomeView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
+  public HomeView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init(context);
+  }
 
-    private void init(Context context) {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_home,this);
-        mPresenter = new HomeViewPresenter();
-        setPresenter(mPresenter);
+  public HomeView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init(context);
+  }
 
-        mSerach = findViewById(R.id.search);
-        mSerach.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getNavigation().navigate(Screen.SEARCH_SCREEN, null);
-            }
+  private void init(Context context) {
+    LayoutInflater.from(getContext()).inflate(R.layout.view_home, this);
+    mPresenter = new HomeViewPresenter();
+    setPresenter(mPresenter);
+
+    mSerach = findViewById(R.id.search);
+    mSerach.setOnClickListener(
+        new OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            getNavigation().navigate(Screen.SEARCH_SCREEN, null);
+          }
         });
 
-        mSetting = findViewById(R.id.setting);
-        mSetting.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getNavigation().navigate(Screen.SETTING_SCREEN, null);
-            }
+    mSetting = findViewById(R.id.setting);
+    mSetting.setOnClickListener(
+        new OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            getNavigation().navigate(Screen.SETTING_SCREEN, null);
+          }
         });
-    }
-
+  }
 }

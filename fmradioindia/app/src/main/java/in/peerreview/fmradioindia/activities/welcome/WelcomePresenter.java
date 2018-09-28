@@ -50,17 +50,20 @@ public class WelcomePresenter implements IWelcomeContract.Presenter {
               }
             });
 
-      FMRadioIndiaApplication.Get().getGateKeeperUtils().init(new GateKeeperUtils.Callback() {
-          @Override
-          public void onSuccess() {
-              DLog.d("GK updated");
-          }
+    FMRadioIndiaApplication.Get()
+        .getGateKeeperUtils()
+        .init(
+            new GateKeeperUtils.Callback() {
+              @Override
+              public void onSuccess() {
+                DLog.d("GK updated");
+              }
 
-          @Override
-          public void onError() {
-              DLog.d("GK not updated");
-          }
-      });
+              @Override
+              public void onError() {
+                DLog.d("GK not updated");
+              }
+            });
   }
 
   private void loadDataInternal() {

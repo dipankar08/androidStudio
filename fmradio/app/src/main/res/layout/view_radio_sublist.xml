@@ -4,14 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/large"
+    >
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextListSubTitle"
+        style="@style/TextHeader"
         android:layout_marginLeft="@dimen/windowLeftMargin"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="@dimen/medium"
         />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
@@ -19,5 +21,4 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title">
     </android.support.v7.widget.RecyclerView>
-
 </RelativeLayout>

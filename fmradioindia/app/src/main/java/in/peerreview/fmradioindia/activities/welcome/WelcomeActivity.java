@@ -15,7 +15,6 @@ import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.RuntimePermissionUtils;
 import in.co.dipankar.quickandorid.utils.SharedPrefsUtil;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.activities.FMRadioIndiaApplication;
 import in.peerreview.fmradioindia.common.CommonIntent;
 
 public class WelcomeActivity extends AppCompatActivity implements IWelcomeContract.View {

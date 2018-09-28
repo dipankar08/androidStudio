@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="70" />
+                                                <entry key="scalingPercent" value="61" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -35,8 +35,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/FM-Radio-India.jpg" />
+                                      <entry key="backgroundColor" value="27ae60" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/icons8-radio-100.png" />
+                                      <entry key="foregroundLayerName" value="i" />
                                       <entry key="legacyIconShape" value="CIRCLE" />
                                     </map>
                                   </option>

@@ -5,14 +5,11 @@ import in.co.dipankar.fmradio.ui.base.BasePresenter;
 
 public class FullScreenPlayerViewPresenter extends BasePresenter {
 
-    private Radio mRadio;
-    public void setRadio(Radio radio) {
-        mRadio = radio;
-    }
+  private Radio mRadio;
 
-    public interface ViewContract {
+  public void setRadio(Radio radio) {
+    mRadio = radio;
+  }
 
-    }
-
-
+  public interface ViewContract {}
 }

@@ -32,7 +32,6 @@
         android:layout_above="@+id/mini_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
     <in.co.dipankar.fmradio.ui.viewpresenter.miniplayer.MiniPlayerView
         android:id="@+id/mini_player"
         android:visibility="gone"

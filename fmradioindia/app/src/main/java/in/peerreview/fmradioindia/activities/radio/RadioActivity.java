@@ -1,5 +1,7 @@
 package in.peerreview.fmradioindia.activities.radio;
 
+import static in.peerreview.fmradioindia.common.Constants.TELEMETRY_CLICK_QUICK_LIST_ITEM;
+
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -31,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import in.co.dipankar.quickandorid.buttonsheet.CustomButtonSheetView;
 import in.co.dipankar.quickandorid.buttonsheet.SheetItem;
-import in.co.dipankar.quickandorid.utils.AndroidUtils;
 import in.co.dipankar.quickandorid.utils.AudioRecorderUtil;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.DialogUtils;
@@ -51,8 +52,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import pl.droidsonroids.gif.GifImageView;
-
-import static in.peerreview.fmradioindia.common.Constants.TELEMETRY_CLICK_QUICK_LIST_ITEM;
 
 public class RadioActivity extends AppCompatActivity implements IRadioContract.View {
   private ImageView play, next, prev;
@@ -81,6 +80,7 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         public void onTick(String time) {
           mNotificationView.updateText("Recording " + time);
         }
+
         @Override
         public void onFinish(int sec) {}
       };
@@ -152,19 +152,21 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     mQuickListView.init(
         items1,
         new QuickListView.Callback() {
-            @Override
-            public void onClick(QuickListView.Item id) {
-                mPresenter.setCurNodeID(id.getId());
-                mPresenter.playById(id.getId());
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(TELEMETRY_CLICK_QUICK_LIST_ITEM);
-            }
+          @Override
+          public void onClick(QuickListView.Item id) {
+            mPresenter.setCurNodeID(id.getId());
+            mPresenter.playById(id.getId());
+            FMRadioIndiaApplication.Get().getTelemetry().markHit(TELEMETRY_CLICK_QUICK_LIST_ITEM);
+          }
 
-            @Override
-            public void onLongClick(QuickListView.Item id) {
-                mPresenter.setCurNodeID(id.getId());
-                mCustomButtonSheetView.show();
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_QUICK_LIST_ITEM_LONG);
-            }
+          @Override
+          public void onLongClick(QuickListView.Item id) {
+            mPresenter.setCurNodeID(id.getId());
+            mCustomButtonSheetView.show();
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_QUICK_LIST_ITEM_LONG);
+          }
         },
         R.layout.item,
         QuickListView.Type.HORIZONTAL);
@@ -280,7 +282,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           @Override
           public void onClick(View v) {
             mPresenter.playPause();
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_PLAY_BUTTON);
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_PLAY_BUTTON);
           }
         });
 
@@ -289,7 +293,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           @Override
           public void onClick(View v) {
             mPresenter.playPrevious();
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_PREV_BUTTON);
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_PREV_BUTTON);
           }
         });
 
@@ -298,7 +304,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           @Override
           public void onClick(View v) {
             mPresenter.playNext();
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_NEXT_BUTTON);
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_NEXT_BUTTON);
           }
         });
 
@@ -306,7 +314,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_FEV_BUTTON);
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_FEV_BUTTON);
             mPresenter.onFevClicked();
           }
         });
@@ -317,7 +327,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           public void onClick(View v) {
             showLockUI();
             setImageSrcWithAnimation(lock, R.drawable.ic_lock_off);
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_LOCK_BUTTON);
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_LOCK_BUTTON);
           }
         });
 
@@ -334,7 +346,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           @Override
           public boolean onLongClick(View v) {
             hideLockUI();
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_LOCK_BUTTON);
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_LOCK_BUTTON);
             return true;
           }
         });
@@ -344,7 +358,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
           public void onClick(View v) {
             if (!mAudioRecorderUtil.isRecording()) {
               startRecoding();
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_RECORD_BUTTON);
+              FMRadioIndiaApplication.Get()
+                  .getTelemetry()
+                  .markHit(Constants.TELEMETRY_CLICK_RECORD_BUTTON);
             } else {
               mAudioRecorderUtil.stopRecord();
             }
@@ -399,18 +415,22 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     mRadioListView.init(
         items1,
         new QuickListView.Callback() {
-            @Override
-            public void onClick(QuickListView.Item id) {
-                mPresenter.playById(id.getId());
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MAIN_LIST_ITEM);
-            }
+          @Override
+          public void onClick(QuickListView.Item id) {
+            mPresenter.playById(id.getId());
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_MAIN_LIST_ITEM);
+          }
 
-            @Override
-            public void onLongClick(QuickListView.Item id) {
-                mCustomButtonSheetView.show();
-                mCurSelectId = id.getId();
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MAIN_LIST_ITEM_LONG);
-            }
+          @Override
+          public void onLongClick(QuickListView.Item id) {
+            mCustomButtonSheetView.show();
+            mCurSelectId = id.getId();
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_MAIN_LIST_ITEM_LONG);
+          }
         },
         R.layout.item_radio,
         QuickListView.Type.VERTICAL);
@@ -439,7 +459,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_SEARCH_BAR);
+            FMRadioIndiaApplication.Get()
+                .getTelemetry()
+                .markHit(Constants.TELEMETRY_CLICK_SEARCH_BAR);
             ShowQAB();
           }
         });
@@ -463,19 +485,27 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             switch (id) {
               case 0:
                 mPresenter.filterByTag("bengali");
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_QSB_BENGALI);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_QSB_BENGALI);
                 break;
               case 1:
                 mPresenter.filterByTag("hindi");
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_QSB_HINDI);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_QSB_HINDI);
                 break;
               case 2:
                 mPresenter.filterByTag("kolkata");
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_QSB_KOLKATA);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_QSB_KOLKATA);
                 break;
               case 3:
                 mPresenter.filterByTag("bangladesh");
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_QSB_BANGALADESH);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_QSB_BANGALADESH);
                 break;
             }
             HideKeyboard();
@@ -495,7 +525,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             new CustomButtonSheetView.Callback() {
               @Override
               public void onClick(int v) {
-                  FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_TUT);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_TUT);
                 CommonIntent.startTutorialActivity(RadioActivity.this, null);
               }
             },
@@ -509,7 +541,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             new CustomButtonSheetView.Callback() {
               @Override
               public void onClick(int v) {
-                  FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_FEB);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_FEB);
                 mPresenter.makeCurrentFev(true);
               }
             },
@@ -540,7 +574,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                     cancelStop();
                     break;
                 }
-                  FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_AUTOSTOP);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_AUTOSTOP);
               }
             },
             new CharSequence[] {"30min", "1Hrs", "1hrs 30Min", "2 hrs", "Cancel"}));
@@ -569,7 +605,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
                     cancelAlerm();
                     break;
                 }
-                  FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_AUTOSTART);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_AUTOSTART);
               }
             },
             new CharSequence[] {"5:00 AM", "6:00AM", "7:00 AM", "8 AM", "Cancel"}));
@@ -582,7 +620,9 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
             new CustomButtonSheetView.Callback() {
               @Override
               public void onClick(int v) {
-                  FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_CHANGE_THEME);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_CLICK_BUTTONSHEET_CHANGE_THEME);
                 changeTheme();
               }
             },
@@ -774,54 +814,54 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
         FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MENU_RATE);
         mRadioHelper.shouldShowRateDialog(true);
         return true;
-        case R.id.about:
-            String aboutStr = getResources().getString(R.string.fmradio_about);
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MENU_ABOUT);
-            DialogUtils.showAboutDialog(this, aboutStr);
-            return true;
-        case R.id.report:
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MENU_REPORT);
-            DialogUtils.showReportDialog(this, new DialogUtils.ReportCallback() {
-                @Override
-                public void onSubmit(final String type, final String message) {
-                    FMRadioIndiaApplication.Get().getTelemetry().sendTelemetry(
-                            "click_menu_app_report",
-                            new HashMap<String, String>() {
-                                {
-                                    put("type", type);
-                                    put("msg",message);
-                                }
-                            });
-                }
+      case R.id.about:
+        String aboutStr = getResources().getString(R.string.fmradio_about);
+        FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MENU_ABOUT);
+        DialogUtils.showAboutDialog(this, aboutStr);
+        return true;
+      case R.id.report:
+        FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MENU_REPORT);
+        DialogUtils.showReportDialog(
+            this,
+            new DialogUtils.ReportCallback() {
+              @Override
+              public void onSubmit(final String type, final String message) {
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .sendTelemetry(
+                        "click_menu_app_report",
+                        new HashMap<String, String>() {
+                          {
+                            put("type", type);
+                            put("msg", message);
+                          }
+                        });
+              }
 
-                @Override
-                public void onDismiss() {
-
-                }
+              @Override
+              public void onDismiss() {}
             });
-            return true;
-        case R.id.upgrade:
-            FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_CLICK_MENU_UPGRADE);
-            DialogUtils.showAppUpgradeAlert(this, new DialogUtils.AppUpgradeCallback() {
-                @Override
-                public void onSubmit() {
+        return true;
+      case R.id.upgrade:
+        FMRadioIndiaApplication.Get()
+            .getTelemetry()
+            .markHit(Constants.TELEMETRY_CLICK_MENU_UPGRADE);
+        DialogUtils.showAppUpgradeAlert(
+            this,
+            new DialogUtils.AppUpgradeCallback() {
+              @Override
+              public void onSubmit() {}
 
-                }
-
-                @Override
-                public void onDismiss() {
-
-                }
+              @Override
+              public void onDismiss() {}
             });
-            return true;
+        return true;
       default:
         return super.onOptionsItemSelected(menuItem);
     }
   }
 
-
-
-    private CountDownTimer mAppFinishTimer;
+  private CountDownTimer mAppFinishTimer;
 
   private void handleStop(final int rem) {
     cancelStop();
@@ -944,35 +984,35 @@ public class RadioActivity extends AppCompatActivity implements IRadioContract.V
     finish();
   }
 
-    @Override
-    protected void onDestroy() {
-        mPresenter.stopPlay();
-        super.onDestroy();
-        DLog.e("onDestroy Called");
-    }
+  @Override
+  protected void onDestroy() {
+    mPresenter.stopPlay();
+    super.onDestroy();
+    DLog.e("onDestroy Called");
+  }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
-            DLog.d("On Config Change : LANDSCAPE");
-        }else{
-            DLog.d("On Config Change: PORTRAIT");
-        }
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+      DLog.d("On Config Change : LANDSCAPE");
+    } else {
+      DLog.d("On Config Change: PORTRAIT");
     }
+  }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("saved_id", mPresenter.getCurrentPlayingID());
-    }
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putString("saved_id", mPresenter.getCurrentPlayingID());
+  }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        String prevPlaying = savedInstanceState.getString("saved_id");
-        if (prevPlaying != null && ! mPresenter.isPlaying()) {
-            mPresenter.playById(prevPlaying);
-        }
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    String prevPlaying = savedInstanceState.getString("saved_id");
+    if (prevPlaying != null && !mPresenter.isPlaying()) {
+      mPresenter.playById(prevPlaying);
     }
+  }
 }

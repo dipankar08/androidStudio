@@ -9,56 +9,56 @@ import android.widget.RelativeLayout;
 
 public abstract class BaseView extends RelativeLayout {
 
-    @Nullable private Bundle args;
-    @Nullable private BasePresenter mPresenter;
-    public BaseView(Context context) {
-        super(context);
-    }
+  @Nullable private Bundle args;
+  @Nullable private BasePresenter mPresenter;
 
-    public BaseView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+  public BaseView(Context context) {
+    super(context);
+  }
 
-    public BaseView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+  public BaseView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    public final Navigation getNavigation(){
-        return ((BaseNavigationActivity)getContext()).getNavigation();
-    }
+  public BaseView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+  }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if(mPresenter!= null) {
-            mPresenter.detachView();
-        }
-    }
+  public final Navigation getNavigation() {
+    return ((BaseNavigationActivity) getContext()).getNavigation();
+  }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        if(mPresenter!=null) {
-            mPresenter.attachView(this);
-        }
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    if (mPresenter != null) {
+      mPresenter.detachView();
     }
+  }
 
-    // this function to be called by subclass.
-    protected void setPresenter(BasePresenter presenter){
-        mPresenter = presenter;
+  @Override
+  protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    if (mPresenter != null) {
+      mPresenter.attachView(this);
     }
+  }
 
-    public Bundle getArgs() {
-        return args;
-    }
+  // this function to be called by subclass.
+  protected void setPresenter(BasePresenter presenter) {
+    mPresenter = presenter;
+  }
 
-    public void setArgs(Bundle args) {
-        this.args = args;
-    }
+  public Bundle getArgs() {
+    return args;
+  }
 
-    // provides an eny
-    public void onBack(View v){
-        getNavigation().goBack();
-    }
+  public void setArgs(Bundle args) {
+    this.args = args;
+  }
 
+  // provides an eny
+  public void onBack(View v) {
+    getNavigation().goBack();
+  }
 }

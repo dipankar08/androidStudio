@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="windowLeftMargin">8dp</dimen>
+    <dimen name="windowLeftMargin">10dp</dimen>
+    <dimen name="small">6dp</dimen>
+    <dimen name="medium">12dp</dimen>
+    <dimen name="large">24dp</dimen>
+    <dimen name="extra_large">36dp</dimen>
 </resources>

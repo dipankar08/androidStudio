@@ -105,9 +105,10 @@ public class Node implements Parcelable, QuickListView.Item {
     return this.count_click;
   }
 
-  public int getRank(){
-      return this.rank;
+  public int getRank() {
+    return this.rank;
   }
+
   public String getRankMessage() {
     if (this.rank == 0) {
       return " <font color='red'>Be the first player</font>";

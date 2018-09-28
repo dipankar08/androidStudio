@@ -4,9 +4,7 @@ import in.co.dipankar.fmradio.ui.base.BasePresenter;
 
 public class SettingViewPresenter extends BasePresenter {
 
-    public SettingViewPresenter(){
-    }
+  public SettingViewPresenter() {}
 
-    public interface ViewContract {
-    }
+  public interface ViewContract {}
 }

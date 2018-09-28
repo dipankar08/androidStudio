@@ -9,5 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"/>
-
+    <in.co.dipankar.fmradio.ui.viewpresenter.adds.BannerAdsView
+        android:id="@+id/adds"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

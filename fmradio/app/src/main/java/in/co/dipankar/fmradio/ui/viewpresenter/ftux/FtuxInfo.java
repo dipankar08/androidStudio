@@ -1,20 +1,20 @@
 package in.co.dipankar.fmradio.ui.viewpresenter.ftux;
 
 public class FtuxInfo {
-    String title;
-    String subtitle;
+  String title;
+  String subtitle;
 
-    public String getTitle() {
-        return title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public String getSubtitle() {
-        return subtitle;
-    }
+  public String getSubtitle() {
+    return subtitle;
+  }
 
-    public FtuxInfo(String title, String subtitle) {
-        this.title = title;
+  public FtuxInfo(String title, String subtitle) {
+    this.title = title;
 
-        this.subtitle = subtitle;
-    }
+    this.subtitle = subtitle;
+  }
 }

@@ -20,6 +20,7 @@ public class FMRadioIndiaApplication extends Application {
   private NodeManager mNodeManager;
   private TelemetryUtils mTelemetryUtils;
   private GateKeeperUtils mGateKeeperUtils;
+
   @Override
   public void onCreate() {
     super.onCreate();
@@ -47,15 +48,14 @@ public class FMRadioIndiaApplication extends Application {
     return mNodeManager;
   }
 
-    public GateKeeperUtils getGateKeeperUtils() {
-        if (mGateKeeperUtils == null) {
-            mGateKeeperUtils = new GateKeeperUtils(getApplicationContext(),GATEKEEP_ENDPOINT);
-        }
-        return mGateKeeperUtils;
+  public GateKeeperUtils getGateKeeperUtils() {
+    if (mGateKeeperUtils == null) {
+      mGateKeeperUtils = new GateKeeperUtils(getApplicationContext(), GATEKEEP_ENDPOINT);
     }
+    return mGateKeeperUtils;
+  }
 
-
-    public TelemetryUtils getTelemetry() {
+  public TelemetryUtils getTelemetry() {
     if (mTelemetryUtils == null) {
       mTelemetryUtils =
           new TelemetryUtils(

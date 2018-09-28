@@ -4,32 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:src="@drawable/image_background_fullscreen_ftux"
-        android:layout_width="match_parent"
-        android:tint="#90000000"
-        android:scaleType="fitXY"
-        android:layout_height="match_parent"
+        android:id="@+id/logo"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_centerInParent="true"
-        />
-
-    <in.co.dipankar.quickandorid.views.CustomFontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Please wait, Loading..."
-        style="@style/TextSubTitle"
-        android:textColor="#fff"
-        />
-
+        android:src="@drawable/ic_radio_red_32"/>
     <in.co.dipankar.quickandorid.views.VersionView
         android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:text="V0.1"
+        android:layout_centerHorizontal="true"
         style="@style/TextTitle"
-        android:textColor="#fff"
         />
 </RelativeLayout>

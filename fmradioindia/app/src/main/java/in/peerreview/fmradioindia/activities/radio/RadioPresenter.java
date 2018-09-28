@@ -25,7 +25,7 @@ public class RadioPresenter implements IRadioContract.Presenter {
   @Nullable private static List<Node> mNodes = null;
   private int mCurNodeIdx = 0;
   private String mCurNodeID = null; /* This is the curent node that is playing */
-    private String mCurPlayingID = null;
+  private String mCurPlayingID = null;
 
   private Player mPlayer;
 
@@ -40,13 +40,15 @@ public class RadioPresenter implements IRadioContract.Presenter {
               @Override
               public void onTryPlaying(final String id, String msg) {
                 mView.renderTryPlayUI("Try playing " + msg);
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_PLAYER_TRY_PLAYING);
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_PLAYER_TRY_PLAYING);
                 updateStatOnDBNodes(id, "count_click");
               }
 
               @Override
               public void onSuccess(String id, String msg) {
-                  mCurPlayingID = id;
+                mCurPlayingID = id;
                 mView.renderPlayUI("Now Playing " + msg);
                 if (mNodes != null && mCurNodeIdx < mNodes.size()) {
                   FMRadioIndiaApplication.Get()
@@ -58,20 +60,21 @@ public class RadioPresenter implements IRadioContract.Presenter {
                     .retrive(RANK_UP_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
                 updateStatOnDBNodes(id, "count_success");
 
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_PLAYER_SUCCESS);
-
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_PLAYER_SUCCESS);
               }
 
               @Override
               public void onResume(String id, String msg) {
                 mView.renderPlayUI("Resume playing: " + msg);
-                  mCurPlayingID = id;
+                mCurPlayingID = id;
               }
 
               @Override
               public void onPause(String id, String msg) {
                 mView.renderPauseUI("Stop Playing: " + msg);
-                  mCurPlayingID = null;
+                mCurPlayingID = null;
               }
 
               @Override
@@ -89,13 +92,15 @@ public class RadioPresenter implements IRadioContract.Presenter {
                     .retrive(RANK_DOWN_URL + id, Network.CacheControl.GET_LIVE_ONLY, null);
 
                 updateStatOnDBNodes(id, "count_error");
-                FMRadioIndiaApplication.Get().getTelemetry().markHit(Constants.TELEMETRY_PLAYER_ERROR);
-                  mCurPlayingID = null;
+                FMRadioIndiaApplication.Get()
+                    .getTelemetry()
+                    .markHit(Constants.TELEMETRY_PLAYER_ERROR);
+                mCurPlayingID = null;
               }
 
               @Override
               public void onComplete(String id, String msg) {
-                  mCurPlayingID = null;
+                mCurPlayingID = null;
                 mView.renderPlayUI(msg);
               }
             });
@@ -298,12 +303,12 @@ public class RadioPresenter implements IRadioContract.Presenter {
     return FMRadioIndiaApplication.Get().getNodeManager().getNodeById(channel_id);
   }
 
-    @Override
-    public void stopPlay() {
-        mPlayer.stop();
-    }
+  @Override
+  public void stopPlay() {
+    mPlayer.stop();
+  }
 
-    private void updateStatOnDBNodes(final String id, final String type) {
+  private void updateStatOnDBNodes(final String id, final String type) {
     FMRadioIndiaApplication.Get()
         .getNetwork()
         .send(
@@ -324,15 +329,15 @@ public class RadioPresenter implements IRadioContract.Presenter {
             });
   }
 
-  public String getCurrentPlayingID(){
-     return mCurPlayingID;
+  public String getCurrentPlayingID() {
+    return mCurPlayingID;
   }
 
-    @Override
-    public boolean isPlaying() {
-      if(mPlayer == null){
-          return false;
-      }
-      return mPlayer.isPlaying();
+  @Override
+  public boolean isPlaying() {
+    if (mPlayer == null) {
+      return false;
     }
+    return mPlayer.isPlaying();
+  }
 }

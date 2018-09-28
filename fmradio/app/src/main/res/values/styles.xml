@@ -19,48 +19,46 @@
         <item name="android:text">Radio Mirchi</item>
         <item name="android:textColor">@color/textPrimary1</item>
         <item name="customfont">OpenSans-Bold.ttf</item>
-        <item name="android:textSize">27dp</item>
+        <item name="android:textSize">30dp</item>
     </style>
     <style name="TextHugeTitle.White">
         <item name="android:textColor">@color/tw__solid_white</item>
     </style>
 
+    <style name="TextHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Radio Mirchi</item>
+        <item name="android:textColor">@color/textPrimary1</item>
+        <item name="customfont">OpenSans-Bold.ttf</item>
+        <item name="android:textSize">22dp</item>
+    </style>
     <style name="TextTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Radio Mirchi</item>
+        <item name="android:textColor">@color/textPrimary1</item>
+        <item name="customfont">OpenSans-Regular.ttf</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+    <style name="TextSubTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Radio Mirchi</item>
         <item name="android:textColor">@color/textPrimary3</item>
         <item name="customfont">OpenSans-Regular.ttf</item>
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">12dp</item>
     </style>
-
-    <style name="TextSubTitle">
+    <style name="TextMini">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">Radio Mirchi</item>
+        <item name="android:text">Radio mirchi</item>
         <item name="android:textColor">@color/textPrimary4</item>
         <item name="customfont">OpenSans-Regular.ttf</item>
         <item name="android:textSize">12dp</item>
     </style>
 
-    <style name="TextListSubTitle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">Radio Mirchi</item>
-        <item name="android:textColor">@color/textPrimary2</item>
-        <item name="customfont">OpenSans-Bold.ttf</item>
-        <item name="android:textSize">18dp</item>
-    </style>
 
-    <style name="TextSubHeading">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">TextSubHeading</item>
-        <item name="android:textColor">@color/textPrimary2</item>
-        <item name="customfont">OpenSans-Bold.ttf</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:textSize">14dp</item>
-    </style>
 
     <style name="SearchBar">
         <item name="android:layout_width">match_parent</item>
@@ -160,6 +158,27 @@
         <item name="android:src">@drawable/ic_setting_black_24</item>
     </style>
 
+    <style name="PrimaryButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_round_border_black</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textColor">@color/textPrimary3</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textSize">10dp</item>
+    </style>
+
+    <style name="CardHolder">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/large</item>
+        <item name="android:background">@drawable/background_round_border_gray</item>
+    </style>
 
 
 </resources>
