@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">livetv</string>
+    <string name="welcome">Welcome to Live TV</string>
 </resources>

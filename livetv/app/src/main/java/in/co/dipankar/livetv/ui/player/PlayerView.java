@@ -67,23 +67,19 @@ public class PlayerView extends BaseView {
           }
         });
 
-    mVideoView.setOnTouchListener(
-        new OnTouchListener() {
-          @Override
-          public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-              if (mControl.getVisibility() == VISIBLE) {
+    mVideoView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mControl.getVisibility() == VISIBLE) {
                 hideControls();
                 mHandler.removeCallbacks(mRunnable);
-              } else {
+            } else {
                 showControls();
                 mHandler.removeCallbacks(mRunnable);
-                mHandler.postDelayed(mRunnable, 10000);
-              }
+                mHandler.postDelayed(mRunnable, 5000);
             }
-            return false;
-          }
-        });
+        }
+    });
 
     mRunnable =
         new Runnable() {

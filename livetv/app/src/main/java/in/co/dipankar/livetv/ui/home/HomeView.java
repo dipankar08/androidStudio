@@ -2,6 +2,7 @@ package in.co.dipankar.livetv.ui.home;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -38,9 +39,7 @@ public class HomeView extends BaseView {
     mChannelManager = ChannelManager.Get();
 
     mRecyclerView = (RecyclerView) findViewById(R.id.rv);
-    RecyclerView.LayoutManager mLayoutManager =
-        new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-    mRecyclerView.setLayoutManager(mLayoutManager);
+    mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 6));
     mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     mTVAdapter = new TvListAdapter(getContext());
     mRecyclerView.setAdapter(mTVAdapter);

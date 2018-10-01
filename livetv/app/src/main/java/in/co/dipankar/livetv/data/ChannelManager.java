@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class ChannelManager {
 
   private static ChannelManager sChannelManager;
-  private static String URL = "http://simplestore.dipankar.co.in/api/livetv";
+  private static String URL = "http://simplestore.dipankar.co.in/api/livetv?_limit=100";
 
   private Context mContext;
   private List<Channel> mChannelList;
