@@ -20,8 +20,16 @@ public class ChannelManager {
   private int mChannel;
   private Network mNetwork;
 
-  private ChannelManager() {}
+  private ChannelManager() {
+      mActionCallbackList = new ArrayList<>();
+      mChannelList = new ArrayList<>();
+  }
 
+  public interface ActionCallback{
+      void onAction(String action);
+  }
+
+  private List<ActionCallback> mActionCallbackList;
   public static synchronized ChannelManager Get() {
     if (sChannelManager == null) {
       sChannelManager = new ChannelManager();
@@ -52,9 +60,27 @@ public class ChannelManager {
     mNetwork = new Network(mContext, false);
   }
 
-  public interface Callback {
-    void onFail(String msg);
+  public void addActionCallback(ActionCallback cb){
+      mActionCallbackList.add(cb);
+  }
 
+    public void setAction(String data) {
+      switch (data){
+          case "next":
+              next();
+              break;
+          case "prev":
+              prev();
+              break;
+      }
+
+      for(ActionCallback ac: mActionCallbackList){
+          ac.onAction(data);
+      }
+    }
+
+    public interface Callback {
+    void onFail(String msg);
     void onSuccess(List<Channel> radio);
   }
 
@@ -85,4 +111,23 @@ public class ChannelManager {
   public Channel getCurrent() {
     return mChannelList.get(mChannel);
   }
+
+  private void next(){
+      mChannel ++;
+      if(mChannel == mChannelList.size()){
+          mChannel =0;
+      }
+      for(ActionCallback c: mActionCallbackList){
+          c.onAction("track_change");
+      }
+  }
+    private void prev(){
+        mChannel --;
+        if(mChannel < 0 ){
+            mChannel =mChannelList.size() -1;
+        }
+        for(ActionCallback c: mActionCallbackList){
+            c.onAction("track_change");
+        }
+    }
 }

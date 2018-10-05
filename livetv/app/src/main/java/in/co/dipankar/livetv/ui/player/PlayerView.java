@@ -113,6 +113,28 @@ public class PlayerView extends BaseView {
             }
           }
         });
+
+      mChannelManager.addActionCallback(new ChannelManager.ActionCallback() {
+          @Override
+          public void onAction(String action) {
+              switch (action){
+                  case "volp":
+                      break;
+                  case "voln":
+                      break;
+                  case "play":
+                      if(mVideoView.isPlaying()){
+                          mVideoView.pause();
+                      } else{
+                          mVideoView.start();
+                      }
+                      break;
+                  case "track_change":
+                      play();
+
+              }
+          }
+      });
   }
 
   private void showControls() {
@@ -128,9 +150,14 @@ public class PlayerView extends BaseView {
   @Override
   protected void onAttachedToWindow() {
     super.onAttachedToWindow();
-    Channel c = mChannelManager.getCurrent();
-    if (c != null) {
-      mVideoView.setVideoURI(Uri.parse(c.getUrl()));
-    }
+    play();
+
   }
+
+    private void play() {
+        Channel c = mChannelManager.getCurrent();
+        if (c != null) {
+            mVideoView.setVideoURI(Uri.parse(c.getUrl()));
+        }
+    }
 }
