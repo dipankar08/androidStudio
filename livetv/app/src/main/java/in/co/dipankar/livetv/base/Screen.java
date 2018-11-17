@@ -7,4 +7,5 @@ public enum Screen {
   SETTING,
   DETAILS,
   PLAYER,
+    WEBVIEW,
 }

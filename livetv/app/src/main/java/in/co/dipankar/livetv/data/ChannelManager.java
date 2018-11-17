@@ -112,7 +112,7 @@ public class ChannelManager {
     return mChannelList.get(mChannel);
   }
 
-  private void next(){
+  public void next(){
       mChannel ++;
       if(mChannel == mChannelList.size()){
           mChannel =0;
@@ -121,7 +121,7 @@ public class ChannelManager {
           c.onAction("track_change");
       }
   }
-    private void prev(){
+    public void prev(){
         mChannel --;
         if(mChannel < 0 ){
             mChannel =mChannelList.size() -1;

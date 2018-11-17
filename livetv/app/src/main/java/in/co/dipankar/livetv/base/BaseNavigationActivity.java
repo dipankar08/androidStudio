@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
+
 import in.co.dipankar.livetv.R;
 import in.co.dipankar.quickandorid.utils.DLog;
 
@@ -155,4 +157,14 @@ public abstract class BaseNavigationActivity extends AppCompatActivity implement
     popAllFragments();
     navigate(getHomeScreen(), null, true, false);
   }
+
+    @Override public void onResume() {
+        super.onResume();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override public void onPause() {
+        super.onPause();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
 }

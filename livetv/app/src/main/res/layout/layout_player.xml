@@ -53,6 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
+
         <ImageButton
             android:id="@+id/previous"
             android:src="@drawable/ic_prev_white_48"
@@ -85,4 +86,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/loading_text"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:text="Wait... We are loading....."
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </android.support.constraint.ConstraintLayout>

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
 import com.devbrackets.android.exomedia.ui.widget.VideoView;
@@ -27,6 +29,7 @@ public class PlayerView extends BaseView {
   LinearLayout mControl;
   RelativeLayout mToolbar;
   Runnable mRunnable;
+  TextView mLoadingText;
   Handler mHandler = new Handler();
 
   public PlayerView(Context context) {
@@ -48,13 +51,16 @@ public class PlayerView extends BaseView {
     LayoutInflater.from(getContext()).inflate(R.layout.layout_player, this);
     mControl = findViewById(R.id.controls);
     mToolbar = findViewById(R.id.tool_bar);
-
+    mLoadingText = findViewById(R.id.loading_text);
+      setKeepScreenOn(true);
     mVideoView = (VideoView) findViewById(R.id.video_view);
     mVideoView.setOnErrorListener(
         new OnErrorListener() {
           @Override
           public boolean onError(Exception e) {
             DLog.e("setOnErrorListener called");
+            mLoadingText.setText("Not able to play this channel!");
+            mLoadingText.setVisibility(VISIBLE);
             return false;
           }
         });
@@ -63,6 +69,7 @@ public class PlayerView extends BaseView {
         new OnPreparedListener() {
           @Override
           public void onPrepared() {
+              mLoadingText.setVisibility(GONE);
             mVideoView.start();
           }
         });
@@ -114,6 +121,23 @@ public class PlayerView extends BaseView {
           }
         });
 
+      final ImageView mNext = findViewById(R.id.next);
+      mNext.setOnClickListener(new OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              mChannelManager.next();
+          }
+      });
+
+      final ImageView mPrev = findViewById(R.id.previous);
+      mNext.setOnClickListener(new OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              mChannelManager.prev();
+          }
+      });
+
+
       mChannelManager.addActionCallback(new ChannelManager.ActionCallback() {
           @Override
           public void onAction(String action) {
@@ -156,6 +180,7 @@ public class PlayerView extends BaseView {
 
     private void play() {
         Channel c = mChannelManager.getCurrent();
+        mLoadingText.setText("Wait! Try playing "+c.getName());
         if (c != null) {
             mVideoView.setVideoURI(Uri.parse(c.getUrl()));
         }

@@ -3,8 +3,11 @@ package in.co.dipankar.livetv.ui;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import in.co.dipankar.livetv.R;
@@ -14,6 +17,7 @@ import in.co.dipankar.livetv.data.ChannelManager;
 import in.co.dipankar.livetv.ui.home.HomeFragment;
 import in.co.dipankar.livetv.ui.player.PlayerFragment;
 import in.co.dipankar.livetv.ui.splash.SplashFragment;
+import in.co.dipankar.livetv.ui.webview.MovieFragment;
 import in.co.dipankar.quickandorid.utils.SimplePubSub;
 
 public class MainActivity extends BaseNavigationActivity {
@@ -32,7 +36,21 @@ public class MainActivity extends BaseNavigationActivity {
     fullscreen();
     initSimplePubSub();
       mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+      enterImmersiveMode();
+      PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+      PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Tag");
+      wl.acquire();
   }
+
+    private void enterImmersiveMode() {
+        final View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                decorView.getSystemUiVisibility()
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
 
     private void initSimplePubSub() {
         mSimplePubSub = new SimplePubSub(new SimplePubSub.Config() {
@@ -74,12 +92,14 @@ public class MainActivity extends BaseNavigationActivity {
             }
 
             @Override
-            public void onMessage(String topic, final String data) {
+            public void onMessage(String topic, final String args) {
+                final String[] argList = args.split("#");
+                final String type=argList[0];
                 if(topic.equals("live_tv")){
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            switch (data){
+                            switch (type){
                                 case "volp":
                                     mAudioManager.adjustVolume(AudioManager.ADJUST_RAISE,
                                             AudioManager.FLAG_PLAY_SOUND);
@@ -88,8 +108,14 @@ public class MainActivity extends BaseNavigationActivity {
                                     mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER,
                                             AudioManager.FLAG_PLAY_SOUND);
                                     break;
+                                case"movie":
+                                    // SimplePubSub.publish("live_tv","movie#http://google.com")
+                                    String url = argList[1];
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("URL", url);
+                                    getNavigation().navigate(Screen.WEBVIEW, bundle);
                                 default:
-                                    mChannelManager.setAction(data);
+                                    mChannelManager.setAction(type);
                             }
                         }
                     });
@@ -144,6 +170,8 @@ public class MainActivity extends BaseNavigationActivity {
         return SplashFragment.getNewFragment(args);
       case PLAYER:
         return PlayerFragment.getNewFragment(args);
+        case WEBVIEW:
+            return MovieFragment.getNewFragment(args);
       default:
         return null;
     }
@@ -151,13 +179,13 @@ public class MainActivity extends BaseNavigationActivity {
 
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         mSimplePubSub.disconnect();
         super.onPause();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         mSimplePubSub.connect();
         super.onResume();
     }
@@ -166,4 +194,11 @@ public class MainActivity extends BaseNavigationActivity {
   protected void onDestroy() {
     super.onDestroy();
   }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
 }

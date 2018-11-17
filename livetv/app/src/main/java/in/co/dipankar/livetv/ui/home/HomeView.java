@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+
 import in.co.dipankar.livetv.R;
 import in.co.dipankar.livetv.base.BaseView;
 import in.co.dipankar.livetv.base.Screen;
@@ -16,6 +18,7 @@ import in.co.dipankar.livetv.data.ChannelManager;
 public class HomeView extends BaseView {
 
   private RecyclerView mRecyclerView;
+  private Button mButton;
   private TvListAdapter mTVAdapter;
   ChannelManager mChannelManager;
 
@@ -57,6 +60,14 @@ public class HomeView extends BaseView {
               @Override
               public void onLongClick(View view, int position) {}
             }));
+
+      mButton = findViewById(R.id.webview);
+      mButton.setOnClickListener(new OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              getNavigation().navigate(Screen.WEBVIEW, null);
+          }
+      });
   }
 
   @Override
