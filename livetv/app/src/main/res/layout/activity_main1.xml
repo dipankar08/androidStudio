@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.devbrackets.android.exomedia.ui.widget.VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:useDefaultControls="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+    <!-- Control -->
+    <LinearLayout
+        android:id="@+id/controls"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rv"
+        >
+        <ImageButton
+            android:id="@+id/previous"
+            android:layout_height="120dp"
+            android:layout_width="120dp"
+            android:src="@drawable/ic_prev_white_48" />
+        <ImageButton
+            android:id="@+id/play_pause"
+            android:layout_height="120dp"
+            android:layout_width="120dp"
+            android:src="@drawable/ic_pasue_white_48"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+        <ImageButton
+            android:id="@+id/next"
+            android:layout_height="120dp"
+            android:layout_width="120dp"
+            android:src="@drawable/ic_next_white_48"/>
+    </LinearLayout>
+
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:text="Wait, we are loading the channel..."
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#80000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        >
+    </android.support.v7.widget.RecyclerView>
+</android.support.constraint.ConstraintLayout>

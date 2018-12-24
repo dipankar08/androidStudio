@@ -20,6 +20,9 @@ public class ChannelManager {
   private int mChannel;
   private Network mNetwork;
 
+  private int mQuickSwitchIndex1 =-1;
+  private int mQuickSwitchIndex2 =-1;
+
   private ChannelManager() {
       mActionCallbackList = new ArrayList<>();
       mChannelList = new ArrayList<>();
@@ -106,6 +109,7 @@ public class ChannelManager {
 
   public void setCurrent(int id) {
     mChannel = id;
+    adjustQuickSwitch();
   }
 
   public Channel getCurrent() {
@@ -117,15 +121,52 @@ public class ChannelManager {
       if(mChannel == mChannelList.size()){
           mChannel =0;
       }
-      for(ActionCallback c: mActionCallbackList){
-          c.onAction("track_change");
-      }
+      notifyApp();
   }
-    public void prev(){
-        mChannel --;
-        if(mChannel < 0 ){
-            mChannel =mChannelList.size() -1;
+
+
+
+public void prev(){
+    mChannel --;
+    if(mChannel < 0 ){
+        mChannel =mChannelList.size() -1;
+    }
+    notifyApp();
+}
+
+    private void adjustQuickSwitch() {
+        // already exist.
+        if(mQuickSwitchIndex1 == mChannel || mQuickSwitchIndex2 == mChannel){
+            return;
         }
+        // First one not yet set
+        if(mQuickSwitchIndex1 == -1){
+            mQuickSwitchIndex1 = mChannel;
+        }
+        //second is not yet set
+        if(mQuickSwitchIndex2 == -1){
+            mQuickSwitchIndex2 = mChannel;
+        }
+        // both set switch
+        else if(mQuickSwitchIndex1 == mChannel){
+            mQuickSwitchIndex2 = mChannel;
+        }
+         else {
+            mQuickSwitchIndex1 = mChannel;
+        }
+    }
+
+    public void quickSwitch() {
+       if(mQuickSwitchIndex1 == mChannel && mQuickSwitchIndex2 != -1){
+           mChannel=mQuickSwitchIndex2;
+       }
+       else if(mQuickSwitchIndex2 == mChannel && mQuickSwitchIndex1 != -1){
+           mChannel=mQuickSwitchIndex1;
+       }
+       notifyApp();
+    }
+
+    public void notifyApp(){
         for(ActionCallback c: mActionCallbackList){
             c.onAction("track_change");
         }

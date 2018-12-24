@@ -6,16 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:imageButtonStyle">@style/OverlayButton</item>
-
     </style>
-
-    <style name="OverlayButton">
-        <item name="android:background">@drawable/bottom_background_round_black50</item>
-        <item name="android:layout_width">200dp</item>
-        <item name="android:layout_height">200dp</item>
-        <item name="android:padding">20dp</item>
-    </style>
-
 
 </resources>
