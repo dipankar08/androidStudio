@@ -16,7 +16,7 @@
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/title"
         android:textSize="20dp"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/image"
         android:maxLines="2"

@@ -11,6 +11,7 @@ public class MainState extends BaseViewState {
     private Boolean isListOpen;
     private Channel mCurChannel;
     private Boolean mIsShowControl;
+    private Boolean mIsShowLoading;
     protected MainState(Builder builder) {
         super(builder);
         mChannel = builder.mChannel;
@@ -18,6 +19,7 @@ public class MainState extends BaseViewState {
         isListOpen = builder.isListOpen;
         mCurChannel = builder.mCurChannel;
         mIsShowControl = builder.mIsShowControl;
+        mIsShowLoading = builder.mIsShowLoading;
     }
 
     public String getErrorMsg() {
@@ -33,6 +35,7 @@ public class MainState extends BaseViewState {
     public Boolean getIsShowControl() {
         return mIsShowControl;
     }
+    public Boolean getIsShowLoading(){ return  mIsShowLoading;}
 
     public List<Channel> getChannel() {
         return mChannel;
@@ -44,6 +47,7 @@ public class MainState extends BaseViewState {
         private String mError = null;
         private Boolean isListOpen = null;
         private Boolean mIsShowControl = null;
+        private Boolean mIsShowLoading = null;
         public Builder(){}
         public Builder setChannel(List<Channel> channel){
             mChannel=channel;
@@ -63,6 +67,10 @@ public class MainState extends BaseViewState {
         }
         public Builder setIsShowControl(boolean mIsShowControl){
             this.mIsShowControl =mIsShowControl;
+            return this;
+        }
+        public Builder setIsShowLoading(boolean mIsShowLoading){
+            this.mIsShowLoading = mIsShowLoading;
             return this;
         }
         public MainState build(){

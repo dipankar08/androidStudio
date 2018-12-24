@@ -18,21 +18,28 @@ public class MainPresenter extends BasePresenter {
     private boolean mIsShowingControl = false;
     public MainPresenter() {
         super("MainPresenter");
+        render(new MainState.Builder().setIsShowLoading(true).build());
         mChannelList = new ArrayList<>();
         mDataFetcher = new DataFetcher(MyApplication.Get().getApplicationContext());
         mDataFetcher.fetchData(new DataFetcher.Callback() {
             @Override
-            public void onSuccess(List<Channel> channels) {
-                render(new MainState.Builder().setChannel(channels).build());
+            public void onSuccess(final List<Channel> channels) {
                 if(mChannelList != null) {
                     mChannelList = channels;
                     mCurIndex = 0;
                 }
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        render(new MainState.Builder().setChannel(channels).setIsShowLoading(false).build());
+                    }
+                }, 10*1000);
+
             }
 
             @Override
             public void onError(String msg) {
-                render(new MainState.Builder().setErrorMsg(msg).build());
+                render(new MainState.Builder().setErrorMsg(msg).setIsShowLoading(false).build());
             }
         });
 
@@ -40,7 +47,6 @@ public class MainPresenter extends BasePresenter {
             @Override
             public void run() {
                 hideControls();
-                mIsShowingControl = false;
             }
         };
 
@@ -70,10 +76,12 @@ public class MainPresenter extends BasePresenter {
 
     private void showControls() {
         render(new MainState.Builder().setIsShowControl(true).build());
+        mIsShowingControl = true;
     }
 
     private void hideControls() {
         render(new MainState.Builder().setIsShowControl(false).build());
+        mIsShowingControl = false;
     }
 
     public void onNextClicked() {

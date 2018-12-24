@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
@@ -22,10 +22,10 @@ import in.co.dipankar.quickandorid.arch.BaseView;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-
 public class MainActivity extends Activity implements BaseView<MainState> {
 
     private VideoView mVideoView;
+    private ViewGroup mFlash;
     private ViewGroup mControls;
     private ImageButton mPrevious;
     private ImageButton mPlayPause;
@@ -48,6 +48,7 @@ public class MainActivity extends Activity implements BaseView<MainState> {
         mNext = findViewById(R.id.next);
         mLoadingText = findViewById(R.id.loading);
         mRecyclerView = findViewById(R.id.rv);
+        mFlash = findViewById(R.id.flash);
         initCallback();
     }
 
@@ -132,10 +133,34 @@ public class MainActivity extends Activity implements BaseView<MainState> {
     }
 
     @Override
-    public void render(final MainState state) {
-        runOnUiThread(new Runnable() {
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
+        }
+    }
+    private void hideSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+    @Override
+    public void render(final MainState state) {runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(state.getIsShowLoading() != null){
+                    if(state.getIsShowLoading()){
+                        mFlash.setVisibility(VISIBLE);
+                    } else{
+                        mFlash.setVisibility(GONE);
+                    }
+                }
+
                 if(state.getChannel() != null){
                     mTVAdapter.setItems(state.getChannel());
                     mRecyclerView.setVisibility(VISIBLE);
