@@ -1,4 +1,4 @@
-package in.co.dipankar.livetv.newUI;
+package in.co.dipankar.livetv.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

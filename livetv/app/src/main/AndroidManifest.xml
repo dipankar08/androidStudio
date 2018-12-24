@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:name=".newUI.MyApplication"
+        android:name=".ui.MyApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".newUI.MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

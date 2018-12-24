@@ -1,4 +1,4 @@
-package in.co.dipankar.livetv.newUI;
+package in.co.dipankar.livetv.ui;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -8,9 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.devbrackets.android.exomedia.listener.OnErrorListener;

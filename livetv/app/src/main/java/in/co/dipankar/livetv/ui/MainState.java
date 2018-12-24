@@ -1,4 +1,4 @@
-package in.co.dipankar.livetv.newUI;
+package in.co.dipankar.livetv.ui;
 
 import java.util.List;
 
