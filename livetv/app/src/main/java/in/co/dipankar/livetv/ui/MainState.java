@@ -12,6 +12,7 @@ public class MainState extends BaseViewState {
     private Channel mCurChannel;
     private Boolean mIsShowControl;
     private Boolean mIsShowLoading;
+    private List<String> mCat;
     protected MainState(Builder builder) {
         super(builder);
         mChannel = builder.mChannel;
@@ -20,6 +21,7 @@ public class MainState extends BaseViewState {
         mCurChannel = builder.mCurChannel;
         mIsShowControl = builder.mIsShowControl;
         mIsShowLoading = builder.mIsShowLoading;
+        mCat = builder.mCat;
     }
 
     public String getErrorMsg() {
@@ -40,6 +42,9 @@ public class MainState extends BaseViewState {
     public List<Channel> getChannel() {
         return mChannel;
     }
+    public List<String> getCat() {
+        return mCat;
+    }
 
     public static class Builder extends BaseViewState.Builder<Builder> {
         private List<Channel> mChannel = null;
@@ -48,6 +53,7 @@ public class MainState extends BaseViewState {
         private Boolean isListOpen = null;
         private Boolean mIsShowControl = null;
         private Boolean mIsShowLoading = null;
+        private List<String> mCat= null;
         public Builder(){}
         public Builder setChannel(List<Channel> channel){
             mChannel=channel;
@@ -71,6 +77,11 @@ public class MainState extends BaseViewState {
         }
         public Builder setIsShowLoading(boolean mIsShowLoading){
             this.mIsShowLoading = mIsShowLoading;
+            return this;
+        }
+
+        public Builder setCat(List<String> mCat){
+            this.mCat = mCat;
             return this;
         }
         public MainState build(){

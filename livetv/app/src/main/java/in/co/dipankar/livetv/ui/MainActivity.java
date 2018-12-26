@@ -6,14 +6,21 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
 import com.devbrackets.android.exomedia.ui.widget.VideoView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import in.co.dipankar.livetv.R;
 import in.co.dipankar.quickandorid.arch.BaseView;
@@ -25,11 +32,14 @@ public class MainActivity extends Activity implements BaseView<MainState> {
     private VideoView mVideoView;
     private ViewGroup mFlash;
     private ViewGroup mControls;
+    private ViewGroup mControls2;
     private ImageButton mPrevious;
     private ImageButton mPlayPause;
     private ImageButton mNext;
     private TextView mLoadingText;
+    private TextView mTotal;
     private RecyclerView mRecyclerView;
+    private Spinner mSpinner;
 
     private MainPresenter mPresenter;
     private TvListAdapter mTVAdapter;
@@ -47,6 +57,9 @@ public class MainActivity extends Activity implements BaseView<MainState> {
         mLoadingText = findViewById(R.id.loading);
         mRecyclerView = findViewById(R.id.rv);
         mFlash = findViewById(R.id.flash);
+        mControls2 = findViewById(R.id.controls2);
+        mTotal = findViewById(R.id.total);
+        mSpinner = findViewById(R.id.cat);
         initCallback();
     }
 
@@ -116,6 +129,26 @@ public class MainActivity extends Activity implements BaseView<MainState> {
                     @Override
                     public void onLongClick(View view, int position) {}
         }));
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mPresenter.OnRecyclerViewTouch();
+                }
+                return false;
+            }
+        });
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.OnSpinnerSelect(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mPresenter.OnSpinnerSelect(0);
+            }
+        });
     }
 
     @Override
@@ -158,10 +191,14 @@ public class MainActivity extends Activity implements BaseView<MainState> {
                         mFlash.setVisibility(GONE);
                     }
                 }
-
+                if(state.getCat() != null){
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.spinner_item, state.getCat());
+                    mSpinner.setAdapter(arrayAdapter);
+                }
                 if(state.getChannel() != null){
                     mTVAdapter.setItems(state.getChannel());
-                    mRecyclerView.setVisibility(VISIBLE);
+                    mTotal.setText("Live Channel:"+state.getChannel().size());
+                    mControls2.setVisibility(VISIBLE);
                 }
 
                 if(state.getErrorMsg() != null){
@@ -178,10 +215,10 @@ public class MainActivity extends Activity implements BaseView<MainState> {
                 if(state.getIsShowControl() != null) {
                     if (state.getIsShowControl()) {
                         mControls.setVisibility(VISIBLE);
-                        mRecyclerView.setVisibility(VISIBLE);
+                        mControls2.setVisibility(VISIBLE);
                     } else {
                         mControls.setVisibility(GONE);
-                        mRecyclerView.setVisibility(GONE);
+                        mControls2.setVisibility(GONE);
                     }
                 }
             }

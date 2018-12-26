@@ -1,9 +1,16 @@
 package in.co.dipankar.livetv.ui;
 
 import android.os.Handler;
+import android.util.ArraySet;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import in.co.dipankar.livetv.data.Channel;
 import in.co.dipankar.livetv.data.DataFetcher;
 import in.co.dipankar.quickandorid.arch.BasePresenter;
@@ -12,26 +19,36 @@ import in.co.dipankar.quickandorid.arch.BasePresenter;
 public class MainPresenter extends BasePresenter {
     private DataFetcher mDataFetcher;
     private List<Channel> mChannelList;
+    private List<Channel> mFullChannelList;
+    private List<String> mCategories;
     private int mCurIndex = -1;
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
     private boolean mIsShowingControl = false;
+    private final Runnable hideRun= new Runnable() {
+        @Override
+        public void run() {
+            render(new MainState.Builder().setIsListOpen(false).build());
+        }
+    };
+
     public MainPresenter() {
         super("MainPresenter");
         render(new MainState.Builder().setIsShowLoading(true).build());
         mChannelList = new ArrayList<>();
+        mFullChannelList = new ArrayList<>();
+        mCategories = new ArrayList<>();
         mDataFetcher = new DataFetcher(MyApplication.Get().getApplicationContext());
         mDataFetcher.fetchData(new DataFetcher.Callback() {
             @Override
             public void onSuccess(final List<Channel> channels) {
                 if(mChannelList != null) {
-                    mChannelList = channels;
-                    mCurIndex = 0;
+                    processChannel(channels);
                 }
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        render(new MainState.Builder().setChannel(channels).setIsShowLoading(false).build());
+                        render(new MainState.Builder().setChannel(channels).setCat(mCategories).setIsShowLoading(false).build());
                     }
                 }, 10*1000);
 
@@ -49,7 +66,24 @@ public class MainPresenter extends BasePresenter {
                 hideControls();
             }
         };
+    }
 
+    private void processChannel(List<Channel> channels) {
+        mFullChannelList = channels;
+        mChannelList = mFullChannelList;
+        mCategories.add("All");// index 0
+        for(Channel c: channels){
+            if(mCategories.contains(c.getCategories())){
+                continue;
+            }
+            mCategories.add(c.getCategories());
+        }
+        mCurIndex =0;
+    }
+
+    public void OnRecyclerViewTouch() {
+        mHandler.removeCallbacks(mRunnable);
+        mHandler.postDelayed(mRunnable, 5000);
     }
 
     public void onVideoPlayerError() {
@@ -109,4 +143,20 @@ public class MainPresenter extends BasePresenter {
         }
         render(new MainState.Builder().setCurChannel(mChannelList.get(position)).build());
     }
+
+    public void OnSpinnerSelect(int position) {
+        List<Channel> selected = new ArrayList<>();
+        if(position == 0){
+            selected = mFullChannelList;
+        } else {
+            for (Channel c : mFullChannelList) {
+                if (c.getCategories().equals(mCategories.toArray()[position])){
+                    selected.add(c);
+                }
+            }
+        }
+        mChannelList = selected;
+        render(new MainState.Builder().setChannel(selected).build());
+    }
+
 }

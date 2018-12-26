@@ -17,13 +17,17 @@ public class Channel {
   @JsonProperty("image")
   private String img;
 
+  @JsonProperty("categories")
+  private String categories;
+
   public Channel() {}
 
-  public Channel(String id, String name, String url, String img) {
+  public Channel(String id, String name, String url, String img, String categories) {
     this.id = id;
     this.name = name;
     this.url = url;
     this.img = img;
+    this.categories = categories;
   }
 
   public String getName() {
@@ -41,4 +45,8 @@ public class Channel {
   public String getId() {
     return id;
   }
+
+    public String getCategories() {
+        return categories;
+    }
 }
