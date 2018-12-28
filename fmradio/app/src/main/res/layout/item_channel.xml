@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:paddingBottom="@dimen/gap_between_rv_element"
+    android:paddingStart="@dimen/space_from_edge"
+    android:paddingEnd="@dimen/space_from_edge">
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/count"
+        style="@style/Text.Title"
+        android:text="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <in.co.dipankar.quickandorid.views.CircleImageView
+        android:id="@+id/image"
+        android:src="@drawable/ic_radio_mirchi"
+        android:layout_width="@dimen/channel_logo_size"
+        android:layout_height="@dimen/channel_logo_size"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/count"
+        android:layout_marginLeft="20dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content">
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/title"
+            style="@style/Text.Title"
+            android:text="Radio Mirchi"
+            android:layout_marginBottom="2dp"/>
+        <in.co.dipankar.quickandorid.views.CustomFontTextView
+            android:id="@+id/sub_title"
+            style="@style/Text.SubTitle"
+            android:text="Sub Title"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
