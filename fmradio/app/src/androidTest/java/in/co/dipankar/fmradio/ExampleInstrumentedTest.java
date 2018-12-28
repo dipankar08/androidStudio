@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio;
+package in.peerreview.fmradioindia;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("in.co.dipankar.fmradio", appContext.getPackageName());
+        assertEquals("in.peerreview.fmradioindia", appContext.getPackageName());
     }
 }

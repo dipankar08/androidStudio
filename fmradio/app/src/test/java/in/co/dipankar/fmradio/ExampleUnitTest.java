@@ -1,4 +1,4 @@
-package in.co.dipankar.fmradio;
+package in.peerreview.fmradioindia;
 
 import org.junit.Test;
 

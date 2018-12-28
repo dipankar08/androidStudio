@@ -45,8 +45,8 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MyViewHold
   public void onBindViewHolder(MyViewHolder holder, int position) {
     Channel c = channelList.get(position);
     holder.title.setText(c.getName());
-    if(c.getImg()!= null) {
-        Glide.with(mContext).load(c.getImg()).into(holder.image);
+    if (c.getImg() != null) {
+      Glide.with(mContext).load(c.getImg()).into(holder.image);
     }
   }
 

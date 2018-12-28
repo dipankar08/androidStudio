@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.co.dipankar.fmradio">
-
-    <uses-permission android:name="com.android.vending.BILLING" />
+    package="in.peerreview.fmradioindia">
 
     <application
         android:allowBackup="true"
@@ -10,10 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".FmRadioApplication"
+        android:name=".newui.MyApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".newui.MainActivity"
             android:fitsSystemWindows="true"
             >
             <intent-filter>
@@ -21,11 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".service.MusicService" android:enabled="true" />
+        <service android:name=".applogic.MusicService" android:enabled="true" />
     </application>
 </manifest>
-
-<!-- Notes:
-Read this if you find some bug
-https://stackoverflow.com/questions/29311078/android-completely-transparent-status-bar
--->

@@ -1,4 +1,3 @@
 package in.peerreview.fmradioindia.applogic;
 
-public class Channel {
-}
+public class Channel {}

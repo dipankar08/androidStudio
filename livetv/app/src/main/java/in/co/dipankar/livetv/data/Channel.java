@@ -46,7 +46,7 @@ public class Channel {
     return id;
   }
 
-    public String getCategories() {
-        return categories;
-    }
+  public String getCategories() {
+    return categories;
+  }
 }

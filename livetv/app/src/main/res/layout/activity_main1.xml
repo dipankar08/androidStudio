@@ -73,6 +73,7 @@
         <in.co.dipankar.quickandorid.views.CustomFontTextView
             android:id="@+id/total"
             android:text="25 Channel"
+            android:textSize="25dp"
             android:textColor="#ffffff"
             android:layout_margin="20dp"
             android:layout_width="wrap_content"
