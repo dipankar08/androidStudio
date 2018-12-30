@@ -1,4 +1,3 @@
 package in.peerreview.fmradioindia.utils;
 
-public class Utils {
-}
+public class Utils {}

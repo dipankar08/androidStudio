@@ -146,19 +146,18 @@ public class MainPresenter extends BasePresenter {
     }
     render(new MainState.Builder().setCurChannel(mChannelList.get(position)).build());
   }
-
-  public void OnSpinnerSelect(int position) {
-    List<Channel> selected = new ArrayList<>();
-    if (position == 0) {
-      selected = mFullChannelList;
-    } else {
-      for (Channel c : mFullChannelList) {
-        if (c.getCategories().equals(mCategories.toArray()[position])) {
-          selected.add(c);
+    public void onChangeFilter(String filter) {
+        List<Channel> selected = new ArrayList<>();
+        if (filter == null) {
+            selected = mFullChannelList;
+        } else {
+            for (Channel c : mFullChannelList) {
+                if (c.getCategories().equals(filter)) {
+                    selected.add(c);
+                }
+            }
         }
-      }
+        mChannelList = selected;
+        render(new MainState.Builder().setChannel(selected).build());
     }
-    mChannelList = selected;
-    render(new MainState.Builder().setChannel(selected).build());
-  }
 }

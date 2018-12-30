@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:segmentedgroup="http://schemas.android.com/tools"
     android:background="#000"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -81,16 +82,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
-        <Spinner
-            android:id="@+id/cat"
-            android:layout_margin="20dp"
-            android:layout_width="150dp"
-            android:background="#00000000"
-            android:popupBackground="#00000000"
+        <info.hoang8f.android.segmented.SegmentedGroup
+            android:id="@+id/segmented"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            segmentedgroup:sc_border_width="1dp"
+            segmentedgroup:sc_corner_radius="5dp"
+            segmentedgroup:sc_tint_color="#ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/total"
+            app:layout_constraintBottom_toBottomOf="@+id/total"
+            >
+            <RadioButton
+                android:id="@+id/all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                style="@style/RadioButton" />
+            <RadioButton
+                android:id="@+id/movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movie"
+                style="@style/RadioButton" />
+            <RadioButton
+                android:id="@+id/music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Music"
+                style="@style/RadioButton" />
+            <RadioButton
+                android:id="@+id/news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="News"
+                style="@style/RadioButton" />
+            <RadioButton
+                android:id="@+id/fun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enterteianment"
+                style="@style/RadioButton" />
+        </info.hoang8f.android.segmented.SegmentedGroup>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"

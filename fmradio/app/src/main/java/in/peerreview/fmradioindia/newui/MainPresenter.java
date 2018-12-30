@@ -32,7 +32,7 @@ public class MainPresenter extends BasePresenter {
 
     public MainPresenter() {
         super("MainPresenter");
-        render(new MainState.Builder().setIsShowLoading(true).build());
+        render(new MainState.Builder().setCurPage(MainState.Page.SPASH).build());
         mChannelList = new ArrayList<>();
         mFullChannelList = new ArrayList<>();
         mCategories = new ArrayList<>();

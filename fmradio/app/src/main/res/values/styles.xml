@@ -18,7 +18,7 @@
     </style>
     <style name="Text.SubTitle">
         <item name="android:textColor">@color/subtitle_text</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
     </style>
     <style name="Text.HugeTitle">
         <item name="android:textColor">@color/hugetitle_text</item>
