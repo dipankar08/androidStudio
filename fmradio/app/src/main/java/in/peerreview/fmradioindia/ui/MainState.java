@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.newui;
+package in.peerreview.fmradioindia.ui;
 
 import in.co.dipankar.quickandorid.arch.BaseViewState;
 import in.peerreview.fmradioindia.model.Channel;
@@ -12,6 +12,7 @@ public class MainState extends BaseViewState {
   }
 
   private List<Channel> mChannel;
+    private List<Channel> suggestionList;
   private Page currentPage;
   private String mError;
   private Boolean isListOpen;
@@ -32,6 +33,7 @@ public class MainState extends BaseViewState {
     mCat = builder.mCat;
     currentPage = builder.currentPage;
     isPlaying = builder.isPlaying;
+    suggestionList = builder.suggestionList;
   }
 
   public String getErrorMsg() {
@@ -65,6 +67,9 @@ public class MainState extends BaseViewState {
   public List<Channel> getChannel() {
     return mChannel;
   }
+    public List<Channel> getSuggestionList() {
+        return suggestionList;
+    }
 
   public List<String> getCat() {
     return mCat;
@@ -80,6 +85,7 @@ public class MainState extends BaseViewState {
     private Boolean mIsShowLoading = null;
     private List<String> mCat = null;
     private Boolean isPlaying = null;
+    private List<Channel> suggestionList= null;
 
     public Builder() {}
 
@@ -117,6 +123,11 @@ public class MainState extends BaseViewState {
       this.mCat = mCat;
       return this;
     }
+
+      public Builder setSuggestionList(List<Channel> sug) {
+          this.suggestionList = sug;
+          return this;
+      }
 
     public Builder setCurPage(Page page) {
       this.currentPage = page;

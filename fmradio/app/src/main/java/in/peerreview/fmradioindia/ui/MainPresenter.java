@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.newui;
+package in.peerreview.fmradioindia.ui;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 
@@ -10,6 +10,7 @@ import android.os.IBinder;
 
 import in.peerreview.fmradioindia.applogic.DataFetcher;
 import in.peerreview.fmradioindia.applogic.MusicService;
+import in.peerreview.fmradioindia.applogic.TelemetryManager;
 import in.peerreview.fmradioindia.model.Channel;
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.co.dipankar.quickandorid.services.Item;
@@ -23,9 +24,12 @@ import java.util.List;
 
 public class MainPresenter extends BasePresenter {
     private DataFetcher mDataFetcher;
-    private List<Channel> mChannelList;
+    private List<Channel> mSearchChannelList;
     private List<Channel> mFullChannelList;
+    private List<Channel> mSuggestionChannelList;
     private List<String> mCategories;
+    private TelemetryManager mTelemetryManager;
+    private HashMap<String, Channel> mIdToChannelMap;
 
     private int mCurIndex = -1;
     private Handler mHandler = new Handler();
@@ -33,29 +37,19 @@ public class MainPresenter extends BasePresenter {
     public MainPresenter() {
         super("MainPresenter");
         render(new MainState.Builder().setCurPage(MainState.Page.SPASH).build());
-        mChannelList = new ArrayList<>();
+        mSearchChannelList = new ArrayList<>();
+        mSuggestionChannelList = new ArrayList<>();
         mFullChannelList = new ArrayList<>();
         mCategories = new ArrayList<>();
+        mIdToChannelMap = new HashMap<>();
         mDataFetcher = new DataFetcher(MyApplication.Get().getApplicationContext());
         mDataFetcher.fetchData(
                 new DataFetcher.Callback() {
                     @Override
                     public void onSuccess(final List<Channel> channels) {
-                        if (mChannelList != null) {
+                        if (mSearchChannelList != null) {
                             processChannel(channels);
                         }
-                        mHandler.postDelayed(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        render(
-                                                new MainState.Builder()
-                                                        .setChannel(channels)
-                                                        .setCurPage(MainState.Page.HOME)
-                                                        .build());
-                                    }
-                                },
-                                10 * 1000);
                     }
 
                     @Override
@@ -63,6 +57,7 @@ public class MainPresenter extends BasePresenter {
                         showErrorMsg(msg);
                     }
                 });
+        mTelemetryManager = new TelemetryManager();
     }
 
     @Override
@@ -79,26 +74,45 @@ public class MainPresenter extends BasePresenter {
 
     private void processChannel(List<Channel> channels) {
         mFullChannelList = channels;
-        mChannelList = mFullChannelList;
+        mSearchChannelList = mFullChannelList;
         mCategories.add("All"); // index 0
         mCurIndex = 0;
-    }
+        mSuggestionChannelList = mFullChannelList.subList(0, 5);
+        mSuggestionChannelList.add(new Channel("Find More..",""));
+        mHandler.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        render(new MainState.Builder()
+                            .setChannel(channels)
+                            .setSuggestionList(mSuggestionChannelList)
+                            .setCurPage(MainState.Page.HOME)
+                            .build());
+                    }
+                });
 
-    public void onVideoPlayerError() {
-        if (mChannelList.size() < 0) {
-            return;
+        for(Channel channel: mFullChannelList){
+            mIdToChannelMap.put(channel.getId(), channel);
         }
-        render(
-                new MainState.Builder()
-                        .setErrorMsg("Not able to play:" + mChannelList.get(mCurIndex).getName())
-                        .build());
     }
 
-    public void onVideoPlayerSuccess() {
-        render(new MainState.Builder().setErrorMsg(null).build());
+    public void OnSearchQueryChanged(String s) {
+        List<Channel> mSearchResult = new ArrayList<>();
+        if(s == null || s.length() == 0){
+            mSearchResult = mFullChannelList;
+        } else {
+            for (Channel c : mFullChannelList) {
+                if (c.getName().toLowerCase().contains(s.toLowerCase())) {
+                    mSearchResult.add(c);
+                }
+            }
+        }
+        mSearchChannelList = mSearchResult;
+        render(new MainState.Builder().setChannel(mSearchResult).build());
     }
 
     public void onNextClicked() {
+        mTelemetryManager.markHit(TelemetryManager.TELEMETRY_CLICK_NEXT_BUTTON);
         Intent mService = new Intent(getContext(), MusicService.class);
         mService.setAction(MusicForegroundService.Contracts.NEXT);
         ensureSurviceReady();
@@ -106,6 +120,7 @@ public class MainPresenter extends BasePresenter {
     }
 
     public void onPrevClicked() {
+        mTelemetryManager.markHit(TelemetryManager.TELEMETRY_CLICK_PREV_BUTTON);
         Intent mService = new Intent(getContext(), MusicService.class);
         mService.setAction(MusicForegroundService.Contracts.PREV);
         ensureSurviceReady();
@@ -113,9 +128,29 @@ public class MainPresenter extends BasePresenter {
     }
 
     public void onItemClick(int position) {
-        if (mChannelList.size() < 0) {
-            return;
+        mTelemetryManager.markHit(TelemetryManager.TELEMETRY_CLICK_MAIN_LIST_ITEM);
+        String id = mSearchChannelList.get(position).getId();
+        for(int i =0 ;i<mFullChannelList.size();i++){
+            if(id.equals(mFullChannelList.get(i).getId())){
+                startPlayInternal(i);
+                break;
+            }
         }
+    }
+
+    public void onSuggestionItemClick(int position) {
+        mTelemetryManager.markHit(TelemetryManager.TELEMETRY_CLICK_SUGGESTION_LIST_ITEM);
+        String id = mSuggestionChannelList.get(position).getId();
+        for(int i =0 ;i<mFullChannelList.size();i++){
+            if(id.equals(mFullChannelList.get(i).getId())){
+                startPlayInternal(i);
+                break;
+            }
+        }
+    }
+
+    private void startPlayInternal(int position) {
+        render(new MainState.Builder().setCurChannel(mFullChannelList.get(position)).build());
         ensureSurviceReady();
         Intent mService = new Intent(getContext(), MusicService.class);
         mService.putExtra("index", position);
@@ -131,7 +166,7 @@ public class MainPresenter extends BasePresenter {
         }
         Intent mService = new Intent(getContext(), MusicService.class);
         List<Item> list = new ArrayList<Item>();
-        for (Channel channel : mChannelList) {
+        for (Channel channel : mFullChannelList) {
             list.add(new Item(channel.getId(), channel.getName(), channel.getUrl()));
         }
         mService.putExtra("list", (Serializable) list);
@@ -158,14 +193,6 @@ public class MainPresenter extends BasePresenter {
 
     private void showErrorMsg(String msg) {
         render(new MainState.Builder().setErrorMsg(msg).build());
-        mHandler.postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        render(new MainState.Builder().setErrorMsg("").build());
-                    }
-                },
-                30 * 1000);
     }
 
     private ServiceConnection mConnection =
@@ -180,34 +207,44 @@ public class MainPresenter extends BasePresenter {
                                 @Override
                                 public void onTryPlaying(String id, String msg) {
                                     DLog.d("Binder::onTryPlaying called");
-                                    render(new MainState.Builder().setIsShowLoading(true).build());
+                                    render(new MainState.Builder().setIsShowLoading(true).setCurChannel(mIdToChannelMap.get(id)).build());
+                                    showErrorMsg("Hold on! Try playing "+mIdToChannelMap.get(id).getName());
+                                    mTelemetryManager.dbIncrementCount(id);
+                                    mTelemetryManager.markHit(TelemetryManager.TELEMETRY_PLAYER_TRY_PLAYING);
                                 }
 
                                 @Override
                                 public void onSuccess(String id, String msg) {
                                     render(new MainState.Builder().setIsPlaying(true).setIsShowLoading(false).build());
+                                    showErrorMsg("Now Playing "+mIdToChannelMap.get(id).getName());
                                     DLog.d("Binder::onSuccess called");
+                                    mTelemetryManager.markHit(TelemetryManager.TELEMETRY_PLAYER_SUCCESS);
+                                    mTelemetryManager.dbIncrementSuccess(id);
+                                    mTelemetryManager.rankUp(id);
                                 }
 
                                 @Override
                                 public void onResume(String id, String msg) {
                                     render(new MainState.Builder().setIsPlaying(true).build());
-                                    showErrorMsg(msg);
+                                    showErrorMsg("Now playing "+mIdToChannelMap.get(id).getName());
                                     DLog.d("Binder::onResume called");
                                 }
 
                                 @Override
                                 public void onPause(String id, String msg) {
                                     render(new MainState.Builder().setIsPlaying(false).build());
-                                    showErrorMsg(msg);
+                                    showErrorMsg(""+mIdToChannelMap.get(id).getName()+" Paused");
                                     DLog.d("Binder::onPause called");
                                 }
 
                                 @Override
                                 public void onError(String id, String msg) {
                                     render(new MainState.Builder().setIsPlaying(false).setIsShowLoading(false).build());
-                                    showErrorMsg(msg);
+                                    showErrorMsg(mIdToChannelMap.get(id).getName()+ " is offline.");
                                     DLog.d("Binder::onError called");
+                                    mTelemetryManager.markHit(TelemetryManager.TELEMETRY_PLAYER_ERROR);
+                                    mTelemetryManager.dbIncrementError(id);
+                                    mTelemetryManager.rankDown(id);
                                 }
 
                                 @Override
@@ -232,4 +269,5 @@ public class MainPresenter extends BasePresenter {
                     DLog.d("Disconnected to bounded service");
                 }
             };
+
 }

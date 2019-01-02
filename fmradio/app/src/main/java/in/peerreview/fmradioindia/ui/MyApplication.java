@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.newui;
+package in.peerreview.fmradioindia.ui;
 
 import android.app.Application;
 import android.app.NotificationChannel;

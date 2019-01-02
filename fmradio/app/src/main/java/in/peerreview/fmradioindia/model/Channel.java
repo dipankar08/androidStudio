@@ -119,6 +119,10 @@ public class Channel {
   }
 
   public Channel() {}
+  public Channel(String name, String img){
+      this.name = name;
+      this.img = img;
+    }
 
   public String getSubTitle() {
     String msg = "<span color='black'>" + getCount_click() + "</span> plays  ." + getRankMessage();

@@ -10,4 +10,6 @@
     <string name="state_removed">This stream is removed. We will update soon.</string>
     <string name="state_mostlyworking">This streams mostly working. Keep trying.</string>
     <string name="state_limitedtime">This channel works only for limited time in a day.</string>
+    <string name="my_radio">My Radio</string>
+    <string name="search">Search FM</string>
 </resources>

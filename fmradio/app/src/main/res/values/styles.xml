@@ -12,6 +12,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="customfont">myfont.ttf</item>
     </style>
+    <style name="Text.HomeTitle">
+        <item name="android:textColor">@color/title_text</item>
+        <item name="android:textSize">20sp</item>
+    </style>
     <style name="Text.Title">
         <item name="android:textColor">@color/title_text</item>
         <item name="android:textSize">17sp</item>
@@ -38,5 +42,7 @@
         <item name="android:background">#00000000</item>
         <item name="android:padding">15dp</item>
     </style>
+
+
 
 </resources>

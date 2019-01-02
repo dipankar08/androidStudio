@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.data.configuration;
+package in.peerreview.fmradioindia.applogic;
 
 import android.support.annotation.NonNull;
 import in.peerreview.fmradioindia.BuildConfig;

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/gap_between_element"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+   >
+    <in.co.dipankar.quickandorid.views.CircleImageView
+        android:id="@+id/image"
+        android:src="@drawable/ic_radio_mirchi"
+        android:layout_width="@dimen/channel_logo_size_xx"
+        android:layout_height="@dimen/channel_logo_size_xx"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/count"
+        app:civ_border_color="#ebf0f1"
+        app:civ_border_width="1dp"
+        />
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/title"
+        style="@style/Text.Title"
+        android:text="Radio Mirchi"
+        android:textSize="14dp"
+        android:maxLines="2"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</LinearLayout>

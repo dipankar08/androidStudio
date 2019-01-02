@@ -8,11 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".newui.MyApplication"
+        android:name=".ui.MyApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".newui.MainActivity"
+            android:name=".ui.MainActivity"
             android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
