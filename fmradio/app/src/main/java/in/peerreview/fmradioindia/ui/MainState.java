@@ -1,6 +1,7 @@
 package in.peerreview.fmradioindia.ui;
 
 import in.co.dipankar.quickandorid.arch.BaseViewState;
+import in.peerreview.fmradioindia.model.Category;
 import in.peerreview.fmradioindia.model.Channel;
 import java.util.List;
 
@@ -8,19 +9,23 @@ public class MainState extends BaseViewState {
   public enum Page {
     NONE,
     SPASH,
-    HOME
+    HOME,
+    SEARCH;
   }
 
   private List<Channel> mChannel;
-    private List<Channel> suggestionList;
+  private List<Channel> suggestionList;
   private Page currentPage;
   private String mError;
+  private String mDidYouKnowText;
   private Boolean isListOpen;
   private Channel mCurChannel;
   private Boolean mIsShowControl;
   private Boolean mIsShowLoading;
   private Boolean isPlaying;
   private List<String> mCat;
+  List<Category> mCategoriesMap = null;
+  private int mPage = -1;
 
   protected MainState(Builder builder) {
     super(builder);
@@ -34,6 +39,9 @@ public class MainState extends BaseViewState {
     currentPage = builder.currentPage;
     isPlaying = builder.isPlaying;
     suggestionList = builder.suggestionList;
+    mDidYouKnowText = builder.mDidYouKnowText;
+    mCategoriesMap = builder.mCategoriesMap;
+    mPage = builder.mPage;
   }
 
   public String getErrorMsg() {
@@ -64,19 +72,33 @@ public class MainState extends BaseViewState {
     return isPlaying;
   }
 
+  public String getDidYouKnowText() {
+    return mDidYouKnowText;
+  }
+
   public List<Channel> getChannel() {
     return mChannel;
   }
-    public List<Channel> getSuggestionList() {
-        return suggestionList;
-    }
+
+  public List<Channel> getSuggestionList() {
+    return suggestionList;
+  }
+
+  public int getPage() {
+    return mPage;
+  }
 
   public List<String> getCat() {
     return mCat;
   }
 
+  public List<Category> getCategoriesMap() {
+    return mCategoriesMap;
+  }
+
   public static class Builder extends BaseViewState.Builder<Builder> {
     private Page currentPage = Page.NONE;
+    private int mPage = -1;
     private List<Channel> mChannel = null;
     private Channel mCurChannel;
     private String mError = null;
@@ -85,7 +107,9 @@ public class MainState extends BaseViewState {
     private Boolean mIsShowLoading = null;
     private List<String> mCat = null;
     private Boolean isPlaying = null;
-    private List<Channel> suggestionList= null;
+    private List<Channel> suggestionList = null;
+    private String mDidYouKnowText = null;
+    List<Category> mCategoriesMap = null;
 
     public Builder() {}
 
@@ -124,10 +148,15 @@ public class MainState extends BaseViewState {
       return this;
     }
 
-      public Builder setSuggestionList(List<Channel> sug) {
-          this.suggestionList = sug;
-          return this;
-      }
+    public Builder setpage(int page) {
+      this.mPage = page;
+      return this;
+    }
+
+    public Builder setSuggestionList(List<Channel> sug) {
+      this.suggestionList = sug;
+      return this;
+    }
 
     public Builder setCurPage(Page page) {
       this.currentPage = page;
@@ -136,6 +165,16 @@ public class MainState extends BaseViewState {
 
     public Builder setIsPlaying(boolean isPlaying) {
       this.isPlaying = isPlaying;
+      return this;
+    }
+
+    public Builder setDidYouKnowText(String bundle) {
+      this.mDidYouKnowText = bundle;
+      return this;
+    }
+
+    public Builder setCategoriesList(List<Category> mCategoriesMap) {
+      this.mCategoriesMap = mCategoriesMap;
       return this;
     }
 

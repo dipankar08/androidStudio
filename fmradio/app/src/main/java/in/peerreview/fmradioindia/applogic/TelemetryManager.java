@@ -12,6 +12,7 @@ import in.peerreview.fmradioindia.ui.MyApplication;
 public class TelemetryManager {
 
 
+
     public static String DB_ENDPOINT = "http://simplestore.dipankar.co.in/api/nodel_bengalifm";
     public static String TELEMETRY_ENDPOINT = "http://simplestore.dipankar.co.in/api/stat_bengalifm";
 
@@ -31,6 +32,7 @@ public class TelemetryManager {
     public static final String TELEMETRY_CLICK_NEXT_BUTTON = "click_next_btn";
     public static final String TELEMETRY_CLICK_MAIN_LIST_ITEM = "click_main_list_item";
     public static final String TELEMETRY_CLICK_SUGGESTION_LIST_ITEM = "click_suggestion_list_item" ;
+    public static final String TELEMETRY_CLICK_RATING_BAR = "click_rating_bar";
 
 
     public static final String TELEMETRY_CLICK_QUICK_LIST_ITEM = "click_quick_list_item";

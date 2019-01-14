@@ -5,6 +5,7 @@
     <dimen name="channel_logo_margin_right">70dp</dimen>
     <dimen name="space_from_edge">15dp</dimen>
     <dimen name="gap_between_element">8dp</dimen>
+    <dimen name="gap_between_tiles">30dp</dimen>
     <dimen name="gap_between_rv_element">20dp</dimen>
-    <dimen name="channel_logo_size_xx">85dp</dimen>
+    <dimen name="suggestion_img_size">70dp</dimen>
 </resources>

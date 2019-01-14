@@ -54,8 +54,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     holder.subtitle.setText(Html.fromHtml(c.getSubTitle()));
     if (c.getImg() != null && c.getImg().length() != 0) {
       Glide.with(mContext).load(c.getImg()).into(holder.image);
-    } else{
-     holder.image.setImageResource(R.drawable.ic_music);
+    } else {
+      holder.image.setImageResource(R.drawable.ic_music);
     }
   }
 

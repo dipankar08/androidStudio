@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/title"
+        style="@style/Text.HomeTitle"
+        android:text="Title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="@dimen/space_from_edge"
+        android:paddingBottom="@dimen/gap_between_element"/>
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/all"
+        android:text="more"
+        style="@style/Text.More"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/space_from_edge"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        />
+</android.support.constraint.ConstraintLayout>

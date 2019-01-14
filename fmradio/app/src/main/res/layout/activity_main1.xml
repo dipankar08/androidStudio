@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
@@ -9,6 +10,7 @@
     <!-- Splash screen -->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/splash"
+        android:visibility="gone"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,7 +48,7 @@
     <!-- HomeView -->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/home"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <in.co.dipankar.quickandorid.views.CustomFontTextView
@@ -56,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent"
             style="@style/Text.HugeTitle"
             android:layout_marginLeft="@dimen/space_from_edge"
-            android:layout_marginTop="@dimen/space_from_edge"
+            android:layout_marginTop="@dimen/gap_between_element"
             />
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
@@ -65,97 +67,18 @@
             android:layout_width="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/sliding_tabs"
             app:layout_constraintTop_toBottomOf="@+id/home_title">
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/page_one"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/tile_nowplaying"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_from_edge"
-                    android:layout_marginEnd="@dimen/space_from_edge"
-                    android:layout_marginBottom="@dimen/gap_between_element"
-                    android:background="@drawable/background_edittext"
-                    android:paddingLeft="@dimen/space_from_edge"
-                    android:paddingRight="@dimen/space_from_edge"
-                    android:paddingBottom="@dimen/space_from_edge"
-                    >
-                    <ProgressBar
-                        android:id="@+id/progress_bar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="parent"
-                        android:visibility="gone"
-                        android:indeterminateOnly="true"/>
-                    <in.co.dipankar.quickandorid.views.CustomFontTextView
-                        android:id="@+id/now_playing_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:paddingTop="@dimen/space_from_edge"
-                        android:textAlignment="center"
-                        style="@style/Text.HomeTitle" />
-                    <in.co.dipankar.quickandorid.views.CircleImageView
-                        android:id="@+id/now_playing_image"
-                        android:src="@drawable/ic_radio_mirchi"
-                        android:layout_width="@dimen/channel_logo_size_xx"
-                        android:layout_height="@dimen/channel_logo_size_xx"
-                        app:layout_constraintTop_toBottomOf="@id/now_playing_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:civ_border_color="#ebf0f1"
-                        app:civ_border_width="1dp"
-                        android:layout_marginTop="@dimen/gap_between_element"
-                        android:layout_marginBottom="@dimen/gap_between_element"
-                        />
-                    <LinearLayout
-                        android:id="@+id/controls"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        >
-                        <ImageButton
-                            android:id="@+id/previous"
-                            style="@style/Btn.PlayControl"
-                            android:src="@drawable/prev" />
-                        <ImageButton
-                            android:alpha="0.1"
-                            android:id="@+id/play_pause"
-                            style="@style/Btn.PlayControl"
-                            android:src="@drawable/pause"/>
-                        <ImageButton
-                            android:id="@+id/next"
-                            style="@style/Btn.PlayControl"
-                            android:src="@drawable/next"/>
-                    </LinearLayout>
-                </android.support.constraint.ConstraintLayout>
-                <in.co.dipankar.quickandorid.views.CustomFontTextView
-                    android:layout_marginStart="@dimen/space_from_edge"
-                    android:layout_marginEnd="@dimen/space_from_edge"
-                    android:layout_marginBottom="@dimen/gap_between_element"
-                    android:layout_marginTop="@dimen/space_from_edge"
-                    android:text="Suggested FM"
-                    style="@style/Text.HomeTitle" />
+                android:layout_gravity="center"
+                android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/suggestion_rv"
+                    android:id="@+id/categories_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_from_edge"
-                    android:layout_marginEnd="@dimen/space_from_edge"
-                    android:background="@drawable/background_edittext"
-                    />
-            </LinearLayout>
+                    android:layout_height="match_parent"/>
+            </android.support.constraint.ConstraintLayout>
             <LinearLayout
                 android:id="@+id/page_two"
                 android:layout_width="match_parent"
@@ -177,5 +100,77 @@
                     />
             </LinearLayout>
         </android.support.v4.view.ViewPager>
+
+        <!-- Controls-->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="@dimen/space_from_edge"
+            android:background="#ddffffff"
+            android:visibility="gone"
+            >
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:id="@+id/live"
+                android:text="Live"
+                style="@style/Text.PlayTitle.LIVE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"
+                />
+            <in.co.dipankar.quickandorid.views.CustomFontTextView
+                android:id="@+id/now_playing_text"
+                style="@style/Text.PlayTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/live"
+                android:layout_marginLeft="@dimen/gap_between_element"
+                />
+            <ImageButton
+                android:id="@+id/previous"
+                android:visibility="gone"
+                style="@style/Btn.PlayControl"
+                app:layout_constraintEnd_toStartOf="@id/play_pause"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/prev" />
+            <ImageButton
+                android:id="@+id/play_pause"
+                style="@style/Btn.PlayControl"
+                android:src="@drawable/pause"
+                app:layout_constraintEnd_toStartOf="@id/next"
+                />
+            <ImageButton
+                android:id="@+id/next"
+                android:visibility="gone"
+                style="@style/Btn.PlayControl"
+                android:src="@drawable/next"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+        </android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.TabLayout
+            android:visibility="gone"
+            android:id="@+id/sliding_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="#00000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </android.support.constraint.ConstraintLayout>
+    <!-- Progress bar -->
+    <ProgressBar
+    android:id="@+id/progress_bar"
+    style="?android:attr/progressBarStyleHorizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="parent"
+    android:visibility="gone"
+    android:indeterminateOnly="true"/>
 </android.support.constraint.ConstraintLayout>

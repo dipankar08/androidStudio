@@ -41,6 +41,8 @@ public class Channel {
 
   @JsonProperty("state")
   private String state;
+@JsonProperty("category")
+private String categories;
 
   public String getId() {
     return id;
@@ -90,7 +92,11 @@ public class Channel {
     return state;
   }
 
-  public Channel(
+    public String getCategories() {
+        return categories;
+    }
+
+    public Channel(
       String id,
       int rank,
       int count_click,
@@ -102,7 +108,8 @@ public class Channel {
       String group,
       String tags,
       String help,
-      String state) {
+      String state,
+      String categories) {
     this.id = id;
     this.rank = rank;
     this.count_click = count_click;
@@ -116,6 +123,7 @@ public class Channel {
     this.tags = tags;
     this.help = help;
     this.state = state;
+    this.categories = categories;
   }
 
   public Channel() {}
