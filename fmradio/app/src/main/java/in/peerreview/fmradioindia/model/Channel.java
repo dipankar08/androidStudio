@@ -41,8 +41,9 @@ public class Channel {
 
   @JsonProperty("state")
   private String state;
-@JsonProperty("category")
-private String categories;
+
+  @JsonProperty("category")
+  private String categories;
 
   public String getId() {
     return id;
@@ -92,11 +93,11 @@ private String categories;
     return state;
   }
 
-    public String getCategories() {
-        return categories;
-    }
+  public String getCategories() {
+    return categories;
+  }
 
-    public Channel(
+  public Channel(
       String id,
       int rank,
       int count_click,
@@ -127,10 +128,11 @@ private String categories;
   }
 
   public Channel() {}
-  public Channel(String name, String img){
-      this.name = name;
-      this.img = img;
-    }
+
+  public Channel(String name, String img) {
+    this.name = name;
+    this.img = img;
+  }
 
   public String getSubTitle() {
     String msg = "<span color='black'>" + getCount_click() + "</span> plays  ." + getRankMessage();
