@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.ui;
+package in.peerreview.fmradioindia.ui.compactlist;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.model.Category;
 import in.peerreview.fmradioindia.model.Channel;
+import in.peerreview.fmradioindia.ui.common.RecyclerTouchListener;
+import in.peerreview.fmradioindia.ui.rowlist.RowListView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +32,13 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
   public class MyViewHolder extends RecyclerView.ViewHolder {
     public TextView title;
     public TextView all;
-    public RecyclerView rv;
+    public RowListView rowListView;
 
     public MyViewHolder(View view) {
       super(view);
       title = (TextView) view.findViewById(R.id.title);
       all = (TextView) view.findViewById(R.id.all);
-      rv = (RecyclerView) view.findViewById(R.id.rv);
+      rowListView = (RowListView) view.findViewById(R.id.row);
     }
   }
 
@@ -57,22 +60,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     Category c = mCategoryList.get(position);
     holder.title.setText(c.getName());
 
-    holder.rv.setLayoutManager(new GridLayoutManager(mContext, 4));
-    holder.rv.setItemAnimator(new DefaultItemAnimator());
-    holder.rv.setAdapter(new CategoriesItemAdapter(mContext, c.getList()));
-    holder.rv.addOnItemTouchListener(
-        new RecyclerTouchListener(
-            mContext,
-            holder.rv,
-            new RecyclerTouchListener.ClickListener() {
-              @Override
-              public void onClick(View view, int pos) {
-                mCallback.onClickItem(mCategoryList.get(position).getList().get(pos).getId());
-              }
-
-              @Override
-              public void onLongClick(View view, int position) {}
-            }));
+    holder.rowListView.setData(c.getList(), new RowListView.Callback() {
+        @Override
+        public void onClick(String id) {
+            mCallback.onClickItem(id);
+        }
+    });
     holder.all.setOnClickListener(
         new View.OnClickListener() {
           @Override

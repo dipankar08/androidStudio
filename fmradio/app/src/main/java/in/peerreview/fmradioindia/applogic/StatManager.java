@@ -10,9 +10,18 @@ public class StatManager {
   private long mPlayCount = 0;
   private long mStartTime = 0;
 
-  public StatManager() {
+  private StatManager() {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.Get());
     mPlayTime = sp.getLong("TimeSpent", mPlayTime);
+  }
+
+  private static StatManager sStatManager;
+
+  public static StatManager Get() {
+    if (sStatManager == null) {
+      sStatManager = new StatManager();
+    }
+    return sStatManager;
   }
 
   private void storePlayTime(long time) {

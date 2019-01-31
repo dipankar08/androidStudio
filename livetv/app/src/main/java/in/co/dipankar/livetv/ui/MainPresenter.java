@@ -97,7 +97,7 @@ public class MainPresenter extends BasePresenter {
   }
 
   public void onVideoPlayerSuccess() {
-    render(new MainState.Builder().setErrorMsg(null).build());
+    render(new MainState.Builder().setErrorMsg("").build());
   }
 
   public void onTouchViewView() {
@@ -126,7 +126,7 @@ public class MainPresenter extends BasePresenter {
       return;
     }
     mCurIndex = (mCurIndex + 1) % mChannelList.size();
-    render(new MainState.Builder().setCurChannel(mChannelList.get(mCurIndex)).build());
+    internalPlay();
   }
 
   public void onPrevClicked() {
@@ -137,14 +137,20 @@ public class MainPresenter extends BasePresenter {
     if (mCurIndex < 0) {
       mCurIndex = mChannelList.size() - 1;
     }
-    render(new MainState.Builder().setCurChannel(mChannelList.get(mCurIndex)).build());
+    internalPlay();
+
   }
 
-  public void onItemClick(int position) {
+    private void internalPlay() {
+        render(new MainState.Builder().setCurChannel(mChannelList.get(mCurIndex)).setErrorMsg("Wait ... Try Playing "+mChannelList.get(mCurIndex).getName()).build());
+    }
+
+    public void onItemClick(int position) {
     if (mChannelList.size() < 0) {
       return;
     }
-    render(new MainState.Builder().setCurChannel(mChannelList.get(position)).build());
+    mCurIndex = position;
+    internalPlay();
   }
     public void onChangeFilter(String filter) {
         List<Channel> selected = new ArrayList<>();

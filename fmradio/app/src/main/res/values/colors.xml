@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#0097ff</color>
+    <color name="colorPrimaryDark">#0087f9</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="title_text">#aa000000</color>
@@ -9,4 +9,9 @@
     <color name="subtitle_text">#50000000</color>
     <color name="errortitle_text">#ff0000</color>
     <color name="test">#ffffff</color>
+
+    <color name="invertBackground">#0097ff</color>
+    <color name="invertPrimaryColor">#ffffff</color>
+    <color name="invertSecondaryColor">#bbe1ff</color>
+    <color name="invertTabBackground">#0087f9</color>
 </resources>

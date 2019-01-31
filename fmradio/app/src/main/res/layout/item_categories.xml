@@ -2,11 +2,13 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="50dp"
+    android:layout_marginBottom="@dimen/space_from_edge"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/title"
         style="@style/Text.HomeTitle"
+        android:textColor="#666666"
+        android:textSize="16sp"
         android:text="Title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,12 +23,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/space_from_edge"
         />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
+    <in.peerreview.fmradioindia.ui.rowlist.RowListView
+        android:id="@+id/row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/title">
+    </in.peerreview.fmradioindia.ui.rowlist.RowListView>
 </android.support.constraint.ConstraintLayout>

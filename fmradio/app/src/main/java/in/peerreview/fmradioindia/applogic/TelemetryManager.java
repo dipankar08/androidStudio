@@ -60,7 +60,7 @@ public class TelemetryManager {
   private TelemetryUtils mTelemetryUtils;
   private INetwork mNetwork;
 
-  public TelemetryManager() {
+  private TelemetryManager() {
     if (mTelemetryUtils == null) {
       mTelemetryUtils =
           new TelemetryUtils(
@@ -80,6 +80,16 @@ public class TelemetryManager {
       mNetwork = new Network(MyApplication.Get(), true);
       DLog.d("Netwrok is created");
     }
+    sTelemetryManager = this;
+  }
+
+  private static TelemetryManager sTelemetryManager;
+
+  public static TelemetryManager Get() {
+    if (sTelemetryManager == null) {
+      sTelemetryManager = new TelemetryManager();
+    }
+    return sTelemetryManager;
   }
 
   public void rankUp(String id) {

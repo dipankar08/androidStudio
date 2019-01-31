@@ -5,6 +5,7 @@ import in.co.dipankar.quickandorid.arch.BaseViewState;
 import java.util.List;
 
 public class MainState extends BaseViewState {
+
   private List<Channel> mChannel;
   private String mError;
   private Boolean isListOpen;

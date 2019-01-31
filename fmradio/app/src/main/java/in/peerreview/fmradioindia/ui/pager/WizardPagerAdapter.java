@@ -1,21 +1,20 @@
-package in.peerreview.fmradioindia.ui;
+package in.peerreview.fmradioindia.ui.pager;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import in.peerreview.fmradioindia.R;
 
-class WizardPagerAdapter extends PagerAdapter {
+public class WizardPagerAdapter extends PagerAdapter {
 
   public Object instantiateItem(ViewGroup collection, int position) {
 
     int resId = 0;
     switch (position) {
       case 0:
-        resId = R.id.page_one;
+        // resId = R.id.page_one;
         break;
       case 1:
-        resId = R.id.page_two;
+        // resId = R.id.page_two;
         break;
     }
     return collection.findViewById(resId);

@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.ui;
+package in.peerreview.fmradioindia.ui.rowlist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,16 +11,20 @@ import com.bumptech.glide.Glide;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.model.Channel;
 import java.util.List;
+import javax.annotation.Nullable;
 
-public class CategoriesItemAdapter
-    extends RecyclerView.Adapter<CategoriesItemAdapter.MyViewHolder> {
+public class RowListAdapter extends RecyclerView.Adapter<RowListAdapter.MyViewHolder> {
 
-  private List<Channel> channelList;
+  @Nullable private List<Channel> channelList;
   private Context mContext;
 
-  public CategoriesItemAdapter(Context context, List<Channel> list) {
+  public RowListAdapter(Context context) {
     mContext = context;
+  }
+
+  public void setItem(List<Channel> list) {
     channelList = list;
+    notifyDataSetChanged();
   }
 
   public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -37,12 +41,12 @@ public class CategoriesItemAdapter
   @Override
   public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View itemView =
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_suggestion, parent, false);
-    return new MyViewHolder(itemView);
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_roew, parent, false);
+    return new RowListAdapter.MyViewHolder(itemView);
   }
 
   @Override
-  public void onBindViewHolder(MyViewHolder holder, int position) {
+  public void onBindViewHolder(RowListAdapter.MyViewHolder holder, int position) {
     Channel c = channelList.get(position);
     holder.title.setText(c.getName());
     if (c.getImg() != null && c.getImg().length() != 0) {
@@ -54,6 +58,6 @@ public class CategoriesItemAdapter
 
   @Override
   public int getItemCount() {
-    return channelList.size();
+    return channelList != null ? channelList.size() : 0;
   }
 }

@@ -230,12 +230,13 @@ public class MainActivity extends Activity implements BaseView<MainState> {
                         }
 
                         if (state.getErrorMsg() != null) {
-                            mLoadingText.setText(state.getErrorMsg());
-                            mLoadingText.setVisibility(VISIBLE);
-                        } else {
-                            mLoadingText.setVisibility(GONE);
+                            if(state.getErrorMsg().equals("")){
+                                mLoadingText.setVisibility(GONE);
+                            } else {
+                                mLoadingText.setText(state.getErrorMsg());
+                                mLoadingText.setVisibility(VISIBLE);
+                            }
                         }
-
                         if (state.getCurChannel() != null) {
                             mVideoView.setVideoURI(Uri.parse(state.getCurChannel().getUrl()));
                         }
