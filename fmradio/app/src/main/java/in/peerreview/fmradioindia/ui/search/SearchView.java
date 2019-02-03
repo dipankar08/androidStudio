@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.ui;
+package in.peerreview.fmradioindia.ui.search;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.ui.collist.ColListView;
+import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
 import in.peerreview.fmradioindia.ui.rowlist.RowListView;
 
 public class SearchView extends ConstraintLayout implements BaseView<SearchState> {
@@ -26,9 +27,10 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
   SearchPresenter mPresenter;
   private Callback mCallback;
 
-  public interface Callback{
-      void onClose();
-      void onOpen();
+  public interface Callback {
+    void onClose();
+
+    void onOpen();
   }
 
   public SearchView(Context context) {
@@ -61,9 +63,9 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
         new OnClickListener() {
           @Override
           public void onClick(View view) {
-              if(mCallback != null) {
-                  mCallback.onClose();
-              }
+            if (mCallback != null) {
+              mCallback.onClose();
+            }
           }
         });
     mClose.setOnClickListener(
@@ -87,6 +89,20 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
           @Override
           public void afterTextChanged(Editable editable) {}
         });
+    mRecentList.addCallback(
+        new RowListView.Callback() {
+          @Override
+          public void onClick(String id) {
+            mPresenter.onClickItem(id);
+          }
+        });
+    mColListView.addCallback(
+        new ColListView.Callback() {
+          @Override
+          public void onClick(String id) {
+            mPresenter.onClickItem(id);
+          }
+        });
   }
 
   @Override
@@ -101,38 +117,33 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
     super.onDetachedFromWindow();
   }
 
-    @Override
-    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-        mPresenter.onVisibilityChanged(visibility);
-    }
-
-    @Override
-  public void render(SearchState state) {
-    if (state.getShouldShowClose() != null) {
-      mClose.setVisibility(state.getShouldShowClose() ? VISIBLE : INVISIBLE);
-    }
-    if (state.getPreviousSerachList() != null) {
-      mRecentList.setData(
-          state.getPreviousSerachList(),
-          new RowListView.Callback() {
-            @Override
-            public void onClick(String id) {
-              mPresenter.onClickItem(id);
-            }
-          });
-    }
-    if(state.getSearchChannel() != null){
-        mColListView.setData( state.getSearchChannel(), new ColListView.Callback() {
-            @Override
-            public void onClick(String id) {
-                mPresenter.onClickItem(id);
-            }
-        });
-    }
+  @Override
+  protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+    super.onVisibilityChanged(changedView, visibility);
+    mPresenter.onVisibilityChanged(visibility);
   }
 
-  public void addCallback(Callback callback){
-      mCallback = callback;
+  @Override
+  public void render(SearchState state) {
+    ((MainActivity) getContext())
+        .runOnUiThread(
+            new Runnable() {
+              @Override
+              public void run() {
+                if (state.getShouldShowClose() != null) {
+                  mClose.setVisibility(state.getShouldShowClose() ? VISIBLE : INVISIBLE);
+                }
+                if (state.getPreviousSerachList() != null) {
+                  mRecentList.setData(state.getPreviousSerachList());
+                }
+                if (state.getSearchChannel() != null) {
+                  mColListView.setData(state.getSearchChannel());
+                }
+              }
+            });
+  }
+
+  public void addCallback(Callback callback) {
+    mCallback = callback;
   }
 }

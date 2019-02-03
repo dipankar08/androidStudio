@@ -1,8 +1,6 @@
 package in.peerreview.fmradioindia.ui.compactlist;
 
 import android.content.Context;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +9,7 @@ import android.widget.TextView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.model.Category;
 import in.peerreview.fmradioindia.model.Channel;
-import in.peerreview.fmradioindia.ui.common.RecyclerTouchListener;
 import in.peerreview.fmradioindia.ui.rowlist.RowListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +22,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
   }
 
   private List<Category> mCategoryList;
-  private Context mContext;
   private Callback mCallback;
 
   public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -44,7 +39,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 
   public CategoriesAdapter(Context context, List<Channel> list, Callback callback) {
     this.mCategoryList = new ArrayList<>();
-    mContext = context;
     mCallback = callback;
   }
 
@@ -60,12 +54,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     Category c = mCategoryList.get(position);
     holder.title.setText(c.getName());
 
-    holder.rowListView.setData(c.getList(), new RowListView.Callback() {
-        @Override
-        public void onClick(String id) {
+    holder.rowListView.setData(c.getList());
+    holder.rowListView.addCallback(
+        new RowListView.Callback() {
+          @Override
+          public void onClick(String id) {
             mCallback.onClickItem(id);
-        }
-    });
+          }
+        });
     holder.all.setOnClickListener(
         new View.OnClickListener() {
           @Override

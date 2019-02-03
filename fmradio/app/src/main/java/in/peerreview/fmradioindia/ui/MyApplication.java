@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 import in.co.dipankar.quickandorid.utils.DLog;
+import in.peerreview.fmradioindia.applogic.StorageManager;
 
 public class MyApplication extends Application {
 
@@ -21,6 +22,7 @@ public class MyApplication extends Application {
     mMyApplication = this;
     super.onCreate();
     createNotificationChannel();
+    StorageManager.Get().init(this);
   }
 
   private void createNotificationChannel() {

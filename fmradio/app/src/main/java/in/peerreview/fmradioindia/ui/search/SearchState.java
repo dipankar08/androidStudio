@@ -1,7 +1,8 @@
-package in.peerreview.fmradioindia.ui;
+package in.peerreview.fmradioindia.ui.search;
 
 import in.co.dipankar.quickandorid.arch.BaseViewState;
 import in.peerreview.fmradioindia.model.Channel;
+import in.peerreview.fmradioindia.ui.mainactivity.MainState;
 import java.util.List;
 
 public class SearchState extends BaseViewState {

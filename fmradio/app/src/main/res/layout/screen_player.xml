@@ -58,7 +58,7 @@
         android:id="@+id/full_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         >
         <View
             android:layout_width="match_parent"
@@ -119,6 +119,17 @@
             app:layout_constraintTop_toBottomOf="@+id/sub_title"
 
             />
+        <ImageView
+            android:id="@+id/fev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_bookmark_empty_white_32"
+            android:layout_marginTop="@dimen/space_from_edge"
+            app:layout_constraintTop_toBottomOf="@+id/count"
+            />
+
 
         <ImageView
             android:id="@+id/play_pause2"

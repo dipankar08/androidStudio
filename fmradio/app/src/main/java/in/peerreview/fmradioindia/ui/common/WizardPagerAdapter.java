@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.ui.pager;
+package in.peerreview.fmradioindia.ui.common;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

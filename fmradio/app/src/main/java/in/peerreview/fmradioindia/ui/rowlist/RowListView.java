@@ -9,17 +9,16 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.model.Channel;
 import in.peerreview.fmradioindia.ui.common.RecyclerTouchListener;
 import java.util.List;
 
 public class RowListView extends LinearLayout {
-  RecyclerView mRV;
-  Callback mCallback;
-  RowListAdapter mRowListAdapter;
-  List<Channel> mItemList;
+  private RecyclerView mRV;
+  private @Nullable Callback mCallback;
+  private RowListAdapter mRowListAdapter;
+  private @Nullable List<Channel> mItemList;
 
   public interface Callback {
     void onClick(String id);
@@ -73,9 +72,12 @@ public class RowListView extends LinearLayout {
             }));
   }
 
-  public void setData(List<Channel> list, Callback callback) {
-      mItemList = list;
-    mRowListAdapter.setItem(list);
+  public void addCallback(Callback callback) {
     mCallback = callback;
+  }
+
+  public void setData(List<Channel> list) {
+    mItemList = list;
+    mRowListAdapter.setItem(list);
   }
 }

@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia.ui;
+package in.peerreview.fmradioindia.ui.mainactivity;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -9,22 +9,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.ui.compactlist.CategoriesListView;
-import in.peerreview.fmradioindia.ui.player.PlayerView;
+import in.peerreview.fmradioindia.ui.home.HomeScreen;
+import in.peerreview.fmradioindia.ui.search.SearchView;
+import in.peerreview.fmradioindia.ui.splash.SplashScreen;
 
 public class MainActivity extends Activity implements BaseView<MainState> {
-  private ViewGroup mSplashView;
+  private SplashScreen mSplashView;
   private SearchView mSearchView;
-  private CategoriesListView mCategoriesList;
-
-  private ViewGroup mHomeView;
-
+  private HomeScreen mHomeView;
   private MainPresenter mPresenter;
 
   @Override
@@ -42,39 +36,33 @@ public class MainActivity extends Activity implements BaseView<MainState> {
 
     mSplashView = findViewById(R.id.splash);
     mSearchView = findViewById(R.id.search);
-
     mHomeView = findViewById(R.id.home);
-    mCategoriesList = findViewById(R.id.categories_list);
 
-    initCallback();
-    mPresenter = new MainPresenter();
-  }
-
-  private void initCallback() {
-    mCategoriesList.addCallback(
-        new CategoriesListView.Callback() {
+    mSearchView.addCallback(
+        new SearchView.Callback() {
           @Override
-          public void onItemClick(String id) {
-            mPresenter.onItemClick(id);
+          public void onClose() {
+            mSearchView.setVisibility(View.INVISIBLE);
           }
 
           @Override
-          public void onMoreClick(int i) {
-              mSearchView.setVisibility(VISIBLE);
+          public void onOpen() {}
+        });
+    mSplashView.addCallback(
+        new SplashScreen.Callback() {
+          @Override
+          public void onLoadSuccess() {
+            mPresenter.onLoadSuccess();
           }
         });
-
-    mSearchView.addCallback(new SearchView.Callback() {
-        @Override
-        public void onClose() {
-            mSearchView.setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        public void onOpen() {
-
-        }
-    });
+    mHomeView.addCallback(
+        new HomeScreen.Callback() {
+          @Override
+          public void onSearchClick() {
+            mSearchView.setVisibility(VISIBLE);
+          }
+        });
+    mPresenter = new MainPresenter();
   }
 
   @Override
@@ -95,10 +83,10 @@ public class MainActivity extends Activity implements BaseView<MainState> {
         new Runnable() {
           @Override
           public void run() {
-            if (state.getCurrentPage() != MainState.Page.NONE) {
+            if (state.getPage() != MainState.Page.NONE) {
               mSplashView.setVisibility(GONE);
               mHomeView.setVisibility(GONE);
-              switch (state.getCurrentPage()) {
+              switch (state.getPage()) {
                 case HOME:
                   mHomeView.setVisibility(VISIBLE);
                   break;
@@ -106,9 +94,6 @@ public class MainActivity extends Activity implements BaseView<MainState> {
                   mSplashView.setVisibility(VISIBLE);
                   break;
               }
-            }
-            if (state.getCategoriesMap() != null) {
-              mCategoriesList.setup(state.getCategoriesMap());
             }
           }
         });

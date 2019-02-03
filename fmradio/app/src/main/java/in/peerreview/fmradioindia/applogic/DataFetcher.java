@@ -26,8 +26,10 @@ public class DataFetcher {
   private List<Channel> mChannelList;
   private Network mNetwork;
   private List<Callback> mCallback;
+  private Context mContext;
 
   public DataFetcher(Context context) {
+    mContext = context;
     mChannelList = new ArrayList<>();
     mNetwork = new Network(context, true);
   }
@@ -36,7 +38,7 @@ public class DataFetcher {
     long startTime = System.nanoTime();
     mNetwork.retrive(
         URL,
-        Network.CacheControl.GET_LIVE_ELSE_CACHE,
+        Network.CacheControl.GET_LIVE_ONLY,
         new Network.Callback() {
 
           @Override

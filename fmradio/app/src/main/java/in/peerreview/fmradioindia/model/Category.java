@@ -23,4 +23,9 @@ public class Category {
   public List<Channel> getList() {
     return mList;
   }
+
+  public Category addList(List<Channel> list) {
+    mList = list;
+    return this;
+  }
 }

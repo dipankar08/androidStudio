@@ -41,9 +41,7 @@ public class MusicManager {
     return mMusicManager;
   }
 
-
-
-    public interface Callback {
+  public interface Callback {
     void onTryPlaying(Channel channelForId);
 
     void onSuccess(Channel channelForId);
@@ -198,14 +196,12 @@ public class MusicManager {
     isServiceReady = true;
   }
 
-    public void playById(String id) {
-        for(int i =0;i<mFullChannelList.size();i++){
-            if(mFullChannelList.get(i).getId().equals(id)){
-                play(i);
-                break;
-            }
-        }
+  public void playById(String id) {
+    if (mChannelManager.getIndexForId(id) != null) {
+      play(mChannelManager.getIndexForId(id));
     }
+    mChannelManager.markRecentPlayed(id);
+  }
 
   public void play(int position) {
     ensureSurviceReady();
@@ -221,15 +217,17 @@ public class MusicManager {
     ensureSurviceReady();
     mContext.startService(mService);
   }
-  public void setPlayList(List<Channel> list1){
-      mFullChannelList = list1;
-      Intent mService = new Intent(mContext, MusicService.class);
-      List<Item> list = new ArrayList<Item>();
-      for (Channel channel : mFullChannelList) {
-          list.add(new Item(channel.getId(), channel.getName(), channel.getUrl()));
-      }
-      mService.putExtra("list", (Serializable) list);
-      mService.setAction(MusicForegroundService.Contracts.LOAD);
-      mContext.startService(mService);
+
+  public void setPlayList(List<Channel> list1) {
+    mFullChannelList = list1;
+    Intent mService = new Intent(mContext, MusicService.class);
+    List<Item> list = new ArrayList<Item>();
+    for (Channel channel : mFullChannelList) {
+      list.add(new Item(channel.getId(), channel.getName(), channel.getUrl()));
+    }
+    ensureSurviceReady();
+    mService.putExtra("list", (Serializable) list);
+    mService.setAction(MusicForegroundService.Contracts.LOAD);
+    mContext.startService(mService);
   }
 }
