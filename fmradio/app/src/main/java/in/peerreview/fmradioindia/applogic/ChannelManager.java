@@ -5,7 +5,6 @@ import in.peerreview.fmradioindia.model.Channel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -35,8 +34,8 @@ public class ChannelManager {
 
   @Inject
   public ChannelManager(DataFetcher dataFetcher, StorageManager storageManager) {
-      mDataFetcher = dataFetcher;
-      mStorageManager = storageManager;
+    mDataFetcher = dataFetcher;
+    mStorageManager = storageManager;
     mCallbacks = new ArrayList<>();
     mCategories = new ArrayList<>();
     mIdToChannelMap = new HashMap<>();

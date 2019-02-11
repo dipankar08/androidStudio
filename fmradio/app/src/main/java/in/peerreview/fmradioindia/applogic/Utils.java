@@ -4,26 +4,25 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.DisplayMetrics;
-
 import in.co.dipankar.quickandorid.utils.DLog;
-import in.peerreview.fmradioindia.ui.MyApplication;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
+@Singleton
 public class Utils {
 
-    @Inject Context mContext;
-    @Inject
-    public Utils(){
+  @Inject
+  @Named("ApplicationContext")
+  Context mContext;
 
-    }
-  public  String getVersionString() {
+  @Inject
+  public Utils() {}
+
+  public String getVersionString() {
     try {
-      PackageInfo pInfo =
-              mContext
-              .getPackageManager()
-              .getPackageInfo(mContext.getPackageName(), 0);
+      PackageInfo pInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
       String version = pInfo.versionName;
       int no = pInfo.versionCode;
       return "Bengali FM: V-" + no + " (" + version + ")";
@@ -33,7 +32,7 @@ public class Utils {
     return "Unknown Version";
   }
 
-  public  void printExecutionTime(long startTime, long endTime) {
+  public void printExecutionTime(long startTime, long endTime) {
     long time_ns = endTime - startTime;
     long time_ms = TimeUnit.NANOSECONDS.toMillis(time_ns);
     long time_sec = TimeUnit.NANOSECONDS.toSeconds(time_ns);
@@ -51,11 +50,15 @@ public class Utils {
     DLog.d(stringBuilder.toString());
   }
 
-    public static float convertDpToPixel(float dp, Context context){
-        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
-    public static float convertPixelsToDp(float px, Context context){
-        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
+  public static float convertDpToPixel(float dp, Context context) {
+    return dp
+        * ((float) context.getResources().getDisplayMetrics().densityDpi
+            / DisplayMetrics.DENSITY_DEFAULT);
+  }
 
+  public static float convertPixelsToDp(float px, Context context) {
+    return px
+        / ((float) context.getResources().getDisplayMetrics().densityDpi
+            / DisplayMetrics.DENSITY_DEFAULT);
+  }
 }

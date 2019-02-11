@@ -3,10 +3,9 @@ package in.peerreview.fmradioindia.applogic;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import in.peerreview.fmradioindia.ui.MyApplication;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
@@ -14,13 +13,12 @@ public class StatManager {
   private long mPlayTime = 0;
   private long mPlayCount = 0;
   private long mStartTime = 0;
+  private Context mContext;
 
   @Inject
-  Context mContext;
-
-  @Inject
-  public StatManager() {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+  public StatManager(@Named("ApplicationContext") Context context) {
+    mContext = context;
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     mPlayTime = sp.getLong("TimeSpent", mPlayTime);
   }
 

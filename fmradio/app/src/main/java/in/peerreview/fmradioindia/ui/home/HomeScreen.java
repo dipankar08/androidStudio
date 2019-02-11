@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.ui.compactlist.CategoriesListView;
@@ -18,7 +17,8 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
   private HomePresenter mPresenter;
   @Nullable private Callback mCallback;
   private TextView mSerachBox;
-    public interface Callback {
+
+  public interface Callback {
     void onSearchClick();
   }
 
@@ -42,7 +42,7 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
         (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     inflater.inflate(R.layout.screen_home, this, true);
     mCategoriesList = findViewById(R.id.categories_list);
-      mSerachBox = findViewById(R.id.search_box);
+    mSerachBox = findViewById(R.id.search_box);
     mCategoriesList.addCallback(
         new CategoriesListView.Callback() {
           @Override
@@ -57,14 +57,15 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
             }
           }
         });
-      mSerachBox.setOnClickListener(new OnClickListener() {
+    mSerachBox.setOnClickListener(
+        new OnClickListener() {
           @Override
           public void onClick(View view) {
-              if(mCallback != null){
-                  mCallback.onSearchClick();
-              }
+            if (mCallback != null) {
+              mCallback.onSearchClick();
+            }
           }
-      });
+        });
     mPresenter = new HomePresenter();
   }
 

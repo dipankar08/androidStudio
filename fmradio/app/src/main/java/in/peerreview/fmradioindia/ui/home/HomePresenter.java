@@ -1,17 +1,18 @@
 package in.peerreview.fmradioindia.ui.home;
 
-import javax.inject.Inject;
-
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
+import in.peerreview.fmradioindia.ui.MyApplication;
+import javax.inject.Inject;
 
 public class HomePresenter extends BasePresenter {
-    @Inject MusicManager mMusicManager;
-    @Inject ChannelManager mChannelManager;
+  @Inject MusicManager mMusicManager;
+  @Inject ChannelManager mChannelManager;
 
   public HomePresenter() {
     super("MainPresenter");
+    MyApplication.getMyComponent().inject(this);
     mChannelManager.addCallback(
         new ChannelManager.Callback() {
           @Override

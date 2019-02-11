@@ -1,15 +1,15 @@
 package in.peerreview.fmradioindia.applogic;
 
 import android.content.Context;
-
-import javax.inject.Inject;
-
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.INetwork;
 import in.co.dipankar.quickandorid.utils.Network;
 import in.co.dipankar.quickandorid.utils.TelemetryUtils;
-import in.peerreview.fmradioindia.ui.MyApplication;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
+@Singleton
 public class TelemetryManager {
 
   public static String DB_ENDPOINT = "http://simplestore.dipankar.co.in/api/nodel_bengalifm";
@@ -63,7 +63,9 @@ public class TelemetryManager {
 
   private TelemetryUtils mTelemetryUtils;
   private INetwork mNetwork;
+
   @Inject
+  @Named("ApplicationContext")
   Context mContext;
 
   @Inject

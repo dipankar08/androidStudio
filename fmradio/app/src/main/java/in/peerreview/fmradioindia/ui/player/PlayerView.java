@@ -9,9 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import javax.inject.Inject;
-
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.applogic.Utils;
@@ -21,7 +18,7 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
   ViewGroup mMiniView, mFullView;
   TextView mPlayTitle1, mPlayTitle2, mSubtitle, mCount;
   ImageView mPlayPause1, mPlayPause2, mNext, mPrev, mBack, mFev;
-  @Inject PlayerPresenter mPresenter;
+  PlayerPresenter mPresenter;
 
   public PlayerView(Context context) {
     super(context);
@@ -59,14 +56,14 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
         new OnClickListener() {
           @Override
           public void onClick(View view) {
-              showMiniView();
+            showMiniView();
           }
         });
     mMiniView.setOnClickListener(
         new OnClickListener() {
           @Override
           public void onClick(View view) {
-              showFullView();
+            showFullView();
           }
         });
     mPlayPause1.setOnClickListener(
@@ -104,65 +101,57 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
             mPresenter.toggleFev();
           }
         });
-    //mPresenter = new PlayerPresenter("PlayerPresenter");
+    mPresenter = new PlayerPresenter();
   }
 
-    private void showFullView() {
-        mFullView.animate()
-                .translationY(Utils.convertDpToPixel(60, getContext()))
-                .alpha(1.0f)
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
+  private void showFullView() {
+    mFullView
+        .animate()
+        .translationY(Utils.convertDpToPixel(60, getContext()))
+        .alpha(1.0f)
+        .setListener(
+            new Animator.AnimatorListener() {
+              @Override
+              public void onAnimationStart(Animator animator) {}
 
-                    }
+              @Override
+              public void onAnimationEnd(Animator animator) {
+                mMiniView.setVisibility(GONE);
+              }
 
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        mMiniView.setVisibility(GONE);
-                    }
+              @Override
+              public void onAnimationCancel(Animator animator) {}
 
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
+              @Override
+              public void onAnimationRepeat(Animator animator) {}
+            });
+  }
 
-                    }
+  private void showMiniView() {
+    // Hide FullView
+    mFullView
+        .animate()
+        .translationY(mFullView.getHeight() - Utils.convertDpToPixel(60, getContext()))
+        .alpha(1.0f)
+        .setListener(
+            new Animator.AnimatorListener() {
+              @Override
+              public void onAnimationStart(Animator animator) {}
 
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
+              @Override
+              public void onAnimationEnd(Animator animator) {
+                mMiniView.setVisibility(VISIBLE);
+              }
 
-                    }
-                });
-    }
+              @Override
+              public void onAnimationCancel(Animator animator) {}
 
-    private void showMiniView() {
-        // Hide FullView
-        mFullView.animate()
-                .translationY(mFullView.getHeight() - Utils.convertDpToPixel(60, getContext()))
-                .alpha(1.0f)
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
+              @Override
+              public void onAnimationRepeat(Animator animator) {}
+            });
+  }
 
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        mMiniView.setVisibility(VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
-
-                    }
-                });
-    }
-
-    @Override
+  @Override
   public void render(PlayerState state) {
     ((MainActivity) getContext())
         .runOnUiThread(

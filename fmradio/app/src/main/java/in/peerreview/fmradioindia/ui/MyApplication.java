@@ -5,26 +5,31 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
-
+import dagger.android.DispatchingAndroidInjector;
+import in.co.dipankar.quickandorid.utils.DLog;
+import in.peerreview.fmradioindia.applogic.ChannelManager;
+import in.peerreview.fmradioindia.di.ContextModule;
+import in.peerreview.fmradioindia.di.DaggerMyComponent;
+import in.peerreview.fmradioindia.di.MyComponent;
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
-import in.co.dipankar.quickandorid.utils.DLog;
-import in.peerreview.fmradioindia.di.DaggerAppComponent;
+public class MyApplication extends Application {
 
-public class MyApplication extends Application implements HasActivityInjector {
+  @Inject DispatchingAndroidInjector<Activity> activityDispatchingInjector;
 
-    @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingInjector;
+  @Inject ChannelManager channelManager;
+
   public static final String CHANNEL_ID = "MUSIC_NOTIFICATION_CHANNEL";
+  private static MyComponent component;
 
   @Override
   public void onCreate() {
     super.onCreate();
     createNotificationChannel();
-    initializeComponent();
+    component =
+        DaggerMyComponent.builder()
+            .contextModule(new ContextModule(getApplicationContext()))
+            .build();
   }
 
   private void createNotificationChannel() {
@@ -38,15 +43,8 @@ public class MyApplication extends Application implements HasActivityInjector {
       manager.createNotificationChannel(serviceChannel);
     }
   }
-    private void initializeComponent() {
-        DaggerAppComponent.builder()
-                .application(this)
-                .build()
-                .inject(this);
-    }
 
-    @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return activityDispatchingInjector;
-    }
+  public static MyComponent getMyComponent() {
+    return component;
+  }
 }

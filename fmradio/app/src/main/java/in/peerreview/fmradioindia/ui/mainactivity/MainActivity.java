@@ -1,21 +1,17 @@
 package in.peerreview.fmradioindia.ui.mainactivity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-
-import dagger.android.AndroidInjection;
-import dagger.android.support.DaggerAppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.ui.MyApplication;
 import in.peerreview.fmradioindia.ui.home.HomeScreen;
 import in.peerreview.fmradioindia.ui.search.SearchView;
 import in.peerreview.fmradioindia.ui.splash.SplashScreen;
 
-public class MainActivity extends DaggerAppCompatActivity implements BaseView<MainState> {
+public class MainActivity extends AppCompatActivity implements BaseView<MainState> {
   private SplashScreen mSplashView;
   private SearchView mSearchView;
   private HomeScreen mHomeView;
@@ -31,7 +27,6 @@ public class MainActivity extends DaggerAppCompatActivity implements BaseView<Ma
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-      AndroidInjection.inject(this);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main1);
 
@@ -53,15 +48,16 @@ public class MainActivity extends DaggerAppCompatActivity implements BaseView<Ma
         new SplashScreen.Callback() {
           @Override
           public void onLoadSuccess() {
-              AnimationUtil.switchFromSpashToHomeScreen(getApplicationContext(), mSplashView, mHomeView);
-              mPresenter.onLoadSuccess();
+            AnimationUtil.switchFromSpashToHomeScreen(
+                getApplicationContext(), mSplashView, mHomeView);
+            mPresenter.onLoadSuccess();
           }
         });
     mHomeView.addCallback(
         new HomeScreen.Callback() {
           @Override
           public void onSearchClick() {
-              AnimationUtil.openSearchScreen(getApplicationContext(), mSearchView);
+            AnimationUtil.openSearchScreen(getApplicationContext(), mSearchView);
           }
         });
     mPresenter = new MainPresenter();
@@ -84,8 +80,7 @@ public class MainActivity extends DaggerAppCompatActivity implements BaseView<Ma
     runOnUiThread(
         new Runnable() {
           @Override
-          public void run() {
-          }
+          public void run() {}
         });
   }
 

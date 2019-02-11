@@ -2,27 +2,37 @@ package in.peerreview.fmradioindia.ui.splash;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
-
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
+import in.peerreview.fmradioindia.storage.StaticResource;
 import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
 import javax.annotation.Nullable;
 
 public class SplashScreen extends ConstraintLayout implements BaseView<SplashState> {
+  private ViewPager mViewPager;
+  private int index = 0;
+  private Button mButton;
+  private VideoView mVideoView;
   private TextView mVersion;
   private ViewGroup mFTUX, mBoot;
+  private TabLayout mTabLayout;
   private SplashPresenter mSplashPresenter;
+  private FixedPageAdapter mFixedPageAdapter;
   @Nullable private Callback mCallback;
-  private VideoView mVideoView;
 
   public interface Callback {
     void onLoadSuccess();
@@ -49,31 +59,73 @@ public class SplashScreen extends ConstraintLayout implements BaseView<SplashSta
     inflater.inflate(R.layout.activity_splash, this, true);
     mFTUX = findViewById(R.id.ftux);
     mBoot = findViewById(R.id.boot);
-      mVideoView = findViewById(R.id.videoView);
-      Uri uri = Uri.parse("android.resource://"+getContext().getPackageName()+"/"+R.raw.backgroud_preview);
-      mVideoView.setVideoURI(uri);
-      mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+    mViewPager = (ViewPager) findViewById(R.id.pager);
+    mVideoView = findViewById(R.id.videoView);
+    mButton = findViewById(R.id.next);
+    mTabLayout = (TabLayout) findViewById(R.id.tabDots);
+    mFixedPageAdapter =
+        new FixedPageAdapter(getContext(), StaticResource.getSplashData(getContext()));
+
+    // define viewpager
+    mViewPager.setAdapter(mFixedPageAdapter);
+    mTabLayout.setupWithViewPager(mViewPager, true);
+    mViewPager.setOnPageChangeListener(
+        new ViewPager.OnPageChangeListener() {
+          @Override
+          public void onPageScrolled(
+              int position, float positionOffset, int positionOffsetPixels) {}
+
+          @Override
+          public void onPageSelected(int position) {
+            index = position;
+            if (position < StaticResource.getSplashData(getContext()).size() - 1) {
+              mButton.setBackgroundResource(R.drawable.rounded_white_empty);
+              mButton.setTextColor(Color.WHITE);
+              mButton.setText("Next");
+            } else {
+              mButton.setBackgroundResource(R.drawable.rounded_white_full);
+              mButton.setTextColor(Color.BLACK);
+              mButton.setText("Getting Stated");
+            }
+          }
+
+          @Override
+          public void onPageScrollStateChanged(int state) {}
+        });
+    // setup Button.
+    mButton.setOnClickListener(
+        new OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            if (index == 3) {
+              mSplashPresenter.onCompelteFTUX();
+            } else {
+              mViewPager.setCurrentItem(++index);
+            }
+          }
+        });
+    // Setup Video View
+    Uri uri =
+        Uri.parse(
+            "android.resource://" + getContext().getPackageName() + "/" + R.raw.backgroud_preview);
+    mVideoView.setVideoURI(uri);
+    mVideoView.start();
+    mVideoView.setOnPreparedListener(
+        new MediaPlayer.OnPreparedListener() {
           @Override
           public void onPrepared(MediaPlayer mp) {
-              mp.setLooping(true);
+            mp.setLooping(true);
           }
-      });
-      mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-          @Override
-          public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-              return false;
-          }
-      });
-
+        });
+    // Setup presenter.
     mSplashPresenter = new SplashPresenter("SplashPresenter");
   }
 
   @Override
   protected void onAttachedToWindow() {
     super.onAttachedToWindow();
-      mVideoView.start();
     mSplashPresenter.attachView(this);
-    //mSplashPresenter.startFetch();
+    mVideoView.start();
   }
 
   @Override
@@ -93,11 +145,22 @@ public class SplashScreen extends ConstraintLayout implements BaseView<SplashSta
             new Runnable() {
               @Override
               public void run() {
-                if (splashState.getError() == null) {
-                  if (mCallback != null) {
-                    mCallback.onLoadSuccess();
-                  }
-                } else {
+                switch (splashState.getType()) {
+                  case Boot:
+                    mBoot.setVisibility(VISIBLE);
+                    mFTUX.setVisibility(GONE);
+                    break;
+                  case Ftux:
+                    mBoot.setVisibility(GONE);
+                    mFTUX.setVisibility(VISIBLE);
+                    break;
+                  case Done:
+                    if (mCallback != null) {
+                      mCallback.onLoadSuccess();
+                    }
+                }
+
+                if (splashState.getError() != null) {
                   AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                   alertDialog.setTitle("Not able to Load Channel");
                   alertDialog.setMessage("Please make sure you have internet connection");

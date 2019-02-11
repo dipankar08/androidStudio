@@ -3,7 +3,6 @@ package in.peerreview.fmradioindia.applogic;
 import static android.content.Context.BIND_AUTO_CREATE;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
@@ -11,16 +10,17 @@ import in.co.dipankar.quickandorid.services.Item;
 import in.co.dipankar.quickandorid.services.MusicForegroundService;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.model.Channel;
+import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+@Singleton
 public class MusicManager {
-  private Context mContext;
+  private MainActivity mContext;
   private TelemetryManager mTelemetryManager;
   private StatManager mStatManager;
   private ChannelManager mChannelManager;
@@ -29,7 +29,8 @@ public class MusicManager {
   private List<Channel> mFullChannelList;
 
   @Inject
-  public MusicManager(TelemetryManager telemetryManager,StatManager statManager, ChannelManager channelManager ) {
+  public MusicManager(
+      TelemetryManager telemetryManager, StatManager statManager, ChannelManager channelManager) {
     mTelemetryManager = telemetryManager;
     mStatManager = statManager;
     mChannelManager = channelManager;
@@ -57,7 +58,7 @@ public class MusicManager {
     mCallbacks.remove(callback);
   }
 
-  public void startService(Context context) {
+  public void startService(MainActivity context) {
     mContext = context;
     bindService();
   }

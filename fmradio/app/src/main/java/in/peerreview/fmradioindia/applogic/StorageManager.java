@@ -5,19 +5,15 @@ import in.peerreview.fmradioindia.model.Channel;
 import io.paperdb.Paper;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
 public class StorageManager {
 
-
-    @Inject
-      public StorageManager() {
-      }
-
-  public void init(Context context) {
+  @Inject
+  public StorageManager(@Named("ApplicationContext") Context context) {
     Paper.init(context);
   }
 

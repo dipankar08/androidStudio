@@ -4,17 +4,17 @@ import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
 import in.peerreview.fmradioindia.model.Channel;
+import in.peerreview.fmradioindia.ui.MyApplication;
 import java.util.List;
-
 import javax.inject.Inject;
 
 public class SearchPresenter extends BasePresenter {
-  @Inject
-  ChannelManager mChannelManager;
+  @Inject ChannelManager mChannelManager;
   @Inject MusicManager mMusicManager;
 
   public SearchPresenter(String name) {
     super(name);
+    MyApplication.getMyComponent().inject(this);
     mChannelManager.addCallback(
         new ChannelManager.Callback() {
           @Override

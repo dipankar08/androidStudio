@@ -1,25 +1,25 @@
 package in.peerreview.fmradioindia.ui.mainactivity;
 
-import javax.inject.Inject;
-
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
+import in.peerreview.fmradioindia.ui.MyApplication;
+import javax.inject.Inject;
 
 public class MainPresenter extends BasePresenter {
 
   @Inject MusicManager mMusicManager;
   @Inject ChannelManager mChannelManager;
 
-
   public MainPresenter() {
     super("MainPresenter");
+    MyApplication.getMyComponent().inject(this);
   }
 
   @Override
   protected void onViewAttached() {
     super.onViewAttached();
-    mMusicManager.startService(getContext());
+    mMusicManager.startService((MainActivity) getContext());
   }
 
   @Override

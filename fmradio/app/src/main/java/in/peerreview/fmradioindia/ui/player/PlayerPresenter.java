@@ -4,20 +4,19 @@ import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
 import in.peerreview.fmradioindia.model.Channel;
+import in.peerreview.fmradioindia.ui.MyApplication;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 public class PlayerPresenter extends BasePresenter {
-   MusicManager mMusicManager;
-  ChannelManager mChannelManager;
   @Nullable private Channel mChannel;
+  @Inject MusicManager mMusicManager;
+  @Inject ChannelManager mChannelManager;
 
   @Inject
-  public PlayerPresenter(MusicManager musicManager, ChannelManager channelManager) {
-      super("PlayerPresenter");
-      mMusicManager = mMusicManager;
-      mChannelManager = channelManager;
-
+  public PlayerPresenter() {
+    super("PlayerPresenter");
+    MyApplication.getMyComponent().inject(this);
     mMusicManager.addCallback(
         new MusicManager.Callback() {
           @Override
