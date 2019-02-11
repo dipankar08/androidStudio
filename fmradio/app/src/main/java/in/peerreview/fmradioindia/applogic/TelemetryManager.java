@@ -1,5 +1,9 @@
 package in.peerreview.fmradioindia.applogic;
 
+import android.content.Context;
+
+import javax.inject.Inject;
+
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.co.dipankar.quickandorid.utils.INetwork;
 import in.co.dipankar.quickandorid.utils.Network;
@@ -59,12 +63,15 @@ public class TelemetryManager {
 
   private TelemetryUtils mTelemetryUtils;
   private INetwork mNetwork;
+  @Inject
+  Context mContext;
 
-  private TelemetryManager() {
+  @Inject
+  public TelemetryManager() {
     if (mTelemetryUtils == null) {
       mTelemetryUtils =
           new TelemetryUtils(
-              MyApplication.Get(),
+              mContext,
               TELEMETRY_ENDPOINT,
               true,
               new TelemetryUtils.Callback() {
@@ -77,7 +84,7 @@ public class TelemetryManager {
     }
 
     if (mNetwork == null) {
-      mNetwork = new Network(MyApplication.Get(), true);
+      mNetwork = new Network(mContext, true);
       DLog.d("Netwrok is created");
     }
     sTelemetryManager = this;

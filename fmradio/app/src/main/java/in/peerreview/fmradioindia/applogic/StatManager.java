@@ -1,31 +1,31 @@
 package in.peerreview.fmradioindia.applogic;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import in.peerreview.fmradioindia.ui.MyApplication;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class StatManager {
   private long mPlayTime = 0;
   private long mPlayCount = 0;
   private long mStartTime = 0;
 
-  private StatManager() {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.Get());
+  @Inject
+  Context mContext;
+
+  @Inject
+  public StatManager() {
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
     mPlayTime = sp.getLong("TimeSpent", mPlayTime);
   }
 
-  private static StatManager sStatManager;
-
-  public static StatManager Get() {
-    if (sStatManager == null) {
-      sStatManager = new StatManager();
-    }
-    return sStatManager;
-  }
-
   private void storePlayTime(long time) {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.Get());
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
     SharedPreferences.Editor editor = sp.edit();
     mPlayTime += time;
     editor.putLong("TimeSpent", mPlayTime);
@@ -33,7 +33,7 @@ public class StatManager {
   }
 
   public String getPlayTime() {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.Get());
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
     long time_ns = sp.getLong("TimeSpent", mPlayTime);
     StringBuilder stringBuilder = new StringBuilder();
     long time_min = TimeUnit.NANOSECONDS.toMinutes(time_ns);
@@ -44,7 +44,7 @@ public class StatManager {
   }
 
   public void storePlayCount(long time) {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.Get());
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
     SharedPreferences.Editor editor = sp.edit();
     mPlayCount += time;
     editor.putLong("PlayCount", mPlayCount);
@@ -52,7 +52,7 @@ public class StatManager {
   }
 
   public long getPlayCount() {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.Get());
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
     return sp.getLong("PlayCount", mPlayCount);
   }
 

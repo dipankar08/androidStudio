@@ -1,18 +1,19 @@
 package in.peerreview.fmradioindia.ui.mainactivity;
 
+import javax.inject.Inject;
+
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
 
 public class MainPresenter extends BasePresenter {
 
-  private MusicManager mMusicManager;
-  private ChannelManager mChannelManager;
+  @Inject MusicManager mMusicManager;
+  @Inject ChannelManager mChannelManager;
+
 
   public MainPresenter() {
     super("MainPresenter");
-    mMusicManager = MusicManager.Get();
-    mChannelManager = ChannelManager.Get();
   }
 
   @Override

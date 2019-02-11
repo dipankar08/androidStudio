@@ -1,28 +1,30 @@
 package in.peerreview.fmradioindia.ui;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 import in.co.dipankar.quickandorid.utils.DLog;
-import in.peerreview.fmradioindia.applogic.StorageManager;
+import in.peerreview.fmradioindia.di.DaggerAppComponent;
 
-public class MyApplication extends Application {
+public class MyApplication extends Application implements HasActivityInjector {
 
-  private static MyApplication mMyApplication;
-
+    @Inject
+    DispatchingAndroidInjector<Activity> activityDispatchingInjector;
   public static final String CHANNEL_ID = "MUSIC_NOTIFICATION_CHANNEL";
-
-  public static Application Get() {
-    return mMyApplication;
-  }
 
   @Override
   public void onCreate() {
-    mMyApplication = this;
     super.onCreate();
     createNotificationChannel();
-    StorageManager.Get().init(this);
+    initializeComponent();
   }
 
   private void createNotificationChannel() {
@@ -36,4 +38,15 @@ public class MyApplication extends Application {
       manager.createNotificationChannel(serviceChannel);
     }
   }
+    private void initializeComponent() {
+        DaggerAppComponent.builder()
+                .application(this)
+                .build()
+                .inject(this);
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return activityDispatchingInjector;
+    }
 }

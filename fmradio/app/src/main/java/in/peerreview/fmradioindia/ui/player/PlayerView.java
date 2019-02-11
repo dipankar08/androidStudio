@@ -1,5 +1,6 @@
 package in.peerreview.fmradioindia.ui.player;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
@@ -8,15 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import javax.inject.Inject;
+
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
+import in.peerreview.fmradioindia.applogic.Utils;
 import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
 
 public class PlayerView extends ConstraintLayout implements BaseView<PlayerState> {
   ViewGroup mMiniView, mFullView;
   TextView mPlayTitle1, mPlayTitle2, mSubtitle, mCount;
   ImageView mPlayPause1, mPlayPause2, mNext, mPrev, mBack, mFev;
-  PlayerPresenter mPresenter;
+  @Inject PlayerPresenter mPresenter;
 
   public PlayerView(Context context) {
     super(context);
@@ -38,7 +43,7 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
         (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     inflater.inflate(R.layout.screen_player, this, true);
     mMiniView = findViewById(R.id.mini_view);
-    mFullView = findViewById(R.id.full_view);
+    mFullView = findViewById(R.id.player_screen);
     mPlayTitle1 = findViewById(R.id.play_text1);
     mPlayTitle2 = findViewById(R.id.title);
     mSubtitle = findViewById(R.id.sub_title);
@@ -54,16 +59,14 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
         new OnClickListener() {
           @Override
           public void onClick(View view) {
-            mFullView.setVisibility(GONE);
-            mMiniView.setVisibility(VISIBLE);
+              showMiniView();
           }
         });
     mMiniView.setOnClickListener(
         new OnClickListener() {
           @Override
           public void onClick(View view) {
-            mFullView.setVisibility(VISIBLE);
-            mMiniView.setVisibility(GONE);
+              showFullView();
           }
         });
     mPlayPause1.setOnClickListener(
@@ -101,10 +104,65 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
             mPresenter.toggleFev();
           }
         });
-    mPresenter = new PlayerPresenter("PlayerPresenter");
+    //mPresenter = new PlayerPresenter("PlayerPresenter");
   }
 
-  @Override
+    private void showFullView() {
+        mFullView.animate()
+                .translationY(Utils.convertDpToPixel(60, getContext()))
+                .alpha(1.0f)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        mMiniView.setVisibility(GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+    }
+
+    private void showMiniView() {
+        // Hide FullView
+        mFullView.animate()
+                .translationY(mFullView.getHeight() - Utils.convertDpToPixel(60, getContext()))
+                .alpha(1.0f)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        mMiniView.setVisibility(VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+    }
+
+    @Override
   public void render(PlayerState state) {
     ((MainActivity) getContext())
         .runOnUiThread(

@@ -1,21 +1,21 @@
 package in.peerreview.fmradioindia.ui.mainactivity;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
+
+import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerAppCompatActivity;
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
+import in.peerreview.fmradioindia.ui.MyApplication;
 import in.peerreview.fmradioindia.ui.home.HomeScreen;
 import in.peerreview.fmradioindia.ui.search.SearchView;
 import in.peerreview.fmradioindia.ui.splash.SplashScreen;
 
-public class MainActivity extends Activity implements BaseView<MainState> {
+public class MainActivity extends DaggerAppCompatActivity implements BaseView<MainState> {
   private SplashScreen mSplashView;
   private SearchView mSearchView;
   private HomeScreen mHomeView;
@@ -31,6 +31,7 @@ public class MainActivity extends Activity implements BaseView<MainState> {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+      AndroidInjection.inject(this);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main1);
 
@@ -42,7 +43,7 @@ public class MainActivity extends Activity implements BaseView<MainState> {
         new SearchView.Callback() {
           @Override
           public void onClose() {
-            mSearchView.setVisibility(View.INVISIBLE);
+            AnimationUtil.closeSearchScreen(getApplicationContext(), mSearchView);
           }
 
           @Override
@@ -52,14 +53,15 @@ public class MainActivity extends Activity implements BaseView<MainState> {
         new SplashScreen.Callback() {
           @Override
           public void onLoadSuccess() {
-            mPresenter.onLoadSuccess();
+              AnimationUtil.switchFromSpashToHomeScreen(getApplicationContext(), mSplashView, mHomeView);
+              mPresenter.onLoadSuccess();
           }
         });
     mHomeView.addCallback(
         new HomeScreen.Callback() {
           @Override
           public void onSearchClick() {
-            mSearchView.setVisibility(VISIBLE);
+              AnimationUtil.openSearchScreen(getApplicationContext(), mSearchView);
           }
         });
     mPresenter = new MainPresenter();
@@ -83,18 +85,6 @@ public class MainActivity extends Activity implements BaseView<MainState> {
         new Runnable() {
           @Override
           public void run() {
-            if (state.getPage() != MainState.Page.NONE) {
-              mSplashView.setVisibility(GONE);
-              mHomeView.setVisibility(GONE);
-              switch (state.getPage()) {
-                case HOME:
-                  mHomeView.setVisibility(VISIBLE);
-                  break;
-                case SPASH:
-                  mSplashView.setVisibility(VISIBLE);
-                  break;
-              }
-            }
           }
         });
   }

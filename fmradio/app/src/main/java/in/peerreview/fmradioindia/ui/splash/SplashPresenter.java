@@ -1,15 +1,19 @@
 package in.peerreview.fmradioindia.ui.splash;
 
+import javax.inject.Inject;
+
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.co.dipankar.quickandorid.arch.Error;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
+import in.peerreview.fmradioindia.applogic.MusicManager;
 
 public class SplashPresenter extends BasePresenter {
-  private ChannelManager mChannelManager;
+
+    @Inject MusicManager mMusicManager;
+    @Inject ChannelManager mChannelManager;
 
   public SplashPresenter(String name) {
     super(name);
-    mChannelManager = ChannelManager.Get();
     mChannelManager.addCallback(
         new ChannelManager.Callback() {
           @Override

@@ -6,19 +6,16 @@ import io.paperdb.Paper;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class StorageManager {
-  private static StorageManager sStorage;
 
-  private StorageManager() {
-    sStorage = this;
-  }
 
-  public static StorageManager Get() {
-    if (sStorage == null) {
-      sStorage = new StorageManager();
-    }
-    return sStorage;
-  }
+    @Inject
+      public StorageManager() {
+      }
 
   public void init(Context context) {
     Paper.init(context);

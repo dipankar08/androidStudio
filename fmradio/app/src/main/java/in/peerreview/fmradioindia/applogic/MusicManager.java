@@ -16,29 +16,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 public class MusicManager {
   private Context mContext;
   private TelemetryManager mTelemetryManager;
   private StatManager mStatManager;
-  private static MusicManager mMusicManager;
   private ChannelManager mChannelManager;
   List<Callback> mCallbacks;
 
   private List<Channel> mFullChannelList;
 
-  MusicManager() {
-    mTelemetryManager = TelemetryManager.Get();
-    mStatManager = StatManager.Get();
+  @Inject
+  public MusicManager(TelemetryManager telemetryManager,StatManager statManager, ChannelManager channelManager ) {
+    mTelemetryManager = telemetryManager;
+    mStatManager = statManager;
+    mChannelManager = channelManager;
     mFullChannelList = new ArrayList<>();
-    mChannelManager = ChannelManager.Get();
     mCallbacks = new ArrayList<>();
-  }
-
-  public static MusicManager Get() {
-    if (mMusicManager == null) {
-      mMusicManager = new MusicManager();
-    }
-    return mMusicManager;
   }
 
   public interface Callback {

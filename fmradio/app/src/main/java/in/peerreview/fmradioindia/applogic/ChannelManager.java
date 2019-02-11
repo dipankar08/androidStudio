@@ -2,11 +2,14 @@ package in.peerreview.fmradioindia.applogic;
 
 import in.peerreview.fmradioindia.model.Category;
 import in.peerreview.fmradioindia.model.Channel;
-import in.peerreview.fmradioindia.ui.MyApplication;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class ChannelManager {
   private static final int MAX_LIMIT = 6;
 
@@ -17,10 +20,10 @@ public class ChannelManager {
   private List<Channel> mRecentPlayedChannelList;
   private List<Channel> mLikedChannelList;
   private List<Category> mCategories;
-  static ChannelManager sChannelManager;
+  List<Callback> mCallbacks;
+
   private DataFetcher mDataFetcher;
   private StorageManager mStorageManager;
-  List<Callback> mCallbacks;
 
   public interface Callback {
     void onLoadError(String err);
@@ -30,15 +33,14 @@ public class ChannelManager {
     void onDataRefreshed();
   }
 
-  private ChannelManager() {
+  @Inject
+  public ChannelManager(DataFetcher dataFetcher, StorageManager storageManager) {
+      mDataFetcher = dataFetcher;
+      mStorageManager = storageManager;
     mCallbacks = new ArrayList<>();
-
     mCategories = new ArrayList<>();
     mIdToChannelMap = new HashMap<>();
     mIdToIndex = new HashMap<>();
-
-    mDataFetcher = new DataFetcher(MyApplication.Get().getApplicationContext());
-    mStorageManager = StorageManager.Get();
     mRecentSearchChannelList = mStorageManager.getRecentSearch();
     mRecentPlayedChannelList = mStorageManager.getRecentPlayed();
     mLikedChannelList = mStorageManager.getLike();
@@ -78,13 +80,6 @@ public class ChannelManager {
 
   public void removeCallback(Callback callback) {
     mCallbacks.remove(callback);
-  }
-
-  public static ChannelManager Get() {
-    if (sChannelManager == null) {
-      sChannelManager = new ChannelManager();
-    }
-    return sChannelManager;
   }
 
   private void processChannel() {

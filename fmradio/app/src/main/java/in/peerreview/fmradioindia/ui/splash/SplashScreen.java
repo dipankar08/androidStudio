@@ -2,21 +2,27 @@ package in.peerreview.fmradioindia.ui.splash;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.VideoView;
+
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.applogic.Utils;
 import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
 import javax.annotation.Nullable;
 
 public class SplashScreen extends ConstraintLayout implements BaseView<SplashState> {
   private TextView mVersion;
+  private ViewGroup mFTUX, mBoot;
   private SplashPresenter mSplashPresenter;
   @Nullable private Callback mCallback;
+  private VideoView mVideoView;
 
   public interface Callback {
     void onLoadSuccess();
@@ -41,16 +47,33 @@ public class SplashScreen extends ConstraintLayout implements BaseView<SplashSta
     LayoutInflater inflater =
         (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     inflater.inflate(R.layout.activity_splash, this, true);
-    mVersion = findViewById(R.id.version);
-    mVersion.setText(Utils.getVersionString());
+    mFTUX = findViewById(R.id.ftux);
+    mBoot = findViewById(R.id.boot);
+      mVideoView = findViewById(R.id.videoView);
+      Uri uri = Uri.parse("android.resource://"+getContext().getPackageName()+"/"+R.raw.backgroud_preview);
+      mVideoView.setVideoURI(uri);
+      mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+          @Override
+          public void onPrepared(MediaPlayer mp) {
+              mp.setLooping(true);
+          }
+      });
+      mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+          @Override
+          public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+              return false;
+          }
+      });
+
     mSplashPresenter = new SplashPresenter("SplashPresenter");
   }
 
   @Override
   protected void onAttachedToWindow() {
     super.onAttachedToWindow();
+      mVideoView.start();
     mSplashPresenter.attachView(this);
-    mSplashPresenter.startFetch();
+    //mSplashPresenter.startFetch();
   }
 
   @Override

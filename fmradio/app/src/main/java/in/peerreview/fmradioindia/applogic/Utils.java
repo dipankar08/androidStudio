@@ -1,18 +1,29 @@
 package in.peerreview.fmradioindia.applogic;
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.DisplayMetrics;
+
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.ui.MyApplication;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 public class Utils {
-  public static String getVersionString() {
+
+    @Inject Context mContext;
+    @Inject
+    public Utils(){
+
+    }
+  public  String getVersionString() {
     try {
       PackageInfo pInfo =
-          MyApplication.Get()
+              mContext
               .getPackageManager()
-              .getPackageInfo(MyApplication.Get().getPackageName(), 0);
+              .getPackageInfo(mContext.getPackageName(), 0);
       String version = pInfo.versionName;
       int no = pInfo.versionCode;
       return "Bengali FM: V-" + no + " (" + version + ")";
@@ -22,7 +33,7 @@ public class Utils {
     return "Unknown Version";
   }
 
-  public static void printExecutionTime(long startTime, long endTime) {
+  public  void printExecutionTime(long startTime, long endTime) {
     long time_ns = endTime - startTime;
     long time_ms = TimeUnit.NANOSECONDS.toMillis(time_ns);
     long time_sec = TimeUnit.NANOSECONDS.toSeconds(time_ns);
@@ -39,4 +50,12 @@ public class Utils {
 
     DLog.d(stringBuilder.toString());
   }
+
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+    public static float convertPixelsToDp(float px, Context context){
+        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
 }

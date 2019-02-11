@@ -15,14 +15,28 @@
         android:layout_marginLeft="@dimen/space_from_edge"
         android:layout_marginTop="@dimen/gap_between_element"
         />
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/search_box"
+        style="@style/Text"
+        android:text="Type to search"
+        android:textSize="20sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="14dp"
+        android:paddingStart="10dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/background_edittext"
+        android:layout_margin="@dimen/space_from_edge"
+        app:layout_constraintTop_toBottomOf="@+id/home_title"
+        android:layout_height="wrap_content" />
     <in.peerreview.fmradioindia.ui.compactlist.CategoriesListView
         android:id="@+id/categories_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/home_title"
+        app:layout_constraintTop_toBottomOf="@+id/search_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/space_from_edge"
         />
     <in.peerreview.fmradioindia.ui.player.PlayerView
         android:id="@+id/player_screen"

@@ -1,6 +1,5 @@
 package in.peerreview.fmradioindia.applogic;
 
-import static in.peerreview.fmradioindia.applogic.Utils.printExecutionTime;
 
 import android.content.Context;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -15,6 +14,11 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+
+@Singleton
 public class DataFetcher {
   public interface Callback {
     void onSuccess(List<Channel> mChannelList);
@@ -28,6 +32,9 @@ public class DataFetcher {
   private List<Callback> mCallback;
   private Context mContext;
 
+  @Inject Utils mUtils;
+
+  @Inject
   public DataFetcher(Context context) {
     mContext = context;
     mChannelList = new ArrayList<>();
@@ -45,7 +52,7 @@ public class DataFetcher {
           public void onSuccess(JSONObject jsonObject) {
             callback.onSuccess(parse(jsonObject));
             long endTime = System.nanoTime();
-            printExecutionTime(startTime, endTime);
+              mUtils.printExecutionTime(startTime, endTime);
           }
 
           @Override

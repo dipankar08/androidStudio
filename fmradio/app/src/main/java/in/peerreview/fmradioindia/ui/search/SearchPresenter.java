@@ -6,14 +6,15 @@ import in.peerreview.fmradioindia.applogic.MusicManager;
 import in.peerreview.fmradioindia.model.Channel;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class SearchPresenter extends BasePresenter {
-  private ChannelManager mChannelManager;
-  private MusicManager mMusicManager;
+  @Inject
+  ChannelManager mChannelManager;
+  @Inject MusicManager mMusicManager;
 
   public SearchPresenter(String name) {
     super(name);
-    mChannelManager = ChannelManager.Get();
-    mMusicManager = MusicManager.Get();
     mChannelManager.addCallback(
         new ChannelManager.Callback() {
           @Override

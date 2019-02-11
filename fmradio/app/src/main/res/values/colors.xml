@@ -14,4 +14,6 @@
     <color name="invertPrimaryColor">#ffffff</color>
     <color name="invertSecondaryColor">#bbe1ff</color>
     <color name="invertTabBackground">#0087f9</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

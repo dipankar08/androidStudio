@@ -7,11 +7,35 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- BASE Style -->
     <style name="Text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="customfont">myfont.ttf</item>
     </style>
+
+    <style name="Image">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="ImageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <!-- Test Style -->
+    <style name="Text.Bold">
+        <item name="customfont">myfontbold.ttf</item>
+    </style>
+    <style name="Text.Light">
+        <item name="customfont">myfontlight.ttf</item>
+    </style>
+
     <style name="Text.HugeTitle">
         <item name="android:textColor">#212121</item>
         <item name="android:textSize">30sp</item>
@@ -24,6 +48,22 @@
     <style name="Text.SubTitle">
         <item name="android:textColor">@color/subtitle_text</item>
         <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Image Style -->
+
+
+    <!-- ImageButton Style -->
+
+
+    <!-- TextButton Style -->
+    <style name="TextButton.Empty">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/rounded_white_empty</item>
+    </style>
+    <style name="TextButton.Full">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/rounded_white_full</item>
     </style>
 
     <!-- Other value -->
@@ -84,5 +124,6 @@
     <style name="Text.SubTitle.Invert">
         <item name="android:textColor">@color/invertSecondaryColor</item>
     </style>
+
 
 </resources>
