@@ -11,35 +11,52 @@
         android:text="My Radio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/Text.HugeTitle"
+        style="@style/Text.Bold.HugeTitle"
         android:layout_marginLeft="@dimen/space_from_edge"
         android:layout_marginTop="@dimen/gap_between_element"
         />
-    <in.co.dipankar.quickandorid.views.CustomFontTextView
+    <ImageView
+        android:id="@+id/settings"
+        style="@style/ImageButton.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/home_title"
+        app:layout_constraintBottom_toBottomOf="@id/home_title"
+        android:src="@drawable/ic_settings_black_24"
+        android:layout_marginEnd="@dimen/space_from_edge"
+        />
+    <EditText
         android:id="@+id/search_box"
-        style="@style/Text"
-        android:text="Type to search"
-        android:textSize="20sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="14dp"
-        android:paddingStart="10dp"
-        android:layout_width="match_parent"
-        android:background="@drawable/background_edittext"
-        android:layout_margin="@dimen/space_from_edge"
+        style="@style/EditText.Search"
         app:layout_constraintTop_toBottomOf="@+id/home_title"
-        android:layout_height="wrap_content" />
+        android:layout_marginLeft="@dimen/space_from_edge"
+        android:layout_marginRight="@dimen/space_from_edge"
+        android:layout_marginTop="@dimen/space_from_edge"
+        android:editable="false"
+     />
+    <in.peerreview.fmradioindia.ui.rowlist.RowListView
+        android:visibility="gone"
+        android:id="@+id/list_suggested"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:headerLayout="@layout/item_row"
+        app:headerText="Suggested List"
+        app:isHorizantal="true"
+        app:layout_constraintTop_toBottomOf="@+id/search_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
     <in.peerreview.fmradioindia.ui.compactlist.CategoriesListView
         android:id="@+id/categories_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/search_box"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_suggested"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/space_from_edge"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
     <in.peerreview.fmradioindia.ui.player.PlayerView
         android:id="@+id/player_screen"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -26,6 +26,7 @@ public class PlayerPresenter extends BasePresenter {
                 new PlayerState.Builder()
                     .setChannel(channel)
                     .setState(PlayerState.State.TRY_PLAYING)
+                    .setVisibilityType(PlayerState.VisibilityType.SHOW_FULL)
                     .build());
           }
 
@@ -60,6 +61,8 @@ public class PlayerPresenter extends BasePresenter {
           @Override
           public void onDataRefreshed() {}
         });
+    render(
+        new PlayerState.Builder().setVisibilityType(PlayerState.VisibilityType.HIDE_ALL).build());
   }
 
   void onClickPlayPause() {

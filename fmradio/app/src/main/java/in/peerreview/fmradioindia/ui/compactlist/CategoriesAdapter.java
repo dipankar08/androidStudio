@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.model.Category;
 import in.peerreview.fmradioindia.model.Channel;
@@ -19,8 +18,6 @@ import java.util.function.Predicate;
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.MyViewHolder> {
 
   public interface Callback {
-    public void onClickAllButton(int i);
-
     public void onClickItem(String id);
   }
 
@@ -28,14 +25,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
   private Callback mCallback;
 
   public class MyViewHolder extends RecyclerView.ViewHolder {
-    public TextView title;
-    public TextView all;
     public RowListView rowListView;
 
     public MyViewHolder(View view) {
       super(view);
-      title = (TextView) view.findViewById(R.id.title);
-      all = (TextView) view.findViewById(R.id.all);
       rowListView = (RowListView) view.findViewById(R.id.row);
     }
   }
@@ -55,8 +48,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
   @Override
   public void onBindViewHolder(MyViewHolder holder, int position) {
     Category c = mCategoryList.get(position);
-    holder.title.setText(c.getName());
-
     holder.rowListView.setData(c.getList());
     holder.rowListView.addCallback(
         new RowListView.Callback() {
@@ -65,13 +56,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             mCallback.onClickItem(id);
           }
         });
-    holder.all.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            mCallback.onClickAllButton(position);
-          }
-        });
+    holder.rowListView.setTitle(c.getName());
   }
 
   @Override

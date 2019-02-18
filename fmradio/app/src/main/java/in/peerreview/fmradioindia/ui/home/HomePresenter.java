@@ -20,12 +20,20 @@ public class HomePresenter extends BasePresenter {
 
           @Override
           public void onLoadSuccess() {
-            render(new HomeState.Builder().setCategoriesList(mChannelManager.getCatMap()).build());
+            render(
+                new HomeState.Builder()
+                    .setCategoriesList(mChannelManager.getCatMap())
+                    .setSuggestionList(mChannelManager.getSuggestedList())
+                    .build());
           }
 
           @Override
           public void onDataRefreshed() {
-            render(new HomeState.Builder().setCategoriesList(mChannelManager.getCatMap()).build());
+            render(
+                new HomeState.Builder()
+                    .setCategoriesList(mChannelManager.getCatMap())
+                    .setSuggestionList(mChannelManager.getSuggestedList())
+                    .build());
           }
         });
   }

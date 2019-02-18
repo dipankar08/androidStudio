@@ -139,6 +139,23 @@ public class Channel {
     return msg;
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof Channel)) {
+      return false;
+    }
+    Channel cc = (Channel) o;
+    return cc.getId().equals(getId());
+  }
+
   public String getRankMessage() {
     if (this.rank == 0) {
       return " <font color='red'>Be the first player</font>";

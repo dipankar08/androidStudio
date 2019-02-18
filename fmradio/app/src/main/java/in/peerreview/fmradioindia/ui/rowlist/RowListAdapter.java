@@ -2,6 +2,7 @@ package in.peerreview.fmradioindia.ui.rowlist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,11 @@ public class RowListAdapter extends RecyclerView.Adapter<RowListAdapter.MyViewHo
 
   @Nullable private List<Channel> channelList;
   private Context mContext;
+  private int mLayoutId;
 
-  public RowListAdapter(Context context) {
+  public RowListAdapter(Context context, int layoutId) {
     mContext = context;
+    mLayoutId = layoutId;
   }
 
   public void setItem(List<Channel> list) {
@@ -29,30 +32,57 @@ public class RowListAdapter extends RecyclerView.Adapter<RowListAdapter.MyViewHo
 
   public class MyViewHolder extends RecyclerView.ViewHolder {
     public ImageView image;
+    public TextView count;
     public TextView title;
+    public TextView subtitle;
+    public TextView live;
 
     public MyViewHolder(View view) {
       super(view);
-      image = (ImageView) view.findViewById(R.id.image);
-      title = (TextView) view.findViewById(R.id.title);
+      image = (ImageView) view.findViewById(R.id.row_image);
+      title = (TextView) view.findViewById(R.id.row_title);
+      subtitle = (TextView) view.findViewById(R.id.row_subtitle);
+      count = (TextView) view.findViewById(R.id.row_count);
+      live = (TextView) view.findViewById(R.id.row_live);
     }
   }
 
   @Override
   public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View itemView =
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_roew, parent, false);
+    if (mLayoutId == -1) {
+      mLayoutId = R.layout.item_roew;
+    }
+    View itemView = LayoutInflater.from(parent.getContext()).inflate(mLayoutId, parent, false);
     return new RowListAdapter.MyViewHolder(itemView);
   }
 
   @Override
   public void onBindViewHolder(RowListAdapter.MyViewHolder holder, int position) {
     Channel c = channelList.get(position);
-    holder.title.setText(c.getName());
-    if (c.getImg() != null && c.getImg().length() != 0) {
-      Glide.with(mContext).load(c.getImg()).into(holder.image);
-    } else {
-      holder.image.setImageResource(R.drawable.ic_search);
+    if (holder.count != null) {
+      holder.count.setText(position + 1 + "");
+    }
+    if (holder.title != null) {
+      holder.title.setText(c.getName());
+    }
+    if (holder.subtitle != null) {
+      holder.subtitle.setText(Html.fromHtml(c.getSubTitle()));
+    }
+    if (holder.image != null) {
+      if (c.getImg() != null && c.getImg().length() != 0) {
+        Glide.with(mContext).load(c.getImg()).into(holder.image);
+      } else {
+        holder.image.setImageResource(R.drawable.ic_music);
+      }
+    }
+    if (holder.live != null) {
+      if (c.getRank() > 8) {
+        holder.live.setText("Live");
+        holder.live.setBackgroundResource(R.drawable.rouned_button_red_full);
+      } else {
+        holder.live.setText("Offline");
+        holder.live.setBackgroundResource(R.drawable.rounded_black_full);
+      }
     }
   }
 

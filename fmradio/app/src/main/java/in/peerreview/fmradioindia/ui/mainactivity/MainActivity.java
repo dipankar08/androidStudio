@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.ui.home.HomeScreen;
+import in.peerreview.fmradioindia.ui.pref.UserPrefView;
 import in.peerreview.fmradioindia.ui.search.SearchView;
 import in.peerreview.fmradioindia.ui.splash.SplashScreen;
 
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
   private SplashScreen mSplashView;
   private SearchView mSearchView;
   private HomeScreen mHomeView;
+  private UserPrefView mUserPrefView;
   private MainPresenter mPresenter;
 
   @Override
@@ -28,17 +32,24 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
+    getSupportActionBar().hide(); // hide the title bar
+    this.getWindow()
+        .setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN); // enable full screen
     setContentView(R.layout.activity_main1);
 
     mSplashView = findViewById(R.id.splash);
     mSearchView = findViewById(R.id.search);
     mHomeView = findViewById(R.id.home);
+    mUserPrefView = findViewById(R.id.user_pref);
 
     mSearchView.addCallback(
         new SearchView.Callback() {
           @Override
           public void onClose() {
-            AnimationUtil.closeSearchScreen(getApplicationContext(), mSearchView);
+            AnimationUtil.close(AnimationUtil.AnimationType.OPEN_CLOSE_FROM_BUTTON, mSearchView);
           }
 
           @Override
@@ -57,7 +68,19 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
         new HomeScreen.Callback() {
           @Override
           public void onSearchClick() {
-            AnimationUtil.openSearchScreen(getApplicationContext(), mSearchView);
+            AnimationUtil.open(AnimationUtil.AnimationType.OPEN_CLOSE_FROM_BUTTON, mSearchView);
+          }
+
+          @Override
+          public void onSettingClick() {
+            AnimationUtil.open(AnimationUtil.AnimationType.OPEN_CLOSE_FROM_BUTTON, mUserPrefView);
+          }
+        });
+    mUserPrefView.addCallback(
+        new UserPrefView.Callback() {
+          @Override
+          public void onClose() {
+            AnimationUtil.close(AnimationUtil.AnimationType.OPEN_CLOSE_FROM_BUTTON, mUserPrefView);
           }
         });
     mPresenter = new MainPresenter();

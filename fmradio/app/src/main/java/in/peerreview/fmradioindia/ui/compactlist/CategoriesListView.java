@@ -19,8 +19,6 @@ public class CategoriesListView extends ConstraintLayout {
 
   public interface Callback {
     public void onItemClick(String id);
-
-    public void onMoreClick(int i);
   }
 
   public CategoriesListView(Context context) {
@@ -48,13 +46,6 @@ public class CategoriesListView extends ConstraintLayout {
             getContext(),
             null,
             new CategoriesAdapter.Callback() {
-              @Override
-              public void onClickAllButton(int i) {
-                if (mCallback != null) {
-                  mCallback.onMoreClick(i);
-                }
-              }
-
               @Override
               public void onClickItem(String id) {
                 if (mCallback != null) {

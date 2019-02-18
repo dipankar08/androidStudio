@@ -1,24 +1,35 @@
 package in.peerreview.fmradioindia.ui.player;
 
+import static in.peerreview.fmradioindia.ui.player.PlayerState.VisibilityType.HIDE_ALL;
+import static in.peerreview.fmradioindia.ui.player.PlayerState.VisibilityType.NONE;
+import static in.peerreview.fmradioindia.ui.player.PlayerState.VisibilityType.SHOW_ALL;
+import static in.peerreview.fmradioindia.ui.player.PlayerState.VisibilityType.SHOW_FULL;
+
 import android.animation.Animator;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import in.co.dipankar.quickandorid.arch.BaseView;
+import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.applogic.Utils;
 import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
 
 public class PlayerView extends ConstraintLayout implements BaseView<PlayerState> {
-  ViewGroup mMiniView, mFullView;
-  TextView mPlayTitle1, mPlayTitle2, mSubtitle, mCount;
-  ImageView mPlayPause1, mPlayPause2, mNext, mPrev, mBack, mFev;
+
+  ViewGroup mMiniView, mRootView;
+  TextView mPlayTitle1, mPlayTitle2;
+  ImageView mPlayPause1, mPlayPause2, mNext, mPrev, mFev;
+  View mBack;
   PlayerPresenter mPresenter;
+  ProgressBar mProgressBar;
 
   public PlayerView(Context context) {
     super(context);
@@ -40,11 +51,10 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
         (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     inflater.inflate(R.layout.screen_player, this, true);
     mMiniView = findViewById(R.id.mini_view);
-    mFullView = findViewById(R.id.player_screen);
+    mRootView = findViewById(R.id.player_screen);
+    mProgressBar = findViewById(R.id.progress_bar);
     mPlayTitle1 = findViewById(R.id.play_text1);
     mPlayTitle2 = findViewById(R.id.title);
-    mSubtitle = findViewById(R.id.sub_title);
-    mCount = findViewById(R.id.count);
     mPlayPause1 = findViewById(R.id.play_pause1);
     mPlayPause2 = findViewById(R.id.play_pause2);
     mNext = findViewById(R.id.full_next);
@@ -56,14 +66,14 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
         new OnClickListener() {
           @Override
           public void onClick(View view) {
-            showMiniView();
+            setVisibility(PlayerState.VisibilityType.SHOW_MINI);
           }
         });
     mMiniView.setOnClickListener(
         new OnClickListener() {
           @Override
           public void onClick(View view) {
-            showFullView();
+            setVisibility(PlayerState.VisibilityType.SHOW_FULL);
           }
         });
     mPlayPause1.setOnClickListener(
@@ -101,54 +111,91 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
             mPresenter.toggleFev();
           }
         });
+
+    mRootView.setOnTouchListener(
+        new OnTouchListener() {
+          @Override
+          public boolean onTouch(View view, MotionEvent event) {
+            switch (event.getAction()) {
+              case MotionEvent.ACTION_UP:
+                break;
+              case MotionEvent.ACTION_DOWN:
+                break;
+              case MotionEvent.ACTION_MOVE:
+                break;
+              default:
+                break;
+            }
+            DLog.d("Touch:" + event.getRawX() + event.getRawY());
+            mRootView.setY(event.getY());
+            return true;
+          }
+        });
     mPresenter = new PlayerPresenter();
   }
 
-  private void showFullView() {
-    mFullView
-        .animate()
-        .translationY(Utils.convertDpToPixel(60, getContext()))
-        .alpha(1.0f)
-        .setListener(
-            new Animator.AnimatorListener() {
-              @Override
-              public void onAnimationStart(Animator animator) {}
+  private void setVisibility(PlayerState.VisibilityType type) {
+    switch (type) {
+      case HIDE_ALL:
+        mRootView.setVisibility(GONE);
+        mMiniView.setVisibility(GONE);
+        break;
+      case SHOW_ALL:
+        mRootView.setVisibility(VISIBLE);
+        break;
+      case SHOW_FULL:
+        mRootView
+            .animate()
+            .translationY(0)
+            .alpha(1.0f)
+            .setListener(
+                new Animator.AnimatorListener() {
+                  @Override
+                  public void onAnimationStart(Animator animator) {
+                    mRootView.setVisibility(VISIBLE);
+                    mMiniView.setVisibility(GONE);
+                    mBack.setVisibility(VISIBLE);
+                    mFev.setVisibility(VISIBLE);
+                  }
 
-              @Override
-              public void onAnimationEnd(Animator animator) {
-                mMiniView.setVisibility(GONE);
-              }
+                  @Override
+                  public void onAnimationEnd(Animator animator) {}
 
-              @Override
-              public void onAnimationCancel(Animator animator) {}
+                  @Override
+                  public void onAnimationCancel(Animator animator) {}
 
-              @Override
-              public void onAnimationRepeat(Animator animator) {}
-            });
-  }
+                  @Override
+                  public void onAnimationRepeat(Animator animator) {}
+                });
+        break;
+      case SHOW_MINI:
+        mRootView
+            .animate()
+            .translationY(mRootView.getHeight() - Utils.convertDpToPixel(50, getContext()))
+            .alpha(1.0f)
+            .setListener(
+                new Animator.AnimatorListener() {
+                  @Override
+                  public void onAnimationStart(Animator animator) {
+                    mRootView.setVisibility(VISIBLE);
+                    mMiniView.setVisibility(GONE);
+                  }
 
-  private void showMiniView() {
-    // Hide FullView
-    mFullView
-        .animate()
-        .translationY(mFullView.getHeight() - Utils.convertDpToPixel(60, getContext()))
-        .alpha(1.0f)
-        .setListener(
-            new Animator.AnimatorListener() {
-              @Override
-              public void onAnimationStart(Animator animator) {}
+                  @Override
+                  public void onAnimationEnd(Animator animator) {
+                    mMiniView.setVisibility(VISIBLE);
+                    mBack.setVisibility(GONE);
+                    mFev.setVisibility(GONE);
+                  }
 
-              @Override
-              public void onAnimationEnd(Animator animator) {
-                mMiniView.setVisibility(VISIBLE);
-              }
+                  @Override
+                  public void onAnimationCancel(Animator animator) {}
 
-              @Override
-              public void onAnimationCancel(Animator animator) {}
-
-              @Override
-              public void onAnimationRepeat(Animator animator) {}
-            });
+                  @Override
+                  public void onAnimationRepeat(Animator animator) {}
+                });
+        break;
+    }
   }
 
   @Override
@@ -161,8 +208,6 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
                 if (state.getChannel() != null) {
                   mPlayTitle1.setText(state.getChannel().getName());
                   mPlayTitle2.setText(state.getChannel().getName());
-                  mSubtitle.setText(state.getChannel().getCategories());
-                  mCount.setText(state.getChannel().getCount_click() + "times played");
                 }
                 if (state.getState() != null) {
                   switch (state.getState()) {
@@ -178,11 +223,25 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
                       mPlayPause2.setImageResource(R.drawable.ic_pause_white);
                       break;
                   }
+                  if (state.getState() == PlayerState.State.TRY_PLAYING) {
+                    mProgressBar.setVisibility(VISIBLE);
+                  } else {
+                    mProgressBar.setVisibility(GONE);
+                  }
                 }
                 if (state.isFev()) {
-                  mFev.setImageResource(R.drawable.ic_bookmark_fill_white_32);
+                  mFev.setImageResource(R.drawable.ic_heart_white_empty_24);
                 } else {
-                  mFev.setImageResource(R.drawable.ic_bookmark_empty_white_32);
+                  mFev.setImageResource(R.drawable.ic_heart_white_full_24);
+                }
+
+                if (state.getVisibilityType() != NONE) {
+                  if (state.getVisibilityType() == HIDE_ALL) {
+                    mRootView.setVisibility(GONE);
+                  }
+                  if (state.getVisibilityType() == SHOW_FULL) {
+                    mRootView.setVisibility(VISIBLE);
+                  }
                 }
               }
             });

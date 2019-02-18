@@ -27,7 +27,7 @@ public class SplashPresenter extends BasePresenter {
 
           @Override
           public void onLoadSuccess() {
-            render(new SplashState.Builder().setType(SplashState.Type.Done).build());
+            render(new SplashState.Builder().setType(SplashState.Type.Done).setError(null).build());
           }
 
           @Override

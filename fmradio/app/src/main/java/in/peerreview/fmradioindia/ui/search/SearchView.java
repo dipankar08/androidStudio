@@ -8,22 +8,20 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.ui.collist.ColListView;
 import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
 import in.peerreview.fmradioindia.ui.rowlist.RowListView;
 
 public class SearchView extends ConstraintLayout implements BaseView<SearchState> {
   ImageView mBack;
   ImageView mClose;
-  TextView mStatus;
   EditText mSearchEditText;
   RowListView mRecentList;
-  ColListView mColListView;
+  RowListView mColListView;
   SearchPresenter mPresenter;
   private Callback mCallback;
 
@@ -53,9 +51,8 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
         (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     inflater.inflate(R.layout.activity_search, this, true);
     mBack = findViewById(R.id.back);
-    mClose = findViewById(R.id.close);
-    mStatus = findViewById(R.id.sub_title);
     mSearchEditText = findViewById(R.id.input);
+    mClose = findViewById(R.id.close);
     mRecentList = findViewById(R.id.recent_list);
     mColListView = findViewById(R.id.search_result);
     mPresenter = new SearchPresenter("SearchPresenter");
@@ -72,6 +69,7 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
         new OnClickListener() {
           @Override
           public void onClick(View view) {
+            mSearchEditText.setText("");
             mPresenter.onSearch("");
           }
         });
@@ -97,7 +95,7 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
           }
         });
     mColListView.addCallback(
-        new ColListView.Callback() {
+        new RowListView.Callback() {
           @Override
           public void onClick(String id) {
             mPresenter.onClickItem(id);
@@ -121,6 +119,16 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
   protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
     super.onVisibilityChanged(changedView, visibility);
     mPresenter.onVisibilityChanged(visibility);
+    if (visibility == VISIBLE) {
+      mSearchEditText.requestFocus();
+      InputMethodManager keyboard =
+          (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+      keyboard.showSoftInput(mSearchEditText, 0);
+    } else {
+      InputMethodManager inputMethodManager =
+          (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+      inputMethodManager.hideSoftInputFromWindow(mSearchEditText.getWindowToken(), 0);
+    }
   }
 
   @Override
@@ -133,11 +141,23 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
                 if (state.getShouldShowClose() != null) {
                   mClose.setVisibility(state.getShouldShowClose() ? VISIBLE : INVISIBLE);
                 }
+
                 if (state.getPreviousSerachList() != null) {
-                  mRecentList.setData(state.getPreviousSerachList());
+                  if (state.getPreviousSerachList().size() > 0) {
+                    mRecentList.setData(state.getPreviousSerachList());
+                    mRecentList.setVisibility(VISIBLE);
+                  } else {
+                    mRecentList.setVisibility(GONE);
+                  }
                 }
+
                 if (state.getSearchChannel() != null) {
-                  mColListView.setData(state.getSearchChannel());
+                  if (state.getSearchChannel().size() > 0) {
+                    mColListView.setData(state.getSearchChannel());
+                    mColListView.setVisibility(VISIBLE);
+                  } else {
+                    mColListView.setVisibility(GONE);
+                  }
                 }
               }
             });

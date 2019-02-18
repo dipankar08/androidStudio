@@ -6,9 +6,11 @@ import java.util.List;
 public class Category {
   private String name;
   private List<Channel> mList;
+  private boolean shouldShow;
 
-  public Category(String name) {
+  public Category(String name, boolean shoudShow) {
     this.name = name;
+    this.shouldShow = shoudShow;
     mList = new ArrayList<>();
   }
 
@@ -27,5 +29,13 @@ public class Category {
   public Category addList(List<Channel> list) {
     mList = list;
     return this;
+  }
+
+  public void setShouldShow(boolean shouldShow) {
+    this.shouldShow = shouldShow;
+  }
+
+  public boolean isShouldShow() {
+    return shouldShow;
   }
 }

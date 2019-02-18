@@ -3,83 +3,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/head"
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/serach_title"
+        android:text="Search Now"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Text.Bold.HugeTitle"
+        android:layout_marginLeft="@dimen/space_from_edge"
+        android:layout_marginTop="@dimen/gap_between_element"
+        />
+    <ImageButton
+        android:id="@+id/back"
+        style="@style/ImageButton.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/serach_title"
+        app:layout_constraintBottom_toBottomOf="@id/serach_title"
+        android:src="@drawable/ic_close_24"
+        android:layout_marginEnd="@dimen/space_from_edge"
+        />
+    <EditText
+        android:id="@+id/input"
+        style="@style/EditText.Search"
+        app:layout_constraintTop_toBottomOf="@+id/serach_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="@dimen/space_from_edge"
+        android:layout_marginTop="@dimen/space_from_edge"
+        android:layout_marginRight="@dimen/space_from_edge"
+        />
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_close_close"
+        app:layout_constraintTop_toTopOf="@id/input"
+        app:layout_constraintBottom_toBottomOf="@id/input"
+        app:layout_constraintRight_toRightOf="@id/input"
+        android:layout_marginRight="@dimen/small"
+        />
+    <ScrollView
         android:layout_width="match_parent"
-        android:background="@color/invertBackground"
-        android:layout_height="150dp">
-        <ImageView
-            android:id="@+id/back"
-            android:src="@drawable/ic_back_white"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="@dimen/space_from_edge"
-            android:layout_marginTop="@dimen/space_from_edge"
-            />
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:id="@+id/title"
-            android:text="Search"
-            style="@style/Text.HugeTitle.Invert"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="@dimen/space_from_edge"
-            />
-        <in.co.dipankar.quickandorid.views.CustomFontTextView
-            android:id="@+id/sub_title"
-            android:text="23 people"
-            style="@style/Text.Title.Invert"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-        <EditText
-            android:id="@+id/input"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input"
+        android:layout_marginTop="@dimen/gap_between_element"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/background_edittext_white"
-            android:layout_marginLeft="@dimen/space_from_edge"
-            android:layout_marginBottom="@dimen/space_from_edge"
-            android:layout_marginRight="@dimen/space_from_edge"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+        <in.peerreview.fmradioindia.ui.rowlist.RowListView
+            android:id="@+id/recent_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:headerLayout="@layout/item_row"
+            app:headerText="Recent Search"
+            app:isHorizantal="true"
             />
-        <ImageView
-            android:id="@+id/close"
-            android:src="@drawable/ic_close_close"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            app:layout_constraintRight_toRightOf="@id/input"
-            app:layout_constraintTop_toTopOf="@id/input"
-            app:layout_constraintBottom_toBottomOf="@id/input"
+        <in.peerreview.fmradioindia.ui.rowlist.RowListView
+            android:id="@+id/search_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:headerLayout="@layout/item_col"
+            app:headerText="Search Result"
+            app:isHorizantal="false"
             />
-    </android.support.constraint.ConstraintLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/head"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-    <in.peerreview.fmradioindia.ui.rowlist.RowListView
-        android:id="@+id/recent_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <in.peerreview.fmradioindia.ui.collist.ColListView
-        android:id="@+id/search_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
