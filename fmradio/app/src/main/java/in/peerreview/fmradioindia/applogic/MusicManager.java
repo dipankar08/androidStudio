@@ -113,6 +113,7 @@ public class MusicManager {
                     callback.onResume(mChannelManager.getChannelForId(id));
                   }
                   DLog.d("Binder::onResume called");
+                  mTelemetryManager.rankUp(id);
                   mStatManager.onStartPlaying();
                 }
 
@@ -196,8 +197,10 @@ public class MusicManager {
   public void playById(String id) {
     if (mChannelManager.getIndexForId(id) != null) {
       play(mChannelManager.getIndexForId(id));
+      mChannelManager.markRecentPlayed(id);
+    } else {
+      DLog.d("Not able to play as not found");
     }
-    mChannelManager.markRecentPlayed(id);
   }
 
   public void play(int position) {

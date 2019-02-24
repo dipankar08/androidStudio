@@ -76,7 +76,7 @@ public class RowListAdapter extends RecyclerView.Adapter<RowListAdapter.MyViewHo
       }
     }
     if (holder.live != null) {
-      if (c.getRank() > 8) {
+      if (c.isOnline()) {
         holder.live.setText("Live");
         holder.live.setBackgroundResource(R.drawable.rouned_button_red_full);
       } else {

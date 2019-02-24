@@ -159,6 +159,12 @@ public class SearchView extends ConstraintLayout implements BaseView<SearchState
                     mColListView.setVisibility(GONE);
                   }
                 }
+
+                if (state.getSearchChannel() != null && state.getSearchChannel().size() > 0) {
+                  mRecentList.setVisibility(GONE);
+                } else {
+                  mRecentList.setVisibility(VISIBLE);
+                }
               }
             });
   }

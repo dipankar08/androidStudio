@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/settings_title"
-        android:text="My Channels"
+        android:text="Preferences"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Text.Bold.HugeTitle"
@@ -23,17 +23,57 @@
         android:src="@drawable/ic_close_24"
         android:layout_marginEnd="@dimen/space_from_edge"
         />
-    <in.peerreview.fmradioindia.ui.common.OptionView
-        android:id="@+id/options"
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/pref_close"
+        android:padding="@dimen/space_from_edge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/settings_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/space_from_edge"
-        android:layout_marginEnd="@dimen/space_from_edge"
-        android:layout_marginStart="@dimen/space_from_edge"
-        android:foregroundGravity="center"
-        app:layout_alignSelf="center"
-        />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/Text.Bold.Pref"
+                android:text="Your channel Pref"/>
+            <in.peerreview.fmradioindia.ui.common.OptionView
+                android:id="@+id/options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_alignSelf="center"
+                />
+            <TextView
+                style="@style/Text.Bold.Pref"
+                android:text="Others Settings"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_white_full"
+                android:layout_marginBottom="@dimen/space_from_edge"
+                android:text="Rate APP" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_white_full"
+                android:layout_marginBottom="@dimen/space_from_edge"
+                android:text="Report Issues" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_white_full"
+                android:layout_marginBottom="@dimen/space_from_edge"
+                android:text="Share this app" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_white_full"
+                android:layout_marginBottom="@dimen/space_from_edge"
+                android:text="Follow Us" />
+            <TextView
+                style="@style/Text.Bold.Pref"
+                android:text="Internal Settings"/>
+        </LinearLayout>
+
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

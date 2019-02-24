@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.bumptech.glide.Glide;
 import in.co.dipankar.quickandorid.arch.BaseView;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.R;
@@ -30,6 +32,9 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
   View mBack;
   PlayerPresenter mPresenter;
   ProgressBar mProgressBar;
+  TextView mLive;
+  ImageView mLogo;
+  ImageView mLike, mUnlike;
 
   public PlayerView(Context context) {
     super(context);
@@ -61,7 +66,10 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
     mPrev = findViewById(R.id.full_prev);
     mBack = findViewById(R.id.back);
     mFev = findViewById(R.id.fev);
-
+    mLive = findViewById(R.id.player_live);
+    mLogo = findViewById(R.id.logo);
+    mLike = findViewById(R.id.like);
+    mUnlike = findViewById(R.id.unlike);
     mBack.setOnClickListener(
         new OnClickListener() {
           @Override
@@ -109,6 +117,22 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
           @Override
           public void onClick(View view) {
             mPresenter.toggleFev();
+          }
+        });
+    mLike.setOnClickListener(
+        new OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Toast.makeText(getContext(), "Liked", Toast.LENGTH_SHORT).show();
+            mPresenter.onClickLike();
+          }
+        });
+    mUnlike.setOnClickListener(
+        new OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Toast.makeText(getContext(), "Un-linked", Toast.LENGTH_SHORT).show();
+            mPresenter.onClickUnlike();
           }
         });
 
@@ -208,6 +232,19 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
                 if (state.getChannel() != null) {
                   mPlayTitle1.setText(state.getChannel().getName());
                   mPlayTitle2.setText(state.getChannel().getName());
+                  if (state.getChannel().getImg() != null
+                      && state.getChannel().getImg().length() != 0) {
+                    Glide.with(getContext()).load(state.getChannel().getImg()).into(mLogo);
+                  } else {
+                    mLogo.setImageResource(R.drawable.ic_music);
+                  }
+                  if (state.getChannel().isOnline()) {
+                    mLive.setText("Online");
+                    mLive.setBackgroundResource(R.drawable.rouned_button_red_full);
+                  } else {
+                    mLive.setText("Offline");
+                    mLive.setBackgroundResource(R.drawable.rounded_black_full);
+                  }
                 }
                 if (state.getState() != null) {
                   switch (state.getState()) {
@@ -227,6 +264,14 @@ public class PlayerView extends ConstraintLayout implements BaseView<PlayerState
                     mProgressBar.setVisibility(VISIBLE);
                   } else {
                     mProgressBar.setVisibility(GONE);
+                  }
+
+                  if (state.getState() == PlayerState.State.ERROR) {
+                    Toast.makeText(
+                            getContext(),
+                            "This channel is offline - Please again later",
+                            Toast.LENGTH_SHORT)
+                        .show();
                   }
                 }
                 if (state.isFev()) {

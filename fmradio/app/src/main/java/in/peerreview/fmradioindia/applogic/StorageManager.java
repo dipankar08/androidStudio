@@ -4,6 +4,7 @@ import android.content.Context;
 import in.peerreview.fmradioindia.model.Channel;
 import io.paperdb.Paper;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,5 +48,33 @@ public class StorageManager {
 
   public List<Channel> getAll() {
     return Paper.book().read("all", new ArrayList<>());
+  }
+
+  public void deleteAll() {
+    Paper.book().delete("all");
+  }
+
+  public void deleteRecentPlayed() {
+    Paper.book().delete("recentPlayed");
+  }
+
+  public void deleteRecentSearch() {
+    Paper.book().delete("recentSearch");
+  }
+
+  public void deleteLike() {
+    Paper.book().delete("like");
+  }
+
+  public void savePref(LinkedHashMap<String, Boolean> val) {
+    Paper.book().write("Pref", val);
+  }
+
+  public LinkedHashMap<String, Boolean> getPref() {
+    return Paper.book().read("pref", new LinkedHashMap<String, Boolean>());
+  }
+
+  public void deletePref() {
+    Paper.book().delete("pref");
   }
 }

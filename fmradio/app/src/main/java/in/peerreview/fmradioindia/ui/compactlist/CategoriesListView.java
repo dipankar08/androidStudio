@@ -1,18 +1,15 @@
 package in.peerreview.fmradioindia.ui.compactlist;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import in.peerreview.fmradioindia.R;
 import in.peerreview.fmradioindia.model.Category;
 import java.util.List;
 import javax.annotation.Nullable;
 
-public class CategoriesListView extends ConstraintLayout {
+public class CategoriesListView extends RecyclerView {
   private RecyclerView mCategoriesRV;
   private CategoriesAdapter mCategoriesAdapter;
   @Nullable private Callback mCallback;
@@ -37,10 +34,6 @@ public class CategoriesListView extends ConstraintLayout {
   }
 
   private void init() {
-    LayoutInflater inflater =
-        (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    inflater.inflate(R.layout.view_composite_list, this, true);
-    mCategoriesRV = findViewById(R.id.rv);
     mCategoriesAdapter =
         new CategoriesAdapter(
             getContext(),
@@ -53,9 +46,9 @@ public class CategoriesListView extends ConstraintLayout {
                 }
               }
             });
-    mCategoriesRV.setLayoutManager(new LinearLayoutManager(getContext()));
-    mCategoriesRV.setItemAnimator(new DefaultItemAnimator());
-    mCategoriesRV.setAdapter(mCategoriesAdapter);
+    setLayoutManager(new LinearLayoutManager(getContext()));
+    setItemAnimator(new DefaultItemAnimator());
+    setAdapter(mCategoriesAdapter);
   }
 
   public void addCallback(Callback callback) {

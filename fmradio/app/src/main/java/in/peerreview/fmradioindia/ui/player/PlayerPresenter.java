@@ -3,6 +3,7 @@ package in.peerreview.fmradioindia.ui.player;
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
+import in.peerreview.fmradioindia.applogic.ThreadUtils;
 import in.peerreview.fmradioindia.model.Channel;
 import in.peerreview.fmradioindia.ui.MyApplication;
 import javax.annotation.Nullable;
@@ -12,6 +13,8 @@ public class PlayerPresenter extends BasePresenter {
   @Nullable private Channel mChannel;
   @Inject MusicManager mMusicManager;
   @Inject ChannelManager mChannelManager;
+
+  @Inject ThreadUtils mThreadUtils;
 
   @Inject
   public PlayerPresenter() {
@@ -50,17 +53,6 @@ public class PlayerPresenter extends BasePresenter {
             render(new PlayerState.Builder().setState(PlayerState.State.PAUSE).build());
           }
         });
-    mChannelManager.addCallback(
-        new ChannelManager.Callback() {
-          @Override
-          public void onLoadError(String err) {}
-
-          @Override
-          public void onLoadSuccess() {}
-
-          @Override
-          public void onDataRefreshed() {}
-        });
     render(
         new PlayerState.Builder().setVisibilityType(PlayerState.VisibilityType.HIDE_ALL).build());
   }
@@ -81,5 +73,13 @@ public class PlayerPresenter extends BasePresenter {
     if (mChannel != null) {
       mChannelManager.toggleFev(mChannel.getId());
     }
+  }
+
+  public void onClickLike() {
+    mChannelManager.markLike(mChannel.getId());
+  }
+
+  public void onClickUnlike() {
+    mChannelManager.markUnlike(mChannel.getId());
   }
 }

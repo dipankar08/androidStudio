@@ -1,6 +1,8 @@
 package in.peerreview.fmradioindia.applogic;
 
+import android.os.Build;
 import android.support.annotation.Nullable;
+import com.google.common.collect.Lists;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.model.Category;
 import in.peerreview.fmradioindia.model.Channel;
@@ -29,9 +31,19 @@ public class ChannelManager {
   List<Callback> mCallbacks;
   private LinkedHashMap<String, Boolean> mUserPref;
   List<Channel> mSuggested;
+  private boolean mAlreadyBuild = false;
+  private TelemetryManager mTelemetryManager;
 
   private DataFetcher mDataFetcher;
   private StorageManager mStorageManager;
+
+  public void markLike(String id) {
+    mTelemetryManager.dbIncrementLike(id, true);
+  }
+
+  public void markUnlike(String id) {
+    mTelemetryManager.dbIncrementLike(id, false);
+  }
 
   public interface Callback {
     void onLoadError(String err);
@@ -39,12 +51,22 @@ public class ChannelManager {
     void onLoadSuccess();
 
     void onDataRefreshed();
+
+    void onCatListRefreshed();
+
+    void onChangeSerachList();
+
+    void onChangeFebList();
+
+    void onChangeRecentList();
   }
 
   @Inject
-  public ChannelManager(DataFetcher dataFetcher, StorageManager storageManager) {
+  public ChannelManager(
+      DataFetcher dataFetcher, StorageManager storageManager, TelemetryManager telemetryManager) {
     mDataFetcher = dataFetcher;
     mStorageManager = storageManager;
+    mTelemetryManager = telemetryManager;
     mCallbacks = new ArrayList<>();
     mCategoriesMap = new LinkedHashMap<>();
     mSelectedCatList = new ArrayList<>();
@@ -54,7 +76,7 @@ public class ChannelManager {
     mRecentPlayedChannelList = mStorageManager.getRecentPlayed();
     mLikedChannelList = mStorageManager.getLike();
     mFullChannelList = mStorageManager.getAll();
-    mUserPref = new LinkedHashMap<>();
+    mUserPref = mStorageManager.getPref();
     mSuggested = new ArrayList<>();
   }
 
@@ -100,22 +122,21 @@ public class ChannelManager {
 
   private void processConfig(Config config) {
     // Might need to process the config
-    for (String s : config.getCatList()) {
-      mUserPref.put(s, false);
+    boolean isSelected = mUserPref.size() > 0 ? false : true;
+    for (String s : Lists.reverse(config.getCatList())) {
+      if (mUserPref.get(s.trim()) == null) {
+        mUserPref.put(s.trim(), isSelected);
+      }
     }
-
-    for (String s : config.getLangList()) {
-      mUserPref.put(s, false);
+    for (String s : Lists.reverse(config.getLangList())) {
+      if (mUserPref.get(s.trim()) == null) {
+        mUserPref.put(s.trim(), isSelected);
+      }
     }
     maybuildCatList();
   }
 
   private void processChannel() {
-    for (int i = 0; i < mFullChannelList.size(); i++) {
-      Channel channel = mFullChannelList.get(i);
-      mIdToChannelMap.put(channel.getId(), channel);
-      mIdToIndex.put(channel.getId(), i);
-    }
     maybuildCatList();
   }
 
@@ -124,17 +145,29 @@ public class ChannelManager {
       DLog.d("Skip building the list as UserPref or mFullChannelList not avilable");
       return;
     }
+    if (mAlreadyBuild) {
+      mAlreadyBuild = true;
+      DLog.d("Already build list -- so skiping");
+    }
 
     mCategoriesMap = new LinkedHashMap<>();
+    mSuggested = new ArrayList<>();
+    mIdToIndex = new HashMap<>();
+    mIdToChannelMap = new HashMap<>();
+
+    for (int i = 0; i < mFullChannelList.size(); i++) {
+      Channel channel = mFullChannelList.get(i);
+      mIdToChannelMap.put(channel.getId(), channel);
+      mIdToIndex.put(channel.getId(), i);
+    }
+
     mCategoriesMap.put(
         "Recent Play List".toLowerCase(),
         new Category("Recent Play List", true).addList(mRecentPlayedChannelList));
     mCategoriesMap.put(
         "Liked Play List".toLowerCase(),
         new Category("Liked Play List", true).addList(mLikedChannelList));
-    mCategoriesMap.put(
-        SUGGESTION_LIST_TAG.toLowerCase(),
-        new Category(SUGGESTION_LIST_TAG, true).addList(mLikedChannelList));
+    mCategoriesMap.put(SUGGESTION_LIST_TAG.toLowerCase(), new Category(SUGGESTION_LIST_TAG, true));
 
     for (Map.Entry<String, Boolean> item : mUserPref.entrySet()) {
       mCategoriesMap.put(item.getKey().toLowerCase().trim(), new Category(item.getKey(), true));
@@ -161,8 +194,15 @@ public class ChannelManager {
     if (mCategoriesMap.get(SUGGESTION_LIST_TAG.trim().toLowerCase()) != null) {
       mSuggested.addAll(mCategoriesMap.get(SUGGESTION_LIST_TAG.trim().toLowerCase()).getList());
     }
+    // trip perf
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      mUserPref
+          .entrySet()
+          .removeIf(e -> mCategoriesMap.get(e.getKey().toLowerCase()).getList().size() == 0);
+    }
     for (Callback callback : mCallbacks) {
       callback.onLoadSuccess();
+      callback.onDataRefreshed();
     }
     reBuildCatList();
   }
@@ -172,13 +212,15 @@ public class ChannelManager {
   // Live, All India Radio, Bangladesh Radio ",
   private void reBuildCatList() {
     mSelectedCatList = new ArrayList<>();
-    for (Map.Entry<String, Category> entry : mCategoriesMap.entrySet()) {
-      if (entry.getValue().isShouldShow()) {
-        mSelectedCatList.add(entry.getValue());
+    for (Map.Entry<String, Boolean> entry : mUserPref.entrySet()) {
+      if (entry.getValue()) {
+        if (mCategoriesMap.get(entry.getKey().toLowerCase()) != null) {
+          mSelectedCatList.add(mCategoriesMap.get(entry.getKey().toLowerCase()));
+        }
       }
     }
     for (Callback callback : mCallbacks) {
-      callback.onDataRefreshed();
+      callback.onCatListRefreshed();
     }
   }
 
@@ -211,11 +253,13 @@ public class ChannelManager {
     if (channel != null) {
       mRecentPlayedChannelList.add(0, channel);
     }
-    ;
+
     if (mRecentPlayedChannelList.size() > MAX_LIMIT) {
       mRecentPlayedChannelList.remove(MAX_LIMIT);
     }
-    notifyUpdate();
+    for (Callback callback : mCallbacks) {
+      callback.onChangeRecentList();
+    }
   }
 
   public List<Channel> getRecentSearch() {
@@ -229,11 +273,12 @@ public class ChannelManager {
     if (channel != null) {
       mRecentSearchChannelList.add(0, channel);
     }
-    ;
     if (mRecentSearchChannelList.size() > MAX_LIMIT) {
       mRecentSearchChannelList.remove(MAX_LIMIT);
     }
-    notifyUpdate();
+    for (Callback callback : mCallbacks) {
+      callback.onChangeSerachList();
+    }
   }
 
   public List<Channel> getFev() {
@@ -253,7 +298,9 @@ public class ChannelManager {
         mLikedChannelList.remove(MAX_LIMIT);
       }
     }
-    notifyUpdate();
+    for (Callback callback : mCallbacks) {
+      callback.onChangeFebList();
+    }
   }
 
   public boolean isFev(String id) {
@@ -269,6 +316,11 @@ public class ChannelManager {
   }
 
   public Integer getIndexForId(String id) {
+    if (mIdToIndex.get(id) == null) {
+      DLog.d("Some invalid entry");
+      // This is important - we need to clear the storage data here.
+      clearAll();
+    }
     return mIdToIndex.get(id);
   }
 
@@ -284,18 +336,11 @@ public class ChannelManager {
     return mSuggested;
   }
 
-  public void notifyUpdate() {
-    reBuildCatList();
-    for (Callback callback : mCallbacks) {
-      callback.onDataRefreshed();
-    }
-  }
-
   public void setFilterUserPref(Map<String, Boolean> val) {
     for (Map.Entry<String, Boolean> entry : val.entrySet()) {
       mUserPref.put(entry.getKey(), entry.getValue());
     }
-    notifyUpdate();
+    reBuildCatList();
   }
 
   public void saveList() {
@@ -303,5 +348,14 @@ public class ChannelManager {
     mStorageManager.saveRecentPlayed(mRecentPlayedChannelList);
     mStorageManager.saveRecentSearch(mRecentSearchChannelList);
     mStorageManager.saveLike(mLikedChannelList);
+    mStorageManager.savePref(mUserPref);
+  }
+
+  public void clearAll() {
+    mStorageManager.deleteAll();
+    mStorageManager.deleteRecentPlayed();
+    mStorageManager.deleteRecentSearch();
+    mStorageManager.deleteLike();
+    mStorageManager.deletePref();
   }
 }

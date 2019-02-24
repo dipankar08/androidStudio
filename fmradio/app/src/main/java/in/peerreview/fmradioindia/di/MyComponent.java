@@ -1,6 +1,7 @@
 package in.peerreview.fmradioindia.di;
 
 import dagger.Component;
+import in.peerreview.fmradioindia.applogic.ThreadUtils;
 import in.peerreview.fmradioindia.ui.home.HomePresenter;
 import in.peerreview.fmradioindia.ui.mainactivity.MainPresenter;
 import in.peerreview.fmradioindia.ui.player.PlayerPresenter;
@@ -23,4 +24,6 @@ public interface MyComponent {
   void inject(SplashPresenter splashPresenter);
 
   void inject(UserPrefPresenter presenter);
+
+  void inject(ThreadUtils threadUtils);
 }

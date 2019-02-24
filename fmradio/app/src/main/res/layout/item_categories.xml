@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:headerLayout="@layout/item_smalltiles"
+        app:headerLayout="@layout/item_home_cat"
         app:isHorizantal="true"/>
 </android.support.constraint.ConstraintLayout>

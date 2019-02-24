@@ -3,6 +3,7 @@ package in.peerreview.fmradioindia.ui.search;
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
+import in.peerreview.fmradioindia.applogic.ThreadUtils;
 import in.peerreview.fmradioindia.model.Channel;
 import in.peerreview.fmradioindia.ui.MyApplication;
 import java.util.List;
@@ -11,6 +12,8 @@ import javax.inject.Inject;
 public class SearchPresenter extends BasePresenter {
   @Inject ChannelManager mChannelManager;
   @Inject MusicManager mMusicManager;
+
+  @Inject ThreadUtils mThreadUtils;
 
   public SearchPresenter(String name) {
     super(name);
@@ -29,7 +32,19 @@ public class SearchPresenter extends BasePresenter {
           }
 
           @Override
-          public void onDataRefreshed() {
+          public void onDataRefreshed() {}
+
+          @Override
+          public void onCatListRefreshed() {}
+
+          @Override
+          public void onChangeSerachList() {}
+
+          @Override
+          public void onChangeFebList() {}
+
+          @Override
+          public void onChangeRecentList() {
             render(
                 new SearchState.Builder()
                     .setRecentSearch(mChannelManager.getRecentSearch())
@@ -39,6 +54,7 @@ public class SearchPresenter extends BasePresenter {
   }
 
   public void onSearch(String s) {
+
     List<Channel> result = mChannelManager.applySearch(s);
     render(
         new SearchState.Builder()
@@ -56,7 +72,7 @@ public class SearchPresenter extends BasePresenter {
     render(
         new SearchState.Builder()
             .setRecentSearch(mChannelManager.getRecentSearch())
-            .setSearchChannel(mChannelManager.getAll())
+            .setSearchChannel(null)
             .build());
   }
 }

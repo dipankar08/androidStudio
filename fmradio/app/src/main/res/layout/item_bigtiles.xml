@@ -35,19 +35,9 @@
         />
     <in.co.dipankar.quickandorid.views.CustomFontTextView
         android:id="@+id/row_live"
-        style="@style/Text"
-        android:text="Live"
-        android:textColor="#ffffff"
-        android:textSize="12sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:background="@drawable/rouned_button_red_full"
+        style="@style/Text.PlayTitle.LIVE"
         android:layout_marginEnd="@dimen/small"
         android:layout_marginTop="@dimen/small"
-        android:paddingBottom="4dp"
-        android:paddingTop="2dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 

@@ -3,12 +3,15 @@ package in.peerreview.fmradioindia.ui.home;
 import in.co.dipankar.quickandorid.arch.BasePresenter;
 import in.peerreview.fmradioindia.applogic.ChannelManager;
 import in.peerreview.fmradioindia.applogic.MusicManager;
+import in.peerreview.fmradioindia.applogic.ThreadUtils;
 import in.peerreview.fmradioindia.ui.MyApplication;
 import javax.inject.Inject;
 
 public class HomePresenter extends BasePresenter {
   @Inject MusicManager mMusicManager;
   @Inject ChannelManager mChannelManager;
+
+  @Inject ThreadUtils mThreadUtils;
 
   public HomePresenter() {
     super("MainPresenter");
@@ -22,7 +25,6 @@ public class HomePresenter extends BasePresenter {
           public void onLoadSuccess() {
             render(
                 new HomeState.Builder()
-                    .setCategoriesList(mChannelManager.getCatMap())
                     .setSuggestionList(mChannelManager.getSuggestedList())
                     .build());
           }
@@ -31,9 +33,25 @@ public class HomePresenter extends BasePresenter {
           public void onDataRefreshed() {
             render(
                 new HomeState.Builder()
-                    .setCategoriesList(mChannelManager.getCatMap())
                     .setSuggestionList(mChannelManager.getSuggestedList())
                     .build());
+          }
+
+          @Override
+          public void onCatListRefreshed() {
+            render(new HomeState.Builder().setCategoriesList(mChannelManager.getCatMap()).build());
+          }
+
+          @Override
+          public void onChangeSerachList() {}
+
+          @Override
+          public void onChangeFebList() {}
+
+          @Override
+          public void onChangeRecentList() {
+            render(
+                new HomeState.Builder().setRecentList(mChannelManager.getRecentPlayed()).build());
           }
         });
   }
@@ -49,6 +67,12 @@ public class HomePresenter extends BasePresenter {
   }
 
   public void onItemClick(String id) {
-    mMusicManager.playById(id);
+    mThreadUtils.execute(
+        new Runnable() {
+          @Override
+          public void run() {
+            mMusicManager.playById(id);
+          }
+        });
   }
 }

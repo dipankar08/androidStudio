@@ -12,8 +12,8 @@ import javax.inject.Singleton;
 @Singleton
 public class TelemetryManager {
 
-  public static String DB_ENDPOINT = "http://simplestore.dipankar.co.in/api/nodel_bengalifm";
-  public static String TELEMETRY_ENDPOINT = "http://simplestore.dipankar.co.in/api/stat_bengalifm";
+  public static String DB_ENDPOINT = "http://simplestore.dipankar.co.in/api/nodel_bengalifm1";
+  public static String TELEMETRY_ENDPOINT = "http://simplestore.dipankar.co.in/api/stat_bengalifm1";
 
   // modidy DB entry
   public static String DB_RANK_UP_URL = DB_ENDPOINT + "?_cmd=rankup&_payload=rank&id=";
@@ -22,7 +22,8 @@ public class TelemetryManager {
   public static String DB_COUNT_ERROR = DB_ENDPOINT + "?_cmd=increment&_payload=count_error&id=";
   public static String DB_COUNT_SUCCESS =
       DB_ENDPOINT + "?_cmd=increment&_payload=count_success&id=";
-
+  public static String DB_COUNT_LIKE = DB_ENDPOINT + "?_cmd=increment&_payload=like&id=";
+  public static String DB_COUNT_UNLIKE = DB_ENDPOINT + "?_cmd=increment&_payload=unlike&id=";
   // Adding telemetry
   public static final String TELEMETRY_PLAYER_TRY_PLAYING =
       "player_click"; // indicate we are really tring.
@@ -89,16 +90,6 @@ public class TelemetryManager {
       mNetwork = new Network(mContext, true);
       DLog.d("Netwrok is created");
     }
-    sTelemetryManager = this;
-  }
-
-  private static TelemetryManager sTelemetryManager;
-
-  public static TelemetryManager Get() {
-    if (sTelemetryManager == null) {
-      sTelemetryManager = new TelemetryManager();
-    }
-    return sTelemetryManager;
   }
 
   public void rankUp(String id) {
@@ -123,5 +114,13 @@ public class TelemetryManager {
 
   public void markHit(String telemetry) {
     mTelemetryUtils.markHit(telemetry);
+  }
+
+  public void dbIncrementLike(String id, boolean inc) {
+    if (inc) {
+      mNetwork.retrive(DB_COUNT_LIKE + id, Network.CacheControl.GET_LIVE_ONLY, null);
+    } else {
+      mNetwork.retrive(DB_COUNT_UNLIKE + id, Network.CacheControl.GET_LIVE_ONLY, null);
+    }
   }
 }

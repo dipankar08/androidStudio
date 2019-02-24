@@ -29,9 +29,9 @@ public class DataFetcher {
     void onError(String msg);
   }
 
-  private static String URL = "http://simplestore.dipankar.co.in/api/nodel_bengalifm?_limit=1000";
+  private static String URL = "http://simplestore.dipankar.co.in/api/nodel_bengalifm1?_limit=1000";
   private static String APP_CONFIG_URL =
-      "http://simplestore.dipankar.co.in/api/nodel_config?app_name=fmradioindia";
+      "http://simplestore.dipankar.co.in/api/nodel_config?app_name=fmradioindia1";
   private List<Channel> mChannelList;
   private Network mNetwork;
   private List<Callback> mCallback;

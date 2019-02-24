@@ -53,14 +53,19 @@
         <item name="android:textColor">@color/subtitle_text</item>
         <item name="android:textSize">11sp</item>
     </style>
+    <style name="Text.Bold.Pref">
+        <item name="android:textColor">#111111</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">@dimen/space_from_edge</item>
+    </style>
 
     <!-- Image Style -->
 
 
     <!-- ImageButton Style -->
     <style name="ImageButton.Small">
-        <item name="android:layout_width">45dp</item>
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:background">@drawable/round_button_background</item>
         <item name="android:padding">10dp</item>
         <item name="android:src">@drawable/ic_start_blank</item>
@@ -113,12 +118,18 @@
     </style>
 
     <style name="Text.PlayTitle.LIVE">
+        <item name="android:text">Live</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:background">@drawable/background_red</item>
         <item name="android:paddingStart">10dp</item>
         <item name="android:paddingEnd">10dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+    <style name="Text.PlayTitle.LIVE.NO">
+        <item name="android:text">Offline</item>
+        <item name="android:background">@drawable/rounded_black_full</item>
     </style>
 
     <style name="Text.Error">
@@ -148,5 +159,7 @@
         <item name="android:textColor">@color/subtitle_text</item>
         <item name="android:background">#00424242</item>
     </style>
+
+
 
 </resources>

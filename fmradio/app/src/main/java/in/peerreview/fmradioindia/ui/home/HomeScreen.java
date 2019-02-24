@@ -21,11 +21,15 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
   private TextView mSerachBox;
   private ImageView mSettings;
   private RowListView mSuggested;
+  private RowListView mRecent;
+  private ImageView mMenu;
 
   public interface Callback {
     void onSearchClick();
 
     void onSettingClick();
+
+    void onMenuClick();
   }
 
   public HomeScreen(Context context) {
@@ -52,6 +56,8 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
     mSerachBox = findViewById(R.id.search_box);
     mSettings = findViewById(R.id.settings);
     mSuggested = findViewById(R.id.list_suggested);
+    mRecent = findViewById(R.id.list_recent);
+    mMenu = findViewById(R.id.menu);
     mSuggested.setNestedScrollingEnabled(false);
     mSuggested.addCallback(
         new RowListView.Callback() {
@@ -76,7 +82,6 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
             }
           }
         });
-    mPresenter = new HomePresenter();
     mSettings.setOnClickListener(
         new OnClickListener() {
           @Override
@@ -86,6 +91,23 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
             }
           }
         });
+    mRecent.addCallback(
+        new RowListView.Callback() {
+          @Override
+          public void onClick(String id) {
+            mPresenter.onItemClick(id);
+          }
+        });
+    mMenu.setOnClickListener(
+        new OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            if (mCallback != null) {
+              mCallback.onMenuClick();
+            }
+          }
+        });
+    mPresenter = new HomePresenter();
   }
 
   public void addCallback(Callback callback) {
@@ -99,6 +121,14 @@ public class HomeScreen extends ConstraintLayout implements BaseView<HomeState> 
             new Runnable() {
               @Override
               public void run() {
+                if (state.getRecentList() != null) {
+                  if (state.getRecentList().size() > 0) {
+                    mRecent.setData(state.getRecentList());
+                    mRecent.setVisibility(VISIBLE);
+                  } else {
+                    mRecent.setVisibility(GONE);
+                  }
+                }
                 if (state.getSuggestionList() != null) {
                   if (state.getSuggestionList().size() > 0) {
                     mSuggested.setData(state.getSuggestionList());

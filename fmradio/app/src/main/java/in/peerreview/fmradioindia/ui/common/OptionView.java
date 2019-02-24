@@ -10,6 +10,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
 import in.peerreview.fmradioindia.R;
+import in.peerreview.fmradioindia.applogic.Utils;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -63,10 +64,14 @@ public class OptionView extends FlexboxLayout {
       LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
       params.setMargins(10, 10, 10, 10);
       button.setLayoutParams(params);
+      int px = (int) Utils.convertDpToPixel(10, getContext());
+      button.setPadding(px, px, px, px);
       button.setText(key);
       button.setTextSize(12);
       button.setBackgroundResource(
-          value ? R.drawable.rouned_button_red_full : R.drawable.rouned_button_red_empty);
+          value
+              ? R.drawable.rouned_switch_button_red_full
+              : R.drawable.rouned_switch_button_red_empty);
       mMap.put(button, key);
       button.setOnClickListener(
           new OnClickListener() {
@@ -75,16 +80,16 @@ public class OptionView extends FlexboxLayout {
               String now = mMap.get((TextView) view);
               if (now != null) {
                 // exist
-                if (nNowSelecetd.get(now) == null || nNowSelecetd.get(now) == false) {
+                if (!mAllState.get(now)) {
                   nNowSelecetd.put(now, true);
                   mAllState.put(now, true);
-                  view.setBackgroundResource(R.drawable.rouned_button_red_full);
+                  view.setBackgroundResource(R.drawable.rouned_switch_button_red_full);
                   ((TextView) view).setTextColor(Color.WHITE);
 
                 } else {
                   nNowSelecetd.put(now, false);
                   mAllState.put(now, false);
-                  view.setBackgroundResource(R.drawable.rouned_button_red_empty);
+                  view.setBackgroundResource(R.drawable.rouned_switch_button_red_empty);
                   ((TextView) view).setTextColor(Color.BLACK);
                 }
               }

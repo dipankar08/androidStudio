@@ -59,7 +59,7 @@
             android:id="@+id/recent_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:headerLayout="@layout/item_row"
+            app:headerLayout="@layout/item_recent_search"
             app:headerText="Recent Search"
             app:isHorizantal="true"
             />

@@ -167,4 +167,8 @@ public class Channel {
       return " <font color='#1a512e'>Always working</font>";
     }
   }
+
+  public boolean isOnline() {
+    return rank > 5;
+  }
 }

@@ -3,8 +3,12 @@ package in.peerreview.fmradioindia.ui.mainactivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import in.co.dipankar.quickandorid.arch.BaseView;
@@ -20,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
   private HomeScreen mHomeView;
   private UserPrefView mUserPrefView;
   private MainPresenter mPresenter;
+  private DrawerLayout mDrawerLayout;
 
   @Override
   protected void onNewIntent(Intent intent) {
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
     mSearchView = findViewById(R.id.search);
     mHomeView = findViewById(R.id.home);
     mUserPrefView = findViewById(R.id.user_pref);
+    mDrawerLayout = findViewById(R.id.drawer_layout);
 
     mSearchView.addCallback(
         new SearchView.Callback() {
@@ -75,6 +81,15 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
           public void onSettingClick() {
             AnimationUtil.open(AnimationUtil.AnimationType.OPEN_CLOSE_FROM_BUTTON, mUserPrefView);
           }
+
+          @Override
+          public void onMenuClick() {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+              mDrawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+              mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+          }
         });
     mUserPrefView.addCallback(
         new UserPrefView.Callback() {
@@ -83,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
             AnimationUtil.close(AnimationUtil.AnimationType.OPEN_CLOSE_FROM_BUTTON, mUserPrefView);
           }
         });
+    setupDrawer();
     mPresenter = new MainPresenter();
   }
 
@@ -135,5 +151,24 @@ public class MainActivity extends AppCompatActivity implements BaseView<MainStat
               }
             })
         .show();
+  }
+
+  private void setupDrawer() {
+    NavigationView navigationView = findViewById(R.id.nav_view);
+    navigationView.setNavigationItemSelectedListener(
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(MenuItem menuItem) {
+            // set item as selected to persist highlight
+            menuItem.setChecked(true);
+            // close drawer when item is tapped
+            mDrawerLayout.closeDrawers();
+
+            // Add code here to update the UI based on the item selected
+            // For example, swap UI fragments here
+
+            return true;
+          }
+        });
   }
 }
