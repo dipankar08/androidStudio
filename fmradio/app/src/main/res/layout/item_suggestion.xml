@@ -8,6 +8,10 @@
     android:gravity="center_horizontal"
     android:layout_marginLeft="@dimen/small"
     >
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/row_image"
         android:src="@drawable/ic_music"
@@ -41,5 +45,11 @@
         android:layout_marginBottom="@dimen/small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_goneMarginBottom="@dimen/small"
+        />
+    <in.co.dipankar.quickandorid.views.CustomFontTextView
+        android:id="@+id/row_new"
+        style="@style/Text.PlayTitle.New"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/small"
         />
 </android.support.constraint.ConstraintLayout>

@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.MyViewHolder> {
 
   public interface Callback {
-    public void onClickItem(String id);
+    void onClickItem(String id);
   }
 
   private List<Category> mCategoryList;
@@ -29,7 +29,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 
     public MyViewHolder(View view) {
       super(view);
-      rowListView = (RowListView) view.findViewById(R.id.row);
+      rowListView = view.findViewById(R.id.row);
     }
   }
 
@@ -64,16 +64,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     return mCategoryList.size();
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.N)
   public void setItems(List<Category> list) {
-    list.removeIf(
-        new Predicate<Category>() {
-          @Override
-          public boolean test(Category category) {
-            return category.getList() == null || category.getList().size() == 0;
+      List<Category> res = new ArrayList<>();
+      for(Category category: list){
+          if(category.getList() == null || category.getList().size() == 0){
+              continue;
           }
-        });
-    this.mCategoryList = list;
+          res.add(category);
+      }
+    this.mCategoryList = res;
     notifyDataSetChanged();
   }
 }

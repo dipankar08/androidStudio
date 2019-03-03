@@ -15,7 +15,7 @@ public class CategoriesListView extends RecyclerView {
   @Nullable private Callback mCallback;
 
   public interface Callback {
-    public void onItemClick(String id);
+    void onItemClick(String id);
   }
 
   public CategoriesListView(Context context) {

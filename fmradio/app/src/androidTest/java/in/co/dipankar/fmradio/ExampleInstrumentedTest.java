@@ -1,4 +1,4 @@
-package in.peerreview.fmradioindia;
+package in.co.dipankar.fmradio;
 
 import static org.junit.Assert.*;
 

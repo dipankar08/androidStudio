@@ -59,10 +59,10 @@ public class SplashScreen extends ConstraintLayout implements BaseView<SplashSta
     inflater.inflate(R.layout.activity_splash, this, true);
     mFTUX = findViewById(R.id.ftux);
     mBoot = findViewById(R.id.boot);
-    mViewPager = (ViewPager) findViewById(R.id.pager);
+    mViewPager = findViewById(R.id.pager);
     mVideoView = findViewById(R.id.videoView);
     mButton = findViewById(R.id.next);
-    mTabLayout = (TabLayout) findViewById(R.id.tabDots);
+    mTabLayout = findViewById(R.id.tabDots);
     mFixedPageAdapter =
         new FixedPageAdapter(getContext(), StaticResource.getSplashData(getContext()));
 

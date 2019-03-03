@@ -26,16 +26,10 @@ public class HomePresenter extends BasePresenter {
             render(
                 new HomeState.Builder()
                     .setSuggestionList(mChannelManager.getSuggestedList())
+                        .setRecentList(mChannelManager.getRecentPlayed())
                     .build());
           }
 
-          @Override
-          public void onDataRefreshed() {
-            render(
-                new HomeState.Builder()
-                    .setSuggestionList(mChannelManager.getSuggestedList())
-                    .build());
-          }
 
           @Override
           public void onCatListRefreshed() {
@@ -43,16 +37,21 @@ public class HomePresenter extends BasePresenter {
           }
 
           @Override
-          public void onChangeSerachList() {}
+          public void onChangeRecentSerachList() {}
 
           @Override
           public void onChangeFebList() {}
 
           @Override
-          public void onChangeRecentList() {
+          public void onChangeRecentPlayList() {
             render(
                 new HomeState.Builder().setRecentList(mChannelManager.getRecentPlayed()).build());
           }
+
+            @Override
+            public void onPrefUpdated() {
+
+            }
         });
   }
 

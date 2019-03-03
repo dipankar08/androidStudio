@@ -14,6 +14,7 @@
         app:layout_constraintBottom_toBottomOf="@id/home_title"
         android:src="@drawable/ic_menu_black_24"
         android:layout_marginStart="@dimen/space_from_edge"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/space_from_edge"
         />
     <in.co.dipankar.quickandorid.views.CustomFontTextView
@@ -55,6 +56,7 @@
                 />
             <in.peerreview.fmradioindia.ui.rowlist.RowListView
                 android:id="@+id/list_suggested"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:headerLayout="@layout/item_suggestion"
@@ -63,6 +65,7 @@
                 />
             <in.peerreview.fmradioindia.ui.rowlist.RowListView
                 android:id="@+id/list_recent"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:headerLayout="@layout/item_home_cat"
@@ -73,16 +76,18 @@
                 android:id="@+id/categories_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
     <in.peerreview.fmradioindia.ui.player.PlayerView
         android:id="@+id/player_screen"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

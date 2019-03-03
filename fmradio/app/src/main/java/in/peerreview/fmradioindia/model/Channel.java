@@ -1,7 +1,16 @@
 package in.peerreview.fmradioindia.model;
 
+import com.esotericsoftware.kryo.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Channel {
@@ -11,6 +20,9 @@ public class Channel {
 
   @JsonProperty("rank")
   private int rank;
+
+  @JsonProperty("created_time")
+  private String created_time;
 
   @JsonProperty("count_click")
   private int count_click;
@@ -93,8 +105,11 @@ public class Channel {
     return state;
   }
 
-  public String getCategories() {
-    return categories;
+  public List<String> getCategories() {
+      if(categories != null) {
+          return Arrays.asList(categories.split(","));
+      }
+      return new ArrayList<>();
   }
 
   public Channel(
@@ -110,7 +125,8 @@ public class Channel {
       String tags,
       String help,
       String state,
-      String categories) {
+      String categories,
+      String created_time) {
     this.id = id;
     this.rank = rank;
     this.count_click = count_click;
@@ -125,6 +141,8 @@ public class Channel {
     this.help = help;
     this.state = state;
     this.categories = categories;
+
+    this.created_time = created_time;
   }
 
   public Channel() {}
@@ -167,6 +185,28 @@ public class Channel {
       return " <font color='#1a512e'>Always working</font>";
     }
   }
+
+  public boolean isNew(){
+      if(created_time == null){
+          return false;
+      } else{
+          try {
+              java.util.Date temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS")
+                      .parse(created_time);
+              return dateDifference(temp, new Date());
+          } catch (ParseException e) {
+              e.printStackTrace();
+              return false;
+          }
+      }
+  }
+    public boolean dateDifference(Date d1, Date d2)
+    {
+        long currentDateMilliSec = d1.getTime();
+        long updateDateMilliSec = d2.getTime();
+        long diffDays = (currentDateMilliSec - updateDateMilliSec) / (24 * 60 * 60 * 1000);
+        return diffDays < 1; // added in less than 24 hrs.
+    }
 
   public boolean isOnline() {
     return rank > 5;

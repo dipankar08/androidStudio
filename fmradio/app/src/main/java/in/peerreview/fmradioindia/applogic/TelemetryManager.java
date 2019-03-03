@@ -12,7 +12,13 @@ import javax.inject.Singleton;
 @Singleton
 public class TelemetryManager {
 
-  public static String DB_ENDPOINT = "http://simplestore.dipankar.co.in/api/nodel_bengalifm1";
+    public static final String TELEMETRY_CLICK_BTN_OPTION = "click_option_btn";
+    public static final String TELEMETRY_CLICK_BTN_REPORT = "click_report_btn";
+    public static final String TELEMETRY_CLICK_BTN_SAHRE = "click_share_btn";
+    public static final String TELEMETRY_CLICK_BTN_FOLLOW = "click_follow_btn";
+    public static final String TELEMETRY_CLICK_BTN_RATE = "click_rate_btn";
+    public static final String TELEMETRY_CLICK_BTN_CREDIT = "click_credit_btn";
+    public static String DB_ENDPOINT = "http://simplestore.dipankar.co.in/api/nodel_bengalifm1";
   public static String TELEMETRY_ENDPOINT = "http://simplestore.dipankar.co.in/api/stat_bengalifm1";
 
   // modidy DB entry

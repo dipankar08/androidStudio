@@ -7,7 +7,7 @@ public class MainState extends BaseViewState {
     NONE,
     SPASH,
     HOME,
-    SEARCH;
+    SEARCH
   }
 
   private Page mPage = Page.NONE;

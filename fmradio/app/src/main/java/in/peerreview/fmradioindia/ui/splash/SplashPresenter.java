@@ -35,21 +35,21 @@ public class SplashPresenter extends BasePresenter {
           }
 
           @Override
-          public void onDataRefreshed() {
-            render(new SplashState.Builder().setError(null).build());
-          }
-
-          @Override
           public void onCatListRefreshed() {}
 
           @Override
-          public void onChangeSerachList() {}
+          public void onChangeRecentSerachList() {}
 
           @Override
           public void onChangeFebList() {}
 
           @Override
-          public void onChangeRecentList() {}
+          public void onChangeRecentPlayList() {}
+
+            @Override
+            public void onPrefUpdated() {
+
+            }
         });
     if (mPrefUtils.isFtux()) {
       onCompelteFTUX();

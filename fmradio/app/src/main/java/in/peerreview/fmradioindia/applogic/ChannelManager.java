@@ -19,6 +19,7 @@ import javax.inject.Singleton;
 public class ChannelManager {
   private static final int MAX_LIMIT = 6;
   private static final String SUGGESTION_LIST_TAG = "Mostly Played";
+  private static final String NEWLY_ADDED_TAG = "Newly Added";
 
   private HashMap<String, Channel> mIdToChannelMap;
   private HashMap<String, Integer> mIdToIndex;
@@ -50,15 +51,13 @@ public class ChannelManager {
 
     void onLoadSuccess();
 
-    void onDataRefreshed();
-
     void onCatListRefreshed();
+    void onChangeRecentSerachList();
 
-    void onChangeSerachList();
+      void onChangeRecentPlayList();
 
     void onChangeFebList();
-
-    void onChangeRecentList();
+    void onPrefUpdated();
   }
 
   @Inject
@@ -122,7 +121,7 @@ public class ChannelManager {
 
   private void processConfig(Config config) {
     // Might need to process the config
-    boolean isSelected = mUserPref.size() > 0 ? false : true;
+    boolean isSelected = mUserPref.size() <= 0;
     for (String s : Lists.reverse(config.getCatList())) {
       if (mUserPref.get(s.trim()) == null) {
         mUserPref.put(s.trim(), isSelected);
@@ -133,6 +132,9 @@ public class ChannelManager {
         mUserPref.put(s.trim(), isSelected);
       }
     }
+    for(Callback callback:mCallbacks){
+        callback.onPrefUpdated();
+    }
     maybuildCatList();
   }
 
@@ -141,6 +143,7 @@ public class ChannelManager {
   }
 
   private void maybuildCatList() {
+
     if (mUserPref.size() == 0 || mFullChannelList.size() == 0) {
       DLog.d("Skip building the list as UserPref or mFullChannelList not avilable");
       return;
@@ -150,39 +153,52 @@ public class ChannelManager {
       DLog.d("Already build list -- so skiping");
     }
 
+    // Initilize all data.
     mCategoriesMap = new LinkedHashMap<>();
     mSuggested = new ArrayList<>();
     mIdToIndex = new HashMap<>();
     mIdToChannelMap = new HashMap<>();
 
+    // Building the Index map.
     for (int i = 0; i < mFullChannelList.size(); i++) {
       Channel channel = mFullChannelList.get(i);
       mIdToChannelMap.put(channel.getId(), channel);
       mIdToIndex.put(channel.getId(), i);
     }
 
+    // Population extra index,
     mCategoriesMap.put(
         "Recent Play List".toLowerCase(),
         new Category("Recent Play List", true).addList(mRecentPlayedChannelList));
     mCategoriesMap.put(
         "Liked Play List".toLowerCase(),
         new Category("Liked Play List", true).addList(mLikedChannelList));
+
+    mUserPref.put(SUGGESTION_LIST_TAG, true);
     mCategoriesMap.put(SUGGESTION_LIST_TAG.toLowerCase(), new Category(SUGGESTION_LIST_TAG, true));
 
+    mUserPref.put(NEWLY_ADDED_TAG, true);
+    mCategoriesMap.put(NEWLY_ADDED_TAG.toLowerCase(), new Category(SUGGESTION_LIST_TAG, true));
+
+    // Create cat for each pref which is inorder as this is a linked hash map
     for (Map.Entry<String, Boolean> item : mUserPref.entrySet()) {
       mCategoriesMap.put(item.getKey().toLowerCase().trim(), new Category(item.getKey(), true));
     }
-    // Populated
+
+
+    // Traversal each channel and insert into map and also populate the UserPref if needed.
     for (Channel channel : mFullChannelList) {
-      // cat exist.
-      String cat = channel.getCategories();
-      if (cat != null) {
-        if (mCategoriesMap.get(cat.toLowerCase().trim()) == null) {
-          mCategoriesMap.put(cat.toLowerCase().trim(), new Category(cat, false));
-        }
-        mCategoriesMap.get(cat.toLowerCase().trim()).addItem(channel);
+
+      for(String cat :channel.getCategories()) {
+          if (cat != null && cat.trim().length() > 0) {
+              if (mUserPref.get(cat) == null) {
+                  mUserPref.put(cat, true);
+                  mCategoriesMap.put(cat.toLowerCase().trim(), new Category(cat, false));
+              }
+              mCategoriesMap.get(cat.toLowerCase().trim()).addItem(channel);
+          }
       }
-      // tag
+
       if (channel.getTags() != null) {
         for (String c : mCategoriesMap.keySet()) {
           if (channel.getTags().toLowerCase().contains(c)) {
@@ -190,19 +206,28 @@ public class ChannelManager {
           }
         }
       }
+
+      if(channel.isNew()){
+          mCategoriesMap.get(NEWLY_ADDED_TAG.toLowerCase().trim()).addItem(channel);
+      }
     }
+
+    // adding to suggetion.
     if (mCategoriesMap.get(SUGGESTION_LIST_TAG.trim().toLowerCase()) != null) {
       mSuggested.addAll(mCategoriesMap.get(SUGGESTION_LIST_TAG.trim().toLowerCase()).getList());
     }
-    // trip perf
+
+
+    // 3. Trip the perf which is empty.
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       mUserPref
           .entrySet()
           .removeIf(e -> mCategoriesMap.get(e.getKey().toLowerCase()).getList().size() == 0);
     }
+
+    //4. Notifcy callback.
     for (Callback callback : mCallbacks) {
       callback.onLoadSuccess();
-      callback.onDataRefreshed();
     }
     reBuildCatList();
   }
@@ -258,7 +283,7 @@ public class ChannelManager {
       mRecentPlayedChannelList.remove(MAX_LIMIT);
     }
     for (Callback callback : mCallbacks) {
-      callback.onChangeRecentList();
+      callback.onChangeRecentPlayList();
     }
   }
 
@@ -277,7 +302,7 @@ public class ChannelManager {
       mRecentSearchChannelList.remove(MAX_LIMIT);
     }
     for (Callback callback : mCallbacks) {
-      callback.onChangeSerachList();
+      callback.onChangeRecentSerachList();
     }
   }
 
@@ -329,7 +354,7 @@ public class ChannelManager {
   }
 
   public LinkedHashMap<String, Boolean> getUserPref() {
-    return mUserPref;
+      return (LinkedHashMap<String, Boolean>) mUserPref.clone();
   }
 
   public @Nullable List<Channel> getSuggestedList() {

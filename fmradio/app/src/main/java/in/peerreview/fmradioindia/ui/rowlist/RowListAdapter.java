@@ -36,14 +36,16 @@ public class RowListAdapter extends RecyclerView.Adapter<RowListAdapter.MyViewHo
     public TextView title;
     public TextView subtitle;
     public TextView live;
+    public TextView neww;
 
     public MyViewHolder(View view) {
       super(view);
-      image = (ImageView) view.findViewById(R.id.row_image);
-      title = (TextView) view.findViewById(R.id.row_title);
-      subtitle = (TextView) view.findViewById(R.id.row_subtitle);
-      count = (TextView) view.findViewById(R.id.row_count);
-      live = (TextView) view.findViewById(R.id.row_live);
+      image = view.findViewById(R.id.row_image);
+      title = view.findViewById(R.id.row_title);
+        neww = view.findViewById(R.id.row_new);
+      subtitle = view.findViewById(R.id.row_subtitle);
+      count = view.findViewById(R.id.row_count);
+      live = view.findViewById(R.id.row_live);
     }
   }
 
@@ -83,6 +85,13 @@ public class RowListAdapter extends RecyclerView.Adapter<RowListAdapter.MyViewHo
         holder.live.setText("Offline");
         holder.live.setBackgroundResource(R.drawable.rounded_black_full);
       }
+    }
+    if(holder.neww != null){
+        if(c.isNew()){
+            holder.neww.setVisibility(View.VISIBLE);
+        } else{
+            holder.neww.setVisibility(View.GONE);
+        }
     }
   }
 

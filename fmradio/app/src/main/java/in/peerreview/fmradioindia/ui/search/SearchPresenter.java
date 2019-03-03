@@ -31,25 +31,28 @@ public class SearchPresenter extends BasePresenter {
                     .build());
           }
 
-          @Override
-          public void onDataRefreshed() {}
 
           @Override
           public void onCatListRefreshed() {}
 
           @Override
-          public void onChangeSerachList() {}
+          public void onChangeRecentSerachList() {}
 
           @Override
           public void onChangeFebList() {}
 
           @Override
-          public void onChangeRecentList() {
+          public void onChangeRecentPlayList() {
             render(
                 new SearchState.Builder()
                     .setRecentSearch(mChannelManager.getRecentSearch())
                     .build());
           }
+
+            @Override
+            public void onPrefUpdated() {
+
+            }
         });
   }
 
@@ -59,7 +62,7 @@ public class SearchPresenter extends BasePresenter {
     render(
         new SearchState.Builder()
             .setSearchChannel(result)
-            .setShouldShowClose(s.length() > 0 ? true : false)
+            .setShouldShowClose(s.length() > 0)
             .build());
   }
 

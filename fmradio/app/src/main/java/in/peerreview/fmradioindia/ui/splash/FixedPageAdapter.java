@@ -34,14 +34,14 @@ public class FixedPageAdapter extends PagerAdapter {
 
   public Object instantiateItem(ViewGroup collection, int position) {
     LayoutInflater inflater =
-        (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+        (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     View view = inflater.inflate(R.layout.pagelet_ftux1_item, null);
     Item item = mItemList.get(position);
 
-    ((ImageView) view.findViewById(R.id.image)).setBackgroundResource(item.mImageRes);
+    view.findViewById(R.id.image).setBackgroundResource(item.mImageRes);
     ((TextView) view.findViewById(R.id.title)).setText(item.title);
     ((TextView) view.findViewById(R.id.subtitle)).setText(item.subtitle);
-    ((ViewPager) collection).addView(view, 0);
+    collection.addView(view, 0);
     return view;
   }
 
