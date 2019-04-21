@@ -35,7 +35,7 @@
             <TextView
                 style="@style/Text.Bold.Pref"
                 android:text="Channel Preferences "/>
-            <in.peerreview.fmradioindia.ui.common.OptionView
+            <in.peerreview.fmradioindia.ui.views.common.OptionView
                 android:id="@+id/options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-        <in.peerreview.fmradioindia.ui.rowlist.RowListView
+        <in.peerreview.fmradioindia.ui.views.rowlist.RowListView
             android:id="@+id/recent_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             app:headerText="Recent Search"
             app:isHorizantal="true"
             />
-        <in.peerreview.fmradioindia.ui.rowlist.RowListView
+        <in.peerreview.fmradioindia.ui.views.rowlist.RowListView
             android:id="@+id/search_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

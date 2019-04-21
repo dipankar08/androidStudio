@@ -10,7 +10,7 @@
         android:name=".ui.MyApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.mainactivity.MainActivity"
+            android:name=".ui.activity_v1.mainactivity.MainActivity"
             android:fitsSystemWindows="true"
 
             android:screenOrientation="portrait"

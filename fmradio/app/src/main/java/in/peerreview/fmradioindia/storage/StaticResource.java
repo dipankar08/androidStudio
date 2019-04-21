@@ -2,7 +2,7 @@ package in.peerreview.fmradioindia.storage;
 
 import android.content.Context;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.ui.splash.FixedPageAdapter;
+import in.peerreview.fmradioindia.ui.views.splash.FixedPageAdapter;
 import java.util.ArrayList;
 import java.util.List;
 

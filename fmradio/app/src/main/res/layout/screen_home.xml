@@ -54,7 +54,7 @@
                 android:layout_marginStart="@dimen/space_from_edge"
                 android:editable="false"
                 />
-            <in.peerreview.fmradioindia.ui.rowlist.RowListView
+            <in.peerreview.fmradioindia.ui.views.rowlist.RowListView
                 android:id="@+id/list_suggested"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 app:headerText="Suggested List"
                 app:isHorizantal="true"
                 />
-            <in.peerreview.fmradioindia.ui.rowlist.RowListView
+            <in.peerreview.fmradioindia.ui.views.rowlist.RowListView
                 android:id="@+id/list_recent"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                 app:headerText="Recent Play List"
                 app:isHorizantal="true"
                 />
-            <in.peerreview.fmradioindia.ui.compactlist.CategoriesListView
+            <in.peerreview.fmradioindia.ui.views.compactlist.CategoriesListView
                 android:id="@+id/categories_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <in.peerreview.fmradioindia.ui.player.PlayerView
+    <in.peerreview.fmradioindia.ui.views.player.PlayerView
         android:id="@+id/player_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

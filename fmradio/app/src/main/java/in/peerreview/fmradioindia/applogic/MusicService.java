@@ -2,7 +2,7 @@ package in.peerreview.fmradioindia.applogic;
 
 import in.co.dipankar.quickandorid.services.MusicForegroundService;
 import in.peerreview.fmradioindia.R;
-import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
+import in.peerreview.fmradioindia.ui.activity_v1.mainactivity.MainActivity;
 
 public class MusicService extends MusicForegroundService {
   @Override

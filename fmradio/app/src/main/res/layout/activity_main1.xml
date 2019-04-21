@@ -6,22 +6,22 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <in.peerreview.fmradioindia.ui.home.HomeScreen
+    <in.peerreview.fmradioindia.ui.views.home.HomeScreen
         android:id="@+id/home"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <in.peerreview.fmradioindia.ui.search.SearchView
+    <in.peerreview.fmradioindia.ui.views.search.SearchView
         android:id="@+id/search"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <in.peerreview.fmradioindia.ui.splash.SplashScreen
+    <in.peerreview.fmradioindia.ui.views.splash.SplashScreen
         android:id="@+id/splash"
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <in.peerreview.fmradioindia.ui.pref.UserPrefView
+    <in.peerreview.fmradioindia.ui.views.pref.UserPrefView
         android:id="@+id/user_pref"
         android:visibility="gone"
         android:layout_width="match_parent"

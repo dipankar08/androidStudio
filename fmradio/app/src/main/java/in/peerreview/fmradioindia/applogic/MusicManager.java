@@ -10,7 +10,7 @@ import in.co.dipankar.quickandorid.services.Item;
 import in.co.dipankar.quickandorid.services.MusicForegroundService;
 import in.co.dipankar.quickandorid.utils.DLog;
 import in.peerreview.fmradioindia.model.Channel;
-import in.peerreview.fmradioindia.ui.mainactivity.MainActivity;
+import in.peerreview.fmradioindia.ui.activity_v1.mainactivity.MainActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
