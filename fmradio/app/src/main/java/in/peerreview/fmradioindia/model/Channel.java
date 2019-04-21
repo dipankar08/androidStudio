@@ -42,9 +42,6 @@ public class Channel {
   @JsonProperty("url")
   private String url;
 
-  @JsonProperty("group")
-  private String group;
-
   @JsonProperty("tags")
   private String tags;
 
@@ -56,6 +53,21 @@ public class Channel {
 
   @JsonProperty("category")
   private String categories;
+
+  @JsonProperty("like")
+    private int like;
+
+    @JsonProperty("unlike")
+    private int unlike;
+
+    @JsonProperty("lang")
+    private String lang;
+
+    @JsonProperty("city")
+    private String city;
+
+    @JsonProperty("country")
+    private String country;
 
   public String getId() {
     return id;
@@ -89,10 +101,6 @@ public class Channel {
     return url;
   }
 
-  public String getGroup() {
-    return group;
-  }
-
   public String getTags() {
     return tags;
   }
@@ -104,6 +112,30 @@ public class Channel {
   public String getState() {
     return state;
   }
+
+    public String getCreated_time() {
+        return created_time;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public int getUnlike() {
+        return unlike;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 
   public List<String> getCategories() {
       if(categories != null) {
@@ -126,23 +158,32 @@ public class Channel {
       String help,
       String state,
       String categories,
-      String created_time) {
-    this.id = id;
-    this.rank = rank;
-    this.count_click = count_click;
-    this.count_error = count_error;
-    this.count_success = count_success;
-    this.name = name;
-    this.img = img;
+      String created_time,
+      int like,
+      int unlike,
+      String city,
+      String country,
+      String lang
+        ) {
+        this.id = id;
+        this.rank = rank;
+        this.count_click = count_click;
+        this.count_error = count_error;
+        this.count_success = count_success;
+        this.name = name;
+        this.img = img;
 
     this.url = url;
-    this.group = group;
     this.tags = tags;
     this.help = help;
     this.state = state;
     this.categories = categories;
-
     this.created_time = created_time;
+    this.like = like;
+    this.unlike = unlike;
+    this.city = city;
+    this.country = country;
+    this.lang = lang;
   }
 
   public Channel() {}
